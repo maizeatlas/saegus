@@ -1,11 +1,18 @@
-Operators
-=========
+:mod:`operators` --- Operators: Functions Applied During Evolutionary Processes
+===============================================================================
 
-All of the classes in this module are derived from the simuPOP.PyOperator
+
+
+ All of the classes in this module are derived from the simuPOP.PyOperator
  class. Each class performs some task inside of the evolutionary process.
  simuPOP offers a standard library of operators for common population genetics
  processes. These operators are defined for the purpose of investigating
  the genetic and statistical properties of recurrently selected populations.
+
+
+
+class CalculateErrorVariance
+----------------------------
 
 
 class GenotypicEffectCalculator
@@ -29,10 +36,12 @@ begin=0, end=-1, step=1, at=[], subPops=ALL_AVAIL, infoFields=[])
       which loci are considered QTL. As the name suggests the user must
       define each locus by its absolute index.
 
+    .. function:: genotypic_contribution_calculator(self, ind)
 
 
 
-class PhenotypicEffectCalculator
+
+class PhenotypeCalculator
 --------------------------------
 
 .. class:: PhenotypicEffectCalculator
@@ -52,5 +61,3 @@ step=1, at=[], subPops=ALL_AVAIL, infoFields=[])
       error term to the contribution from genotype. The error term ``epsilon``
       is a random draw from a normal distribution with mean 0 and variance
       variance(1/heritability - 1).
-
-
