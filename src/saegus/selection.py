@@ -173,9 +173,9 @@ class Truncation(object):
         founder_chooser = breed.PairwiseIDChooser(parental_id_pairs)
         if len(parental_id_pairs) % 2 != 0:
             parental_id_pairs.append(random.choice(parental_id_pairs))
-        offspring_pop_sizes = int(len(parental_id_pairs)/2)
 
         print("Creating the F_one population from selected founders.")
+        #while pop.popSize() > 1:
         pop.evolve(
             preOps=[
                 sim.PyEval(r'"Generation: %d\n" % gen'),
@@ -186,10 +186,11 @@ class Truncation(object):
                     sim.IdTagger(), sim.ParentsTagger(), sim.PedigreeTagger(),
                     sim.Recombinator(rates=recombination_rates)],
                     numOffspring=1),
-            subPopSize=offspring_pop_sizes),
-            postOps=sim.SplitSubPops(sizes=[1]*offspring_pop_sizes),
+            ),
             gen=1,
             )
+        #    new_parents = list(pop.indInfo('ind_id'))
+        #    new_founder_chooser = breed.PairwiseIDChooser(new_parents)
 
     def expand_by_selfing(self, pop, recombination_rates):
         """
@@ -232,20 +233,19 @@ class Truncation(object):
         """
         starting_gen = pop.vars()['gen']
         print("Initiating recombinatorial convergence at generation: %d" % pop.dvars().gen)
-        while pop.numSubPop() > 1:
-            self.pop_halver(pop)
-            self.odd_to_even(pop)
-            self.pairwise_merge_protocol(pop)
-            sub_pop_sizes = list(pop.subPopSizes())
+        while pop.popSize() > 1:
+            #self.pop_halver(pop)
+            #self.odd_to_even(pop)
+            #self.pairwise_merge_protocol(pop)
             pop.evolve(
                 preOps=[
                     sim.MergeSubPops(),
                     sim.PyEval(r'"Generation: %d\n" % gen'),
-                    sim.SplitSubPops(sizes=sub_pop_sizes, randomize=False),
                 ],
-                matingScheme=sim.RandomMating(ops=[sim.Recombinator(
-                    rates=recombination_rates),
-                    sim.IdTagger(), sim.PedigreeTagger()]),
+                matingScheme=sim.RandomMating(ops=[
+                    sim.IdTagger(), sim.PedigreeTagger(),
+                    sim.Recombinator(rates=recombination_rates)]
+                    ),
                 gen=1,
             )
 
@@ -308,7 +308,7 @@ class Truncation(object):
         pop.evolve(
             initOps=[
                 sim.InitInfo(0, infoFields=['generation']),
-                operators.GenotypicContributionCalculator(qtl, aes),
+                operators.GenoAdditive(qtl, aes),
                 operators.CalculateErrorVariance(self.heritability),
                 operators.PhenotypeCalculator(
                     self.proportion_of_individuals_saved),
@@ -331,7 +331,7 @@ class Truncation(object):
             ],
             preOps=[
                 sim.PyEval(r'"Generation: %d\n" % gen'),
-                operators.GenotypicContributionCalculator(qtl, aes, begin=1),
+                operators.GenoAdditive(qtl, aes, begin=1),
                 sim.InfoExec('generation=gen'),
                 operators.PhenotypeCalculator(
                     self.proportion_of_individuals_saved, begin=1),
@@ -368,7 +368,7 @@ class Truncation(object):
         ],
         finalOps=[
             sim.InfoExec('generation=gen'),
-            operators.GenotypicContributionCalculator(qtl, aes),
+            operators.GenoAdditive(qtl, aes),
             operators.PhenotypeCalculator(
                 self.proportion_of_individuals_saved),
             operators.MetaPopulation(meta_pop, self.meta_pop_sample_sizes),
@@ -701,7 +701,7 @@ class Drift(object):
         pop.evolve(
             initOps=[
                 sim.InitInfo(0, infoFields=['generation']),
-                operators.GenotypicContributionCalculator(qtl, aes),
+                operators.GenoAdditive(qtl, aes),
                 operators.CalculateErrorVariance(self.heritability),
                 operators.PhenotypeCalculator(
                     self.proportion_of_individuals_saved),
@@ -722,7 +722,7 @@ class Drift(object):
             ],
             preOps=[
                 sim.PyEval(r'"Generation: %d\n" % gen'),
-                operators.GenotypicContributionCalculator(qtl, aes, begin=1),
+                operators.GenoAdditive(qtl, aes, begin=1),
                 sim.InfoExec('generation=gen'),
                 operators.PhenotypeCalculator(
                     self.proportion_of_individuals_saved, begin=1),
@@ -757,7 +757,7 @@ class Drift(object):
         ],
         finalOps=[
             sim.InfoExec('generation=gen'),
-            operators.GenotypicContributionCalculator(qtl, aes),
+            operators.GenoAdditive(qtl, aes),
             operators.PhenotypeCalculator(
                 self.proportion_of_individuals_saved),
             operators.MetaPopulation(meta_pop, self.meta_pop_sample_sizes),

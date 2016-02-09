@@ -27,7 +27,7 @@ class Frq(object):
         self.qt_loci = qt_loci
         self.pop = pop
 
-    def allele_frequencies(self, pop, loci):
+    def allele_frequencies(self, pop: sim.Population, loci: list):
         """
         Determine major and minor alleles in each generation the aggregate
         population. Generations in a meta-populations correspond to
@@ -48,7 +48,7 @@ class Frq(object):
         allele_frq = {}
 
         # Generations
-        for i in range(pop.numSubPop()):
+        for i in range(self.pop.numSubPop()):
             for locus in range(self.pop.totNumLoci()):
                 reversed_allele_frequencies[i, locus] = {}
                 for allele in self.alleles[locus]:

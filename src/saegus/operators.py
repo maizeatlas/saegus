@@ -32,15 +32,15 @@ class CalculateErrorVariance(sim.PyOperator):
         return True
 
 
-class GenotypicContributionCalculator(sim.PyOperator):
+class GenoAdditive(sim.PyOperator):
     def __init__(self, absolute_qtl, allele_effects, *args, **kwargs):
         self.absolute_qtl = absolute_qtl
         self.allele_effects = allele_effects
         sim.PyOperator.__init__(self,
-                                func=self.genotypic_contribution_calculator,
+                                func=self.additive_model,
                                 *args, **kwargs)
 
-    def genotypic_contribution_calculator(self, ind):
+    def additive_model(self, ind):
         """
         Calculates genotypic contribution ``g`` by summing the effect of each
         allele at each QTL triplet.

@@ -2,12 +2,13 @@
 
 from distutils.core import setup
 
-setup(name='wgs',
-    version='0.1.0',
-    description='Simulation of Artificial Selection experiments.',
+setup(name='saegus',
+    version='0.1.2',
+    description='Simulation and Analysis of Artificial Selection experiments.',
     author='John J. Dougherty III',
     author_email='jjdoc@udel.edu',
-    packages=['wgs'],
+    packages=['saegus'],
+    license='GNU General Public License Version 3'
     
 
 
