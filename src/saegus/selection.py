@@ -4,6 +4,7 @@ import simuPOP as sim
 import random
 import collections as col
 from . import breed, operators
+import csv
 import itertools
 
 class Truncation(object):
@@ -193,9 +194,22 @@ class Truncation(object):
             ),
             gen=1,
             )
+        self.pedigree_writer(pop, 'MAGIC_pedigree.txt')
+
 
 
     def recombinatorial_convergence(self, pop, recombination_rates):
+        """
+        Implements the MAGIC breeding scheme of breeding single individuals
+        in pairs determined by the offspring of the initial population. The
+        initial population is given by generate_f_one.
+        :param pop:
+        :type pop:
+        :param recombination_rates:
+        :type recombination_rates:
+        :return:
+        :rtype:
+        """
         while pop.popSize() > 1:
             new_parents = list(pop.indInfo('ind_id'))
             new_parent_id_pairs = [(pid, pid+1) for pid in new_parents[::2]]
@@ -216,8 +230,7 @@ class Truncation(object):
                 matingScheme=sim.HomoMating(
                     sim.PyParentsChooser(new_founder_chooser.by_id_pairs),
                     sim.OffspringGenerator(ops=[
-                        sim.IdTagger(), sim.ParentsTagger(
-                            output=">>pedigree.txt"),
+                        sim.IdTagger(), sim.ParentsTagger(),
                         sim.PedigreeTagger(),
                         sim.Recombinator(rates=recombination_rates)],
                         numOffspring=1),
@@ -225,6 +238,8 @@ class Truncation(object):
             ),
             gen=1,
             )
+
+            self.pedigree_writer(pop, 'MAGIC_pedigree.txt')
 
     def expand_by_selfing(self, pop, recombination_rates):
         """

@@ -3,6 +3,7 @@ __project__ = 'wgs'
 # -*- coding: utf-8 -*-
 
 import simuPOP as sim
+import csv
 import math
 import numpy as np
 import pandas as pd
@@ -13,6 +14,30 @@ from scipy import linalg
 import matplotlib.pyplot as plt
 plt.ioff()
 
+
+
+def pedigree_writer(pop, pedigree_filename):
+    """
+    Writes ind_id, mother_id, father_id for each individual.
+    pedigree_writer will raise an assertion error if the necessary
+    fields are not defined.
+
+    :warning: File is by default in append mode because it assumes
+    :warning: multiple generations will be written.
+    :param pop:
+    :type pop: sim.Population
+    :param pedigree_filename: Name of output file.
+    :type pedigree_filename: str
+    :return: None
+    :rtype: None
+    """
+    with open(pedigree_filename, 'a') as pedigree:
+        pedwriter = csv.writer(pedigree, delimiter='\t')
+        for ind in pop.individuals():
+            ind_lineage = [str(pop.dvars().gen), str(ind.ind_id),
+                               str(ind.mother_id),
+                          str(ind.father_id)]
+            pedwriter.writerow(ind_lineage)
 
 class Frq(object):
     """
@@ -188,15 +213,10 @@ class Frq(object):
 
 
         data_columns = ['abs_index', 'chrom', 'locus', 'recom_rate', 'cM', 'v']
-
         generation_labels = ['G_'+str(i)
                              for i in range(0, number_gens+1, 2)]
         data_columns = data_columns + generation_labels + ['aggregate']
-
-
-
         data = {}
-
         breakpoints = col.OrderedDict()
         for locus in range(pop.totNumLoci()):
             if recombination_rates[locus] == 0.01:

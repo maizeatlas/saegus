@@ -13,8 +13,8 @@ from . import helpers
 
 ####*
 
-class CalculateErrorVariance(sim.PyOperator):
 
+class CalculateErrorVariance(sim.PyOperator):
     def __init__(self, heritability, *args, **kwargs):
         self.heritability = heritability
         sim.PyOperator.__init__(self, func=self.calculate_error_variance,
@@ -55,12 +55,23 @@ class GenoAdditive(sim.PyOperator):
 
 
 class PhenotypeCalculator(sim.PyOperator):
+    """
+    Under a purely additive model for the time being: P = G + error.
+    ``error`` is a random draw from a normal distribution with mean 0 and
+    variance determined by the variance in the pre-selection population.
+    The variance ``epsilon`` is calculated by another operator:
+    CalculateErrorVariance.
+    """
     def __init__(self, proportion_selected, *args, **kwargs):
         self.proportion_selected = proportion_selected
         sim.PyOperator.__init__(self, func=self.phenotypic_effect_calculator,
                                 *args, **kwargs)
 
     def phenotypic_effect_calculator(self, pop):
+        """
+        Simulate measurement error by adding random error to genotypic
+        contribution.
+        """
         for ind in pop.individuals():
             ind.p = ind.g + random.normalvariate(0, pop.dvars().epsilon)
         return True
