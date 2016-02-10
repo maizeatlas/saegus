@@ -41,8 +41,8 @@
       <file leaf-file-name="helpers.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/saegus/helpers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.672">
-              <caret line="380" column="65" selection-start-line="380" selection-start-column="65" selection-end-line="380" selection-end-column="65" />
+            <state vertical-scroll-proportion="0.796">
+              <caret line="431" column="35" selection-start-line="431" selection-start-column="35" selection-end-line="431" selection-end-column="35" />
               <folding>
                 <element signature="e#82#103#0" expanded="true" />
               </folding>
@@ -649,8 +649,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/helpers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.672">
-          <caret line="380" column="65" selection-start-line="380" selection-start-column="65" selection-end-line="380" selection-end-column="65" />
+        <state vertical-scroll-proportion="0.796">
+          <caret line="431" column="35" selection-start-line="431" selection-start-column="35" selection-end-line="431" selection-end-column="35" />
           <folding>
             <element signature="e#82#103#0" expanded="true" />
           </folding>

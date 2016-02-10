@@ -386,7 +386,7 @@ class Haplotype(object):
         return htypes
 
 
-    def haplotype_table(meta_pop, haplo_data):
+    def haplotype_table(self, meta_pop, haplo_data):
         """
         Generates a pd.DataFrame object for easy analysis and visualization.
         :param meta_pop:
@@ -412,6 +412,30 @@ class Haplotype(object):
                 row = [locus[1]] + [chromosome] + [snp_triplet] + [effect] + generational_frequencies
                 haplotype_table.append(row)
         return pd.DataFrame(haplotype_table, columns=data_columns)
+
+    def setup_data_for_plot(self, haplotype_table):
+        """
+        Uses the haplotype data table to arrange data into a chromosome
+        color coded multiple generation plot which shows the change in
+        haplotype frequency over time. Haplotypes are dots with fixed
+        x-position which shows their effect. Their motion along the y-axis
+        which is frequency shows changes over time.
+        """
+    effect_frq_by_chromosome = {}
+    for sp in range(selection_meta.numSubPop()):
+        effect_frq_by_chromosome[sp] = {}
+        for chrom in distinct_chromosomes:
+            freqs = np.array(htable.loc[htable['chromosome'] == chrom][sp])
+            effects = np.array(htable.loc[htable['chromosome'] == chrom]['effect'])
+            effect_frq_by_chromosome[sp][chrom] = np.array([freqs, effects])
+
+    return effect_frq_by_chromosome
+
+
+
+
+
+
 
 class MetaData(object):
     """
