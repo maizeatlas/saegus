@@ -323,84 +323,95 @@ class Frq(object):
         return qta_table
 
 
-def haplotype_data(pop, meta_pop, allele_effects, quan_trait_loci):
-    """Generates a comprehensive dictionary of haplotypes at each locus and their
-    corresponding effects."""
+class Haplotype(object):
+    """
+    Class to encapsulate all functions related to collecting, analyzing and
+    visualizing haplotype data.
+    """
 
-    haplotypes = {'loci': {},
-                'alleles': {},
-                'effect': {},
-                'frequency': {'aggregate': {}}
-             }
-    generations = ['G_'+str(i) for i in range(0, pop.dvars().gen+1, 2)]
-    for gen in generations:
-        haplotypes['frequency'][gen] = {}
-
-    for k, i in enumerate(range(0, len(quan_trait_loci), 3)):
-        haplotypes['loci'][k] = (quan_trait_loci[i], quan_trait_loci[i+1], quan_trait_loci[i+2])
+    def __init__(self, population, allele_effects, qt_loci):
+        self.population = population
+        self.allele_effects = allele_effects
+        self.qt_loci = qt_loci
 
 
 
-    sim.stat(meta_pop, haploFreq=list(haplotypes['loci'].values()),
-             vars=['haploFreq', 'haploFreq_sp'])
-    for k, v in haplotypes['loci'].items():
-        haplotypes['alleles'][v] = list(meta_pop.dvars().haploFreq[v].keys())
+    def haplotype_data(self, meta_pop, allele_effects, quan_trait_loci):
+        """
+        Generates a comprehensive dictionary of haplotypes at each locus and their
+        corresponding effects.
+        """
 
-    for sp in range(meta_pop.numSubPop()):
-        for loci, triplets in haplotypes['alleles'].items():
-            haplotypes['frequency'][loci][] = {}
+        htypes = {}
+        htypes['loci'] = {}
+        for k, i in enumerate(range(0, len(quan_trait_loci), 3)):
+            htypes['loci'][k] = (quan_trait_loci[i], quan_trait_loci[i+1],
+                                 quan_trait_loci[i+2])
+
+
+        htypes['alleles'] = {}
+        htypes['effect'] = {}
+        htypes['frequency'] = {}
+        for loci in htypes['loci'].values():
+            htypes['frequency'][loci] = {}
+            for sp in range(meta_pop.numSubPop()):
+                htypes['frequency'][loci][sp] = {}
+
+        sim.stat(meta_pop, haploFreq=list(htypes['loci'].values()),
+                 vars=['haploFreq', 'haploFreq_sp'])
+
+
+        for k, v in htypes['loci'].items():
+            htypes['alleles'][v] = list(meta_pop.dvars(0).haploFreq[v].keys())
+
+
+
+        for sp in range(meta_pop.numSubPop()):
+            for loci, triplet in htypes['alleles'].items():
+                for alleles in triplet:
+                    htypes['frequency'][loci][sp][alleles] = meta_pop.dvars(
+                        sp).haploFreq[loci][alleles]
+
+
+
+
+        for htype, triplets in htypes['alleles'].items():
+            htypes['effect'][htype] = {}
             for trip in triplets:
-                haplotypes['frequency'][sp][htype][label][trip] = meta_pop.dvars(sp).haploFreq[htype][trip]
+                htype_effect = allele_effects[htype[0]][trip[0]] +\
+                allele_effects[htype[1]][trip[1]] +\
+                allele_effects[htype[2]][trip[2]]
+                htypes['effect'][htype][trip] = htype_effect
 
-    for sp in range(selection_meta.numSubPop()):
-        for loci, triplet in htypes['alleles'].items():
-            for alleles in triplet:
-                htypes['frequency'][loci][sp] = selection_meta.dvars(sp).haploFreq[loci][alleles]
-
-for loci, triplet in htypes['alleles'].items():
-    htypes['frequency']['accumulated'][loci] = {}
-    for alleles in triplet:
-        htypes['frequency']['accumulated'][loci] = selection_meta.dvars().haploFreq[loci][alleles]
+        return htypes
 
 
-    for htype, triplets in haplotypes['alleles'].items():
-        haplotypes['effect'][htype] = {}
-        for trip in triplets:
-            htype_effect = allele_effects[htype[0]][trip[0]] +\
-            allele_effects[htype[1]][trip[1]] +\
-            allele_effects[htype[2]][trip[2]]
-            haplotypes['effect'][htype][trip] = htype_effect
-
-    for htype, triplets in haplotypes['alleles'].items():
-        haplotypes['frequency'][htype]['aggregate'] = {}
-        for trip in triplets:
-            haplotypes['frequency'][htype]['aggregate'][trip] = meta_pop.dvars(
-
-            ).haploFreq[
-                htype][trip]
-
-    return haplotypes
-
-
-def haplotype_table(pop, meta_pop, haplo_data):
-    """
-    Generates a table from the haplotype data.
-    Table has columns 'centered_on', 'chromosome', 'haplotype', 'effect', ['generations']
-    """
-    integer_to_snp = {0: 'A', 1: 'C', 2: 'G', 3: 'T', 4: '+', 5: '-'}
-    generations = ['G_'+str(i) for i in range(0, meta_pop.dvars().gen+1, 2)]
-    haplotype_table = []
-    data_columns = ['centered_on', 'chromosome', 'haplotype', 'effect'] + generations
-    for locus in haplo_data['loci'].values():
-        for triplet in haplo_data['alleles'][locus]:
-            generational_frequencies = [haplo_data['frequency'][locus][gen][triplet]
-                                        for gen in generations]
-            effect = haplo_data['effect'][locus][triplet]
-            snp_triplet = integer_to_snp[triplet[0]] + integer_to_snp[triplet[1]] + integer_to_snp[triplet[2]]
-            chromosome = meta_pop.chromLocusPair(locus[1])[0] + 1
-            row = [locus[1]] + [chromosome] + [snp_triplet] + [effect] + generational_frequencies
-            haplotype_table.append(row)
-    return pd.DataFrame(haplotype_table, columns=data_columns)
+    def haplotype_table(meta_pop, haplo_data):
+        """
+        Generates a pd.DataFrame object for easy analysis and visualization.
+        :param meta_pop:
+        :type meta_pop:
+        :param haplo_data:
+        :type haplo_data:
+        :return:
+        :rtype:
+        """
+        integer_to_snp = {0: 'A', 1: 'C', 2: 'G', 3: 'T', 4: '+', 5: '-'}
+        generations = ['G_'+str(i) for i in range(0, meta_pop.dvars().gen+1, 2)]
+        haplotype_table = []
+        data_columns = ['centered_on', 'chromosome', 'haplotype', 'effect']
+        generation_columns = list(range(meta_pop.numSubPop()))
+        data_columns.extend(generation_columns)
+        for locus in haplo_data['loci'].values():
+            for triplet in haplo_data['alleles'][locus]:
+                generational_frequencies = [haplo_data['frequency'][locus][sp][triplet]
+                                            for sp in range(meta_pop.numSubPop())]
+                effect = haplo_data['effect'][locus][triplet]
+                snp_triplet = integer_to_snp[triplet[0]] + integer_to_snp[triplet[1]] + integer_to_snp[triplet[2]]
+                chromosome = meta_pop.chromLocusPair(locus[1])[0] + 1
+                row = [locus[1]] + [chromosome] + [snp_triplet] + [effect] + generational_frequencies
+                haplotype_table.append(row)
+        return pd.DataFrame(haplotype_table, columns=data_columns)
 
 class MetaData(object):
     """
@@ -770,24 +781,4 @@ class GWAS(object):
             annotated_G.to_csv(f, sep=' ', index=True, header=False)
 
         return annotated_G
-
-def store_toy_parameter_set():
-    with shelve.open('toy_parameter_set') as tpset:
-        tpset['selection_af'] = selection_af
-        tpset['drift_af'] = drift_af
-        tpset['triplet_qtl'] = triplet_qtl
-        tpset['allele_effects'] = allele_effects
-        tpset['alleles'] = alleles
-        tpset['haplotype'] = hz
-        tpset['epsilon'] = selection_pop.dvars().epsilon
-        tpset['selection_statistics'] = selection_statistics
-        tpset['drift_statistics'] = drift_statistics
-
-def load_toy_parameter_set():
-    toy_parameter_set = {}
-    with shelve.open('toy_parameter_set') as toypset:
-        for k, v in toypset.items():
-            toy_parameter_set[k] = v
-
-    return toy_parameter_set
 
