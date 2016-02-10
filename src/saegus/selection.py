@@ -3,7 +3,7 @@ __author__ = 'John J Dougherty III'
 import simuPOP as sim
 import random
 import collections as col
-from . import breed, operators
+from . import breed, operators, helpers
 import csv
 import itertools
 
@@ -194,8 +194,6 @@ class Truncation(object):
             ),
             gen=1,
             )
-        self.pedigree_writer(pop, 'MAGIC_pedigree.txt')
-
 
 
     def recombinatorial_convergence(self, pop, recombination_rates):
@@ -238,8 +236,6 @@ class Truncation(object):
             ),
             gen=1,
             )
-
-            self.pedigree_writer(pop, 'MAGIC_pedigree.txt')
 
     def expand_by_selfing(self, pop, recombination_rates):
         """

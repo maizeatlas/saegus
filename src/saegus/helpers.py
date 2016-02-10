@@ -326,27 +326,42 @@ class Frq(object):
 def haplotype_data(pop, meta_pop, allele_effects, quan_trait_loci):
     """Generates a comprehensive dictionary of haplotypes at each locus and their
     corresponding effects."""
+
     haplotypes = {'loci': {},
-             'alleles': {},
-              'effect': {},
-              'frequency': {'aggregate':{}}
+                'alleles': {},
+                'effect': {},
+                'frequency': {'aggregate': {}}
              }
     generations = ['G_'+str(i) for i in range(0, pop.dvars().gen+1, 2)]
     for gen in generations:
         haplotypes['frequency'][gen] = {}
+
     for k, i in enumerate(range(0, len(quan_trait_loci), 3)):
         haplotypes['loci'][k] = (quan_trait_loci[i], quan_trait_loci[i+1], quan_trait_loci[i+2])
+
+
 
     sim.stat(meta_pop, haploFreq=list(haplotypes['loci'].values()),
              vars=['haploFreq', 'haploFreq_sp'])
     for k, v in haplotypes['loci'].items():
         haplotypes['alleles'][v] = list(meta_pop.dvars().haploFreq[v].keys())
 
-    for sp, label in zip(range(meta_pop.numSubPop()), generations):
-       for htype, triplets in haplotypes['alleles'].items():
-        haplotypes['frequency'][htype][label] = {}
-        for trip in triplets:
-            haplotypes['frequency'][htype][label][trip] = meta_pop.dvars(sp).haploFreq[htype][trip]
+    for sp in range(meta_pop.numSubPop()):
+        for loci, triplets in haplotypes['alleles'].items():
+            haplotypes['frequency'][loci][] = {}
+            for trip in triplets:
+                haplotypes['frequency'][sp][htype][label][trip] = meta_pop.dvars(sp).haploFreq[htype][trip]
+
+    for sp in range(selection_meta.numSubPop()):
+        for loci, triplet in htypes['alleles'].items():
+            for alleles in triplet:
+                htypes['frequency'][loci][sp] = selection_meta.dvars(sp).haploFreq[loci][alleles]
+
+for loci, triplet in htypes['alleles'].items():
+    htypes['frequency']['accumulated'][loci] = {}
+    for alleles in triplet:
+        htypes['frequency']['accumulated'][loci] = selection_meta.dvars().haploFreq[loci][alleles]
+
 
     for htype, triplets in haplotypes['alleles'].items():
         haplotypes['effect'][htype] = {}
