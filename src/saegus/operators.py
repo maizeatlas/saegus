@@ -255,6 +255,12 @@ class InfoAndGenotypeWriter(sim.PyOperator):
 
 
 class RandomlyAssignFemaleFitness(sim.PyOperator):
+    """
+    Chooses ``size_breeding_subpopulation`` individuals to be eligible for
+    mating. 0 is the default value for ``female_fitness``. Individuals who
+    have ``female_fitness`` = 0 cannot be picked as mates.
+    Individuals who have female fitness = 1 can be chosen as a 'female'.
+    """
     def __init__(self, size_breeding_subpopulation, *args, **kwargs):
         self.size_breeding_subpopulation = size_breeding_subpopulation
         sim.PyOperator.__init__(self, func=self.choose_breeding_individuals_randomly, *args, **kwargs)
@@ -290,7 +296,7 @@ class RandomlyAssignMaleFitness(sim.PyOperator):
 
 class DiscardRandomOffspring(sim.PyOperator):
     """
-    Operator to choose <number_to_remove> individuals at random to remove
+    Operator to choose ``number_to_remove`` individuals at random to remove
     from the offspring population. Simulates the effect of randomly picking
     seed to plant from the larger population.
     """

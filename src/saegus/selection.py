@@ -164,6 +164,8 @@ class Truncation(object):
             dummy_pop.removeSubPops(sub_pop_indexes[1:])
             pop.addIndFrom(dummy_pop)
 
+
+
     def generate_f_one(self, pop, recombination_rates, parental_id_pairs):
         """
         Crosses pairs of founders as they are listed in founder indices
@@ -173,6 +175,7 @@ class Truncation(object):
         founder_chooser = breed.PairwiseIDChooser(parental_id_pairs)
         if len(parental_id_pairs) % 2 != 0:
             parental_id_pairs.append(random.choice(parental_id_pairs))
+        os_size = len(parental_id_pairs)
 
         print("Creating the F_one population from selected founders.")
         #while pop.popSize() > 1:
@@ -186,11 +189,42 @@ class Truncation(object):
                     sim.IdTagger(), sim.ParentsTagger(), sim.PedigreeTagger(),
                     sim.Recombinator(rates=recombination_rates)],
                     numOffspring=1),
+                subPopSize=os_size,
             ),
             gen=1,
             )
-        #    new_parents = list(pop.indInfo('ind_id'))
-        #    new_founder_chooser = breed.PairwiseIDChooser(new_parents)
+
+
+    def recombinatorial_convergence(self, pop, recombination_rates):
+        while pop.popSize() > 1:
+            new_parents = list(pop.indInfo('ind_id'))
+            new_parent_id_pairs = [(pid, pid+1) for pid in new_parents[::2]]
+
+            if len(new_parent_id_pairs) % 2 != 0 and len(
+                    new_parent_id_pairs) != 1:
+                new_parent_id_pairs.append(random.choice(new_parent_id_pairs))
+            new_os_size = len(new_parent_id_pairs)
+
+            new_founder_chooser = breed.PairwiseIDChooser(new_parent_id_pairs)
+
+            pop.evolve(
+                preOps=[
+                    sim.PyEval(r'"Generation: %d\t" % gen'),
+                    sim.Stat(popSize=True, numOfMales=True),
+                    sim.PyEval(r'"popSize: %d\n" % popSize'),
+                ],
+                matingScheme=sim.HomoMating(
+                    sim.PyParentsChooser(new_founder_chooser.by_id_pairs),
+                    sim.OffspringGenerator(ops=[
+                        sim.IdTagger(), sim.ParentsTagger(
+                            output=">>pedigree.txt"),
+                        sim.PedigreeTagger(),
+                        sim.Recombinator(rates=recombination_rates)],
+                        numOffspring=1),
+                subPopSize=new_os_size,
+            ),
+            gen=1,
+            )
 
     def expand_by_selfing(self, pop, recombination_rates):
         """
