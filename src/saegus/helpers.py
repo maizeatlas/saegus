@@ -414,7 +414,8 @@ def generate_haplotype_data_table(pop, haplotype_data):
     return pd.DataFrame(haplotype_table, columns=data_columns)
 
 
-def plot_frequency_vs_effect(pop, haplotype_table, plot_file_name,
+def plot_frequency_vs_effect(pop, haplotype_table, plot_title,
+                             plot_file_name,
                              color_map='Dark2'):
     """
     Uses the haplotype data table to arrange data into a chromosome
@@ -426,12 +427,17 @@ def plot_frequency_vs_effect(pop, haplotype_table, plot_file_name,
     :param haplotype_table:
     """
 
-    distinct_chromosomes = list(set(haplotype_table['chromosomes']))
+    plt.style.use('ggplot')
+
+    distinct_chromosomes = list(set(haplotype_table['chromosome']))
     number_of_different_colors = len(distinct_chromosomes)
+    generation_labels = ['G_' + '{' + str(i) + '}' for i in
+                          range(0, 2*(pop.numSubPop()), 2)]
+    generations = ['G_' + str(i) for i in range(0, 2*(pop.numSubPop()), 2)]
 
     c_map = plt.get_cmap(color_map)
-    colors = [c_map[idx] for idx in
-              np.linspace(0, 1, number_of_different_colors)]
+
+    colors = c_map(np.linspace(0, 1, number_of_different_colors))
 
     chromosome_colors = {distinct_chromosomes[i]: colors[i] for i in
                          range(number_of_different_colors)}
@@ -443,7 +449,7 @@ def plot_frequency_vs_effect(pop, haplotype_table, plot_file_name,
         for chrom in distinct_chromosomes:
             haplotype_frequencies = np.array(
                 haplotype_table.loc[
-                    haplotype_table['chromosome'] == chrom][sp])
+                    haplotype_table['chromosome'] == chrom][generations[sp]])
 
             haplotype_effects = np.array(
                 haplotype_table.loc[
@@ -458,8 +464,8 @@ def plot_frequency_vs_effect(pop, haplotype_table, plot_file_name,
     generations = ['G_'+str(i) for i in range(0, 2*(pop.numSubPop()) + 1, 2)]
 
     f, ax = plt.subplots(pop.numSubPop(), 1, figsize=(15, 40))
-    for sp in range(pop.numSubPop):
-        ax[sp].set_xlim(-0.5, maximum_haplotype_effect+1)
+    for sp in range(pop.numSubPop()):
+        ax[sp].set_xlim(-0.5, maximum_haplotype_effect+4)
         ax[sp].set_ylim(-0.1, 1.1)
         for chrom in distinct_chromosomes:
             ax[sp].plot(effect_frq_by_chromosome[sp][chrom][1],
@@ -470,9 +476,10 @@ def plot_frequency_vs_effect(pop, haplotype_table, plot_file_name,
         #handles, labels = ax[sp].get_legend_handles_labels()
         ax[sp].set_xlabel("Effect")
         ax[sp].set_ylabel("Frequency")
-        ax[sp].set_title(r'${gen}$'.format(gen=generations[sp]))
-    #f.legend(handles, labels, loc='center right')
-    f.suptitle("Changes in Haplotype Frequency Under Selection",
+        ax[sp].set_title(r'${gen}$'.format(gen=generation_labels[sp]),
+                         fontsize=12)
+        ax[sp].legend(loc='best')
+    f.suptitle(plot_title,
                fontsize=24)
 
     f.savefig(plot_file_name, dpi=300)
