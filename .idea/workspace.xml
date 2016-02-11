@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="">
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dictionaries/DoubleDanks.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/jupyternbs/.ipynb_checkpoints/running_simulator_selection_vs_drift-rjwlab-checkpoint.ipynb" />
       <change type="DELETED" beforePath="C:\Users\DoubleDanks\BISB\wisser\code\rjwlab-scripts\saegus_project\devel\jupyternbs\.ipynb_checkpoints\running_gwas-rjwlab-checkpoint.ipynb" afterPath="" />
       <change type="DELETED" beforePath="C:\Users\DoubleDanks\BISB\wisser\code\rjwlab-scripts\saegus_project\devel\jupyternbs\running_gwas-rjwlab.ipynb" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/jupyternbs/change_haplotype_frq_over_time.pdf" afterPath="$PROJECT_DIR$/devel/jupyternbs/change_haplotype_frq_over_time.pdf" />
