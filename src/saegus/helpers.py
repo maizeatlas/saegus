@@ -323,111 +323,159 @@ class Frq(object):
         return qta_table
 
 
-class Haplotype(object):
-    """
-    Class to encapsulate all functions related to collecting, analyzing and
-    visualizing haplotype data.
+def collect_haplotype_data(pop, allele_effects, quantitative_trait_loci):
     """
 
-    def __init__(self, population, allele_effects, qt_loci):
-        self.population = population
-        self.allele_effects = allele_effects
-        self.qt_loci = qt_loci
+    :param pop:
+    :type pop:
+    :param allele_effects:
+    :type allele_effects:
+    :param quantitative_trait_loci:
+    :type quantitative_trait_loci:
+    :return:
+    :rtype:
+    """
+
+    haplotypes = {}
+    haplotypes['loci'] = {}
+    for k, i in enumerate(range(0, len(quantitative_trait_loci), 3)):
+        haplotypes['loci'][k] = (quantitative_trait_loci[i],
+                             quantitative_trait_loci[i+1],
+                             quantitative_trait_loci[i+2])
+
+    haplotypes['alleles'] = {}
+    haplotypes['effect'] = {}
+    haplotypes['frequency'] = {}
+    for loci in haplotypes['loci'].values():
+        haplotypes['frequency'][loci] = {}
+        for sp in range(pop.numSubPop()):
+            haplotypes['frequency'][loci][sp] = {}
+
+    sim.stat(pop, haploFreq=list(haplotypes['loci'].values()),
+             vars=['haploFreq', 'haploFreq_sp'])
+
+    for k, v in haplotypes['loci'].items():
+        haplotypes['alleles'][v] = list(pop.dvars(0).haploFreq[v].keys())
+
+    for sp in range(pop.numSubPop()):
+        for loci, triplet in haplotypes['alleles'].items():
+            for alleles in triplet:
+                haplotypes['frequency'][loci][sp][alleles] = pop.dvars(
+                    sp).haploFreq[loci][alleles]
+
+    for htype, triplets in haplotypes['alleles'].items():
+        haplotypes['effect'][htype] = {}
+        for trip in triplets:
+            htype_effect = allele_effects[htype[0]][trip[0]] +\
+            allele_effects[htype[1]][trip[1]] +\
+            allele_effects[htype[2]][trip[2]]
+            haplotypes['effect'][htype][trip] = htype_effect
+
+    return haplotypes
 
 
-
-    def haplotype_data(self, meta_pop, allele_effects, quan_trait_loci):
-        """
-        Generates a comprehensive dictionary of haplotypes at each locus and their
-        corresponding effects.
-        """
-
-        htypes = {}
-        htypes['loci'] = {}
-        for k, i in enumerate(range(0, len(quan_trait_loci), 3)):
-            htypes['loci'][k] = (quan_trait_loci[i], quan_trait_loci[i+1],
-                                 quan_trait_loci[i+2])
+def generate_haplotype_data_table(pop, haplotype_data):
+    """
+    Generates a table for easy analysis and visualization of haplotypes,
+    effects, frequencies and locations.
 
 
-        htypes['alleles'] = {}
-        htypes['effect'] = {}
-        htypes['frequency'] = {}
-        for loci in htypes['loci'].values():
-            htypes['frequency'][loci] = {}
-            for sp in range(meta_pop.numSubPop()):
-                htypes['frequency'][loci][sp] = {}
-
-        sim.stat(meta_pop, haploFreq=list(htypes['loci'].values()),
-                 vars=['haploFreq', 'haploFreq_sp'])
-
-
-        for k, v in htypes['loci'].items():
-            htypes['alleles'][v] = list(meta_pop.dvars(0).haploFreq[v].keys())
-
-
-
-        for sp in range(meta_pop.numSubPop()):
-            for loci, triplet in htypes['alleles'].items():
-                for alleles in triplet:
-                    htypes['frequency'][loci][sp][alleles] = meta_pop.dvars(
-                        sp).haploFreq[loci][alleles]
-
-
-
-
-        for htype, triplets in htypes['alleles'].items():
-            htypes['effect'][htype] = {}
-            for trip in triplets:
-                htype_effect = allele_effects[htype[0]][trip[0]] +\
-                allele_effects[htype[1]][trip[1]] +\
-                allele_effects[htype[2]][trip[2]]
-                htypes['effect'][htype][trip] = htype_effect
-
-        return htypes
+    :param pop:
+    :type pop:
+    :param haplotype_data:
+    :type haplotype_data:
+    :return:
+    :rtype:
+    """
+    integer_to_snp = {0: 'A', 1: 'C', 2: 'G', 3: 'T', 4: '+', 5: '-'}
+    haplotype_table = []
+    data_columns = ['centered_on', 'relative_position', 'chromosome',
+                    'haplotype', 'effect']
+    generation_columns = ['G_'+str(i) for i in range(0, 2*(pop.numSubPop()),
+                                                     2)]
+    data_columns.extend(generation_columns)
+    for locus in haplotype_data['loci'].values():
+        for triplet in haplotype_data['alleles'][locus]:
+            generational_frequencies = [haplotype_data['frequency'][locus][sp][triplet]
+                                        for sp in range(pop.numSubPop())]
+            effect = haplotype_data['effect'][locus][triplet]
+            snp_triplet = integer_to_snp[triplet[0]] + \
+                          integer_to_snp[triplet[1]] + \
+                          integer_to_snp[triplet[2]]
+            chromosome = pop.chromLocusPair(locus[1])[0] + 1
+            relative_locus = pop.chromLocusPair(locus[1])[1]
+            row = [locus[1]] + \
+                  [relative_locus] +\
+                  [chromosome] + \
+                  [snp_triplet] + \
+                  [effect] + \
+                  generational_frequencies
+            haplotype_table.append(row)
+    return pd.DataFrame(haplotype_table, columns=data_columns)
 
 
-    def haplotype_table(self, meta_pop, haplo_data):
-        """
-        Generates a pd.DataFrame object for easy analysis and visualization.
-        :param meta_pop:
-        :type meta_pop:
-        :param haplo_data:
-        :type haplo_data:
-        :return:
-        :rtype:
-        """
-        integer_to_snp = {0: 'A', 1: 'C', 2: 'G', 3: 'T', 4: '+', 5: '-'}
-        generations = ['G_'+str(i) for i in range(0, meta_pop.dvars().gen+1, 2)]
-        haplotype_table = []
-        data_columns = ['centered_on', 'chromosome', 'haplotype', 'effect']
-        generation_columns = list(range(meta_pop.numSubPop()))
-        data_columns.extend(generation_columns)
-        for locus in haplo_data['loci'].values():
-            for triplet in haplo_data['alleles'][locus]:
-                generational_frequencies = [haplo_data['frequency'][locus][sp][triplet]
-                                            for sp in range(meta_pop.numSubPop())]
-                effect = haplo_data['effect'][locus][triplet]
-                snp_triplet = integer_to_snp[triplet[0]] + integer_to_snp[triplet[1]] + integer_to_snp[triplet[2]]
-                chromosome = meta_pop.chromLocusPair(locus[1])[0] + 1
-                row = [locus[1]] + [chromosome] + [snp_triplet] + [effect] + generational_frequencies
-                haplotype_table.append(row)
-        return pd.DataFrame(haplotype_table, columns=data_columns)
+def plot_frequency_vs_effect(pop, haplotype_table, plot_file_name,
+                             color_map='Dark2'):
+    """
+    Uses the haplotype data table to arrange data into a chromosome
+    color coded multiple generation plot which shows the change in
+    haplotype frequency over time. Haplotypes are dots with fixed
+    x-position which shows their effect. Their motion along the y-axis
+    which is frequency shows changes over time.
+    :param pop:
+    :param haplotype_table:
+    """
 
-    def setup_data_for_plot(self,   haplotype_table):
-        """
-        Uses the haplotype data table to arrange data into a chromosome
-        color coded multiple generation plot which shows the change in
-        haplotype frequency over time. Haplotypes are dots with fixed
-        x-position which shows their effect. Their motion along the y-axis
-        which is frequency shows changes over time.
-        """
+    distinct_chromosomes = list(set(haplotype_table['chromosomes']))
+    number_of_different_colors = len(distinct_chromosomes)
+
+    c_map = plt.get_cmap(color_map)
+    colors = [c_map[idx] for idx in
+              np.linspace(0, 1, number_of_different_colors)]
+
+    chromosome_colors = {distinct_chromosomes[i]: colors[i] for i in
+                         range(number_of_different_colors)}
+
     effect_frq_by_chromosome = {}
-    for sp in range(selection_meta.numSubPop()):
+
+    for sp in range(pop.numSubPop()):
         effect_frq_by_chromosome[sp] = {}
         for chrom in distinct_chromosomes:
-            freqs = np.array(htable.loc[htable['chromosome'] == chrom][sp])
-            effects = np.array(htable.loc[htable['chromosome'] == chrom]['effect'])
-            effect_frq_by_chromosome[sp][chrom] = np.array([freqs, effects])
+            haplotype_frequencies = np.array(
+                haplotype_table.loc[
+                    haplotype_table['chromosome'] == chrom][sp])
+
+            haplotype_effects = np.array(
+                haplotype_table.loc[
+                    haplotype_table['chromosome'] == chrom]['effect'])
+
+            effect_frq_by_chromosome[sp][chrom] = np.array([
+                haplotype_frequencies, haplotype_effects])
+
+    # Figure parameters
+    maximum_haplotype_effect = max(haplotype_table['effect'])
+
+    generations = ['G_'+str(i) for i in range(0, 2*(pop.numSubPop()) + 1, 2)]
+
+    f, ax = plt.subplots(pop.numSubPop(), 1, figsize=(15, 40))
+    for sp in range(pop.numSubPop):
+        ax[sp].set_xlim(-0.5, maximum_haplotype_effect+1)
+        ax[sp].set_ylim(-0.1, 1.1)
+        for chrom in distinct_chromosomes:
+            ax[sp].plot(effect_frq_by_chromosome[sp][chrom][1],
+                    effect_frq_by_chromosome[sp][chrom][0],
+                    markersize=8, linewidth=0.0, marker='*',
+                    color=chromosome_colors[chrom],
+                        label="Chrom {}".format(chrom))
+        #handles, labels = ax[sp].get_legend_handles_labels()
+        ax[sp].set_xlabel("Effect")
+        ax[sp].set_ylabel("Frequency")
+        ax[sp].set_title(r'${gen}$'.format(gen=generations[sp]))
+    #f.legend(handles, labels, loc='center right')
+    f.suptitle("Changes in Haplotype Frequency Under Selection",
+               fontsize=24)
+
+    f.savefig(plot_file_name, dpi=300)
 
     return effect_frq_by_chromosome
 
