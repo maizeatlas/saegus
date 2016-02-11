@@ -413,7 +413,7 @@ class Haplotype(object):
                 haplotype_table.append(row)
         return pd.DataFrame(haplotype_table, columns=data_columns)
 
-    def setup_data_for_plot(self, haplotype_table):
+    def setup_data_for_plot(self,   haplotype_table):
         """
         Uses the haplotype data table to arrange data into a chromosome
         color coded multiple generation plot which shows the change in
