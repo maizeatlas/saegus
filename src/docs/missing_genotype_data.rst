@@ -5,8 +5,8 @@ Genotype Data
 Handling missing genotype data
 ------------------------------
 
-In most cases genotype-by-sequencing will have some missing data. This is a tutorial for
-handling missing genotype data.
+In most cases genotype-by-sequencing will have some missing data. This is a
+tutorial for handling missing genotype data.
 
 .. code:: python
 
