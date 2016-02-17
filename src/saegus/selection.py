@@ -3,9 +3,8 @@ __author__ = 'John J Dougherty III'
 import simuPOP as sim
 import random
 import collections as col
-from . import breed, operators, helpers
-import csv
-import itertools
+from . import breed, operators
+
 
 class Truncation(object):
     """
@@ -46,7 +45,8 @@ class Truncation(object):
         self.breeding_parameters['number_of_breeding_individuals'] = \
             self.number_of_breeding_individuals
         self.number_of_breeding_subpops = \
-            int(self.number_of_breeding_individuals / self.individuals_per_breeding_subpop)
+            int(
+                self.number_of_breeding_individuals / self.individuals_per_breeding_subpop)
         self.breeding_parameters['number_of_breeding_subpops'] = \
             self.number_of_breeding_subpops
         self.total_number_of_offspring_per_generation = \
@@ -132,6 +132,7 @@ class Truncation(object):
         of subpopulations. Testing for an even number of subpopulations is carried out by a different method.
         :param pop: sim.Population split into multiple subpopulations
         :return: Population with half the number of subpopulations
+
         """
         k = pop.numSubPop() - 1
         j = k - 1
@@ -142,15 +143,16 @@ class Truncation(object):
 
     def pop_halver(self, pop):
         """
-        Discards half of each subpopulation at random and merges the results.
+        Discards half of each sub-population at random and merges the results.
         """
         num_sub_pops = pop.numSubPop()
         size_of_each_sub_pop = pop.subPopSize(subPop=0)
         number_discarded = int(size_of_each_sub_pop / 2)
         for i in range(num_sub_pops):
-            removed_ids = random.sample(pop.indInfo('ind_id', subPop=i), number_discarded)
+            removed_ids = random.sample(pop.indInfo('ind_id', subPop=i),
+                                        number_discarded)
             pop.removeIndividuals(IDs=removed_ids)
-        #self.pairwise_merge_protocol(pop)
+            # self.pairwise_merge_protocol(pop)
 
     @staticmethod
     def odd_to_even(pop: sim.Population):
@@ -165,8 +167,6 @@ class Truncation(object):
             dummy_pop.removeSubPops(sub_pop_indexes[1:])
             pop.addIndFrom(dummy_pop)
 
-
-
     def generate_f_one(self, pop, recombination_rates, parental_id_pairs):
         """
         Crosses pairs of founders as they are listed in founder indices
@@ -179,7 +179,7 @@ class Truncation(object):
         os_size = len(parental_id_pairs)
 
         print("Creating the F_one population from selected founders.")
-        #while pop.popSize() > 1:
+        # while pop.popSize() > 1:
         pop.evolve(
             preOps=[
                 sim.PyEval(r'"Generation: %d\n" % gen'),
@@ -193,8 +193,7 @@ class Truncation(object):
                 subPopSize=os_size,
             ),
             gen=1,
-            )
-
+        )
 
     def recombinatorial_convergence(self, pop, recombination_rates):
         """
@@ -210,7 +209,7 @@ class Truncation(object):
         """
         while pop.popSize() > 1:
             new_parents = list(pop.indInfo('ind_id'))
-            new_parent_id_pairs = [(pid, pid+1) for pid in new_parents[::2]]
+            new_parent_id_pairs = [(pid, pid + 1) for pid in new_parents[::2]]
 
             if len(new_parent_id_pairs) % 2 != 0 and len(
                     new_parent_id_pairs) != 1:
@@ -232,9 +231,9 @@ class Truncation(object):
                         sim.PedigreeTagger(),
                         sim.Recombinator(rates=recombination_rates)],
                         numOffspring=1),
-                subPopSize=new_os_size,
-            ),
-            gen=1,
+                    subPopSize=new_os_size,
+                ),
+                gen=1,
             )
 
     def expand_by_selfing(self, pop, recombination_rates):
@@ -243,22 +242,24 @@ class Truncation(object):
         Creates an F2 subpopulations generation by selfing the individuals of
         'pop'. Works on a population with one or more subpopulations.
         """
-        #self.odd_to_even(pop)
+        # self.odd_to_even(pop)
         num_sub_pops = pop.numSubPop()
-        progeny_per_individual = int(self.operating_population_size/2)
+        progeny_per_individual = int(self.operating_population_size / 2)
         print("Creating the F_two population.")
         return pop.evolve(
             preOps=[
                 sim.MergeSubPops(),
                 sim.PyEval(r'"Generation: %d\n" % gen'),
-                sim.SplitSubPops(sizes=[1]*num_sub_pops, randomize=False),
+                sim.SplitSubPops(sizes=[1] * num_sub_pops, randomize=False),
             ],
             matingScheme=sim.SelfMating(subPopSize=[
-                                        progeny_per_individual] * num_sub_pops,
+                                                       progeny_per_individual] * num_sub_pops,
                                         numOffspring=progeny_per_individual,
                                         ops=[
-                                sim.Recombinator(rates=recombination_rates),
-                                        sim.IdTagger(), sim.PedigreeTagger()],
+                                            sim.Recombinator(
+                                                rates=recombination_rates),
+                                            sim.IdTagger(),
+                                            sim.PedigreeTagger()],
                                         ),
             gen=1,
         )
@@ -277,11 +278,12 @@ class Truncation(object):
         :rtype:
         """
         starting_gen = pop.vars()['gen']
-        print("Initiating recombinatorial convergence at generation: %d" % pop.dvars().gen)
+        print(
+            "Initiating recombinatorial convergence at generation: %d" % pop.dvars().gen)
         while pop.popSize() > 1:
-            #self.pop_halver(pop)
-            #self.odd_to_even(pop)
-            #self.pairwise_merge_protocol(pop)
+            # self.pop_halver(pop)
+            # self.odd_to_even(pop)
+            # self.pairwise_merge_protocol(pop)
             pop.evolve(
                 preOps=[
                     sim.MergeSubPops(),
@@ -290,7 +292,7 @@ class Truncation(object):
                 matingScheme=sim.RandomMating(ops=[
                     sim.IdTagger(), sim.PedigreeTagger(),
                     sim.Recombinator(rates=recombination_rates)]
-                    ),
+                ),
                 gen=1,
             )
 
@@ -299,7 +301,6 @@ class Truncation(object):
         Randomly mates 'pop' for 'gens_of_random_mating' generations to further recombine founder genomes and dissolve
         population structure.
         :param pop: Founder population after mate_and_merge procedure
-        :param gens_of_random_mating: Generations of random mating
         :return: Population ready to be subjected to selection
         """
         print("Initiating interim random mating for {} generations.".format(
@@ -310,9 +311,9 @@ class Truncation(object):
             ],
             matingScheme=sim.RandomMating(
                 subPopSize=self.operating_population_size,
-                ops=[sim.IdTagger(),sim.PedigreeTagger(),
-                                               sim.Recombinator(
-                                                rates=recombination_rates)]),
+                ops=[sim.IdTagger(), sim.PedigreeTagger(),
+                     sim.Recombinator(
+                         rates=recombination_rates)]),
             gen=self.generations_of_random_mating,
         )
 
@@ -331,8 +332,6 @@ class Truncation(object):
         pop.dvars().gen = 0
         meta_pop.dvars().gen = 0
 
-
-
         sizes = [self.individuals_per_breeding_subpop] \
                 * self.number_of_breeding_subpops + \
                 [self.number_of_nonbreeding_individuals]
@@ -345,7 +344,8 @@ class Truncation(object):
                                                   "subpopulations"
 
         sampling_generations = [i for i in range(2,
-                                                 self.generations_of_selection, 2)]
+                                                 self.generations_of_selection,
+                                                 2)]
 
         pc = breed.HalfSibBulkBalanceChooser(
             self.individuals_per_breeding_subpop, self.offspring_per_female)
@@ -398,41 +398,44 @@ class Truncation(object):
                 operators.Sorter('p'),
                 sim.SplitSubPops(sizes=sizes, randomize=False),
             ],
-        matingScheme=sim.HomoMating(
-            sim.PyParentsChooser(pc.recursive_pairwise_parent_chooser),
-            sim.OffspringGenerator(ops=[sim.IdTagger(), sim.PedigreeTagger(),
-                                        sim.Recombinator(
-                                            rates=recombination_rates)],
-                                   numOffspring=1),
+            matingScheme=sim.HomoMating(
+                sim.PyParentsChooser(pc.recursive_pairwise_parent_chooser),
+                sim.OffspringGenerator(
+                    ops=[sim.IdTagger(), sim.PedigreeTagger(),
+                         sim.Recombinator(
+                             rates=recombination_rates)],
+                    numOffspring=1),
                 subPopSize=offspring_pops,
                 subPops=list(range(1, self.number_of_breeding_subpops, 1))
-        ),
-        postOps=[
-            sim.MergeSubPops(),
-            operators.DiscardRandomOffspring(self.number_of_offspring_discarded),
-        ],
-        finalOps=[
-            sim.InfoExec('generation=gen'),
-            operators.GenoAdditive(qtl, aes),
-            operators.PhenotypeCalculator(
-                self.proportion_of_individuals_saved),
-            operators.MetaPopulation(meta_pop, self.meta_pop_sample_sizes),
-            sim.PyEval(r'"Final: Sampled %d individuals from generation %d\n" '
-                       r'% (ss, gen_sampled_from)'),
-            operators.Sorter('p'),
-            sim.SplitSubPops(sizes=[self.number_of_breeding_individuals,
+            ),
+            postOps=[
+                sim.MergeSubPops(),
+                operators.DiscardRandomOffspring(
+                    self.number_of_offspring_discarded),
+            ],
+            finalOps=[
+                sim.InfoExec('generation=gen'),
+                operators.GenoAdditive(qtl, aes),
+                operators.PhenotypeCalculator(
+                    self.proportion_of_individuals_saved),
+                operators.MetaPopulation(meta_pop, self.meta_pop_sample_sizes),
+                sim.PyEval(
+                    r'"Final: Sampled %d individuals from generation %d\n" '
+                    r'% (ss, gen_sampled_from)'),
+                operators.Sorter('p'),
+                sim.SplitSubPops(sizes=[self.number_of_breeding_individuals,
                                         self.number_of_nonbreeding_individuals],
                                  randomize=False),
-            operators.Sorter('p'),
-            sim.Stat(meanOfInfo=['g', 'p'], vars=['meanOfInfo',
+                operators.Sorter('p'),
+                sim.Stat(meanOfInfo=['g', 'p'], vars=['meanOfInfo',
                                                       'meanOfInfo_sp']),
-            sim.Stat(varOfInfo=['g', 'p'], vars=['varOfInfo',
+                sim.Stat(varOfInfo=['g', 'p'], vars=['varOfInfo',
                                                      'varOfInfo_sp']),
-            operators.StoreStatistics(),
-            sim.MergeSubPops(),
-            operators.Sorter('p'),
+                operators.StoreStatistics(),
+                sim.MergeSubPops(),
+                operators.Sorter('p'),
             ],
-        gen=self.generations_of_selection)
+            gen=self.generations_of_selection)
 
 
 class Drift(object):
@@ -479,7 +482,8 @@ class Drift(object):
         self.breeding_parameters['number_of_breeding_individuals'] = \
             self.number_of_breeding_individuals
         self.number_of_breeding_subpops = \
-            int(self.number_of_breeding_individuals / self.individuals_per_breeding_subpop)
+            int(
+                self.number_of_breeding_individuals / self.individuals_per_breeding_subpop)
         self.breeding_parameters['number_of_breeding_subpops'] = \
             self.number_of_breeding_subpops
         self.total_number_of_offspring_per_generation = \
@@ -581,9 +585,10 @@ class Drift(object):
         size_of_each_sub_pop = pop.subPopSize(subPop=0)
         number_discarded = int(size_of_each_sub_pop / 2)
         for i in range(num_sub_pops):
-            removed_ids = random.sample(pop.indInfo('ind_id', subPop=i), number_discarded)
+            removed_ids = random.sample(pop.indInfo('ind_id', subPop=i),
+                                        number_discarded)
             pop.removeIndividuals(IDs=removed_ids)
-        #self.pairwise_merge_protocol(pop)
+            # self.pairwise_merge_protocol(pop)
 
     @staticmethod
     def odd_to_even(pop: sim.Population):
@@ -607,7 +612,7 @@ class Drift(object):
         founder_chooser = breed.PairwiseIDChooser(parental_id_pairs)
         if len(parental_id_pairs) % 2 != 0:
             parental_id_pairs.append(random.choice(parental_id_pairs))
-        offspring_pop_sizes = int(len(parental_id_pairs)/2)
+        offspring_pop_sizes = int(len(parental_id_pairs) / 2)
 
         print("Creating the F_one population from selected founders.")
         pop.evolve(
@@ -620,10 +625,10 @@ class Drift(object):
                     sim.IdTagger(), sim.ParentsTagger(), sim.PedigreeTagger(),
                     sim.Recombinator(rates=recombination_rates)],
                     numOffspring=1),
-            subPopSize=offspring_pop_sizes),
-            postOps=sim.SplitSubPops(sizes=[1]*offspring_pop_sizes),
+                subPopSize=offspring_pop_sizes),
+            postOps=sim.SplitSubPops(sizes=[1] * offspring_pop_sizes),
             gen=1,
-            )
+        )
 
     def expand_by_selfing(self, pop, recombination_rates):
         """
@@ -631,22 +636,24 @@ class Drift(object):
         Creates an F2 subpopulations generation by selfing the individuals of
         'pop'. Works on a population with one or more subpopulations.
         """
-        #self.odd_to_even(pop)
+        # self.odd_to_even(pop)
         num_sub_pops = pop.numSubPop()
-        progeny_per_individual = int(self.operating_population_size/2)
+        progeny_per_individual = int(self.operating_population_size / 2)
         print("Creating the F_two population.")
         return pop.evolve(
             preOps=[
                 sim.MergeSubPops(),
                 sim.PyEval(r'"Generation: %d\n" % gen'),
-                sim.SplitSubPops(sizes=[1]*num_sub_pops, randomize=False),
+                sim.SplitSubPops(sizes=[1] * num_sub_pops, randomize=False),
             ],
             matingScheme=sim.SelfMating(subPopSize=[
-                                        progeny_per_individual] * num_sub_pops,
+                                                       progeny_per_individual] * num_sub_pops,
                                         numOffspring=progeny_per_individual,
                                         ops=[
-                                sim.Recombinator(rates=recombination_rates),
-                                        sim.IdTagger(), sim.PedigreeTagger()],
+                                            sim.Recombinator(
+                                                rates=recombination_rates),
+                                            sim.IdTagger(),
+                                            sim.PedigreeTagger()],
                                         ),
             gen=1,
         )
@@ -665,9 +672,10 @@ class Drift(object):
         :rtype:
         """
         starting_gen = pop.vars()['gen']
-        print("Initiating recombinatorial convergence at generation: %d" % pop.dvars().gen)
+        print(
+            "Initiating recombinatorial convergence at generation: %d" % pop.dvars().gen)
         while pop.numSubPop() > 1:
-            #self.pop_halver(pop)
+            # self.pop_halver(pop)
             self.odd_to_even(pop)
             self.pairwise_merge_protocol(pop)
             sub_pop_sizes = list(pop.subPopSizes())
@@ -678,21 +686,21 @@ class Drift(object):
                     sim.SplitSubPops(sizes=sub_pop_sizes, randomize=False),
                 ],
                 matingScheme=sim.HomoMating(sim.SequentialParentChooser(),
-                                                ops=[
-                sim.Recombinator(
-                    rates=recombination_rates),
-                    sim.IdTagger(), sim.PedigreeTagger()],
-                                            numOffspring=1, subPopSize=sub_pop_sizes),
+                                            ops=[
+                                                sim.Recombinator(
+                                                    rates=recombination_rates),
+                                                sim.IdTagger(),
+                                                sim.PedigreeTagger()],
+                                            numOffspring=1,
+                                            subPopSize=sub_pop_sizes),
                 gen=1,
             )
-
 
     def interim_random_mating(self, pop, recombination_rates):
         """
         Randomly mates 'pop' for 'gens_of_random_mating' generations to further recombine founder genomes and dissolve
         population structure.
         :param pop: Founder population after mate_and_merge procedure
-        :param gens_of_random_mating: Generations of random mating
         :return: Population ready to be subjected to selection
         """
         print("Initiating interim random mating for {} generations.".format(
@@ -703,14 +711,14 @@ class Drift(object):
             ],
             matingScheme=sim.RandomMating(
                 subPopSize=self.operating_population_size,
-                ops=[sim.IdTagger(),sim.PedigreeTagger(),
-                                               sim.Recombinator(
-                                                rates=recombination_rates)]),
+                ops=[sim.IdTagger(), sim.PedigreeTagger(),
+                     sim.Recombinator(
+                         rates=recombination_rates)]),
             gen=self.generations_of_random_mating,
         )
 
     def recurrent_drift_selection(self, pop, meta_pop, qtl, aes,
-                                       recombination_rates):
+                                  recombination_rates):
         """
         Sets up and runs recurrent selection for a number of generations for a
         single replicate population. Samples individuals at specified
@@ -723,8 +731,6 @@ class Drift(object):
         """
         pop.dvars().gen = 0
         meta_pop.dvars().gen = 0
-
-
 
         sizes = [self.individuals_per_breeding_subpop] \
                 * self.number_of_breeding_subpops + \
@@ -787,36 +793,38 @@ class Drift(object):
                 sim.MergeSubPops(),
                 sim.SplitSubPops(sizes=sizes, randomize=True),
             ],
-        matingScheme=sim.HomoMating(
-            sim.PyParentsChooser(pc.recursive_pairwise_parent_chooser),
-            sim.OffspringGenerator(ops=[sim.IdTagger(), sim.PedigreeTagger(),
-                                        sim.Recombinator(
-                                            rates=recombination_rates)],
-                                   numOffspring=1),
+            matingScheme=sim.HomoMating(
+                sim.PyParentsChooser(pc.recursive_pairwise_parent_chooser),
+                sim.OffspringGenerator(
+                    ops=[sim.IdTagger(), sim.PedigreeTagger(),
+                         sim.Recombinator(
+                             rates=recombination_rates)],
+                    numOffspring=1),
                 subPopSize=offspring_pops,
                 subPops=list(range(1, self.number_of_breeding_subpops, 1))
-        ),
-        postOps=[
-            sim.MergeSubPops(),
-            operators.DiscardRandomOffspring(self.number_of_offspring_discarded),
-        ],
-        finalOps=[
-            sim.InfoExec('generation=gen'),
-            operators.GenoAdditive(qtl, aes),
-            operators.PhenotypeCalculator(
-                self.proportion_of_individuals_saved),
-            operators.MetaPopulation(meta_pop, self.meta_pop_sample_sizes),
-            sim.PyEval(r'"Final: Sampled %d individuals from generation %d\n" '
-                       r'% (ss, gen_sampled_from)'),
-            sim.SplitSubPops(sizes=[self.number_of_breeding_individuals,
+            ),
+            postOps=[
+                sim.MergeSubPops(),
+                operators.DiscardRandomOffspring(
+                    self.number_of_offspring_discarded),
+            ],
+            finalOps=[
+                sim.InfoExec('generation=gen'),
+                operators.GenoAdditive(qtl, aes),
+                operators.PhenotypeCalculator(
+                    self.proportion_of_individuals_saved),
+                operators.MetaPopulation(meta_pop, self.meta_pop_sample_sizes),
+                sim.PyEval(
+                    r'"Final: Sampled %d individuals from generation %d\n" '
+                    r'% (ss, gen_sampled_from)'),
+                sim.SplitSubPops(sizes=[self.number_of_breeding_individuals,
                                         self.number_of_nonbreeding_individuals],
                                  randomize=True),
-            sim.Stat(meanOfInfo=['g', 'p'], vars=['meanOfInfo',
+                sim.Stat(meanOfInfo=['g', 'p'], vars=['meanOfInfo',
                                                       'meanOfInfo_sp']),
-            sim.Stat(varOfInfo=['g', 'p'], vars=['varOfInfo',
+                sim.Stat(varOfInfo=['g', 'p'], vars=['varOfInfo',
                                                      'varOfInfo_sp']),
-            operators.StoreStatistics(),
-            sim.MergeSubPops(),
+                operators.StoreStatistics(),
+                sim.MergeSubPops(),
             ],
-        gen=self.generations_of_drift)
-
+            gen=self.generations_of_drift)
