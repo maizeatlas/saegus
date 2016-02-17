@@ -323,12 +323,15 @@ class Truncation(object):
         Sets up and runs recurrent selection for a number of generations for a
         single replicate population. Samples individuals at specified
         intervals to make a ``meta_pop``.
+
         :param pop: Population which undergoes selection.
         :param meta_pop: Population into which sampled individuals are
         deposited
         :param qtl: List of loci to which allele effects have been assigned
         :param aes: Dictionary of allele effects
         """
+
+
         pop.dvars().gen = 0
         meta_pop.dvars().gen = 0
 
@@ -436,6 +439,133 @@ class Truncation(object):
                 operators.Sorter('p'),
             ],
             gen=self.generations_of_selection)
+
+
+    def replicate_selection(self, multi_pop, multi_meta_pop, qtl, aes,
+                            recombination_rates):
+        """
+        Runs recurrent truncation selection on a multi-replicate population.
+
+        :param multi_pop: Simulator object of full-sized population
+        :param multi_meta_pop: Simulator object of meta-populations
+        :param qtl: Loci whose alleles have effects
+        :param aes: Allele effect container
+        :param recombination_rates: Probabilities for recombination at each locus
+        """
+
+
+        for pop_rep in multi_pop.populations():
+            pop_rep.dvars().gen = 0
+        for meta_pop_rep in multi_meta_pop.populations():
+            meta_pop_rep.dvars().gen = 0
+
+        sizes = [self.individuals_per_breeding_subpop] \
+                * self.number_of_breeding_subpops + \
+                [self.number_of_nonbreeding_individuals]
+        offspring_pops = [self.offspring_per_breeding_subpop] \
+                         * self.number_of_breeding_subpops + [0]
+
+        assert len(sizes) == len(offspring_pops), "Number of parental " \
+                                                  "subpopulations must equal " \
+                                                  "the number of offspring " \
+                                                  "subpopulations"
+
+        sampling_generations = [i for i in range(2,
+                                                 self.generations_of_selection,
+                                                 2)]
+
+        pc = breed.HalfSibBulkBalanceChooser(
+            self.individuals_per_breeding_subpop, self.offspring_per_female)
+
+        multi_pop.evolve(
+            initOps=[
+                sim.InitInfo(0, infoFields=['generation']),
+                operators.GenoAdditive(qtl, aes),
+                operators.CalculateErrorVariance(self.heritability),
+                operators.PhenotypeCalculator(
+                    self.proportion_of_individuals_saved),
+                operators.MetaPopulation(multi_meta_pop,
+                                         self.meta_pop_sample_sizes),
+                sim.PyEval(r'"Initial: Sampled %d individuals from generation '
+                           r'%d Replicate: %d.\n" % (ss, gen_sampled_from, '
+                           r'rep)'),
+                operators.Sorter('p'),
+                sim.SplitSubPops(sizes=[self.number_of_breeding_individuals,
+                                        self.number_of_nonbreeding_individuals],
+                                 randomize=False),
+                sim.Stat(meanOfInfo=['g', 'p'], vars=['meanOfInfo',
+                                                      'meanOfInfo_sp']),
+                sim.Stat(varOfInfo=['g', 'p'], vars=['varOfInfo',
+                                                     'varOfInfo_sp']),
+                operators.StoreStatistics(),
+                sim.MergeSubPops(),
+                operators.Sorter('p'),
+            ],
+            preOps=[
+                sim.PyEval(r'"Generation: %d\n" % gen'),
+                operators.GenoAdditive(qtl, aes, begin=1),
+                sim.InfoExec('generation=gen'),
+                operators.PhenotypeCalculator(
+                    self.proportion_of_individuals_saved, begin=1),
+                operators.MetaPopulation(multi_meta_pop,
+                                         self.meta_pop_sample_sizes,
+                                         at=sampling_generations),
+                operators.Sorter('p'),
+                sim.SplitSubPops(sizes=[self.number_of_breeding_individuals,
+                                        self.number_of_nonbreeding_individuals],
+                                 randomize=False),
+                sim.Stat(meanOfInfo=['g', 'p'], vars=['meanOfInfo',
+                                                      'meanOfInfo_sp'],
+                         at=sampling_generations),
+                sim.Stat(varOfInfo=['g', 'p'], vars=['varOfInfo',
+                                                     'varOfInfo_sp'],
+                         at=sampling_generations),
+                operators.StoreStatistics(at=sampling_generations),
+                sim.MergeSubPops(),
+                operators.Sorter('p'),
+                sim.SplitSubPops(sizes=sizes, randomize=False),
+            ],
+            matingScheme=sim.HomoMating(
+                sim.PyParentsChooser(pc.recursive_pairwise_parent_chooser),
+                sim.OffspringGenerator(
+                    ops=[sim.IdTagger(), sim.PedigreeTagger(),
+                         sim.Recombinator(
+                             rates=recombination_rates)],
+                    numOffspring=1),
+                subPopSize=offspring_pops,
+                subPops=list(range(1, self.number_of_breeding_subpops, 1))
+            ),
+            postOps=[
+                sim.MergeSubPops(),
+                operators.DiscardRandomOffspring(
+                    self.number_of_offspring_discarded),
+            ],
+            finalOps=[
+                sim.InfoExec('generation=gen'),
+                operators.GenoAdditive(qtl, aes),
+                operators.PhenotypeCalculator(
+                    self.proportion_of_individuals_saved),
+                operators.MetaPopulation(multi_meta_pop, self.meta_pop_sample_sizes),
+                sim.PyEval(
+                    r'"Final: Sampled %d individuals from generation %d\n" '
+                    r'% (ss, gen_sampled_from)'),
+                operators.Sorter('p'),
+                sim.SplitSubPops(sizes=[self.number_of_breeding_individuals,
+                                        self.number_of_nonbreeding_individuals],
+                                 randomize=False),
+                operators.Sorter('p'),
+                sim.Stat(meanOfInfo=['g', 'p'], vars=['meanOfInfo',
+                                                      'meanOfInfo_sp']),
+                sim.Stat(varOfInfo=['g', 'p'], vars=['varOfInfo',
+                                                     'varOfInfo_sp']),
+                operators.StoreStatistics(),
+                sim.MergeSubPops(),
+                operators.Sorter('p'),
+            ],
+            gen=self.generations_of_selection)
+
+
+
 
 
 class Drift(object):

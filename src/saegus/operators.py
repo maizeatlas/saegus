@@ -322,3 +322,52 @@ class DiscardRandomOffspring(sim.PyOperator):
         return True
 
 
+
+
+################ Multiple Replicate Versions ###################################
+
+class MultiGenoAdditive(sim.PyOperator):
+    def __init__(self, absolute_qtl, allele_effects, *args, **kwargs):
+        self.absolute_qtl = absolute_qtl
+        self.allele_effects = allele_effects
+        sim.PyOperator.__init__(self,
+                                func=self.additive_model,
+                                *args, **kwargs)
+
+    def additive_model(self, pop, ind):
+        """
+        Calculates genotypic contribution ``g`` by summing the effect of each
+        allele at each QTL triplet.
+        """
+
+        rep_id = pop.dvars().rep_id
+        genotypic_contribution = \
+            sum([self.allele_effects[locus][ind.genotype(ploidy=0)[locus]] +
+                 self.allele_effects[locus][ind.genotype(ploidy=1)[locus]] for
+                 locus
+                 in self.absolute_qtl])
+        ind.g = genotypic_contribution
+        return True
+
+
+class MultiPhenotypeCalculator(sim.PyOperator):
+    """
+    Under a purely additive model for the time being: P = G + error.
+    ``error`` is a random draw from a normal distribution with mean 0 and
+    variance determined by the variance in the pre-selection population.
+    The variance ``epsilon`` is calculated by another operator:
+    CalculateErrorVariance.
+    """
+    def __init__(self, proportion_selected, *args, **kwargs):
+        self.proportion_selected = proportion_selected
+        sim.PyOperator.__init__(self, func=self.phenotypic_effect_calculator,
+                                *args, **kwargs)
+
+    def phenotypic_effect_calculator(self, pop):
+        """
+        Simulate measurement error by adding random error to genotypic
+        contribution.
+        """
+        for ind in pop.individuals():
+            ind.p = ind.g + random.normalvariate(0, pop.dvars().epsilon)
+        return True
