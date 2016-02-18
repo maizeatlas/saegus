@@ -670,9 +670,7 @@ class PCA(object):
 
 class GWAS(object):
     """
-    A class to provide collect and format all data in preparation for GWAS.
-    I can collect the required files and then automate the writing to a
-    command prompt.
+    A class to collect and format all data in preparation for GWAS using TASSEL.
     """
 
     def __init__(self, pop, individual_names, locus_names, positions, *args,
@@ -861,3 +859,24 @@ class GWAS(object):
 
         return annotated_G
 
+
+def generate_tassel_gwas_configs(tassel_input_dir, run_prefix, xml_pipeline_template):
+
+    import xml.etree.ElementTree as ET
+    import lxml.etree as etree
+
+    tree = ET.parse(xml_pipeline_template)
+    root = tree.getroot()
+    lxml_tree = etree.fromstring(ET.tostring(root))
+    lxml_root = lxml_tree.getroottree()
+
+    lxml_root.find('fork1/h').text = 'C:\\GWAS\\' + run_prefix + 'simulated_hapmap.txt'
+    lxml_root.find('fork2/t').text = 'C:\\GWAS\\' + run_prefix + 'phenotype_vector.txt'
+    lxml_root.find('fork3/q').text = 'C:\\GWAS\\' + run_prefix + 'structure_matrix.txt.txt'
+    lxml_root.find('fork4/k').text = 'C:\\GWAS\\' + run_prefix + 'kinship_matrix.txt'
+
+    lxml_root.find('combine6/export').text = 'second_config_trial'
+
+    lxml_root.write(run_prefix + 'gwas_pipeline.xml', encoding="UTF-8",
+                   method="xml", xml_declaration=True, standalone='',
+                    pretty_print=True)

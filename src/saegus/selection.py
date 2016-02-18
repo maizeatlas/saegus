@@ -73,58 +73,6 @@ class Truncation(object):
         self.breeding_parameters['number_of_offspring_discarded'] = \
             self.number_of_offspring_discarded
 
-    def determine_breeding_parameters(self, operating_population_size,
-                                      proportion_of_individuals_saved,
-                                      overshoot_as_proportion,
-                                      individuals_per_breeding_subpop):
-        """
-        The parameters which determine the breeding population and how
-        it is structured into sub-populations are determine by the four
-        parameters:
-        :param operating_population_size:
-        :type operating_population_size:
-        :param proportion_of_individuals_saved:
-        :type proportion_of_individuals_saved:
-        :param overshoot_as_proportion:
-        :type overshoot_as_proportion:
-        :param individuals_per_breeding_subpop:
-        :type individuals_per_breeding_subpop:
-        :return:
-        :rtype:
-        """
-        self.breeding_parameters = col.OrderedDict()
-        self.number_of_breeding_individuals = \
-            int(proportion_of_individuals_saved * operating_population_size)
-        self.breeding_parameters['number_of_breeding_individuals'] \
-            = self.number_of_breeding_individuals
-        self.number_of_breeding_subpops = \
-            int(self.number_of_breeding_individuals /
-                self.individuals_per_breeding_subpop)
-        self.breeding_parameters['number_of_breeding_subpops'] = \
-            self.number_of_breeding_subpops
-        self.total_number_of_offspring_per_generation = \
-            int(operating_population_size * (1 + overshoot_as_proportion))
-        self.breeding_parameters['total_number_of_offspring_per_generation'] = \
-            self.total_number_of_offspring_per_generation
-        self.offspring_per_breeding_subpop = \
-            int(self.total_number_of_offspring_per_generation /
-                self.number_of_breeding_subpops)
-        self.breeding_parameters['offspring_per_breeding_subpop'] = \
-            self.offspring_per_breeding_subpop
-        self.offspring_per_female = int(self.offspring_per_breeding_subpop /
-                                        self.individuals_per_breeding_subpop)
-        self.breeding_parameters['offspring_per_female'] = \
-            self.offspring_per_female
-        self.number_of_nonbreeding_individuals = \
-            int(self.operating_population_size -
-                self.number_of_breeding_individuals)
-        self.breeding_parameters['number_of_nonbreeding_individuals'] = \
-            self.number_of_nonbreeding_individuals
-        self.number_of_offspring_discarded = \
-            int(self.overshoot_as_proportion * self.operating_population_size)
-        self.breeding_parameters['number_of_offspring_discarded'] = \
-            self.number_of_offspring_discarded
-
     @staticmethod
     def pairwise_merge_protocol(pop: sim.Population):
         """
@@ -484,7 +432,7 @@ class Truncation(object):
                 operators.CalculateErrorVariance(self.heritability),
                 operators.PhenotypeCalculator(
                     self.proportion_of_individuals_saved),
-                operators.MetaPopulation(multi_meta_pop,
+                operators.ReplicateMetaPopulation(multi_meta_pop,
                                          self.meta_pop_sample_sizes),
                 sim.PyEval(r'"Initial: Sampled %d individuals from generation '
                            r'%d Replicate: %d.\n" % (ss, gen_sampled_from, '
@@ -507,7 +455,7 @@ class Truncation(object):
                 sim.InfoExec('generation=gen'),
                 operators.PhenotypeCalculator(
                     self.proportion_of_individuals_saved, begin=1),
-                operators.MetaPopulation(multi_meta_pop,
+                operators.ReplicateMetaPopulation(multi_meta_pop,
                                          self.meta_pop_sample_sizes,
                                          at=sampling_generations),
                 operators.Sorter('p'),
@@ -545,7 +493,8 @@ class Truncation(object):
                 operators.GenoAdditive(qtl, aes),
                 operators.PhenotypeCalculator(
                     self.proportion_of_individuals_saved),
-                operators.MetaPopulation(multi_meta_pop, self.meta_pop_sample_sizes),
+                operators.ReplicateMetaPopulation(multi_meta_pop,
+                                          self.meta_pop_sample_sizes),
                 sim.PyEval(
                     r'"Final: Sampled %d individuals from generation %d\n" '
                     r'% (ss, gen_sampled_from)'),

@@ -12,6 +12,7 @@ class PopulationStatisticsPlot(object):
         self.pop = pop
         self.marker_sizes = marker_sizes
 
+
 def plot_means_and_variances(selection_pop, selection_meta, drift_pop, drift_meta, figure_filename):
     """
     Plot for a specific arrangement of data resutling from the operator StoreStatistics
