@@ -6,7 +6,7 @@ import pandas as pd
 import collections as col
 import random
 import numpy as np
-import json
+import yaml
 from scipy import stats
 
 
@@ -282,31 +282,3 @@ class ReadWrite(object):
     generate storeable data sets.
     """
 
-    def write_trunc_selection_parameters(self, trunc_sel_parameters,
-                                         truncation_selection_filename,
-                                         qtl_parameters, qtl_filename,
-                                         gen_struct_parameters,
-                                         genetic_structure_filename):
-        """Writes a json file for the parameters required for the simulation."""
-        with open(truncation_selection_filename, 'w') as sel:
-            json.dump(trunc_sel_parameters, sel, indent=2)
-        with open(qtl_filename, 'w') as qf:
-            json.dump(qtl_parameters, qf, indent=2)
-        with open(genetic_structure_filename, 'w') as gs:
-            json.dump(gen_struct_parameters, gs)
-        print("Writing parameters to : {}, {}, {}.".format(truncation_selection_filename,
-                                                                 qtl_filename,
-                                                             genetic_structure_filename))
-
-    def load_trunc_selection_parameters(self, truncation_selection_filename,
-                                        qtl_filename,
-                                        genetic_structure_filename):
-        """Loads a json file for the parameters required for the simulation."""
-        with open(truncation_selection_filename, 'r') as sel:
-            selection_parameters = json.load(sel)
-        with open(qtl_filename, 'r') as qf:
-            qtl_parameters = json.load(qf)
-        with open(genetic_structure_filename, 'r') as gs:
-            gen_stru_parameters = json.load(gs)
-
-        return selection_parameters, qtl_parameters, gen_stru_parameters

@@ -31,9 +31,12 @@ called rs_run_1_gwas_pipeline.xml we can use the -configFile option.
 
     run_pipeline.bat -configFile rs_run_1_gwas_pipeline.xml
 
-Using a .xml file is much cleaner than running all of those options in the
+Using a .xml file is much cleaner than specifying all of those options in the
 terminal. Moreover, a .xml file also elucidates how TASSEL is processing the
 input files.
+
+Example XML File for MLM GWAS
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. code-block:: xml
 
@@ -71,3 +74,26 @@ input files.
             <runfork3/>
             <runfork4/>
         </TasselPipeline>
+
+
+Running GWAS With TASSEL
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Performing exploratory analyses with simulated populations is divided into
+three sets of tasks:
+
+    - simulation
+    - GWAS
+    - analysis
+
+A script which uses saegus is performs the simulation. A single set of
+founders is used to generate multiple replicates of a population under
+selection or drift or both. The script also generates additional files
+containing:
+
+    - configuration files used to run GWAS with TASSEL
+    - parameter information
+    - mean and variance data
+    - minor allele matrix
+
+

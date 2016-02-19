@@ -9,7 +9,6 @@ import numpy as np
 import pandas as pd
 import collections as col
 import os
-import shelve
 from scipy import linalg
 import matplotlib.pyplot as plt
 plt.ioff()
@@ -156,6 +155,10 @@ class Frq(object):
         dictionary. Determines favorable/unfavorable allele and corresponding
         frequency. Keys of quantitative_trait_alleles have similar hierarchy
         for both the alleles and their frequencies.
+        :param pop:
+        :param loci:
+        :param alleles:
+        :param allele_effects:
 
 
         """
@@ -209,6 +212,11 @@ class Frq(object):
 
         Allele frequency data is first built up in a regular *dict* object
         then inserted into a
+        :param pop:
+        :param number_gens:
+        :param allele_frq_data:
+        :param recombination_rates:
+        :param genetic_map:
         """
 
 
@@ -266,14 +274,10 @@ class Frq(object):
         """
         Generates a pd.DataFrame object of data relevant to quantitative
         trait alleles across all generations.
-        :param self.pop.dvars().triplet_qtl:
-        :type self.pop.dvars().triplet_qtl:
         :param qt_alleles:
         :type qt_alleles:
         :param allele_effects:
         :type allele_effects:
-        :param qtrait_filename:
-        :type qtrait_filename:
         :return:
         :rtype:
         """
@@ -423,6 +427,9 @@ def plot_frequency_vs_effect(pop, haplotype_table, plot_title,
     haplotype frequency over time. Haplotypes are dots with fixed
     x-position which shows their effect. Their motion along the y-axis
     which is frequency shows changes over time.
+    :param plot_title:
+    :param plot_file_name:
+    :param color_map:
     :param pop:
     :param haplotype_table:
     """
@@ -530,6 +537,9 @@ class MetaData(object):
         Writes a ascii representation of chromosomes with uninteresting loci
         as * and QTL as |. The representation is has scale 1 /
         reduction_factor to make it viable to put into a .txt document.
+        :param pop:
+        :param reduction_factor:
+        :param metadata_filename:
         """
         reduced_chromosomes = [math.floor(chrom/reduction_factor) for chrom in list(pop.numLoci())]
         reduced_qtl = [math.floor(pop.chromLocusPair(locus)[1]/reduction_factor) for locus in pop.dvars().properQTL]
@@ -549,6 +559,7 @@ class MetaData(object):
         """
         Mean to variance ratio of pairwise sequential distances of quantitative trait loci.
         Note that this statistic contributes nothing if there is only one qtl on a chromosome.
+        :param pop:
         """
         chrom_loc_pairs = [pop.chromLocusPair(pop.dvars().properQTL[i]) for i in range(len(pop.dvars().properQTL))]
         chromosomes = [chrom_loc_pairs[i][0] for i in range(len(chrom_loc_pairs))]
@@ -608,6 +619,9 @@ class PCA(object):
         major allele for each individual at each locus. Minor or major
         alleles parameter is a single set of alleles which determines if the
         return is the minor or major allele count matrix.
+        :param pop:
+        :param alleles:
+        :param count_matrix_filename:
         """
         comparison_array = [alleles[locus] for locus in range(pop.totNumLoci())]
         count_matrix = np.zeros((pop.popSize(), len(alleles)))
@@ -629,6 +643,8 @@ class PCA(object):
         Constructs a genotype matrix of bi-allelic loci where each entry is
         the number of copies of the major allele at each locus. The genotype
         matrix has dimensions (number_of_individuals)*(number_of_markers).
+        :param pop:
+        :param count_matrix:
 
         """
         shift = np.apply_along_axis(np.mean, axis=1, arr=count_matrix)
@@ -688,12 +704,8 @@ class GWAS(object):
         names will be hardcoded as will some of the values.
         ``hapmap_matrix_filename`` is the name of the file the formatted
         matrix will be written to.
-        :param pop:
-        :type pop:
-        :param int_to_snp_conversons:
-        :type int_to_snp_conversons:
-        :param hapmap_filename:
-        :type hapmap_filename:
+        :param int_to_snp_conversions:
+        :param hapmap_matrix_filename:
         :return:
         :rtype:
         """
@@ -750,6 +762,7 @@ class GWAS(object):
         Because of the way the header must be written the file is opened in
         append mode. Rewriting to the same file many times could introduce an
         unsuspected bug.
+        :param trait_filename:
         """
         header = "<Trait> sim\n"
 
@@ -779,12 +792,8 @@ class GWAS(object):
         """
         Writes the first two of the population structure matrix to a
         file. First column of the file is are names.
-        :param eigenvectors:
-        :type eigenvectors:
-        :param n_vectors:
-        :type n_vectors:
-        :return:
-        :rtype:
+        :param structure_filename:
+        :param eigen_data:
         """
 
         ordered_names = [self.individual_names[ind.ind_id] for ind in
@@ -818,10 +827,9 @@ class GWAS(object):
 
         The allele frequencies used for this function are with respect to
         the base population or G0: after random mating and before selection.
-        :param allele_count_matrix:
-        :type allele_count_matrix:
-        :param g_zero_alleles:
-        :type g_zero_alleles:
+        :param allele_counts:
+        :param allele_data:
+        :param kinship_filename:
         :return:
         :rtype:
         """
@@ -860,7 +868,11 @@ class GWAS(object):
         return annotated_G
 
 
-def generate_tassel_gwas_configs(run_prefix, xml_pipeline_template):
+def generate_tassel_gwas_configs(input_directory_prefix,
+                                 out_directory_prefix,
+                                 config_file_prefix,
+                                 run_identifier_prefix,
+                                 xml_pipeline_template):
     """
     Creates an xml file to run TASSEL using a mixed linear model approach.
     Assumes use of hapmap, kinship, phenotype and population structure files.
@@ -874,9 +886,11 @@ def generate_tassel_gwas_configs(run_prefix, xml_pipeline_template):
     line interface allows the user to input a .xml file with the same
     information which is used in the terminal.
 
-    :param run_prefix: Identifier for a set of corresponding data
-    :param xml_pipeline_template: XML file already setup for running MLM in GWAS
-    :return: XML file named run_prefix_gwas_pipeline.xml
+    :param input_directory_prefix: Directory path to send the input files.
+    :param run_identifier_prefix: Identifier for single replicate of data
+    :param xml_pipeline_template: XML file already setup for running a
+    specific kind of GWAS
+    :return: XML file to run a single replicate of data using TASSEL
     """
 
 
@@ -888,21 +902,33 @@ def generate_tassel_gwas_configs(run_prefix, xml_pipeline_template):
     lxml_tree = etree.fromstring(ET.tostring(root))
     lxml_root = lxml_tree.getroottree()
 
-    lxml_root.find('fork1/h').text = 'C:\\GWAS\\' + run_prefix + 'simulated_hapmap.txt'
-    lxml_root.find('fork2/t').text = 'C:\\GWAS\\' + run_prefix + 'phenotype_vector.txt'
-    lxml_root.find('fork3/q').text = 'C:\\GWAS\\' + run_prefix + \
-                                     'structure_matrix.txt'
-    lxml_root.find('fork4/k').text = 'C:\\GWAS\\' + run_prefix + 'kinship_matrix.txt'
+    lxml_root.find('fork1/h').text = os.path.join(input_directory_prefix,
+                                                  run_identifier_prefix +
+                                                  'simulated_hapmap.txt')
 
-    lxml_root.find('combine6/export').text = 'C:\\GWAS\\result\\' + \
-                                             run_prefix +'gwas_out_'
+    lxml_root.find('fork2/t').text = os.path.join(input_directory_prefix,
+                                                  run_identifier_prefix +
+                                                  'phenotype_vector.txt')
+    lxml_root.find('fork3/q').text = os.path.join(input_directory_prefix,
+                                                  run_identifier_prefix +
+                                                  'structure_matrix.txt')
+    lxml_root.find('fork4/k').text = os.path.join(input_directory_prefix,
+                                                  run_identifier_prefix +
+                                                  'kinship_matrix.txt')
 
-    lxml_root.write(run_prefix + 'gwas_pipeline.xml', encoding="UTF-8",
+    lxml_root.find('combine6/export').text = os.path.join(
+        out_directory_prefix, run_identifier_prefix +'gwas_out_')
+
+    xml_file_name = run_identifier_prefix + 'sim_gwas_pipeline.xml'
+    config_file_out = os.path.join(config_file_prefix, run_identifier_prefix
+                                   + 'sim_gwas_pipeline.xml')
+
+    lxml_root.write(config_file_out, encoding="UTF-8",
                    method="xml", xml_declaration=True, standalone='',
                     pretty_print=True)
 
 
-def parameter_set_writer(run_prefix, mating,
+def parameter_set_writer(directory_prefix, run_prefix, mating,
                          quantitative, effects,
                          genetic_structure):
     """
@@ -910,6 +936,7 @@ def parameter_set_writer(run_prefix, mating,
     This function writes all parameter information into a set of human
     readable .yaml files.
 
+    :param directory_prefix:
     :param run_prefix: Identifier for a set of simulated data
     :param mating: Parameters which specifying mating
     :param quantitative: Dictionary of qtl for each replicate

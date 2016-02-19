@@ -46,8 +46,8 @@ class Truncation(object):
         self.breeding_parameters['number_of_breeding_individuals'] = \
             self.number_of_breeding_individuals
         self.number_of_breeding_subpops = \
-            int(
-                self.number_of_breeding_individuals / self.individuals_per_breeding_subpop)
+            int(self.number_of_breeding_individuals /\
+                self.individuals_per_breeding_subpop)
         self.breeding_parameters['number_of_breeding_subpops'] = \
             self.number_of_breeding_subpops
         self.total_number_of_offspring_per_generation = \
@@ -55,8 +55,8 @@ class Truncation(object):
         self.breeding_parameters['total_number_of_offspring_per_generation'] = \
             self.total_number_of_offspring_per_generation
         self.offspring_per_breeding_subpop = \
-            int(self.total_number_of_offspring_per_generation
-                / self.number_of_breeding_subpops)
+            int(self.total_number_of_offspring_per_generation/\
+                self.number_of_breeding_subpops)
         self.breeding_parameters['offspring_per_breeding_subpop'] = \
             self.offspring_per_breeding_subpop
         self.offspring_per_female = \
@@ -74,53 +74,6 @@ class Truncation(object):
         self.breeding_parameters['number_of_offspring_discarded'] = \
             self.number_of_offspring_discarded
 
-        logging.basicConfig(filename='simulation.log',
-                            level=logging.DEBUG,
-                            format='%(levelname)s: %(message)s',
-                            filemode='w')
-
-    @staticmethod
-    def pairwise_merge_protocol(pop: sim.Population):
-        """
-        Convenience function to merge half-populations into breeding subpopulations. Does not test for an even number
-        of subpopulations. Testing for an even number of subpopulations is carried out by a different method.
-        :param pop: sim.Population split into multiple subpopulations
-        :return: Population with half the number of subpopulations
-
-        """
-        k = pop.numSubPop() - 1
-        j = k - 1
-        while j > -1:
-            pop.mergeSubPops([j, k], toSubPop=j)
-            k -= 2
-            j -= 2
-
-    def pop_halver(self, pop):
-        """
-        Discards half of each sub-population at random and merges the results.
-        """
-        num_sub_pops = pop.numSubPop()
-        size_of_each_sub_pop = pop.subPopSize(subPop=0)
-        number_discarded = int(size_of_each_sub_pop / 2)
-        for i in range(num_sub_pops):
-            removed_ids = random.sample(pop.indInfo('ind_id', subPop=i),
-                                        number_discarded)
-            pop.removeIndividuals(IDs=removed_ids)
-            # self.pairwise_merge_protocol(pop)
-
-    @staticmethod
-    def odd_to_even(pop: sim.Population):
-        """
-        Tests number of subpopulations in 'pop'. If odd then subpop 0 is paired with subpop -1.
-        :param pop: sim.Population with more than one subpopulation
-        :return: sim.Population with even number of subpopulations.
-        """
-        if pop.numSubPop() % 2 != 0 and pop.numSubPop() != 1:
-            dummy_pop = pop.clone()
-            sub_pop_indexes = list(range(pop.numSubPop()))
-            dummy_pop.removeSubPops(sub_pop_indexes[1:])
-            pop.addIndFrom(dummy_pop)
-
     def generate_f_one(self, pop, recombination_rates, parental_id_pairs):
         """
         Crosses pairs of founders as they are listed in founder indices
@@ -133,12 +86,12 @@ class Truncation(object):
         os_size = len(parental_id_pairs)
 
         logging.info("Creating the F_one population from selected "
-                         "founders.")
+                     "founders.")
         # while pop.popSize() > 1:
         pop.evolve(
             preOps=[
                 sim.PyEval(r'"Generation: %d\n" % gen',
-                           output=logging.info),
+                           ),
             ],
             matingScheme=sim.HomoMating(
                 sim.PyParentsChooser(founder_chooser.by_id_pairs),
@@ -177,10 +130,10 @@ class Truncation(object):
             pop.evolve(
                 preOps=[
                     sim.PyEval(r'"Generation: %d\t" % gen',
-                               output=logging.info),
+                               ),
                     sim.Stat(popSize=True, numOfMales=True),
                     sim.PyEval(r'"popSize: %d\n" % popSize',
-                               output=logging.info),
+                               ),
                 ],
                 matingScheme=sim.HomoMating(
                     sim.PyParentsChooser(new_founder_chooser.by_id_pairs),
@@ -199,6 +152,7 @@ class Truncation(object):
         Specific for plant populations capable of selfing.
         Creates an F2 subpopulations generation by selfing the individuals of
         'pop'. Works on a population with one or more subpopulations.
+        :param pop:
         """
         # self.odd_to_even(pop)
         num_sub_pops = pop.numSubPop()
@@ -207,7 +161,7 @@ class Truncation(object):
         return pop.evolve(
             preOps=[
                 sim.MergeSubPops(),
-                sim.PyEval(r'"Generation: %d\n" % gen', output=logging.info),
+                sim.PyEval(r'"Generation: %d\n" % gen'),
                 sim.SplitSubPops(sizes=[1] * num_sub_pops, randomize=False),
             ],
             matingScheme=sim.SelfMating(subPopSize=[
@@ -221,7 +175,6 @@ class Truncation(object):
                                         ),
             gen=1,
         )
-
 
     def interim_random_mating(self, pop, recombination_rates):
         """
@@ -258,7 +211,6 @@ class Truncation(object):
         :param aes: Dictionary of allele effects
         """
 
-
         pop.dvars().gen = 0
         meta_pop.dvars().gen = 0
 
@@ -291,7 +243,7 @@ class Truncation(object):
                                          self.meta_pop_sample_sizes),
                 sim.PyEval(r'"Initial: Sampled %d individuals from generation '
                            r'%d Replicate: %d.\n" % (ss, gen_sampled_from, '
-                           r'rep)', output=logging.info),
+                           r'rep)'),
                 operators.Sorter('p'),
                 sim.SplitSubPops(sizes=[self.number_of_breeding_individuals,
                                         self.number_of_nonbreeding_individuals],
@@ -305,7 +257,7 @@ class Truncation(object):
                 operators.Sorter('p'),
             ],
             preOps=[
-                sim.PyEval(r'"Generation: %d\n" % gen', output=logging.info),
+                sim.PyEval(r'"Generation: %d\n" % gen'),
                 operators.GenoAdditive(qtl, aes, begin=1),
                 sim.InfoExec('generation=gen'),
                 operators.PhenotypeCalculator(
@@ -351,7 +303,7 @@ class Truncation(object):
                 operators.MetaPopulation(meta_pop, self.meta_pop_sample_sizes),
                 sim.PyEval(
                     r'"Final: Sampled %d individuals from generation %d\n" '
-                    r'% (ss, gen_sampled_from)', output=logging.info),
+                    r'% (ss, gen_sampled_from)'),
                 operators.Sorter('p'),
                 sim.SplitSubPops(sizes=[self.number_of_breeding_individuals,
                                         self.number_of_nonbreeding_individuals],
@@ -367,7 +319,6 @@ class Truncation(object):
             ],
             gen=self.generations_of_selection)
 
-
     def replicate_selection(self, multi_pop, multi_meta_pop, qtl, aes,
                             recombination_rates):
         """
@@ -379,7 +330,6 @@ class Truncation(object):
         :param aes: Allele effect container
         :param recombination_rates: Probabilities for recombination at each locus
         """
-
 
         for pop_rep in multi_pop.populations():
             pop_rep.dvars().gen = 0
@@ -412,10 +362,10 @@ class Truncation(object):
                 operators.PhenotypeCalculator(
                     self.proportion_of_individuals_saved),
                 operators.ReplicateMetaPopulation(multi_meta_pop,
-                                         self.meta_pop_sample_sizes),
+                                                  self.meta_pop_sample_sizes),
                 sim.PyEval(r'"Initial: Sampled %d individuals from generation '
                            r'%d Replicate: %d.\n" % (ss, gen_sampled_from, '
-                           r'rep)', output=logging.info),
+                           r'rep)'),
                 operators.Sorter('p'),
                 sim.SplitSubPops(sizes=[self.number_of_breeding_individuals,
                                         self.number_of_nonbreeding_individuals],
@@ -429,14 +379,14 @@ class Truncation(object):
                 operators.Sorter('p'),
             ],
             preOps=[
-                sim.PyEval(r'"Generation: %d\n" % gen', output=logging.info),
+                sim.PyEval(r'"Generation: %d\n" % gen'),
                 operators.GenoAdditive(qtl, aes, begin=1),
                 sim.InfoExec('generation=gen'),
                 operators.PhenotypeCalculator(
                     self.proportion_of_individuals_saved, begin=1),
                 operators.ReplicateMetaPopulation(multi_meta_pop,
-                                         self.meta_pop_sample_sizes,
-                                         at=sampling_generations),
+                                                  self.meta_pop_sample_sizes,
+                                                  at=sampling_generations),
                 operators.Sorter('p'),
                 sim.SplitSubPops(sizes=[self.number_of_breeding_individuals,
                                         self.number_of_nonbreeding_individuals],
@@ -473,10 +423,10 @@ class Truncation(object):
                 operators.PhenotypeCalculator(
                     self.proportion_of_individuals_saved),
                 operators.ReplicateMetaPopulation(multi_meta_pop,
-                                          self.meta_pop_sample_sizes),
+                                                  self.meta_pop_sample_sizes),
                 sim.PyEval(
                     r'"Final: Sampled %d individuals from generation %d\n" '
-                    r'% (ss, gen_sampled_from)', output=logging.info),
+                    r'% (ss, gen_sampled_from)'),
                 operators.Sorter('p'),
                 sim.SplitSubPops(sizes=[self.number_of_breeding_individuals,
                                         self.number_of_nonbreeding_individuals],
@@ -491,9 +441,6 @@ class Truncation(object):
                 operators.Sorter('p'),
             ],
             gen=self.generations_of_selection)
-
-
-
 
 
 class Drift(object):
@@ -530,7 +477,6 @@ class Drift(object):
         self.heritability = heritability
         self.meta_pop_sample_sizes = meta_pop_sample_sizes
         self.number_of_replicates = number_of_replicates
-
         self.prefounders_file_name = prefounders_file_name
         self.ae_file_name = ae_file_name
 
@@ -565,58 +511,6 @@ class Drift(object):
             self.number_of_nonbreeding_individuals
         self.number_of_offspring_discarded = int(
             self.overshoot_as_proportion * self.operating_population_size)
-        self.breeding_parameters['number_of_offspring_discarded'] = \
-            self.number_of_offspring_discarded
-
-    def determine_breeding_parameters(self, operating_population_size,
-                                      proportion_of_individuals_saved,
-                                      overshoot_as_proportion,
-                                      individuals_per_breeding_subpop):
-        """
-        The parameters which determine the breeding population and how
-        it is structured into sub-populations are determine by the four
-        parameters:
-        :param operating_population_size:
-        :type operating_population_size:
-        :param proportion_of_individuals_saved:
-        :type proportion_of_individuals_saved:
-        :param overshoot_as_proportion:
-        :type overshoot_as_proportion:
-        :param individuals_per_breeding_subpop:
-        :type individuals_per_breeding_subpop:
-        :return:
-        :rtype:
-        """
-        self.breeding_parameters = col.OrderedDict()
-        self.number_of_breeding_individuals = \
-            int(proportion_of_individuals_saved * operating_population_size)
-        self.breeding_parameters['number_of_breeding_individuals'] \
-            = self.number_of_breeding_individuals
-        self.number_of_breeding_subpops = \
-            int(self.number_of_breeding_individuals /
-                self.individuals_per_breeding_subpop)
-        self.breeding_parameters['number_of_breeding_subpops'] = \
-            self.number_of_breeding_subpops
-        self.total_number_of_offspring_per_generation = \
-            int(operating_population_size * (1 + overshoot_as_proportion))
-        self.breeding_parameters['total_number_of_offspring_per_generation'] = \
-            self.total_number_of_offspring_per_generation
-        self.offspring_per_breeding_subpop = \
-            int(self.total_number_of_offspring_per_generation /
-                self.number_of_breeding_subpops)
-        self.breeding_parameters['offspring_per_breeding_subpop'] = \
-            self.offspring_per_breeding_subpop
-        self.offspring_per_female = int(self.offspring_per_breeding_subpop /
-                                        self.individuals_per_breeding_subpop)
-        self.breeding_parameters['offspring_per_female'] = \
-            self.offspring_per_female
-        self.number_of_nonbreeding_individuals = \
-            int(self.operating_population_size -
-                self.number_of_breeding_individuals)
-        self.breeding_parameters['number_of_nonbreeding_individuals'] = \
-            self.number_of_nonbreeding_individuals
-        self.number_of_offspring_discarded = \
-            int(self.overshoot_as_proportion * self.operating_population_size)
         self.breeding_parameters['number_of_offspring_discarded'] = \
             self.number_of_offspring_discarded
 
