@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# wgs documentation build configuration file, created by
+# saegus documentation build configuration file, created by
 # sphinx-quickstart on Sun Nov 22 05:13:08 2015.
 #
 # This file is execfile()d with the current directory set to its
@@ -40,6 +40,9 @@ extensions = [
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
 ]
+
+sys.path.insert(0, "C:\\Users\\DoubleDanks\\BISB\\code\\wisser\\rjwlab"
+                   "-scripts\\saegus_project\\src\\saegus")
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

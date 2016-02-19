@@ -9,18 +9,13 @@ Welcome to saegus' documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
-   introduction
-   breed
-   helpers
-   operators
-   parameterizer
-   parser
-   selection
-   nam_prefounders
-   missing_genotype_data
-   raw_genotype_data
+   introduction.rst
+   nam_prefounders.rst
+   missing_genotype_data.rst
+   raw_genotype_data.rst
+   gwas_with_tassel.rst
 
 
 

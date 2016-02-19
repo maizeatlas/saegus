@@ -3,6 +3,7 @@ __author__ = 'John J Dougherty III'
 import simuPOP as sim
 import random
 import collections as col
+import logging
 from . import breed, operators
 
 
@@ -73,6 +74,11 @@ class Truncation(object):
         self.breeding_parameters['number_of_offspring_discarded'] = \
             self.number_of_offspring_discarded
 
+        logging.basicConfig(filename='simulation.log',
+                            level=logging.DEBUG,
+                            format='%(levelname)s: %(message)s',
+                            filemode='w')
+
     @staticmethod
     def pairwise_merge_protocol(pop: sim.Population):
         """
@@ -126,11 +132,13 @@ class Truncation(object):
             parental_id_pairs.append(random.choice(parental_id_pairs))
         os_size = len(parental_id_pairs)
 
-        print("Creating the F_one population from selected founders.")
+        logging.info("Creating the F_one population from selected "
+                         "founders.")
         # while pop.popSize() > 1:
         pop.evolve(
             preOps=[
-                sim.PyEval(r'"Generation: %d\n" % gen'),
+                sim.PyEval(r'"Generation: %d\n" % gen',
+                           output=logging.info),
             ],
             matingScheme=sim.HomoMating(
                 sim.PyParentsChooser(founder_chooser.by_id_pairs),
@@ -168,9 +176,11 @@ class Truncation(object):
 
             pop.evolve(
                 preOps=[
-                    sim.PyEval(r'"Generation: %d\t" % gen'),
+                    sim.PyEval(r'"Generation: %d\t" % gen',
+                               output=logging.info),
                     sim.Stat(popSize=True, numOfMales=True),
-                    sim.PyEval(r'"popSize: %d\n" % popSize'),
+                    sim.PyEval(r'"popSize: %d\n" % popSize',
+                               output=logging.info),
                 ],
                 matingScheme=sim.HomoMating(
                     sim.PyParentsChooser(new_founder_chooser.by_id_pairs),
@@ -193,11 +203,11 @@ class Truncation(object):
         # self.odd_to_even(pop)
         num_sub_pops = pop.numSubPop()
         progeny_per_individual = int(self.operating_population_size / 2)
-        print("Creating the F_two population.")
+        logging.info("Creating the F_two population.")
         return pop.evolve(
             preOps=[
                 sim.MergeSubPops(),
-                sim.PyEval(r'"Generation: %d\n" % gen'),
+                sim.PyEval(r'"Generation: %d\n" % gen', output=logging.info),
                 sim.SplitSubPops(sizes=[1] * num_sub_pops, randomize=False),
             ],
             matingScheme=sim.SelfMating(subPopSize=[
@@ -212,37 +222,6 @@ class Truncation(object):
             gen=1,
         )
 
-    def mate_and_merge(self, pop, recombination_rates):
-        """
-        mate_and_merge was designed to handle scenarios where there is more
-        than a single pair of prefounders used from the NAM population and
-        where the number of prefounders used is not a power of two.
-
-        :param pop:
-        :type pop:
-        :param recombination_rates:
-        :type recombination_rates:
-        :return:
-        :rtype:
-        """
-        starting_gen = pop.vars()['gen']
-        print(
-            "Initiating recombinatorial convergence at generation: %d" % pop.dvars().gen)
-        while pop.popSize() > 1:
-            # self.pop_halver(pop)
-            # self.odd_to_even(pop)
-            # self.pairwise_merge_protocol(pop)
-            pop.evolve(
-                preOps=[
-                    sim.MergeSubPops(),
-                    sim.PyEval(r'"Generation: %d\n" % gen'),
-                ],
-                matingScheme=sim.RandomMating(ops=[
-                    sim.IdTagger(), sim.PedigreeTagger(),
-                    sim.Recombinator(rates=recombination_rates)]
-                ),
-                gen=1,
-            )
 
     def interim_random_mating(self, pop, recombination_rates):
         """
@@ -312,7 +291,7 @@ class Truncation(object):
                                          self.meta_pop_sample_sizes),
                 sim.PyEval(r'"Initial: Sampled %d individuals from generation '
                            r'%d Replicate: %d.\n" % (ss, gen_sampled_from, '
-                           r'rep)'),
+                           r'rep)', output=logging.info),
                 operators.Sorter('p'),
                 sim.SplitSubPops(sizes=[self.number_of_breeding_individuals,
                                         self.number_of_nonbreeding_individuals],
@@ -326,7 +305,7 @@ class Truncation(object):
                 operators.Sorter('p'),
             ],
             preOps=[
-                sim.PyEval(r'"Generation: %d\n" % gen'),
+                sim.PyEval(r'"Generation: %d\n" % gen', output=logging.info),
                 operators.GenoAdditive(qtl, aes, begin=1),
                 sim.InfoExec('generation=gen'),
                 operators.PhenotypeCalculator(
@@ -372,7 +351,7 @@ class Truncation(object):
                 operators.MetaPopulation(meta_pop, self.meta_pop_sample_sizes),
                 sim.PyEval(
                     r'"Final: Sampled %d individuals from generation %d\n" '
-                    r'% (ss, gen_sampled_from)'),
+                    r'% (ss, gen_sampled_from)', output=logging.info),
                 operators.Sorter('p'),
                 sim.SplitSubPops(sizes=[self.number_of_breeding_individuals,
                                         self.number_of_nonbreeding_individuals],
@@ -436,7 +415,7 @@ class Truncation(object):
                                          self.meta_pop_sample_sizes),
                 sim.PyEval(r'"Initial: Sampled %d individuals from generation '
                            r'%d Replicate: %d.\n" % (ss, gen_sampled_from, '
-                           r'rep)'),
+                           r'rep)', output=logging.info),
                 operators.Sorter('p'),
                 sim.SplitSubPops(sizes=[self.number_of_breeding_individuals,
                                         self.number_of_nonbreeding_individuals],
@@ -450,7 +429,7 @@ class Truncation(object):
                 operators.Sorter('p'),
             ],
             preOps=[
-                sim.PyEval(r'"Generation: %d\n" % gen'),
+                sim.PyEval(r'"Generation: %d\n" % gen', output=logging.info),
                 operators.GenoAdditive(qtl, aes, begin=1),
                 sim.InfoExec('generation=gen'),
                 operators.PhenotypeCalculator(
@@ -497,7 +476,7 @@ class Truncation(object):
                                           self.meta_pop_sample_sizes),
                 sim.PyEval(
                     r'"Final: Sampled %d individuals from generation %d\n" '
-                    r'% (ss, gen_sampled_from)'),
+                    r'% (ss, gen_sampled_from)', output=logging.info),
                 operators.Sorter('p'),
                 sim.SplitSubPops(sizes=[self.number_of_breeding_individuals,
                                         self.number_of_nonbreeding_individuals],

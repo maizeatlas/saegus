@@ -860,7 +860,25 @@ class GWAS(object):
         return annotated_G
 
 
-def generate_tassel_gwas_configs(tassel_input_dir, run_prefix, xml_pipeline_template):
+def generate_tassel_gwas_configs(run_prefix, xml_pipeline_template):
+    """
+    Creates an xml file to run TASSEL using a mixed linear model approach.
+    Assumes use of hapmap, kinship, phenotype and population structure files.
+
+
+
+
+    The TASSEL command line interface requires a considerable number of
+    options to run GWAS. It is impractical to run the command line manually
+    for the number of replications in a simulated study. The TASSEL command
+    line interface allows the user to input a .xml file with the same
+    information which is used in the terminal.
+
+    :param run_prefix: Identifier for a set of corresponding data
+    :param xml_pipeline_template: XML file already setup for running MLM in GWAS
+    :return: XML file named run_prefix_gwas_pipeline.xml
+    """
+
 
     import xml.etree.ElementTree as ET
     import lxml.etree as etree
@@ -872,11 +890,56 @@ def generate_tassel_gwas_configs(tassel_input_dir, run_prefix, xml_pipeline_temp
 
     lxml_root.find('fork1/h').text = 'C:\\GWAS\\' + run_prefix + 'simulated_hapmap.txt'
     lxml_root.find('fork2/t').text = 'C:\\GWAS\\' + run_prefix + 'phenotype_vector.txt'
-    lxml_root.find('fork3/q').text = 'C:\\GWAS\\' + run_prefix + 'structure_matrix.txt.txt'
+    lxml_root.find('fork3/q').text = 'C:\\GWAS\\' + run_prefix + \
+                                     'structure_matrix.txt'
     lxml_root.find('fork4/k').text = 'C:\\GWAS\\' + run_prefix + 'kinship_matrix.txt'
 
-    lxml_root.find('combine6/export').text = 'second_config_trial'
+    lxml_root.find('combine6/export').text = 'C:\\GWAS\\result\\' + \
+                                             run_prefix +'gwas_out_'
 
     lxml_root.write(run_prefix + 'gwas_pipeline.xml', encoding="UTF-8",
                    method="xml", xml_declaration=True, standalone='',
                     pretty_print=True)
+
+
+def parameter_set_writer(run_prefix, mating,
+                         quantitative, effects,
+                         genetic_structure):
+    """
+    Simulation parameters are collected in separate dictionary objects.
+    This function writes all parameter information into a set of human
+    readable .yaml files.
+
+    :param run_prefix: Identifier for a set of simulated data
+    :param mating: Parameters which specifying mating
+    :param quantitative: Dictionary of qtl for each replicate
+    :param effects:
+    :param genetic_structure:
+    :return:
+    """
+
+    import yaml
+
+
+    file_names = {}
+
+    file_names[run_prefix + 'mating.yaml'] = mating
+    file_names[run_prefix + 'qtl.yaml'] = quantitative
+    file_names[run_prefix + 'allele_effects.yaml'] = effects
+    file_names[run_prefix + 'genetic_structure.yaml'] = genetic_structure
+
+    for name, param_set in file_names.items():
+        with open(name, 'w') as p_stream:
+            yaml.dump(param_set, p_stream)
+
+
+def parameter_set_reader(parameter_filename):
+    """
+    Reads a file of .yaml parameters for an easy way to parameterize a
+    simulation. Alternately the user would have to derive a great deal of
+    information from raw files.
+    :param parameter_filename:
+    :return:
+    """
+
+    pass
