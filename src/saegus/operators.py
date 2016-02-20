@@ -9,7 +9,7 @@ import csv
 import random
 import collections as col
 import statistics as stat
-from . import helpers
+from . import analyze
 
 ####*
 
