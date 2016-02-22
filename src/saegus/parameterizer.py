@@ -275,10 +275,44 @@ def seg_qtl_chooser(pop: sim.Population, loci_subset: list, number_qtl: int):
     qtl = sorted(random.sample(permissible_qtl, number_qtl))
     return qtl
 
-class ReadWrite(object):
-    """
-    Embodies functions to read and write parameter files for simulations to
-    a Python shelve object. At present it is the easiest and fastest way to
-    generate storeable data sets.
-    """
 
+def assign_identical_qtl_parameters(multi_pop, alleles,  qtl_subset, \
+                                                number_of_qtl, ae_parameters):
+    """
+    Assigns each replicate in a population the same exact set of QTL and corresponding
+    allele effects.
+
+    :param multi_pop: simuPOP Simulator object containing multiple replicates.
+    :param number_of_qtl: Number of loci to declare as QTL
+    :param qtl_subset: List of loci which can be chosen as QTL
+    :param ae_parameters: Parameters of the allele effect distribution.
+
+
+
+    """
+    triplet_qtl = {i: [] for i in range(multi_pop.numRep())}
+    single_pop = multi_pop.population(0)
+    sim.stat(single_pop, numOfSegSites=qtl_subset, vars=['numOfSegSites', 'segSites'])
+    qtl = seg_qtl_chooser(single_pop, qtl_subset, number_of_qtl)
+
+    for i, pop_rep in enumerate(multi_pop.populations()):
+        for locus in qtl:
+            triplet_qtl[i].append(locus - 1)
+            triplet_qtl[i].append(locus)
+            triplet_qtl[i].append(locus + 1)
+
+    allele_effects = {rep_id: {locus: {} for locus in triplet_qtl[rep_id]}
+                          for rep_id in range(multi_pop.numRep())}
+
+    for locus in triplet_qtl[0]:
+        for allele in alleles[locus]:
+            allele_effects[0][locus][allele] = random.expovariate(
+                *ae_parameters)
+
+    for i in range(1, multi_pop.numRep()):
+        allele_effects[i] = allele_effects[0]
+        assert allele_effects[i] == allele_effects[0], "One set of allele " \
+                                                       "effects is not equal " \
+                                                       "to the 0th one."
+
+    return triplet_qtl, allele_effects

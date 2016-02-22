@@ -1,10 +1,10 @@
 .. saegus documentation master file, created by
-   sphinx-quickstart on Sun Nov 22 05:13:08 2015.
+   sphinx-quickstart on Sun Feb 21 20:01:37 2016.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to saegus' documentation!
-=================================
+Welcome to saegus's documentation!
+==================================
 
 Contents:
 
@@ -12,13 +12,11 @@ Contents:
    :maxdepth: 2
 
    introduction.rst
-   nam_prefounders.rst
-   missing_genotype_data.rst
-   raw_genotype_data.rst
-   gwas_with_tassel.rst
-
-
-
+   analyze.rst
+   breed.rst
+   operators.rst
+   simulate.rst
+   parse.rst
 
 
 Indices and tables

@@ -22,7 +22,6 @@ Imports to handle parsing:
     import collections as col
     from wgs import parser
 
-
 Genotype matrix and genetic map filenames:
 
 .. code:: python
@@ -40,6 +39,7 @@ must be processed or edited before it can be used. The raw genotype matrix for
 the Tuson population looks like this:
 
 Example raw genotype matrix:
+
 +----------+--------+--------+
 | label    | locus1 | locus2 |
 +==========+========+========+
@@ -65,6 +65,7 @@ row-column structure:
     gmatrix = gmatrix.T
 
 We then have:
+
 +--------+----------+----------+----------+
 | label  | C0_164_1 | C0_164_2 | C0_164_3 |
 +========+==========+==========+==========+
@@ -87,6 +88,7 @@ genotype frequencies for locus2 are: 3/2: 0.65, 2/2: 0.10, 3/3: 0.25
 Assuming that we randomly draw 2/2 we would update our genotype matrix as:
 
 Genotype matrix with missing data replaced by random draw:
+
 +--------+----------+----------+----------+
 | label  | C0_164_1 | C0_164_2 | C0_164_3 |
 +========+==========+==========+==========+
