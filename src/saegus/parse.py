@@ -7,12 +7,6 @@ import csv
 import collections as col
 
 
-
-def map_subsetter(map_data):
-    map_subset = [map_data[i] for i in range(len(map_data)) if int(float(map_data[i][3])) == float(map_data[i][3])]
-    return map_subset
-
-
 def genotype_parser(genotype_matrix_filename, columns_to_drop=None,
                     droppable_individuals=None):
     """

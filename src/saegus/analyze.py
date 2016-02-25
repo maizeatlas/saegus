@@ -204,7 +204,7 @@ class Frq(object):
         return quantitative_trait_alleles
 
     def allele_frq_table(self, pop, number_gens,
-        allele_frq_data: dict, recombination_rates, genetic_map):
+        allele_frq_data, recombination_rates, genetic_map):
         """
         Generates a large table which centralizes all allele frequency data.
         The data is inserted into a pandas DataFrame object.
@@ -220,7 +220,8 @@ class Frq(object):
         """
 
 
-        data_columns = ['abs_index', 'chrom', 'locus', 'recom_rate', 'cM', 'v']
+        data_columns = ['abs_index', 'chrom', 'locus', 'major',
+                        'minor', 'recom_rate', 'cM', 'v']
         generation_labels = ['G_'+str(i)
                              for i in range(0, number_gens+1, 2)]
         data_columns = data_columns + generation_labels + ['aggregate']
@@ -732,7 +733,8 @@ class GWAS(object):
         for ind in self.pop.individuals():
             alpha, beta = ind.genotype(ploidy=0), ind.genotype(ploidy=1)
             hapmap_data[self.individual_names[ind.ind_id]] = [
-                int_to_snp_conversions[a]+int_to_snp_conversions[b]
+                ''.join(sorted(int_to_snp_conversions[a]
+                               + int_to_snp_conversions[b]))
                                  for a, b in zip(alpha, beta)]
 
 
@@ -817,7 +819,7 @@ class GWAS(object):
 
         return structure_matrix
 
-    def calc_kinship_matrix(self, allele_counts, allele_data,
+    def calc_kinship_matrix(self, allele_count_matrix, allele_data,
                             kinship_filename):
         """
         Calculates the kinship matrix according to VanRaden 2008:
@@ -826,7 +828,11 @@ class GWAS(object):
         with the variable names in the paper.
 
         The allele frequencies used for this function are with respect to
-        the base population or G0: after random mating and before selection.
+        the aggregate population: all individuals sampled during selection.
+
+        Unsure if I should use the G0 allele or not.
+        Will decide after TASSEL results.
+
         :param allele_counts:
         :param allele_data:
         :param kinship_filename:
@@ -834,19 +840,24 @@ class GWAS(object):
         :rtype:
         """
 
-        M = np.matrix(allele_counts - 1)
+        M = np.matrix(allele_count_matrix - 1)
 
-        major_allele_frequencies = \
-            np.array([allele_data['major', 'frequency', 0][locus]
-                      for locus in range(self.pop.totNumLoci())])
+        # Second allele in the unselected, un-inbred base population.
+        # Refers to major allele in G_0
+        allele_frequencies = np.array([allele_data['minor', 'frequency'][locus]
+                                    for locus in range(self.pop.totNumLoci())])
 
-        P = 2*(major_allele_frequencies - 0.5)
+        P = 2*(allele_frequencies - 0.5)
 
         Z = M - P
 
-        scaling_factor = sum(2*P*(1 - P))
+        scaling_terms = np.zeros((self.pop.totNumLoci()))
+        for locus, probability in enumerate(allele_frequencies):
+            scaling_terms[locus] = 2*probability*(1 - probability)
 
-        G = (Z*Z.T)/scaling_factor
+        scaling_factor = sum(scaling_terms)
+
+        G = Z*Z.T/scaling_factor
 
         annotated_G = pd.DataFrame(G, index=[self.individual_names[ind.ind_id]
                                              for ind in
@@ -861,7 +872,7 @@ class GWAS(object):
 
         if os.path.exists(file_out_path):
             os.remove(file_out_path)
-        with open(kinship_filename, 'a') as f:
+        with open(kinship_filename, 'w') as f:
             f.write(header)
             annotated_G.to_csv(f, sep=' ', index=True, header=False)
 
@@ -902,26 +913,28 @@ def generate_tassel_gwas_configs(input_directory_prefix,
     lxml_tree = etree.fromstring(ET.tostring(root))
     lxml_root = lxml_tree.getroottree()
 
-    lxml_root.find('fork1/h').text = os.path.join(input_directory_prefix,
-                                                  run_identifier_prefix +
-                                                  'simulated_hapmap.txt')
+    hapmap_filename = input_directory_prefix + run_identifier_prefix + \
+                      'simulated_hapmap.txt'
+    phenotype_filename = input_directory_prefix + run_identifier_prefix + \
+        'phenotype_vector.txt'
+    pop_struct_filename = input_directory_prefix + run_identifier_prefix + \
+                          'structure_matrix.txt'
+    kinship_filename = input_directory_prefix + run_identifier_prefix + \
+                       'kinship_matrix.txt'
 
-    lxml_root.find('fork2/t').text = os.path.join(input_directory_prefix,
-                                                  run_identifier_prefix +
-                                                  'phenotype_vector.txt')
-    lxml_root.find('fork3/q').text = os.path.join(input_directory_prefix,
-                                                  run_identifier_prefix +
-                                                  'structure_matrix.txt')
-    lxml_root.find('fork4/k').text = os.path.join(input_directory_prefix,
-                                                  run_identifier_prefix +
-                                                  'kinship_matrix.txt')
+    tassel_outputs = out_directory_prefix + run_identifier_prefix + 'gwas_out_'
 
-    lxml_root.find('combine6/export').text = os.path.join(
-        out_directory_prefix, run_identifier_prefix +'gwas_out_')
+    config_filname = config_file_prefix + run_identifier_prefix + \
+                     'sim_gwas_pipeline.xml'
 
-    xml_file_name = run_identifier_prefix + 'sim_gwas_pipeline.xml'
-    config_file_out = os.path.join(config_file_prefix, run_identifier_prefix
-                                   + 'sim_gwas_pipeline.xml')
+    lxml_root.find('fork1/h').text = hapmap_filename
+    lxml_root.find('fork2/t').text = phenotype_filename
+    lxml_root.find('fork3/q').text = pop_struct_filename
+    lxml_root.find('fork4/k').text = kinship_filename
+
+    lxml_root.find('combine6/export').text = tassel_outputs
+
+    config_file_out = config_filname
 
     lxml_root.write(config_file_out, encoding="UTF-8",
                    method="xml", xml_declaration=True, standalone='',
@@ -970,3 +983,33 @@ def parameter_set_reader(parameter_filename):
     """
 
     pass
+
+
+class Synbreed(object):
+
+    def __init__(self, genotypes, phenotypes, genetic_map):
+        self.genotypes = genotypes
+        self.phenotypes = phenotypes
+        self.genetic_map = genetic_map
+
+    def genotype_formatter(self, hap_map, syn_genotype_filename):
+        """
+        Modifies ``hap_map`` to obtain the format for Synbreed.
+        Subtracts extraneous columns, transposes the result, adds 1 to each
+        index to convert Python index to R index. Then prepends each locus
+        with "M" indicating 'marker'.
+        :param hap_map: A simulated hapmap file from hapmap_formatter.
+        :param syn_genotype_filename: Name of the file which the modified
+        hapmap is written to.
+
+        """
+
+        syn_geno_map = hap_map.drop(["rs", "alleles", "chrom", "pos", "strand",
+                   "assembly", "center", "protLSID", "assayLSID",
+                  "panelLSID", "QCcode"], axis=1).T
+        syn_geno_map.columns = ["M" + str(idx + 1) for idx in syn_geno_map.columns]
+
+        syn_geno_map.to_csv(syn_genotype_filename, sep="\t", index=True,
+                            header=False)
+
+        return syn_geno_map

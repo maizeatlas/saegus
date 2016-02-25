@@ -74,6 +74,19 @@ class Truncation(object):
         self.breeding_parameters['number_of_offspring_discarded'] = \
             self.number_of_offspring_discarded
 
+    def __str__(self):
+        trunc_info = 'Type: Recurrent Selection\n' +\
+                    '**************************\n' +\
+                    'Generations of Selection: {}\n'.format(self.generations_of_selection) +\
+                    'Generations of Random Mating: {}\n'.format(self.generations_of_random_mating) +\
+                    'Operating Population Size: {}\n'.format(
+                        self.operating_population_size) +\
+                    'Proportion of Individuals Saved: {}\n'.format(
+                        self.proportion_of_individuals_saved) +\
+                    'Number of Replicates: {}\n'.format(self.number_of_replicates)
+
+        return trunc_info
+
     def generate_f_one(self, pop, recombination_rates, parental_id_pairs):
         """
         Crosses pairs of founders as they are listed in founder indices

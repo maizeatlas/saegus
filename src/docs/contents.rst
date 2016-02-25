@@ -17,7 +17,7 @@ Contents:
    operators.rst
    simulate.rst
    parse.rst
-
+   specifying_a_simulation.rst
 
 Indices and tables
 ==================

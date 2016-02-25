@@ -10,7 +10,7 @@ Command Line Interface to TASSEL
 
 The TASSEL command line interface requires a considerable number of
 options to run GWAS. It is impractical to run the command line manually
-for the number of replications in a simulated study. Here is an example of
+for any number of replications in a simulated study. Here is an example of
 the command required for a single run of TASSEL
 
 .. code-block:: console
@@ -77,7 +77,7 @@ Example XML File for MLM GWAS
 
 
 Running GWAS With TASSEL
-^^^^^^^^^^^^^^^^^^^^^^^^
+========================
 
 Performing exploratory analyses with simulated populations is divided into
 three sets of tasks:
@@ -86,14 +86,49 @@ three sets of tasks:
     - GWAS
     - analysis
 
-A script which uses saegus is performs the simulation. A single set of
-founders is used to generate multiple replicates of a population under
-selection or drift or both. The script also generates additional files
-containing:
+A script which uses `saegus` performs the simulation. A single set of founders
+is used to generate multiple replicates of a population under selection or
+drift or both. The output of the `saegus` script is
 
-    - configuration files used to run GWAS with TASSEL
-    - parameter information
-    - mean and variance data
+    - parameters
+    - hapmap
+    - allele frequencies
+    - quantitative allele information
+    - mean and variance
     - minor allele matrix
+    - configuration files for TASSEL
+
+
+Simulation Parameters
+~~~~~~~~~~~~~~~~~~~~~
+
+
+Mean and Variance Data
+~~~~~~~~~~~~~~~~~~~~~~
+
+
+Minor Allele Matrix
+~~~~~~~~~~~~~~~~~~~
+
+Configuration Files
+~~~~~~~~~~~~~~~~~~~
+
+
+
+Kinship Matrix
+~~~~~~~~~~~~~~
+
+The kinship matrix or relationship matrix is computed using marker data
+[VanRaden2008]_
+
+.. [VanRaden2008] VanRaden, P. M. (2008). Efficient methods to compute genomic predictions. Journal of Dairy Science, 91(11), 4414–23. doi:10.3168/jds.2007-0980
+
+Calculation:
+
+.. math::
+
+    **M** = minor allele marker matrix
+    **P** =
+
 
 

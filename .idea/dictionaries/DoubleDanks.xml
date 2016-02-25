@@ -6,22 +6,30 @@
       <w>dougherty</w>
       <w>eigen</w>
       <w>errorlevel</w>
+      <w>genindex</w>
       <w>gwas</w>
       <w>haplo</w>
       <w>haplotype</w>
       <w>haplotypes</w>
       <w>hapmap</w>
+      <w>hmap</w>
       <w>lxml</w>
+      <w>metapopulation</w>
+      <w>modindex</w>
       <w>parameterize</w>
+      <w>phenos</w>
       <w>prefounder</w>
       <w>prefounders</w>
+      <w>qtloci</w>
       <w>recombinatorial</w>
       <w>runfork</w>
       <w>saegus</w>
       <w>selfing</w>
+      <w>simu</w>
       <w>singlehtml</w>
       <w>sphinxbuild</w>
       <w>storeable</w>
+      <w>struct</w>
       <w>subpop</w>
       <w>subpopulations</w>
       <w>yaml</w>

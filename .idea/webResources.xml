@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebResourcesPaths">
+    <contentEntries>
+      <entry url="file://$PROJECT_DIR$/../tuson_simulation">
+        <entryData>
+          <resourceRoots>
+            <path value="file://$PROJECT_DIR$/src/docs" />
+            <path value="file://$PROJECT_DIR$/src/data" />
+            <path value="file://$PROJECT_DIR$/devel/jupyternbs/first_generation_simulated_gwas" />
+            <path value="file://$PROJECT_DIR$/devel/jupyternbs/second_generation_simulated_gwas" />
+            <path value="file://$PROJECT_DIR$/devel/jupyternbs/third_generation_simulated_gwas" />
+          </resourceRoots>
+        </entryData>
+      </entry>
+    </contentEntries>
+  </component>
+</project>
