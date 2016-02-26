@@ -271,61 +271,86 @@ class Frq(object):
         return af_table
 
 
-    def qt_allele_table(self, qt_alleles, allele_effects):
-        """
-        Generates a pd.DataFrame object of data relevant to quantitative
-        trait alleles across all generations.
-        :param qt_alleles:
-        :type qt_alleles:
-        :param allele_effects:
-        :type allele_effects:
-        :return:
-        :rtype:
-        """
-        qtdata = {}
-        data_columns = ['abs_index', 'chrom', 'locus', 'cM',
-         'favorable', 'fav_effect', 'unfavorable', 'unfav_effect',
-                        'effect_diff']
+def qt_allele_table(pop, qt_alleles, allele_effects,
+                    number_of_generations):
+    """
+    Generates a pd.DataFrame object of data relevant to quantitative
+    trait alleles across all generations.
+    :param qt_alleles:
+    :type qt_alleles:
+    :param allele_effects:
+    :type allele_effects:
+    :return:
+    :rtype:
+    """
+    #qtdata = {}
+    data_columns = ['abs_index', 'chrom', 'locus',
+     'favorable', 'fav_effect', 'unfavorable', 'unfav_effect',
+                    'effect_diff']
 
-        generation_labels = ['G_'+str(i)
-                             for i in range(0, self.pop.dvars().gen+1, 2)]
-        data_columns = data_columns + generation_labels + ['aggregate']
+    #generation_labels = ['G_'+str(i)
+    #                     for i in range(0, number_of_generations+1, 2)]
+    #data_columns = data_columns + generation_labels + ['aggregate']
 
-        chromosomes = []
-        relative_loci = []
-        for locus in self.pop.dvars().triplet_qtl:
-            pair = self.pop.chromLocusPair(locus)
-            chromosomes.append(pair[0]+1)
-            relative_loci.append(pair[1])
+    chromosomes = []
+    relative_loci = []
+    for locus in range(pop.totNumLoci()):
+        pair = pop.chromLocusPair(locus)
+        chromosomes.append(pair[0]+1)
+        relative_loci.append(pair[1])
+
+    qtdata = dict(chrom=chromosomes,
+                  locus=relative_loci,
+                  abs_index=np.array([i for i in range(
+                      pop.totNumLoci())], dtype=np.int16),
+                  favorable=np.zeros((pop.totNumLoci), dtype=np.int8),
+                  unfavorable=np.zeros((pop.totNumLoci),
+                                       dtype=np.int8),
+                  fav_effect=np.zeros((pop.totNumLoci)),
+                  unfav_effect=np.zeros((pop.totNumLoci)),
+                  effect_diff=np.zeros((pop.totNumLoci)),
+                )
 
 
-        qtdata['chrom'] = chromosomes
-        qtdata['locus'] = relative_loci
-        qtdata['abs_index'] = [locus for locus in self.pop.dvars().triplet_qtl]
-        qtdata['favorable'] = [qt_alleles['alleles']['favorable'][locus] for
-                               locus in self.pop.dvars().triplet_qtl]
+# todo Add generation labels back in after extended table works.
+#        for subpop, label in zip(range(pop.numSubPop(),
+#                                       generation_labels)):
+#            qtdata[label] = np.zeros((pop.totNumLoci))
 
-        qtdata['fav_effect'] = [allele_effects[locus][allele]
-                                for locus, allele in qt_alleles['alleles']['favorable'].items()]
+    for qtlocus in pop.dvars().triplet_qtl:
+        qtdata['favorable'][qtlocus] = qt_alleles['alleles'][
+            'favorable'][qtlocus]
+        qtdata['unfavorable'][qtlocus] = qt_alleles['alleles'][
+            'favorable'][qtlocus]
 
-        qtdata['unfavorable'] = [qt_alleles['alleles']['unfavorable'][locus]
-                                 for locus in self.pop.dvars().triplet_qtl]
 
-        qtdata['unfav_effect'] = [allele_effects[locus][allele]
-                                  for locus, allele in qt_alleles['alleles']['unfavorable'].items()]
+    # allele_effects_keyed by [locus][allele]
 
-        qtdata['effect_diff'] = [allele_effects[locus][qt_alleles['alleles']['favorable'][locus]] -
-                                 allele_effects[locus][qt_alleles['alleles']['unfavorable'][locus]]
-                                 for locus in self.pop.dvars().triplet_qtl]
-        for subpop, label in zip(range(self.pop.numSubPop()),
-                                 generation_labels):
-            qtdata[label] = [qt_alleles['frequency']['favorable'][subpop,
-                                                                  locus] for
-                             locus in self.pop.dvars().triplet_qtl]
-        qtdata['aggregate'] = [qt_alleles['frequency']['favorable'][locus]
-                               for locus in self.pop.dvars().triplet_qtl]
-        qta_table = pd.DataFrame(qtdata, columns=data_columns)
-        return qta_table
+
+        for fav_allele in qt_alleles['alleles']['favorable'].values():
+            qtdata['fav_effect'][qtlocus] = allele_effects[qtlocus][
+                fav_allele]
+        for unfav_allele in qt_alleles['alleles']['unfavorable'].values():
+            qtdata['unfav_effect'][qtlocus] = allele_effects[qtlocus][
+                unfav_allele]
+
+
+# todo Add sub-population qtallele data in after working table
+#            for subpop, label in zip(range(pop.numSubPop()),
+#                                 generation_labels):
+#                qtdata[label][qtlocus] = [qt_alleles['frequency']['favorable'][
+#                                         subpop,
+#                                                                 locus] for
+#                            locus in pop.dvars().triplet_qtl]
+#       qtdata['aggregate'][qtlocus] = [qt_alleles['frequency'][
+            # 'favorable'][locus]
+#                              for locus in pop.dvars().triplet_qtl]
+
+        qtdata['effect_diff'][qtlocus] = \
+            qtdata['fav_effect'][qtlocus] - qtdata['unfav_effect'][qtlocus]
+
+    qta_table = pd.DataFrame(qtdata, columns=data_columns)
+    return qta_table
 
 
 def collect_haplotype_data(pop, allele_effects, quantitative_trait_loci):

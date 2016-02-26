@@ -7,6 +7,7 @@ import collections as col
 import random
 import numpy as np
 import yaml
+from mock.mock import self
 from scipy import stats
 
 
@@ -162,96 +163,152 @@ class AE(object):
                 for_plot_allele_effects[float(idx) + 0.2, nucleotide] = allele_effects[idx + 1, nucleotide]
         return allele_effects, for_plot_allele_effects
 
-class GenotypeData(object):
+class Genotype(object):
     """
-    Code not in working state.
-    10/14/15
+    A class to handle all genotype data.
     """
-    def __init__(self, genotype_matrix_filename):
-        self.genotype_matrix_filename = genotype_matrix_filename
 
-    def parse_genotype_matrix(self, columns_to_drop='popdata'):
-        genotype_matrix = pd.read_csv(self.genotype_matrix_filename, sep='\t', index_col=0, low_memory=False)
-        droppable_individuals = list(genotype_matrix.index[105:])
-        genotype_matrix = genotype_matrix.drop(droppable_individuals, axis=0)
-        genotype_matrix = genotype_matrix.drop(columns_to_drop, axis=1)
-        return genotype_matrix
+    def __init__(self, raw_genotype_array, number_of_individuals,
+                 number_of_markers, missing_genotype_token):
 
-    def genotype_counts_to_frequencies(self, genotype_counts: dict, missing_loci: list):
+        if raw_genotype_array.shape[0] == number_of_markers:
+            raw_genotype_array = raw_genotype_array.T
+            assert raw_genotype_array.shape[0] == number_of_individuals, \
+                "Genotype data does not have proper shape"
+
+        self.genotype_array = raw_genotype_array
+        self.number_of_individuals = number_of_individuals
+        self.number_of_markers = number_of_markers
+        self.missing_genotype_token = missing_genotype_token
+
+    def genotype_counter(self):
+        """
+
+        :param missing_genotype_token:
+        :return:
+        """
+        genotype_counts = {}
+        for genos, locus in zip(self.genotype_array.T, range(
+                self.number_of_markers)):
+            genotype_counts[locus] = dict(col.Counter(genos))
+
+        loci_missing_data = []
+        for locus, gcounts in genotype_counts.items():
+            if self.missing_genotype_token in gcounts.keys():
+                loci_missing_data.append(locus)
+                del gcounts[self.missing_genotype_token]
+
+        return genotype_counts, loci_missing_data
+
+    def determine_individuals_missing_data(self, loci_missing_data,
+                                           missing_genotype_token):
+        """
+        Finds the individuals who are missing genotype data given the list of
+        for which data are missing.
+        :param loci_missing_data: List of loci which have missing genotype data
+        :param missing_genotype_token: A string representing missing data
+        :return: Dictionary of lists of individual indexes
+        """
+        location_of_missing_values = {locus: [] for locus in
+                                      loci_missing_data}
+        for locus in loci_missing_data:
+            for idx, ind in enumerate(self.genotype_array):
+                if ind[locus] == missing_genotype_token:
+                    location_of_missing_values[locus].append(idx)
+
+        return location_of_missing_values
+
+    def convert_counts_to_frq(self, genotype_counts):
         """
         Converts a the dictionaries of genotype: count for each locus into their
         frequency equivalents by dropping and missing data and dividing by the adjusted
         total.
 
         :param genotype_counts:
-        :param missing_loci:
-        :type genotype_counts str:
+        :return: Dictionary of genotype frequencies
+        """
+        genotype_frqs = {locus: {} for locus in range(self.number_of_markers)}
+        for locus, g_counts in genotype_counts.items():
+            markers_counted = sum(g_counts.values())
+            for genotype, count in g_counts.items():
+                genotype_frqs[locus][genotype] = \
+                genotype_counts[locus][genotype]/markers_counted
+        return genotype_frqs
 
-
-        :param missing_loci:
+    def generate_pmf_mappings(self, genotype_frequencies):
+        """
+        Collects all information for creating genotype probability mass
+        functions to replace missing genotype data.
+        :param genotype_frequencies: Dictionary[locus][genotype]: frequency
         :return:
         """
-        geno_frq = {}
-        for mlocus in missing_loci:
-            geno_frq[mlocus] = {}
-            if np.nan in genotype_counts[mlocus]:
-                del genotype_counts[mlocus][np.nan]
-            inds_counted = sum(genotype_counts[mlocus].values())
-            for genotype, cnt in genotype_counts[mlocus].items():
-                geno_frq[mlocus][genotype] = cnt/inds_counted
-        return geno_frq
+        pmf_mappings = \
+            {locus: {} for locus in genotype_frequencies.keys()}
 
-    @staticmethod
-    def centralized_genotype_pmfs(genotype_frequencies):
-        """
-        For the time being all of the information required to compute a custom
-        probability mass function for each locus is stored a dictionary keyed by locus.
-        The values are tuples:
-        0: genotype: frequency
-        1: integer: genotype
-        2: density
-        3: genotype: integer
-        """
-        centralized_pmfs = col.OrderedDict()
         for locus, frq_map in genotype_frequencies.items():
-            pre_density = {genotype: frequency for genotype, frequency in frq_map.items()}
-            genotype_to_int_map = {genotype: i for i, genotype in list(enumerate(frq_map.keys()))}
-            density = {genotype_to_int_map[genotype]: frequency for genotype, frequency in frq_map.items()}
-            int_to_genotype_map = {i: genotype for i, genotype in list(enumerate(frq_map.keys()))}
-            centralized_pmfs[locus] = (pre_density, genotype_to_int_map, density, int_to_genotype_map)
-        return centralized_pmfs
+            genotype_to_int_map = \
+                {genotype: i for i, genotype in list(enumerate(frq_map.keys()))}
+            int_to_genotype_map = \
+                {i: genotype for i, genotype in list(enumerate(frq_map.keys()))}
+            int_to_frq_map = \
+                {genotype_to_int_map[genotype]:
+                     frequency for genotype, frequency in frq_map.items()}
+            pmf_mappings[locus]['geno_to_int'] = \
+                genotype_to_int_map
+            pmf_mappings[locus]['int_to_geno'] = \
+                int_to_genotype_map
+            pmf_mappings[locus]['int_to_frq'] = \
+                int_to_frq_map
+        return pmf_mappings
 
-    @staticmethod
-    def individual_missing_data(genotype_matrix):
+    def generate_genotype_pmfs(self, empirical_pmf_mappings):
         """
-        Each individual has a particular set of loci for which they are missing data. For each individual we need
-        to know what loci are missing. Given the missing locus we can replace the 'NA' with a random draw
-        from the genotype pmf of that locus.
-        :param genotype_matrix:
+        A set of nested dictionaries which enable the use of
+        scipy.stats.rv_discrete to generate a genotype probability mass
+        functions.
+        :param empirical_pmf_mappings:
+        :return:
         """
-        nan_dict = {}
-        nan_array = np.array(pd.isnull(genotype_matrix))
-        for individual, row in enumerate(nan_array):
-            nan_dict[individual] = [locus for locus, val in enumerate(row) if val == True]
-        return nan_dict
+        empirical_genotype_pmfs = {}
+        for locus in range(self.number_of_markers):
+            xk = list(empirical_pmf_mappings[locus]['int_to_frq'].keys())
+            pk = list(empirical_pmf_mappings[locus]['int_to_frq'].values())
+            empirical_genotype_pmfs[locus] = \
+                stats.rv_discrete(values=(xk, pk))
 
-    @staticmethod
-    def replace_missing_genotypes(genotype_matrix, population_genotype_pmfs):
+        return empirical_genotype_pmfs
+
+
+    def replace_missing_genotypes(self):
         """
-        A function to replace each individuals missing genotype data with random draws from a dictionary of
-        genotype pmfs. Parameter missing_loci_per_individual is a dictionary of individual: list_of_missing_loci pairs.
-        population_genotype_pmfs is a nested dictionary which provides all the necessary mapping data to create the
-        replacement data.
-        Note: Assumes that genotype_matrix has rows=individuals and columns=genotypes.
+        A function to utilize all of :class:`Genotype`'s methods to fill in
+        missing genotype values. :func:`replace_missing_genotypes` uses
+        empirically observed genotype frequencies.
+
+
+        :param population_genotype_pmfs:
+        :param locations_missing_data:
+        :param pmass_func_mappings:
         """
-        for ind in range(genotype_matrix.shape[0]):
-            individuals_missing_loci = [genotype_matrix[ind, i] for i in range(genotype_matrix.shape[1])
-                                        if genotype_matrix[ind, i] == np.nan]
-            for locus in individuals_missing_loci:
-                integer_genotype = population_genotype_pmfs[locus]['pmf'].rvs()
-                geno_state = population_genotype_pmfs[locus]['integer_to_state'][integer_genotype]
-                genotype_matrix[ind, locus] = geno_state
-        return genotype_matrix
+        genotype_counts, loci_missing_data = self.genotype_counter()
+        locations_of_missing_data = self.determine_individuals_missing_data(
+            loci_missing_data, self.missing_genotype_token)
+        empirically_observed_frequencies = \
+            self.convert_counts_to_frq(genotype_counts)
+        pmf_mappings = \
+            self.generate_pmf_mappings(empirically_observed_frequencies)
+        genotype_pmfs = self.generate_genotype_pmfs(pmf_mappings)
+
+
+        for locus, individuals in locations_of_missing_data.items():
+            for ind in individuals:
+                int_genotype = genotype_pmfs[locus].rvs()
+                genotype = \
+                    pmf_mappings[locus]['int_to_geno'][int_genotype]
+                self.genotype_array[ind, locus] = genotype
+
+        return self.genotype_array
+
 
 
 def seg_qtl_chooser(pop: sim.Population, loci_subset: list, number_qtl: int):

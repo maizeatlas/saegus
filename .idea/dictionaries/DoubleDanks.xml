@@ -18,12 +18,16 @@
       <w>modindex</w>
       <w>parameterize</w>
       <w>phenos</w>
+      <w>pmass</w>
+      <w>pmfs</w>
       <w>prefounder</w>
       <w>prefounders</w>
       <w>qtloci</w>
+      <w>qtlocus</w>
       <w>recombinatorial</w>
       <w>runfork</w>
       <w>saegus</w>
+      <w>scipy</w>
       <w>selfing</w>
       <w>simu</w>
       <w>singlehtml</w>
@@ -32,6 +36,7 @@
       <w>struct</w>
       <w>subpop</w>
       <w>subpopulations</w>
+      <w>unfav</w>
       <w>yaml</w>
     </words>
   </dictionary>
