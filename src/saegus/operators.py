@@ -4,12 +4,8 @@ import simuPOP as sim
 from simuPOP import sampling
 import pandas as pd
 import numpy as np
-import itertools as ite
 import csv
 import random
-import collections as col
-import statistics as stat
-from . import analyze
 
 ####*
 
@@ -145,36 +141,6 @@ class ReplicateMetaPopulation(sim.PyOperator):
     def add_to_meta_pop(self, pop):
         rep_id = pop.dvars().rep
         sampled = sampling.drawRandomSample(pop, sizes=self.sample_size[pop.dvars().gen])
-        pop.dvars().ss = self.sample_size[pop.dvars().gen]
-        pop.dvars().gen_sampled_from = pop.dvars().gen
-        self.meta_replicates.population(rep_id).addIndFrom(sampled)
-        return True
-
-
-class TestReplicateMetaPopulation(sim.PyOperator):
-    """
-    Operator which writes native simuPOP .pop files of each group of individuals sampled. This allows
-    us to data in the final metapopulation against the data as it is sampled at run-time. This operator
-    is to mainly address the concern that individuals are not being sampled from diferent generations through
-    an undetected bug in the code.
-    """
-    def __init__(self, meta_replicates, sample_size, *args, **kwargs):
-        self.meta_replicates = meta_replicates
-        self.sample_size = sample_size
-        sim.PyOperator.__init__(self, func=self.add_to_meta_pop, *args, **kwargs)
-
-    def add_to_meta_pop(self, pop):
-        rep_id = pop.dvars().rep
-        sampled = sampling.drawRandomSample(pop, sizes=self.sample_size[pop.dvars().gen])
-        sampled_file_name = 'sampled_rep_' + str(rep_id) + '_gen_' + str(pop.dvars().gen) + '_metapop.pop'
-        sampled.save(sampled_file_name)
-        pop.dvars().sampled_genotypes[pop.dvars().gen] = {}
-        for idx, individual in enumerate(pop.individuals()):
-            pop.dvars().sampled_genotypes[pop.dvars().gen] = [
-                individual.genotype(ploidy=0),
-                individual.genotype(ploidy=1)
-            ]
-
         pop.dvars().ss = self.sample_size[pop.dvars().gen]
         pop.dvars().gen_sampled_from = pop.dvars().gen
         self.meta_replicates.population(rep_id).addIndFrom(sampled)

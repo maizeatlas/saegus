@@ -38,3 +38,27 @@ def parse_genotype_matrix(genotype_matrix_filename: str, columns_to_drop='popdat
     if columns_to_drop is not None:
         genotype_matrix = genotype_matrix.drop(columns_to_drop, axis=1)
     return genotype_matrix
+
+
+def pedigree_writer(pop, pedigree_filename):
+    """
+    Writes ind_id, mother_id, father_id for each individual.
+    pedigree_writer will raise an assertion error if the necessary
+    fields are not defined.
+
+    :warning: File is by default in append mode because it assumes
+    :warning: multiple generations will be written.
+    :param pop:
+    :type pop: sim.Population
+    :param pedigree_filename: Name of output file.
+    :type pedigree_filename: str
+    :return: None
+    :rtype: None
+    """
+    with open(pedigree_filename, 'a') as pedigree:
+        pedwriter = csv.writer(pedigree, delimiter='\t')
+        for ind in pop.individuals():
+            ind_lineage = [str(pop.dvars().gen), str(ind.ind_id),
+                               str(ind.mother_id),
+                          str(ind.father_id)]
+            pedwriter.writerow(ind_lineage)

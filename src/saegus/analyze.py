@@ -1,9 +1,5 @@
-__author__ = 'John J. Dougherty III'
-__project__ = 'wgs'
 # -*- coding: utf-8 -*-
-
 import simuPOP as sim
-import csv
 import math
 import numpy as np
 import pandas as pd
@@ -11,32 +7,10 @@ import collections as col
 import os
 from scipy import linalg
 import matplotlib.pyplot as plt
-plt.ioff()
 
 
 
-def pedigree_writer(pop, pedigree_filename):
-    """
-    Writes ind_id, mother_id, father_id for each individual.
-    pedigree_writer will raise an assertion error if the necessary
-    fields are not defined.
 
-    :warning: File is by default in append mode because it assumes
-    :warning: multiple generations will be written.
-    :param pop:
-    :type pop: sim.Population
-    :param pedigree_filename: Name of output file.
-    :type pedigree_filename: str
-    :return: None
-    :rtype: None
-    """
-    with open(pedigree_filename, 'a') as pedigree:
-        pedwriter = csv.writer(pedigree, delimiter='\t')
-        for ind in pop.individuals():
-            ind_lineage = [str(pop.dvars().gen), str(ind.ind_id),
-                               str(ind.mother_id),
-                          str(ind.father_id)]
-            pedwriter.writerow(ind_lineage)
 
 class Frq(object):
     """
@@ -45,10 +19,7 @@ class Frq(object):
     alleles present in prefounder population and allele effects used to
     determine phenotypes for population.
     """
-    def __init__(self, pop, qt_loci, alleles, allele_effects):
-        self.alleles = alleles
-        self.allele_effects = allele_effects
-        self.qt_loci = qt_loci
+    def __init__(self, pop, *args, **kwargs):
         self.pop = pop
 
     def allele_frequencies(self, pop: sim.Population, loci: list):
@@ -132,9 +103,7 @@ class Frq(object):
         for locus in loci:
             major_allele = allele_frq['major', 'alleles'][locus]
             minor_allele = allele_frq['minor', 'alleles'][locus]
-            allele_frq['major', 'frequency'][locus] = pop.dvars(
-
-            ).alleleFreq[locus][major_allele]
+            allele_frq['major', 'frequency'][locus] = pop.dvars().alleleFreq[locus][major_allele]
             allele_frq['minor', 'frequency'][locus] = pop.dvars(
 
             ).alleleFreq[locus][minor_allele]

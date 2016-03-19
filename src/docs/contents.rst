@@ -18,6 +18,8 @@ Contents:
    simulate.rst
    parse.rst
    specifying_a_simulation.rst
+   gwas_with_tassel.rst
+   making_a_base_population.rst
 
 Indices and tables
 ==================

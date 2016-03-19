@@ -1,30 +1,14 @@
+========
 Operators
 =========
 
 All of the classes in this module are derived from the simuPOP.PyOperator
-class. Each class performs some task inside of the evolutionary process
+class. Each class performs some task inside of the evolutionary process.
 simuPOP offers a standard library of operators for common population genetics
-processes. These operators are defined for the purpose of investigating the
-genetic and statistical properties of recurrently selected populations.
+processes. The operators defined in this module perform operations which
+would either be impossible or difficult to implement using standard simuPOP
+operators.
 
-
-:class: CalculateErrorVariance(sim.PyOperator)
-
-    def __init__(self, heritability, *args, **kwargs):
-        self.heritability = heritability
-        sim.PyOperator.__init__(self, func=self.calculate_error_variance,
-                                *args, **kwargs)
-
-    def calculate_error_variance(self, pop):
-        """
-        Calculates the parameter ``epsilon`` to be used as the variance
-        of the error distribution. The error distribution generates noise
-        found in real experiments.
-        """
-        variance_of_g = np.var(pop.indInfo('g'))
-        epsilon = variance_of_g*(1/self.heritability - 1)
-        pop.dvars().epsilon = epsilon
-        return True
 
 
 class GenoAdditive(sim.PyOperator):
@@ -52,6 +36,30 @@ class GenoAdditive(sim.PyOperator):
                      in self.absolute_qtl[rep_id]])
             ind.g = genotypic_contribution
         return True
+
+
+:class:`CalculateErrorVariance`
+
+   An operator to calculate the variance of the experimental error distribution.
+   We assume that there is some degree of error when measuring phenotypes in
+   an actual experiment. Measurement error is represented as a random draw
+   from a normal distribution with mean zero and variance ``epsilon`` where
+
+      ``epsilon`` = ``genotypic_variance`` * (1/``heritability`` - 1)
+
+   ``epsilon`` is assigned as a population variable. This operator is typically
+   called once in the initOps phase of an evolutionary process. At present
+   :class:`CalculateErrorVariance` is hard coded to calculate
+   ``genotypic_variance`` as the sample variance of the infoField ``g``.
+
+   Requires
+   --------
+   Population must have infoField ``g``, 0 < heritability < 1.
+   :class:`GenoAdditive` must be called before class:`CalculateErrorVariance` or
+   values of ``g`` must be assigned to each individual.
+
+   :param float heritability: Floating point value greater than zero and less than 1.
+
 
 
 class PhenotypeCalculator(sim.PyOperator):
