@@ -129,9 +129,10 @@ class Truncation(object):
             new_parents = list(pop.indInfo('ind_id'))
             new_parent_id_pairs = [(pid, pid + 1) for pid in new_parents[::2]]
 
-            if len(new_parent_id_pairs) % 2 != 0 and len(
-                    new_parent_id_pairs) != 1:
+            if len(new_parent_id_pairs) % 2 != 0 and \
+                            len(new_parent_id_pairs) != 1:
                 new_parent_id_pairs.append(random.choice(new_parent_id_pairs))
+
             new_os_size = len(new_parent_id_pairs)
 
             new_founder_chooser = breed.PairwiseIDChooser(new_parent_id_pairs)
