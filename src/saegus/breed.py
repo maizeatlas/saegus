@@ -7,36 +7,32 @@ from . import operators
 
 class Cross(object):
 
-    def generate_f_one(self, pop: sim.Population):
+    def generate_f_one(self, pop, recombination_rates, parental_id_pairs, offspring_per_pair):
         """
-        A very basic implementation of the F_1 cross between pairs of individuals. Relies on
-        pre-formatting of desired mating pairs into an ordered list.
-        [1, 3, 5, 11, 12, 9, 22, 2]
-        The mating pattern would be:
-        1x3, 5x11, 12x9, 22x2.
-        Rearranging the order of the indices would
-        change which pairs of individuals mate.
-        :param pop:
-        :type pop:
-        :return:
-        :rtype:
+        Crosses pairs of founders as they are listed in founder indices
+        using breed.PairwiseIDChooser
         """
-        pop.dvars().generations[1] = 'F_1'
-        pop.dvars().gen = 1
-        pairs_of_founders = int(pop.popSize() / 2)
-        self.odd_to_even(pop)
-        print("Creating the F_one population from selected founders.")
-        return pop.evolve(
+
+        founder_chooser = PairwiseIDChooser(parental_id_pairs)
+        if len(parental_id_pairs) % 2 != 0:
+            parental_id_pairs.append(random.choice(parental_id_pairs))
+        number_of_pairs = len(parental_id_pairs)
+        pop.evolve(
             preOps=[
-                sim.PyEval(r'"Generation: %d\n" % gen'),
-                operators.CalcTripletFrequencies(),
-                sim.PyExec('triplet_freq[gen]=tripletFreq'),
-                sim.SplitSubPops(sizes=[2] * pairs_of_founders, randomize=False),
+                sim.PyEval(r'"Generation: %d\n" % gen',
+                           ),
             ],
-            matingScheme=sim.RandomMating(subPopSize=[1] * pairs_of_founders,
-                                          ops=[sim.Recombinator(rates=0.01), sim.IdTagger(), sim.PedigreeTagger()]),
+            matingScheme=sim.HomoMating(
+                sim.PyParentsChooser(founder_chooser.by_id_pairs),
+                sim.OffspringGenerator(ops=[
+                    sim.IdTagger(), sim.ParentsTagger(), sim.PedigreeTagger(),
+                    sim.Recombinator(rates=recombination_rates)],
+                    numOffspring=offspring_per_pair),
+                subPopSize=[offspring_per_pair]*number_of_pairs,
+            ),
             gen=1,
         )
+
 
     def generate_f_two(self, pop: sim.Population) -> sim.Population:
         """
@@ -126,27 +122,33 @@ class PairwiseIDChooser(object):
     member of the pair.
     """
 
-    def __init__(self, pairs_of_parents):
+    def __init__(self, pairs_of_parents, offspring_per_parental_pair=1):
         """
         **Example**: *Mate selected pairs of parents*
 
         ::
 
-           >>> founders = [(0, 1), (10, 11)]
+           >>> founders = [[0, 1], [10, 11]]
+           >>> offspring_per_parental_pair = 100
+           >>> parent_chooser = PairwiseIDChooser(founders, 100)
 
         :param pairs_of_parents:
         :type pairs_of_parents:
+        :param offspring_per_parental_pair:
         """
         self.pairs_of_parents = pairs_of_parents
+        self.offspring_per_parental_pair = offspring_per_parental_pair
 
     def by_id_pairs(self, pop):
         for pair in self.pairs_of_parents:
-            female_id, male_id = pair
-            female = pop.indByID(float(female_id))
-            male = pop.indByID(float(male_id))
-            female.setSex(2)
-            male.setSex(1)
-            yield pop.indByID(float(male_id)), pop.indByID(float(female_id))
+            copied_parental_pairs = [pair]*self.offspring_per_parental_pair
+            for copied_pair in copied_parental_pairs:
+                female_id, male_id = copied_pair
+                female = pop.indByID(float(female_id))
+                male = pop.indByID(float(male_id))
+                female.setSex(2)
+                male.setSex(1)
+                yield pop.indByID(float(male_id)), pop.indByID(float(female_id))
 
 
 

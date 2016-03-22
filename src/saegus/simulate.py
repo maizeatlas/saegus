@@ -87,7 +87,7 @@ class Truncation(object):
 
         return trunc_info
 
-    def generate_f_one(self, pop, recombination_rates, parental_id_pairs):
+    def generate_f_one(self, pop, recombination_rates, parental_id_pairs, offspring_per_pair):
         """
         Crosses pairs of founders as they are listed in founder indices
         using breed.PairwiseIDChooser
@@ -96,11 +96,7 @@ class Truncation(object):
         founder_chooser = breed.PairwiseIDChooser(parental_id_pairs)
         if len(parental_id_pairs) % 2 != 0:
             parental_id_pairs.append(random.choice(parental_id_pairs))
-        os_size = len(parental_id_pairs)
-
-        logging.info("Creating the F_one population from selected "
-                     "founders.")
-        # while pop.popSize() > 1:
+        number_of_pairs = len(parental_id_pairs)
         pop.evolve(
             preOps=[
                 sim.PyEval(r'"Generation: %d\n" % gen',
@@ -111,8 +107,8 @@ class Truncation(object):
                 sim.OffspringGenerator(ops=[
                     sim.IdTagger(), sim.ParentsTagger(), sim.PedigreeTagger(),
                     sim.Recombinator(rates=recombination_rates)],
-                    numOffspring=1),
-                subPopSize=os_size,
+                    numOffspring=offspring_per_pair),
+                subPopSize=[offspring_per_pair]*number_of_pairs,
             ),
             gen=1,
         )
@@ -129,7 +125,7 @@ class Truncation(object):
         :return:
         :rtype:
         """
-        while pop.popSize() > 1:
+        while pop.numSubPop() > 1:
             new_parents = list(pop.indInfo('ind_id'))
             new_parent_id_pairs = [(pid, pid + 1) for pid in new_parents[::2]]
 
@@ -170,15 +166,13 @@ class Truncation(object):
         # self.odd_to_even(pop)
         num_sub_pops = pop.numSubPop()
         progeny_per_individual = int(self.operating_population_size / 2)
-        logging.info("Creating the F_two population.")
         return pop.evolve(
             preOps=[
                 sim.MergeSubPops(),
                 sim.PyEval(r'"Generation: %d\n" % gen'),
                 sim.SplitSubPops(sizes=[1] * num_sub_pops, randomize=False),
             ],
-            matingScheme=sim.SelfMating(subPopSize=[
-                                                       progeny_per_individual] * num_sub_pops,
+            matingScheme=sim.SelfMating(subPopSize=[progeny_per_individual] * num_sub_pops,
                                         numOffspring=progeny_per_individual,
                                         ops=[
                                             sim.Recombinator(

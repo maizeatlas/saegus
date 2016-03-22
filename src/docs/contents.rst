@@ -11,15 +11,7 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   introduction.rst
-   analyze.rst
    breed.rst
-   operators.rst
-   simulate.rst
-   parse.rst
-   specifying_a_simulation.rst
-   gwas_with_tassel.rst
-   making_a_base_population.rst
 
 Indices and tables
 ==================
