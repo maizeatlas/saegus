@@ -13,28 +13,46 @@ class MAGIC(object):
     crossed with each other until only a single ``line`` remains.
     """
 
-    def generate_f_one(self, pop, recombination_rates, parental_id_pairs, offspring_per_pair):
+    def __init__(self, pop, recombination_rates):
         """
-        Crosses pairs of founders as they are listed in founder indices
-        using breed.PairwiseIDChooser
+        An instance of MAGIC is intended to use in a particular population
+        assuming recombination rates stay constant throughout breeding
+        procedure.
+        """
+        self.pop = pop
+        self. recombination_rates = recombination_rates
+
+    def generate_f_one(self, parental_id_pairs,
+                       offspring_per_pair):
+        """
+        Crosses pairs of *founders* specified by ``parental_id_pairs``.
+
+         :param parental_id_pairs: Nested lists of founder IDs.
+         :param offspring_per_pair: How many offspring per pair.
+
+         :note: If there are an uneven number ``parental_id_pairs appends a
+         random choice to end of list.
         """
 
-        founder_chooser = PairwiseIDChooser(parental_id_pairs)
+        founder_chooser = PairwiseIDChooser(parental_id_pairs,
+                                                  offspring_per_pair)
+
+
         if len(parental_id_pairs) % 2 != 0:
             parental_id_pairs.append(random.choice(parental_id_pairs))
+
         number_of_pairs = len(parental_id_pairs)
-        pop.evolve(
-            preOps=[
-                sim.PyEval(r'"Generation: %d\n" % gen',
-                           ),
-            ],
+        self.pop.evolve(
+            preOps=[],
             matingScheme=sim.HomoMating(
                 sim.PyParentsChooser(founder_chooser.by_id_pairs),
                 sim.OffspringGenerator(ops=[
-                    sim.IdTagger(), sim.ParentsTagger(), sim.PedigreeTagger(),
-                    sim.Recombinator(rates=recombination_rates)],
-                    numOffspring=offspring_per_pair),
-                subPopSize=[offspring_per_pair]*number_of_pairs,
+                    sim.IdTagger(),
+                    sim.ParentsTagger(),
+                    sim.PedigreeTagger(),
+                    sim.Recombinator(rates=self.recombination_rates)],
+                    numOffspring=1),
+                subPopSize=[offspring_per_pair * number_of_pairs],
             ),
             gen=1,
         )

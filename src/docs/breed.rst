@@ -40,3 +40,16 @@ complex mating schemes.
 
       1/2 // 3/4 x 5/6 // 7/8
        1/2//3/4 /// 5/6//7/8
+
+   The result of these three rounds of crossing is a population with high
+   genetic diversity. High genetic diversity stemming from the combination of
+   many different parental lines greatly enhances mapping resolution.
+
+   .. py:method:: __init__(pop, recombination_rates)
+
+   :param pop: A simuPOP.Population subjected to MAGIC mating scheme.
+
+   :param recombination_rates: List of recombination rates at each locus.
+   :param recombination_rates: Each rate is the probability of recombination
+   :param recombination_rates: between a locus and its immediate neighbor.
+   :param recombination_rates: Assumes that every locus is assigned a rate.`
