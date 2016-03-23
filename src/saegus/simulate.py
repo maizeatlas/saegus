@@ -93,7 +93,7 @@ class Truncation(object):
         using breed.PairwiseIDChooser
         """
 
-        founder_chooser = breed.PairwiseIDChooser(parental_id_pairs)
+        founder_chooser = breed.PairwiseIDChooser(parental_id_pairs, offspring_per_pair)
         if len(parental_id_pairs) % 2 != 0:
             parental_id_pairs.append(random.choice(parental_id_pairs))
         number_of_pairs = len(parental_id_pairs)
@@ -105,10 +105,12 @@ class Truncation(object):
             matingScheme=sim.HomoMating(
                 sim.PyParentsChooser(founder_chooser.by_id_pairs),
                 sim.OffspringGenerator(ops=[
-                    sim.IdTagger(), sim.ParentsTagger(), sim.PedigreeTagger(),
+                    sim.IdTagger(),
+                    sim.ParentsTagger(),
+                    sim.PedigreeTagger(),
                     sim.Recombinator(rates=recombination_rates)],
-                    numOffspring=offspring_per_pair),
-                subPopSize=[offspring_per_pair]*number_of_pairs,
+                    numOffspring=1),
+                subPopSize=[offspring_per_pair*number_of_pairs],
             ),
             gen=1,
         )

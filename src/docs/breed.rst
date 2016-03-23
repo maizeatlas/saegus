@@ -3,24 +3,40 @@
 ============
 
 
-A module which has functions and classes related to customized mating schemes implemented in simuPOP.
-``saegus`` is made unique largely because of the way individuals are mated with each other.
+A module which has functions and classes related to customized mating schemes
+implemented in simuPOP. ``saegus`` is unique largely because of its support for
+complex mating schemes.
 
 
 
-:class:`PairwiseIDChooser`
-==========================
+:class:`MAGIC`
+==============
 
-        :param pairs_of_founders: List of lists with pairs of integers.
+   MAGIC: Multi-parent Advanced Generation Inter-crosses
+   MAGIC begins with founders arbitrarily arranged into pairs. Pairs of parents
+   are crossed with each other to make hybrid offspring. The hybrid offspring
+   are crossed with a different group of hybrid offspring to make
+   double-hybrid offspring. This process continues until only a single
+   sub-population of individuals remains.
 
-        Contains a :class:`PyParentsChooser` which allows the user to select pairs of individuals
-        by their ``ind_id`` to be mated together.
+   **Example**
 
-        Tests
-        -----
+      founders = [[1, 2], [3, 4], [5, 6], [7, 8]]
 
-                I ran the following tests::
+   First Round of Crosses
+   ----------------------
 
-                assert pop.popSize == offspring_per_pair*num_pairs, "Incorrect number of individuals in population."
-                assert pop.numSubPop() == num_pairs, "Incorrect number of subpopulations."
+      1 x 2 | 3 x 4 | 5 x 6 | 7 x 8
+       1/2  |  3/4  |  5/6  | 7/8
 
+   Second Round of Crosses
+   -----------------------
+
+      1/2 x 3/4 | 5/6 x 7/8
+       1/2//3/4 | 5/6//7/8
+
+   Third (Final) Round of Crosses
+   ------------------------------
+
+      1/2 // 3/4 x 5/6 // 7/8
+       1/2//3/4 /// 5/6//7/8

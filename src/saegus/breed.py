@@ -5,7 +5,13 @@ import simuPOP as sim
 from . import operators
 
 
-class Cross(object):
+class MAGIC(object):
+    """
+    MAGIC: Multi-parent Advanced Generation Inter Crosses
+    MAGIC is a cross-design which incorporates a large amount of genetic
+    diversity. MAGIC uses a 'funneling' strategy whereby pairs of lines are
+    crossed with each other until only a single ``line`` remains.
+    """
 
     def generate_f_one(self, pop, recombination_rates, parental_id_pairs, offspring_per_pair):
         """
@@ -129,8 +135,13 @@ class PairwiseIDChooser(object):
         ::
 
            >>> founders = [[0, 1], [10, 11]]
-           >>> offspring_per_parental_pair = 100
-           >>> parent_chooser = PairwiseIDChooser(founders, 100)
+           >>> offspring_per_parental_pair = 1
+           >>> parent_chooser = PairwiseIDChooser(founders, offspring_per_parental_pair)
+           >>> for pair in founders:
+           >>>     print(pair)
+           ...     [0, 1]
+           ...     [10, 11]
+
 
         :param pairs_of_parents:
         :type pairs_of_parents:
@@ -149,6 +160,26 @@ class PairwiseIDChooser(object):
                 female.setSex(2)
                 male.setSex(1)
                 yield pop.indByID(float(male_id)), pop.indByID(float(female_id))
+
+
+class ListsOfIDsChooser(object):
+    """
+    The user provides a pair of lists of ``float``s corresponding to the female
+    and male ``ind_id``s.
+    """
+
+    def __init__(self, female_parent_ids, male_parent_ids):
+        self.female_parent_ids = female_parent_ids
+        self.male_parent_ids = male_parent_ids
+
+    def by_lists(self, pop):
+        for female_id, male_id in zip(self.female_parent_ids,
+                                      self.male_parent_ids):
+            female = pop.indByID(float(female_id))
+            male = pop.indByID(float(male_id))
+            female.setSex(2)
+            male.setSex(1)
+            yield pop.indByID(float(male_id)), pop.indByID(float(female_id))
 
 
 
