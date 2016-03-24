@@ -50,6 +50,5 @@ complex mating schemes.
    :param pop: A simuPOP.Population subjected to MAGIC mating scheme.
 
    :param recombination_rates: List of recombination rates at each locus.
-   :param recombination_rates: Each rate is the probability of recombination
-   :param recombination_rates: between a locus and its immediate neighbor.
-   :param recombination_rates: Assumes that every locus is assigned a rate.`
+
+      :note: Recombination rates refer to the simuPOP definition.
