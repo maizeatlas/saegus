@@ -50,7 +50,8 @@ class MAGIC(object):
                     sim.IdTagger(),
                     sim.ParentsTagger(),
                     sim.PedigreeTagger(),
-                    sim.Recombinator(rates=self.recombination_rates)],
+                    sim.Recombinator(rates=self.recombination_rates)
+                                        ],
                     numOffspring=1),
                 subPopSize=[offspring_per_pair * number_of_pairs],
             ),
