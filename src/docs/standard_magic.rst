@@ -40,17 +40,36 @@ Overview of MAGIC in saegus
    * ``mother_id``: Albeit *Zea mays* can be considered both female and male it is useful at times to distinguish  ``mother`` from ``father``.
    * ``father_id``: Defined for the same reason as ``mother_id``. In general we follow the genetics convention of writing the *female* on the left of the cross.
 
+   :note: All of the parameters are stored in using the Python shelve_ module.
+
+   .. _shelve: https://docs.python.org/3.4/library/shelve.html
+
+
+
    .. code-block::
 
       founders = [[1, 2], [3, 4], [5, 6], [7, 8]]
-       founder_mother_ids = [1, 3, 5, 7]
-       founder_father_ids = [2, 4, 6, 8]
+       operating_population_size = 2000
+       offspring_per_cross = operating_population_size / len(founders)
+
+
 
 Implementation of the MAGIC Mating Procedure
 ============================================
 
-   The major change from previous version of the MAGIC implemenation in saegus is how
+   The major change from previous version of the MAGIC implementation in saegus is how
    I choose which individuals mate at each generation. In previous versions beyond ``f_one``
    I would simply specify which sub-populations *could* mate with one another. However, in
    this version I specify every single mating interaction before the ``evolve`` process.
 
+Creating the F :sub:`1`
+~~~~~~~~~~~~~~~~~~~~~~~
+
+   The F :sub:`1` population is created by crossing the four pairs of founders. Each pair is mated
+   500 times to yield a population size of 2000.
+
+   .. code-block:: python
+
+
+
+   The :func:`generate_f_one` function carries out the crosses.

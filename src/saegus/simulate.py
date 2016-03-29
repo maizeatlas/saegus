@@ -88,8 +88,10 @@ class Truncation(object):
 
     def generate_f_one(self, pop, recombination_rates, parental_id_pairs, offspring_per_pair):
         """
-        Crosses pairs of founders as they are listed in founder indices
+        Crosses pairs of founders as they are listed in founder indices.
         using breed.PairwiseIDChooser
+
+        :note: Data is specified as pairs. Testing for even-number unecessary.
         """
 
         founder_chooser = breed.PairwiseIDChooser(parental_id_pairs, offspring_per_pair)
