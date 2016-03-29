@@ -8,12 +8,14 @@
       <w>eigen</w>
       <w>errorlevel</w>
       <w>genindex</w>
+      <w>gmap</w>
       <w>gwas</w>
       <w>haplo</w>
       <w>haplotype</w>
       <w>haplotypes</w>
       <w>hapmap</w>
       <w>hmap</w>
+      <w>intmd</w>
       <w>lxml</w>
       <w>metapopulation</w>
       <w>modindex</w>
@@ -40,6 +42,7 @@
       <w>subpopulations</w>
       <w>tuson</w>
       <w>unfav</w>
+      <w>uniparams</w>
       <w>yaml</w>
     </words>
   </dictionary>

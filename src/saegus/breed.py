@@ -1,14 +1,13 @@
 import random
-
+import numpy as np
 import simuPOP as sim
 
 from . import operators
 
-
 class MAGIC(object):
     """
     MAGIC: Multi-parent Advanced Generation Inter Crosses
-    MAGIC is a cross-design which incorporates a large amount of genetic
+    MAGIC is a cross-design which incorporates a large amount of geneticn
     diversity. MAGIC uses a 'funneling' strategy whereby pairs of lines are
     crossed with each other until only a single ``line`` remains.
     """
@@ -84,24 +83,24 @@ class MAGIC(object):
             gen=1,
         )
 
-    def _mate_and_merge(self, pop: sim.Population):
-        print("Initiating recombinatorial convergence at generation: %d" % pop.dvars().gen)
-        while pop.numSubPop() > 1:
-            #self.odd_to_even(pop)
-            #self.pairwise_merge_protocol(pop)
-            #sub_pop_sizes = list(pop.subPopSizes())
-            pop.evolve(
-                preOps=[
-                    sim.MergeSubPops(),
-                    sim.PyEval(r'"Generation: %d\n" % gen'),
-                    sim.PyExec('triplet_freq[gen]=tripletFreq'),
-                    sim.SplitSubPops(sizes=sub_pop_sizes, randomize=False),
-                ],
-                matingScheme=sim.RandomMating(ops=[sim.Recombinator(rates=0.01),
-                                                   sim.IdTagger(), sim.PedigreeTagger()]),
-                gen=1,
-            )
+    def restructure_offspring(self, offspring_per_subpop, number_subpops):
+        """
+        Rearranges offspring after the F_1 mating scenario. F_1 is merged into
+        a single population. This function splits single aggregate population into
+        uniformly sized sub-populations to easily choose mating pairs.
 
+        """
+        self.pop.splitSubPop(0, offspring_per_subpop * number_subpops)
+        subpop_list = list(range(self.pop.numSubPop()))
+
+        breeding_groups = []
+        for pair in zip(subpop_list[0::2], subpop_list[1::2]):
+            first_maters = random.sample(self.pop.indInfo('ind_id', pair[0]), offspring_per_subpop)
+            second_maters = random.sample(self.pop.indInfo('ind_id', pair[1]), offspring_per_subpop)
+            breeding_groups.append([first_maters, second_maters])
+        breeding_array = np.array(breeding_groups)
+
+        return breeding_array
 
 class ForcedPopulationStructureParentChooser(object):
     """
@@ -179,6 +178,53 @@ class PairwiseIDChooser(object):
                 female.setSex(2)
                 male.setSex(1)
                 yield pop.indByID(float(male_id)), pop.indByID(float(female_id))
+
+
+class SecondOrderPairIDChooser(object):
+    """
+    MultiSubGroupChooser is a generalization of the PairwiseIDChooser to scenarios
+    where multiple sub-populations need to be merged. It is an elegant way
+    to solve the mating scheme issue while preserving predictable
+    and easily testable code.
+    """
+
+    def __init__(self, parental_sub_populations,
+                 female_parent_ids,
+                 male_parent_ids,
+                 offspring_per_parental_pair=1):
+        """
+        PairwiseIDChooser which allows separate lists for females and separate
+        list for males. Instead of providing pairs of parents i.e
+        ::
+
+            founders = [[1, 2], [3, 4], [5, 6], [7, 8]]
+
+        This chooser uses a separate list for each parent i.e.
+        ::
+
+            female_parent_ids = [1, 3, 5, 7]
+            male_parent_ids = [2, 4, 6, 8]
+
+
+        :parameter parental_sub_populations: List of sub-population indices.
+        :parameter female_parent_ids: List of individual IDs (selfing allowed)
+        :parameter male_parent_ids: List of individual IDS (selfing allowed)
+        :parameter offspring_per_parental_pair: Family size per pair of parents.
+
+        """
+        self.male_parent_ids = male_parent_ids
+        self.female_parent_ids = female_parent_ids
+        self.parental_sub_populations = parental_sub_populations
+        self.offspring_per_parental_pair = offspring_per_parental_pair
+
+    def snd_ord_id_pairs(self, pop):
+        for female_id, male_id in zip(self.female_parent_ids, self.male_parent_ids):
+            female = pop.indByID(female_id)
+            male = pop.indByID(male_id)
+            female.setSex(2)
+            male.setSex(1)
+            yield pop.indByID(male_id), pop.indByID(female_id)
+
 
 
 class ListsOfIDsChooser(object):

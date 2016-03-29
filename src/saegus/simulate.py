@@ -1,9 +1,8 @@
 #! usr/bin/python
-__author__ = 'John J Dougherty III'
 import simuPOP as sim
 import random
 import collections as col
-import logging
+import numpy as np
 from . import breed, operators
 
 
@@ -206,6 +205,28 @@ class Truncation(object):
                          rates=recombination_rates)]),
             gen=self.generations_of_random_mating,
         )
+
+    def restructure_offspring(self, pop, offspring_per_subpop, number_subpops):
+        """
+        Rearranges offspring after the F_1 mating scenario. F_1 is merged into
+        a single population. This function splits single aggregate population into
+        uniformly sized sub-populations to easily choose mating pairs.
+
+        """
+
+#        if type(offspring_per_subpop) != list:
+#            offspring_per_subpop = [offspring_per_subpop]
+        pop.splitSubPop(0, [offspring_per_subpop] * number_subpops)
+        subpop_list = list(range(pop.numSubPop()))
+
+        breeding_groups = []
+        for pair in zip(subpop_list[0::2], subpop_list[1::2]):
+            first_maters = random.sample(pop.indInfo('ind_id', pair[0]), offspring_per_subpop)
+            second_maters = random.sample(pop.indInfo('ind_id', pair[1]), offspring_per_subpop)
+            breeding_groups.append([first_maters, second_maters])
+        breeding_array = np.array(breeding_groups)
+
+        return breeding_array
 
     def recurrent_truncation_selection(self, pop, meta_pop, qtl, aes,
                                        recombination_rates):
