@@ -12,6 +12,7 @@ Contents:
    :maxdepth: 2
 
    breed.rst
+   standard_magic.rst
 
 Indices and tables
 ==================
