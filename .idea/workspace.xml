@@ -2,15 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/testing_and_detecting/__init__.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/testing_and_detecting/conftest.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/testing_and_detecting/nam_prefounders_genetic_map.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/testing_and_detecting/over_here.ipynb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" afterPath="$PROJECT_DIR$/.idea/codeStyleSettings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dictionaries/DoubleDanks.xml" afterPath="$PROJECT_DIR$/.idea/dictionaries/DoubleDanks.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/data/standard_magic.pop" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/data/standard_magic_history.dat" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/data/standard_magic_history.bak" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/data/standard_magic_history.dir" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/testing_and_detecting/over_here.ipynb" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/testing_and_detecting/misc_gmap.bak" afterPath="$PROJECT_DIR$/devel/testing_and_detecting/misc_gmap.bak" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/testing_and_detecting/misc_gmap.dir" afterPath="$PROJECT_DIR$/devel/testing_and_detecting/misc_gmap.dir" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/testing_and_detecting/uniparams.bak" afterPath="$PROJECT_DIR$/devel/testing_and_detecting/uniparams.bak" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/testing_and_detecting/uniparams.dir" afterPath="$PROJECT_DIR$/devel/testing_and_detecting/uniparams.dir" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/saegus/breed.py" afterPath="$PROJECT_DIR$/src/saegus/breed.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/saegus/simulate.py" afterPath="$PROJECT_DIR$/src/saegus/simulate.py" />
     </list>
     <ignored path="saegus_project.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -43,11 +45,11 @@
       <file leaf-file-name="breed.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/saegus/breed.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="138">
-              <caret line="195" column="0" selection-start-line="195" selection-start-column="0" selection-end-line="211" selection-end-column="80" />
+            <state relative-caret-position="648">
+              <caret line="216" column="0" selection-start-line="216" selection-start-column="0" selection-end-line="216" selection-end-column="0" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
-                <marker date="1459250844617" expanded="true" signature="6332:6417" placeholder="..." />
+                <marker date="1459252569467" expanded="true" signature="6332:6417" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -56,8 +58,8 @@
       <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+            <state relative-caret-position="408">
+              <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -190,10 +192,9 @@
     </layout>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1592" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1096" />
+    <option name="x" value="800" />
+    <option name="width" value="800" />
+    <option name="height" value="900" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -789,17 +790,17 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1592" y="-8" width="1936" height="1096" extended-state="6" />
+    <frame x="800" y="0" width="800" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17430703" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.44189188" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32417583" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.72153634" sideWeight="0.6305085" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6438172" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35752687" sideWeight="0.48971722" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1391258" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15975104" sideWeight="0.36949152" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20052083" sideWeight="0.36949152" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="DB Browser" active="false" anchor="top" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.329904" sideWeight="0.5" order="0" side_tool="true" content_ui="combo" />
@@ -1228,19 +1229,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/breed.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="195" column="0" selection-start-line="195" selection-start-column="0" selection-end-line="211" selection-end-column="80" />
+        <state relative-caret-position="648">
+          <caret line="216" column="0" selection-start-line="216" selection-start-column="0" selection-end-line="216" selection-end-column="0" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <marker date="1459250844617" expanded="true" signature="6332:6417" placeholder="..." />
+            <marker date="1459252569467" expanded="true" signature="6332:6417" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+        <state relative-caret-position="408">
+          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
           <folding />
         </state>
       </provider>

@@ -188,7 +188,7 @@ class SecondOrderPairIDChooser(object):
     and easily testable code.
     """
 
-    def __init__(self, parental_sub_populations,
+    def __init__(self,
                  female_parent_ids,
                  male_parent_ids,
                  offspring_per_parental_pair=1):
@@ -203,18 +203,16 @@ class SecondOrderPairIDChooser(object):
         ::
 
             female_parent_ids = [1, 3, 5, 7]
-            male_parent_ids = [2, 4, 6, 8]
+             male_parent_ids = [2, 4, 6, 8]
 
 
-        :parameter parental_sub_populations: List of sub-population indices.
         :parameter female_parent_ids: List of individual IDs (selfing allowed)
         :parameter male_parent_ids: List of individual IDS (selfing allowed)
         :parameter offspring_per_parental_pair: Family size per pair of parents.
 
         """
-        self.male_parent_ids = male_parent_ids
         self.female_parent_ids = female_parent_ids
-        self.parental_sub_populations = parental_sub_populations
+        self.male_parent_ids = male_parent_ids
         self.offspring_per_parental_pair = offspring_per_parental_pair
 
     def snd_ord_id_pairs(self, pop):
