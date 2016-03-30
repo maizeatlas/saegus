@@ -1,9 +1,15 @@
-********************
-:mod:`parameterizer`
-********************
+=================
+:mod:`parameters`
+=================
 
 
-Copy and paste of all functions in the module.
+
+
+.. py:function:: assign_identical_qtl_parameters(multi_pop, alleles, qtl_subset, number_of_qtl, ae_parameters)
+
+   :
+
+
 
 .. function:: assign_identical_qtl_parameters(multi_pop, alleles,
 qtl_subset, number_of_qtl, ae_parameters)
@@ -17,57 +23,6 @@ qtl_subset, number_of_qtl, ae_parameters)
     :param number_of_qtl: Number of loci to declare as QTL
     :param ae_parameters: Parameters of the allele effect distribution
 
-
-
-# -*- coding: utf-8 -*-
-
-
-import simuPOP as sim
-import pandas as pd
-import collections as col
-import random
-import numpy as np
-import yaml
-from scipy import stats
-
-
-
-class PopulationStructure(object):
-
-    def __init__(self, pop, population_structure_matrix_filename, threshold, error):
-        self.pop = pop
-        self.population_structure_matrix_filename = population_structure_matrix_filename
-        self.threshold = threshold
-        self.error = error
-
-    def generate_population_structure(self):
-        """
-        Parses a population structure matrix from a file and converts it into a native Python dictionary.
-        Extra steps needed because the population structure file is not in the same order as the genotype file.
-        """
-        popst = pd.read_excel(self.population_structure_matrix_filename)
-        indid_to_sampleid = {popst.index[i]: popst['sample_id'][i] for i in range(len(popst))}
-        popst_proportions = {popst['sample_id'][i]: list(popst.ix[i, 1:7]) for i in range(len(popst))}
-        structure = {indid_to_sampleid[i]: popst_proportions[indid_to_sampleid[i]] for i in range(len(popst))}
-        return structure
-
-    def population_structure_filter(self, population_structure: dict):
-        """
-        In populations with population structure spread over several subpopulations takes individuals whose genomes are
-        derived from at most 2 subpopulations plus/minus error. This function also removes the invalid individuals
-        referenced by absolute index. Resulting population is initial pop size - len(invalids.keys())
-        """
-        invalids = col.defaultdict()
-        for k, v in population_structure.items():
-            primary = max(v)
-            secondary = sorted(v)[-2]
-            if len(set(v)) > 3:
-                if (sum(v) - primary - secondary) > (self.threshold + self.error):
-                    invalids[k] = v
-                else:
-                    pass
-        self.pop.removeIndividuals(indexes=list(invalids.keys()))
-        return list(invalids.keys())
 
     def assign_population_structure(self, population_structure):
         """

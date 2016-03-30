@@ -65,8 +65,7 @@ Implementation of the MAGIC Mating Procedure
 Creating the F :sub:`1`
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-   The F :sub:`1` is graphical depiction of MAGIC
-
-      My attempt at showing the pdf file embedded
+   The F :sub:`1` is graphical depiction of the MAGIC mating scheme applied
+   to our choice of 8 founders.
 
       .. image:: reformed_graph.png

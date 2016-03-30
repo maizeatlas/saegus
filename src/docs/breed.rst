@@ -17,7 +17,11 @@ complex mating schemes.
    are crossed with each other to make hybrid offspring. The hybrid offspring
    are crossed with a different group of hybrid offspring to make
    double-hybrid offspring. This process continues until only a single
-   sub-population of individuals remains.
+   sub-population of individuals remains. Given the ``founders`` MAGIC
+   merges successive generations. The process is demonstrated visually with
+   a graph.
+
+
 
    **Example**
 
@@ -25,25 +29,10 @@ complex mating schemes.
 
       founders = [[1, 2], [3, 4], [5, 6], [7, 8]]
 
+   .. figure:: reformed_graph.png
+      :scale: 50%
 
-
-   First Round of Crosses
-   ----------------------
-
-      1 x 2 | 3 x 4 | 5 x 6 | 7 x 8
-       1/2  |  3/4  |  5/6  | 7/8
-
-   Second Round of Crosses
-   -----------------------
-
-      1/2 x 3/4 | 5/6 x 7/8
-       1/2//3/4 | 5/6//7/8
-
-   Third (Final) Round of Crosses
-   ------------------------------
-
-      1/2 // 3/4 x 5/6 // 7/8
-       1/2//3/4 /// 5/6//7/8
+      Successive rounds of mating merges together the genomes of distinct founders.
 
    The result of these three rounds of crossing is a population with high
    genetic diversity. High genetic diversity stemming from the combination of
@@ -52,7 +41,29 @@ complex mating schemes.
    .. py:method:: __init__(pop, recombination_rates)
 
    :param pop: A simuPOP.Population subjected to MAGIC mating scheme.
-
    :param recombination_rates: List of recombination rates at each locus.
+   :note: Recombination rates refer to the simuPOP definition.
 
-      :note: Recombination rates refer to the simuPOP definition.
+
+Predicting Number of Rounds of Mating
+=====================================
+
+   Given :math:`n` founders to start with:
+
+   If :math:`n` is the :math:`m` a power of two, :math:`m`, then there are *m* rounds of mating.
+   That is if:
+
+   .. math::
+
+      2^m = n
+
+   The number of rounds of mating is the largest power of 2 which can
+   be subtracted from *n* + 1.
+
+   .. code-block:: python
+
+      founders = [1, 2, 3, 4, 5, 6, 7, 8]
+       first_round = [(1, 2), (3, 4), (5, 6), (7, 8)]
+       second_round = [(1/2, 3/4), (5/6, 7/8)]
+       third_round = [(1/2 // 3/4, 5/6 // 7/8)]
+       final_result = 1/2 // 3/4 /// 5/6 // 7/8
