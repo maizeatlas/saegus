@@ -11,8 +11,10 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
+   introduction.rst
    breed.rst
    standard_magic.rst
+   terms.rst
 
 Indices and tables
 ==================

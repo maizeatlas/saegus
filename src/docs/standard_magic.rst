@@ -65,11 +65,8 @@ Implementation of the MAGIC Mating Procedure
 Creating the F :sub:`1`
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-   The F :sub:`1` population is created by crossing the four pairs of founders. Each pair is mated
-   500 times to yield a population size of 2000.
+   The F :sub:`1` is graphical depiction of MAGIC
 
-   .. code-block:: python
+      My attempt at showing the pdf file embedded
 
-
-
-   The :func:`generate_f_one` function carries out the crosses.
+      .. image:: reformed_graph.png
