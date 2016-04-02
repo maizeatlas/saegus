@@ -22,7 +22,8 @@ class Frq(object):
     def __init__(self, pop, *args, **kwargs):
         self.pop = pop
 
-    def allele_frequencies(self, pop: sim.Population, loci: list):
+    @staticmethod
+    def allele_frequencies(pop, alleles, loci: list):
         """
         Determine major and minor alleles in each generation the aggregate
         population. Generations in a meta-populations correspond to
@@ -35,47 +36,26 @@ class Frq(object):
         :rtype:
         """
         sim.stat(pop, alleleFreq=loci, vars=['alleleFreq', 'alleleFreq_sp'])
-        # removes empty sub-population.
-        if pop.subPopSizes()[0] == 0:
-            pop.removeSubPops(0)
 
         reversed_allele_frequencies = {}
         allele_frq = {}
 
-        # Generations
-        for i in range(self.pop.numSubPop()):
-            for locus in range(self.pop.totNumLoci()):
-                reversed_allele_frequencies[i, locus] = {}
-                for allele in self.alleles[locus]:
-                    frequency = self.pop.dvars(i).alleleFreq[locus][allele]
-                    reversed_allele_frequencies[i, locus][frequency] = allele
-
-        # Aggregate population
         for locus in range(pop.totNumLoci()):
             reversed_allele_frequencies[locus] = {}
-            for allele in self.alleles[locus]:
+            for allele in alleles[locus]:
                 frequency = pop.dvars().alleleFreq[locus][allele]
                 reversed_allele_frequencies[locus][frequency] = allele
 
-        for i in range(pop.numSubPop()):
-            allele_frq['minor', 'alleles', i] = col.OrderedDict()
-            allele_frq['minor', 'frequency', i] = col.OrderedDict()
-            allele_frq['frequencies', i] = col.OrderedDict()
-            allele_frq['major', 'alleles', i] = col.OrderedDict()
-            allele_frq['major', 'frequency', i] = col.OrderedDict()
-
-        # Aggregate
-        allele_frq['minor', 'alleles'] = col.OrderedDict()
-        allele_frq['minor', 'frequency'] = col.OrderedDict()
-        allele_frq['frequencies'] = col.OrderedDict()
-        allele_frq['major', 'alleles'] = col.OrderedDict()
-        allele_frq['major', 'frequency'] = col.OrderedDict()
-
+        allele_frq['minor', 'alleles'] = {}
+        allele_frq['minor', 'frequency'] = {}
+        allele_frq['frequencies'] = {}
+        allele_frq['major', 'alleles'] = {}
+        allele_frq['major', 'frequency'] = {}
 
         # Determine major/minor allele in aggregate population
         for locus in loci:
             temp_frq = []
-            for allele in self.alleles[locus]:
+            for allele in alleles[locus]:
                 temp_frq.append(pop.dvars().alleleFreq[locus][allele])
             allele_frq['frequencies'][locus] = temp_frq
             minor_frequency = min(allele_frq['frequencies'][locus])
@@ -85,37 +65,12 @@ class Frq(object):
             allele_frq["major", "alleles"][locus] = \
                 reversed_allele_frequencies[locus][major_frequency]
 
-
-        for i in range(pop.numSubPop()):
-            for locus in loci:
-                temp_frq = []
-                for allele in self.alleles[locus]:
-                    temp_frq.append(pop.dvars(i).alleleFreq[locus][allele])
-                allele_frq['frequencies', i][locus] = temp_frq
-
-                minor_frequency = min(allele_frq['frequencies', i][locus])
-                major_frequency = max(allele_frq['frequencies', i][locus])
-                allele_frq['minor', 'alleles', i][locus] = \
-                    reversed_allele_frequencies[i, locus][minor_frequency]
-                allele_frq['major', 'alleles', i][locus] = \
-                    reversed_allele_frequencies[i, locus][major_frequency]
-
         for locus in loci:
             major_allele = allele_frq['major', 'alleles'][locus]
             minor_allele = allele_frq['minor', 'alleles'][locus]
             allele_frq['major', 'frequency'][locus] = pop.dvars().alleleFreq[locus][major_allele]
-            allele_frq['minor', 'frequency'][locus] = pop.dvars(
-
-            ).alleleFreq[locus][minor_allele]
-            for i in range(pop.numSubPop()):
-                major_allele = allele_frq['major', 'alleles', i][locus]
-                minor_allele = allele_frq['minor', 'alleles', i][locus]
-                allele_frq['major', 'frequency', i][locus] = \
-                    pop.dvars(i).alleleFreq[locus][major_allele]
-                allele_frq['minor', 'frequency', i][locus] = \
-                    pop.dvars(i).alleleFreq[locus][minor_allele]
+            allele_frq['minor', 'frequency'][locus] = pop.dvars().alleleFreq[locus][minor_allele]
         return allele_frq
-
 
     def rank_allele_effects(self, pop, loci, alleles,
                            allele_effects):
@@ -162,13 +117,6 @@ class Frq(object):
         for locus, allele in quantitative_trait_alleles['alleles']['unfavorable'].items():
             quantitative_trait_alleles['frequency']['unfavorable'][locus] =\
                 pop.dvars().alleleFreq[locus][allele]
-        for i in range(pop.numSubPop()):
-            for locus, allele in quantitative_trait_alleles['alleles']['favorable'].items():
-                quantitative_trait_alleles['frequency']['favorable'][i, locus] \
-                    = pop.dvars(i).alleleFreq[locus][allele]
-            for locus, allele in quantitative_trait_alleles['alleles']['unfavorable'].items():
-                quantitative_trait_alleles['frequency']['unfavorable'][i,locus]\
-                    = pop.dvars(i).alleleFreq[locus][allele]
 
         return quantitative_trait_alleles
 

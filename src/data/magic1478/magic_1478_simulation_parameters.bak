@@ -1,0 +1,6 @@
+'founders', (0, 44)
+'prefounder_file_name', (1024, 30)
+'number_of_replicates', (512, 5)
+'recombination_rates', (23552, 13312)
+'alleles', (1536, 21159)
+'operating_population_size', (23040, 6)

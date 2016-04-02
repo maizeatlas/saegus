@@ -36,7 +36,7 @@ Overview of MAGIC in saegus
 
    * ``operating_population_size``: size of our population remains fixed starting with the f_one generation.
    * ``pop``: Our workhorse simuPOP.Population to carry out all evolutionary processes.
-   * ``ind_id``: A unique floating point number corresponding to an individual. ``simuPOP`` allows us to use  ``ind_id`` to arbitarily manipulate populations.
+   * ``ind_id``: A unique floating point number corresponding to an individual. ``simuPOP`` gives us to use  ``ind_id`` to arbitrarily manipulate populations.
    * ``mother_id``: Albeit *Zea mays* can be considered both female and male it is useful at times to distinguish  ``mother`` from ``father``.
    * ``father_id``: Defined for the same reason as ``mother_id``. In general we follow the genetics convention of writing the *female* on the left of the cross.
 

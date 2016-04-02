@@ -12,9 +12,19 @@ Contents:
    :maxdepth: 2
 
    introduction.rst
-   breed.rst
-   standard_magic.rst
    terms.rst
+   breed.rst
+   analyze.rst
+   operators.rst
+   parameters.rst
+   simulate.rst
+   standard_magic.rst
+   magic1478.rst
+   specifying_a_simulation.rst
+   gwas_with_tassel.rst
+   making-a-base-population.rst
+   nam_prefounders.rst
+
 
 Indices and tables
 ==================

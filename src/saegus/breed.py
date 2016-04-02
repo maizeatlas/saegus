@@ -36,7 +36,6 @@ class MAGIC(object):
         founder_chooser = PairwiseIDChooser(parental_id_pairs,
                                                   offspring_per_pair)
 
-
         if len(parental_id_pairs) % 2 != 0:
             parental_id_pairs.append(random.choice(parental_id_pairs))
 
