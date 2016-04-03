@@ -94,9 +94,86 @@ the same founders as in ``standard_magic`` i.e. founders 1 through 8.
    prefounders_1478 = sim.loadPopulation('prefounders_1478.pop')
 
 
+Determine the Mating Pairs of Each Generation
+---------------------------------------------
 
-Parameter Set Stored Using :mode:`shelve`
-=========================================
+I created a standardized MAGIC1478 population as I did with MAGIC7386. At each step
+I pre-determine the mating pairs and record them in ``lists`` which have the title
+``expected_x_mother_ids`` and ``expected_x_father_ids``. The expected parental id pairs are
+mated in order. The offspring have infoFields which record the ID of their mother and ID father.
+
+
+After mating the offspring parental IDs are compared with the expected parental IDs.
+Below is an example of this mating-testing cycle.
+
+.. code-block:: python
+
+   first_sp_mothers = [random.choice(pop.indInfo('ind_id', 0)) for i in range(1000)]
+   second_sp_fathers = [random.choice(pop.indInfo('ind_id', 1)) for i in range(1000)]
+   third_sp_mothers = [random.choice(pop.indInfo('ind_id', 2)) for i in range(1000)]
+   fourth_sp_fathers = [random.choice(pop.indInfo('ind_id', 3)) for i in range(1000)]
+
+   expected_f_two_mother_ids = first_sp_mothers + third_sp_mothers
+   expected_f_two_father_ids = second_sp_fathers + fourth_sp_fathers
+
+The expected parental IDs are written to disk using a ``shelve`` for post-comparison should it be necessary.
+
+.. code-block:: python
+
+   breeding_parameters['expected_f_two_mother_ids'] = expected_f_two_mother_ids
+   breeding_parameters['expected_f_two_father_ids'] = expected_f_two_father_ids
+
+A ``parent_chooser`` is initiated which determines how offspring are created.
+
+.. code-block:: python
+
+   second_order_pc = breed.SecondOrderPairIDChooser(expected_f_two_mother_ids, expected_f_two_father_ids)
+
+Then mating occurs:
+
+.. code-block:: python
+
+   pop.evolve(
+       matingScheme=sim.HomoMating(
+           sim.PyParentsChooser(second_order_pc.snd_ord_id_pairs),
+           sim.OffspringGenerator(ops=[
+               sim.IdTagger(),
+               sim.ParentsTagger(),
+               sim.PedigreeTagger(),
+               sim.Recombinator(rates=0.01)
+           ],
+               numOffspring=1),
+           subPopSize=[2000],
+       ),
+       gen=1,
+   )
+
+We organize mother and father IDs into ``observed`` lists and compare them to the expected IDs.
+We count the number of matches between expected and observed mother IDs and expected and observed father IDs.
+The number should be equal to the population size.
+
+
+.. code-block:: python
+
+   breeding_parameters['expected_f_two_mother_ids'] = expected_f_two_mother_ids
+   breeding_parameters['expected_f_two_father_ids'] = expected_f_two_father_ids
+
+   breeding_parameters['observed_f_two_mother_ids'] = observed_f_two_mother_ids
+   breeding_parameters['observed_f_two_father_ids'] = observed_f_two_father_ids
+
+   breeding_parameters['number_of_matches_f_two_mother_ids'] = sum(np.equal(expected_f_two_mother_ids, observed_f_two_mother_ids))
+   breeding_parameters['number_of_matches_f_two_father_ids'] = sum(np.equal(expected_f_two_father_ids, observed_f_two_father_ids))
+
+   assert breeding_parameters['number_of_matches_f_two_father_ids'] == 2000, "Incorrect father IDs."
+
+   breeding_parameters['number_of_matches_f_two_mother_ids'] == 2000, "Incorrect mother IDs."
+
+The function :func:`np.equal` checks if the IDs match by location so the order is preserved.
+Otherwise the script will crash via an ``AssertionError``.
+
+
+Parameter Set Stored Using :mod:`shelve`
+========================================
 
 I used the ``shelve`` module to store the parameters and entire mating history of ``standard_magic``.
 I did the same thing for ``magic_1478``.
@@ -116,3 +193,4 @@ I did the same thing for ``magic_1478``.
    m1478_trait_parameters['number_of_qtl'] = 10
    m1478_trait_parameters['allele_effect_parameters'] = 1
    m1478_trait_parameters.close()
+

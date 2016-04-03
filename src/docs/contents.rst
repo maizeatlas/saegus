@@ -20,6 +20,7 @@ Contents:
    simulate.rst
    standard_magic.rst
    magic1478.rst
+   creating_data_for_GWAS_with_magic1478.rst
    specifying_a_simulation.rst
    gwas_with_tassel.rst
    making-a-base-population.rst

@@ -21,35 +21,28 @@ class MAGIC(object):
         self.pop = pop
         self. recombination_rates = recombination_rates
 
-    def generate_f_one(self, parental_id_pairs,
-                       offspring_per_pair):
+    def generate_f_one(self, parental_id_pairs, offspring_per_pair):
         """
-        Crosses pairs of *founders* specified by ``parental_id_pairs``.
+        Crosses pairs of founders as they are listed in founder indices.
+        using breed.PairwiseIDChooser
 
-         :param parental_id_pairs: Nested lists of founder IDs.
-         :param offspring_per_pair: How many offspring per pair.
-
-         :note: If there are an uneven number ``parental_id_pairs appends a
-         random choice to end of list.
+        :note: Data is specified as pairs. Testing for even-number unecessary.
         """
 
-        founder_chooser = PairwiseIDChooser(parental_id_pairs,
-                                                  offspring_per_pair)
-
-        if len(parental_id_pairs) % 2 != 0:
-            parental_id_pairs.append(random.choice(parental_id_pairs))
-
+        founder_chooser = PairwiseIDChooser(parental_id_pairs, offspring_per_pair)
         number_of_pairs = len(parental_id_pairs)
         self.pop.evolve(
-            preOps=[],
+            preOps=[
+                sim.PyEval(r'"Generation: %d\n" % gen',
+                           ),
+            ],
             matingScheme=sim.HomoMating(
                 sim.PyParentsChooser(founder_chooser.by_id_pairs),
                 sim.OffspringGenerator(ops=[
                     sim.IdTagger(),
                     sim.ParentsTagger(),
                     sim.PedigreeTagger(),
-                    sim.Recombinator(rates=self.recombination_rates)
-                                        ],
+                    sim.Recombinator(rates=self.recombination_rates)],
                     numOffspring=1),
                 subPopSize=[offspring_per_pair * number_of_pairs],
             ),
@@ -71,7 +64,6 @@ class MAGIC(object):
             preOps=[
                 sim.MergeSubPops(),
                 sim.PyEval(r'"Generation: %d\n" % gen'),
-                operators.CalcTripletFreq(),
                 sim.PyExec('triplet_freq[gen]=tripletFreq'),
                 sim.SplitSubPops(sizes=[1]*num_sub_pops, randomize=False),
             ],
@@ -81,6 +73,28 @@ class MAGIC(object):
                                         ),
             gen=1,
         )
+
+
+    def interim_random_mating(self, generations_of_random_mating, pop_size):
+        """
+        Randomly mates 'pop' for 'gens_of_random_mating' generations to further recombine founder genomes and dissolve
+        population structure.
+        :param pop: Founder population after mate_and_merge procedure
+        :return: Population ready to be subjected to selection
+        """
+        print("Initiating interim random mating for {} generations.".format(generations_of_random_mating))
+        self.pop.evolve(
+            preOps=[
+                sim.PyEval(r'"Generation: %d\n" % gen'),
+            ],
+            matingScheme=sim.RandomMating(
+                subPopSize=pop_size,
+                ops=[sim.IdTagger(), sim.PedigreeTagger(),
+                     sim.Recombinator(
+                         rates=self.recombination_rates)]),
+            gen=generations_of_random_mating,
+        )
+
 
     def restructure_offspring(self, offspring_per_subpop, number_subpops):
         """
