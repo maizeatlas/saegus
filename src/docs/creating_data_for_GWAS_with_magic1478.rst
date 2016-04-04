@@ -51,9 +51,9 @@ So then we assign an effect to each ``allele`` at each ``locus`` as such:
       2: {1: 3.57, 3: 1.874},
       10: {1: 3.29, 3: 3.44},
       20: {0: 2.05, 3: 3.03},
-   }
+   }  
 
-
+I defined a function which generalizes assignment of allele effects assign-any-allele-effects_
 
 
 .. _random-mating-magic1478:
@@ -61,21 +61,6 @@ So then we assign an effect to each ``allele`` at each ``locus`` as such:
 Random Mating MAGIC1478 for GWAS
 ================================
 
-
-
-
-
-.. code:: python
-
-    def assign_allele_effects(alleles, qtl, multiplicity, distribution_function,
-                             *distribution_function_parameters):
-        allele_effects = {}
-        for locus in qtl:
-            allele_effects[locus] = {}
-            for allele in alleles[locus]:
-                allele_effects[locus][allele] = sum([distribution_function(*distribution_function_parameters) 
-                                          for i in range(multiplicity)])
-        return allele_effects
 
 .. code:: python
 
@@ -101,28 +86,13 @@ Random Mating MAGIC1478 for GWAS
 
     sim.tagID(magic1478, reset=False)
 
-.. code:: python
-
     genetic_map = shelve.open('magic_1478_genetic_map')
     history = shelve.open('magic_1478_history')
     simulation = shelve.open('magic_1478_simulation_parameters')
     trait = shelve.open('magic_1478_trait_parameters')
 
-.. code:: python
-
     locus_1478_names = list(range(1478))
     pos_1478_column = list(range(1478))
-
-.. code:: python
-
-    import importlib as imp
-    imp.reload(breed)
-
-.. code:: python
-
-    sim.tagID()
-
-.. code:: python
 
     breed_magic_1478 = breed.MAGIC(magic1478, simulation['recombination_rates'])
     breed_magic_1478.interim_random_mating(3, 2000)
@@ -143,20 +113,12 @@ Determining G and P in the 1478 Population
 
     ae = assign_allele_effects(simulation['alleles'], trait['qtl'], 3, random.expovariate, 1)
 
-.. code:: python
-
-    ae
-
-
-
-
 .. parsed-literal::
 
+    ae
     {2: {1: 1.6039383268614498, 3: 2.795016834003455},
      10: {1: 3.3259920171422936, 3: 3.1695014054478565},
      20: {0: 2.4204478909872953, 3: 4.269861858273051}}
-
-
 
 .. code:: python
 
@@ -573,24 +535,44 @@ Determining G and P in the 1478 Population
 .. code:: python
 
     minor_af_vector = np.zeros(7386)
-    minor_af_vector[:] = [meta_rep.dvars(0).alleleFreq[locus][af['minor', 'alleles', 0][locus]] 
+    minor_af_vector[:] = [meta_rep.dvars(0).alleleFreq[locus][af['minor', 'alleles', 0][locus]]
                           for locus in range(meta_rep.totNumLoci())]
-    
+
     minor_alleles = np.zeros((7386), dtype=np.int8)
     major_alleles = np.zeros((7386), dtype=np.int8)
-    minor_alleles[:] = [af['minor', 'alleles', 0][locus] 
+    minor_alleles[:] = [af['minor', 'alleles', 0][locus]
                           for locus in range(meta_rep.totNumLoci())]
     major_alleles[:] = [af['major', 'alleles', 0][locus]
                            for locus in range(meta_rep.totNumLoci())]
-    
+
     minor_ae = np.zeros(7386)
     major_ae = np.zeros(7386)
     for locus in qtl:
         minor_ae[locus] = allele_effects[0][locus][minor_alleles[locus]]
         major_ae[locus] = allele_effects[0][locus][major_alleles[locus]]
-    
-    
-    
+
+
+
     avg_locus_effects = minor_af_vector*minor_ae + (1-minor_af_vector)*major_ae
 
 
+.. _assign-any-allele-effects:
+
+Allele Effects Using any Number of QTL and any Distribution
+===========================================================
+
+I defined a function which allows the user to define allele effects for any number
+of ``qtl``, any number of ``alleles`` at those loci and as random draws from any
+distribution.
+
+.. py:function:: assign_allele_effects(alleles, qtl, distribution_function, *distribution_function_parameters, multiplicity=1)
+
+      :parameter alleles: Dictionary of alleles at each locus
+      :parameter qtl: Loci which contribute to a quantitative trait
+      :parameter distribution_function: Function used to determine allele effects as random draws
+      :parameter distribution_function_parameters: Parameters required for the distribution function
+      :parameter multiplicity: Number of independent random draws from the distribution_function to assign as alelle effects.
+
+
+
+What do I have so far.

@@ -15,10 +15,7 @@
             <option name="USE_RELATIVE_INDENTS" value="false" />
           </value>
         </option>
-        <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="true" />
-        <MultiMarkdownCodeStyleSettings>
-          <option name="RIGHT_MARGIN" value="72" />
-        </MultiMarkdownCodeStyleSettings>
+        <option name="RIGHT_MARGIN" value="80" />
         <XML>
           <option name="XML_LEGACY_SETTINGS_IMPORTED" value="true" />
         </XML>

@@ -3,209 +3,29 @@
 ==============
 
 
-Imports:
 
-   - import simuPOP as sim
-   - import csv
-   - import math
-   - import numpy as np
-   - import pandas as pd
-   - import collections as col
-   - import os
-   - from scipy import linalg
-   - import matplotlib.pyplot as plt
+.. py:function:: allele_frequencies(pop, alleles, loci)
 
+   Determine major and minor alleles in each generation the aggregate
+   population. Generations in a meta-populations correspond to
+   sub-populations.
 
+   :param pop:
+   :param loci:
 
-.. func:: pedigree_writer(pop, pedigree_filename)
+.. py:function:: rank_allele_effects(pop, loci, alleles, allele_effects)
 
-    Writes ``ind_id``, ``mother_id`` and ``father_id`` for each individual to
-     ``pedigree_filename``.
+   Collects information about alleles at quantitative trait loci into a
+   dictionary. Determines favorable/unfavorable allele and corresponding
+   frequency. Keys of quantitative_trait_alleles have similar hierarchy
+   for both the alleles and their frequencies.
 
-   :warning: File is by default in append mode because it assumes
-   :warning: multiple generations will be written.
-   :param pop: Population with information fields of `ind_id`, `mother_id`
-   and `father_id`.
-   :type pop: sim.Population
-   :param pedigree_filename: Name of output file.
-   :type pedigree_filename: str
-   :return: None
-   :rtype: None
+   :param pop:
+   :param loci:
+   :param alleles:
+   :param allele_effects:
 
-
-.. class:: Frq
-
-   :note: Assumes a quantitative trait additive model -- saegus 0.1.2
-
-   A class to encapsulate information about alleles at all loci Requires a
-   list of loci, a dictionary of alleles and allele effects used to determine
-   phenotypes for population
-
-
-
-    .. method:: __init__(pop, loci, alleles, allele_effects)
-
-       :param dict alleles: Dictionary keyed by locus and valued by a list of
-        alleles present at that locus.
-       :param dict allele_effects: Dictionary keyed by locus and valued by a
-       sub-dictionary of effects for the alleles at that locus.
-       :param list loci: List of loci as integers.
-       :param pop: simuPOP.Population
-
-    .. method:: allele_frequencies(pop, loci):
-        """
-        Determine major and minor alleles in each generation the aggregate
-        population. Generations in a meta-populations correspond to
-        sub-populations.
-        :param pop:
-        :type pop:
-        :param loci:
-        :type loci:
-        :return:
-        :rtype:
-        """
-        sim.stat(pop, alleleFreq=loci, vars=['alleleFreq', 'alleleFreq_sp'])
-        # removes empty sub-population.
-        if pop.subPopSizes()[0] == 0:
-            pop.removeSubPops(0)
-
-        reversed_allele_frequencies = {}
-        allele_frq = {}
-
-        # Generations
-        for i in range(self.pop.numSubPop()):
-            for locus in range(self.pop.totNumLoci()):
-                reversed_allele_frequencies[i, locus] = {}
-                for allele in self.alleles[locus]:
-                    frequency = self.pop.dvars(i).alleleFreq[locus][allele]
-                    reversed_allele_frequencies[i, locus][frequency] = allele
-
-        # Aggregate population
-        for locus in range(pop.totNumLoci()):
-            reversed_allele_frequencies[locus] = {}
-            for allele in self.alleles[locus]:
-                frequency = pop.dvars().alleleFreq[locus][allele]
-                reversed_allele_frequencies[locus][frequency] = allele
-
-        for i in range(pop.numSubPop()):
-            allele_frq['minor', 'alleles', i] = col.OrderedDict()
-            allele_frq['minor', 'frequency', i] = col.OrderedDict()
-            allele_frq['frequencies', i] = col.OrderedDict()
-            allele_frq['major', 'alleles', i] = col.OrderedDict()
-            allele_frq['major', 'frequency', i] = col.OrderedDict()
-
-        # Aggregate
-        allele_frq['minor', 'alleles'] = col.OrderedDict()
-        allele_frq['minor', 'frequency'] = col.OrderedDict()
-        allele_frq['frequencies'] = col.OrderedDict()
-        allele_frq['major', 'alleles'] = col.OrderedDict()
-        allele_frq['major', 'frequency'] = col.OrderedDict()
-
-
-        # Determine major/minor allele in aggregate population
-        for locus in loci:
-            temp_frq = []
-            for allele in self.alleles[locus]:
-                temp_frq.append(pop.dvars().alleleFreq[locus][allele])
-            allele_frq['frequencies'][locus] = temp_frq
-            minor_frequency = min(allele_frq['frequencies'][locus])
-            major_frequency = max(allele_frq['frequencies'][locus])
-            allele_frq['minor', 'alleles'][locus] = \
-                reversed_allele_frequencies[locus][minor_frequency]
-            allele_frq["major", "alleles"][locus] = \
-                reversed_allele_frequencies[locus][major_frequency]
-
-
-        for i in range(pop.numSubPop()):
-            for locus in loci:
-                temp_frq = []
-                for allele in self.alleles[locus]:
-                    temp_frq.append(pop.dvars(i).alleleFreq[locus][allele])
-                allele_frq['frequencies', i][locus] = temp_frq
-
-                minor_frequency = min(allele_frq['frequencies', i][locus])
-                major_frequency = max(allele_frq['frequencies', i][locus])
-                allele_frq['minor', 'alleles', i][locus] = \
-                    reversed_allele_frequencies[i, locus][minor_frequency]
-                allele_frq['major', 'alleles', i][locus] = \
-                    reversed_allele_frequencies[i, locus][major_frequency]
-
-        for locus in loci:
-            major_allele = allele_frq['major', 'alleles'][locus]
-            minor_allele = allele_frq['minor', 'alleles'][locus]
-            allele_frq['major', 'frequency'][locus] = pop.dvars(
-
-            ).alleleFreq[locus][major_allele]
-            allele_frq['minor', 'frequency'][locus] = pop.dvars(
-
-            ).alleleFreq[locus][minor_allele]
-            for i in range(pop.numSubPop()):
-                major_allele = allele_frq['major', 'alleles', i][locus]
-                minor_allele = allele_frq['minor', 'alleles', i][locus]
-                allele_frq['major', 'frequency', i][locus] = \
-                    pop.dvars(i).alleleFreq[locus][major_allele]
-                allele_frq['minor', 'frequency', i][locus] = \
-                    pop.dvars(i).alleleFreq[locus][minor_allele]
-        return allele_frq
-
-
-    def rank_allele_effects(self, pop, loci, alleles,
-                           allele_effects):
-        """
-        Collects information about alleles at quantitative trait loci into a
-        dictionary. Determines favorable/unfavorable allele and corresponding
-        frequency. Keys of quantitative_trait_alleles have similar hierarchy
-        for both the alleles and their frequencies.
-        :param pop:
-        :param loci:
-        :param alleles:
-        :param allele_effects:
-
-
-        """
-        quantitative_trait_alleles = {}
-        quantitative_trait_alleles['effects'] = col.OrderedDict()
-        quantitative_trait_alleles['alleles'] = col.OrderedDict()
-        quantitative_trait_alleles['alleles']['favorable'] = col.OrderedDict()
-        quantitative_trait_alleles['alleles']['unfavorable'] = col.OrderedDict()
-        quantitative_trait_alleles['frequency'] = col.OrderedDict()
-        quantitative_trait_alleles['frequency']['favorable'] = col.OrderedDict()
-        quantitative_trait_alleles['frequency']['unfavorable'] = col.OrderedDict()
-        for locus in loci:
-            temp_effects = []
-            for allele in alleles[locus]:
-                temp_effects.append(allele_effects[locus][allele])
-            quantitative_trait_alleles['effects'][locus] = temp_effects
-
-        for locus in loci:
-            for allele in alleles[locus]:
-                if allele_effects[locus][allele] == max(
-                        quantitative_trait_alleles['effects'][locus]):
-                    quantitative_trait_alleles['alleles']['favorable'][locus] =\
-                        allele
-                if allele_effects[locus][allele] == min(
-                        quantitative_trait_alleles['effects'][locus]):
-                    quantitative_trait_alleles['alleles']['unfavorable'][locus] =\
-                        allele
-
-        for locus, allele in quantitative_trait_alleles['alleles']['favorable'].items():
-            quantitative_trait_alleles['frequency']['favorable'][locus] = \
-                pop.dvars().alleleFreq[locus][allele]
-        for locus, allele in quantitative_trait_alleles['alleles']['unfavorable'].items():
-            quantitative_trait_alleles['frequency']['unfavorable'][locus] =\
-                pop.dvars().alleleFreq[locus][allele]
-        for i in range(pop.numSubPop()):
-            for locus, allele in quantitative_trait_alleles['alleles']['favorable'].items():
-                quantitative_trait_alleles['frequency']['favorable'][i, locus] \
-                    = pop.dvars(i).alleleFreq[locus][allele]
-            for locus, allele in quantitative_trait_alleles['alleles']['unfavorable'].items():
-                quantitative_trait_alleles['frequency']['unfavorable'][i,locus]\
-                    = pop.dvars(i).alleleFreq[locus][allele]
-
-        return quantitative_trait_alleles
-
-
-.. method:: allele_frq_table(pop, number_gens, allele_frq_data, recombination_rates, genetic_map):
+.. py:function:: allele_frq_table(pop, number_gens, allele_frq_data, recombination_rates, genetic_map)
 
    Tabulates useful information about each locus and allele frequency
 
@@ -268,116 +88,26 @@ Imports:
 
 
 
-    def qt_allele_table(self, qt_alleles, allele_effects):
-        """
-        Generates a pd.DataFrame object of data relevant to quantitative
-        trait alleles across all generations.
-        :param qt_alleles:
-        :type qt_alleles:
-        :param allele_effects:
-        :type allele_effects:
-        :return:
-        :rtype:
-        """
-        qtdata = {}
-        data_columns = ['abs_index', 'chrom', 'locus', 'cM',
-         'favorable', 'fav_effect', 'unfavorable', 'unfav_effect',
-                        'effect_diff']
+.. py:function:: qt_allele_table(self, qt_alleles, allele_effects):
+   Generates a pd.DataFrame object of data relevant to quantitative
+   trait alleles across all generations.
+   :param qt_alleles:
+   :type qt_alleles:
+   :param allele_effects:
+   :type allele_effects:
+   :return:
+   :rtype:
 
-        generation_labels = ['G_'+str(i)
-                             for i in range(0, self.pop.dvars().gen+1, 2)]
-        data_columns = data_columns + generation_labels + ['aggregate']
-
-        chromosomes = []
-        relative_loci = []
-        for locus in self.pop.dvars().triplet_qtl:
-            pair = self.pop.chromLocusPair(locus)
-            chromosomes.append(pair[0]+1)
-            relative_loci.append(pair[1])
-
-
-        qtdata['chrom'] = chromosomes
-        qtdata['locus'] = relative_loci
-        qtdata['abs_index'] = [locus for locus in self.pop.dvars().triplet_qtl]
-        qtdata['favorable'] = [qt_alleles['alleles']['favorable'][locus] for
-                               locus in self.pop.dvars().triplet_qtl]
-
-        qtdata['fav_effect'] = [allele_effects[locus][allele]
-                                for locus, allele in qt_alleles['alleles']['favorable'].items()]
-
-        qtdata['unfavorable'] = [qt_alleles['alleles']['unfavorable'][locus]
-                                 for locus in self.pop.dvars().triplet_qtl]
-
-        qtdata['unfav_effect'] = [allele_effects[locus][allele]
-                                  for locus, allele in qt_alleles['alleles']['unfavorable'].items()]
-
-        qtdata['effect_diff'] = [allele_effects[locus][qt_alleles['alleles']['favorable'][locus]] -
-                                 allele_effects[locus][qt_alleles['alleles']['unfavorable'][locus]]
-                                 for locus in self.pop.dvars().triplet_qtl]
-        for subpop, label in zip(range(self.pop.numSubPop()),
-                                 generation_labels):
-            qtdata[label] = [qt_alleles['frequency']['favorable'][subpop,
-                                                                  locus] for
-                             locus in self.pop.dvars().triplet_qtl]
-        qtdata['aggregate'] = [qt_alleles['frequency']['favorable'][locus]
-                               for locus in self.pop.dvars().triplet_qtl]
-        qta_table = pd.DataFrame(qtdata, columns=data_columns)
-        return qta_table
-
-
-def collect_haplotype_data(pop, allele_effects, quantitative_trait_loci):
-    """
+.. py:function:: collect_haplotype_data(pop, allele_effects, quantitative_trait_loci)
 
     :param pop:
-    :type pop:
     :param allele_effects:
-    :type allele_effects:
     :param quantitative_trait_loci:
-    :type quantitative_trait_loci:
-    :return:
-    :rtype:
-    """
-
-    haplotypes = {}
-    haplotypes['loci'] = {}
-    for k, i in enumerate(range(0, len(quantitative_trait_loci), 3)):
-        haplotypes['loci'][k] = (quantitative_trait_loci[i],
-                             quantitative_trait_loci[i+1],
-                             quantitative_trait_loci[i+2])
-
-    haplotypes['alleles'] = {}
-    haplotypes['effect'] = {}
-    haplotypes['frequency'] = {}
-    for loci in haplotypes['loci'].values():
-        haplotypes['frequency'][loci] = {}
-        for sp in range(pop.numSubPop()):
-            haplotypes['frequency'][loci][sp] = {}
-
-    sim.stat(pop, haploFreq=list(haplotypes['loci'].values()),
-             vars=['haploFreq', 'haploFreq_sp'])
-
-    for k, v in haplotypes['loci'].items():
-        haplotypes['alleles'][v] = list(pop.dvars(0).haploFreq[v].keys())
-
-    for sp in range(pop.numSubPop()):
-        for loci, triplet in haplotypes['alleles'].items():
-            for alleles in triplet:
-                haplotypes['frequency'][loci][sp][alleles] = pop.dvars(
-                    sp).haploFreq[loci][alleles]
-
-    for htype, triplets in haplotypes['alleles'].items():
-        haplotypes['effect'][htype] = {}
-        for trip in triplets:
-            htype_effect = allele_effects[htype[0]][trip[0]] +\
-            allele_effects[htype[1]][trip[1]] +\
-            allele_effects[htype[2]][trip[2]]
-            haplotypes['effect'][htype][trip] = htype_effect
-
-    return haplotypes
 
 
-def generate_haplotype_data_table(pop, haplotype_data):
-    """
+
+.. py:function:: generate_haplotype_data_table(pop, haplotype_data)
+
     Generates a table for easy analysis and visualization of haplotypes,
     effects, frequencies and locations.
 
@@ -388,38 +118,11 @@ def generate_haplotype_data_table(pop, haplotype_data):
     :type haplotype_data:
     :return:
     :rtype:
-    """
-    integer_to_snp = {0: 'A', 1: 'C', 2: 'G', 3: 'T', 4: '+', 5: '-'}
-    haplotype_table = []
-    data_columns = ['centered_on', 'relative_position', 'chromosome',
-                    'haplotype', 'effect']
-    generation_columns = ['G_'+str(i) for i in range(0, 2*(pop.numSubPop()),
-                                                     2)]
-    data_columns.extend(generation_columns)
-    for locus in haplotype_data['loci'].values():
-        for triplet in haplotype_data['alleles'][locus]:
-            generational_frequencies = [haplotype_data['frequency'][locus][sp][triplet]
-                                        for sp in range(pop.numSubPop())]
-            effect = haplotype_data['effect'][locus][triplet]
-            snp_triplet = integer_to_snp[triplet[0]] + \
-                          integer_to_snp[triplet[1]] + \
-                          integer_to_snp[triplet[2]]
-            chromosome = pop.chromLocusPair(locus[1])[0] + 1
-            relative_locus = pop.chromLocusPair(locus[1])[1]
-            row = [locus[1]] + \
-                  [relative_locus] +\
-                  [chromosome] + \
-                  [snp_triplet] + \
-                  [effect] + \
-                  generational_frequencies
-            haplotype_table.append(row)
-    return pd.DataFrame(haplotype_table, columns=data_columns)
 
-
-def plot_frequency_vs_effect(pop, haplotype_table, plot_title,
+.. py:function:: plot_frequency_vs_effect(pop, haplotype_table, plot_title,
                              plot_file_name,
-                             color_map='Dark2'):
-    """
+                             color_map='Dark2')
+
     Uses the haplotype data table to arrange data into a chromosome
     color coded multiple generation plot which shows the change in
     haplotype frequency over time. Haplotypes are dots with fixed
@@ -430,80 +133,13 @@ def plot_frequency_vs_effect(pop, haplotype_table, plot_title,
     :param color_map:
     :param pop:
     :param haplotype_table:
-    """
 
-    plt.style.use('ggplot')
+.. py:class:: MetaData(object)
 
-    distinct_chromosomes = list(set(haplotype_table['chromosome']))
-    number_of_different_colors = len(distinct_chromosomes)
-    generation_labels = ['G_' + '{' + str(i) + '}' for i in
-                          range(0, 2*(pop.numSubPop()), 2)]
-    generations = ['G_' + str(i) for i in range(0, 2*(pop.numSubPop()), 2)]
-
-    c_map = plt.get_cmap(color_map)
-
-    colors = c_map(np.linspace(0, 1, number_of_different_colors))
-
-    chromosome_colors = {distinct_chromosomes[i]: colors[i] for i in
-                         range(number_of_different_colors)}
-
-    effect_frq_by_chromosome = {}
-
-    for sp in range(pop.numSubPop()):
-        effect_frq_by_chromosome[sp] = {}
-        for chrom in distinct_chromosomes:
-            haplotype_frequencies = np.array(
-                haplotype_table.loc[
-                    haplotype_table['chromosome'] == chrom][generations[sp]])
-
-            haplotype_effects = np.array(
-                haplotype_table.loc[
-                    haplotype_table['chromosome'] == chrom]['effect'])
-
-            effect_frq_by_chromosome[sp][chrom] = np.array([
-                haplotype_frequencies, haplotype_effects])
-
-    # Figure parameters
-    maximum_haplotype_effect = max(haplotype_table['effect'])
-
-    generations = ['G_'+str(i) for i in range(0, 2*(pop.numSubPop()) + 1, 2)]
-
-    f, ax = plt.subplots(pop.numSubPop(), 1, figsize=(15, 40))
-    for sp in range(pop.numSubPop()):
-        ax[sp].set_xlim(-0.5, maximum_haplotype_effect+4)
-        ax[sp].set_ylim(-0.1, 1.1)
-        for chrom in distinct_chromosomes:
-            ax[sp].plot(effect_frq_by_chromosome[sp][chrom][1],
-                    effect_frq_by_chromosome[sp][chrom][0],
-                    markersize=8, linewidth=0.0, marker='*',
-                    color=chromosome_colors[chrom],
-                        label="Chrom {}".format(chrom))
-        #handles, labels = ax[sp].get_legend_handles_labels()
-        ax[sp].set_xlabel("Effect")
-        ax[sp].set_ylabel("Frequency")
-        ax[sp].set_title(r'${gen}$'.format(gen=generation_labels[sp]),
-                         fontsize=12)
-        ax[sp].legend(loc='best')
-    f.suptitle(plot_title,
-               fontsize=24)
-
-    f.savefig(plot_file_name, dpi=300)
-
-    return effect_frq_by_chromosome
-
-
-
-
-
-
-
-class MetaData(object):
-    """
     The wgs is extensively paramterized. Hence changing one parameter will potentially produce a significantly different
     result in the final population. Therefore, a set of replications is defined by a particular of parameterization.
     The parameterization will be described in a metadata document. The class MetaData is responsible for collecting
     the parameterization information and processing it into a writable file.
-    """
 
     def __init__(self, prefounders, founders, population_sizes, allele_effect_information,
                  allele_effects_table, metadata_filename):
@@ -594,13 +230,13 @@ class MetaData(object):
         return genomic_dispersal
 
 
-class PCA(object):
-    """
+.. py:class::PCA
+
     Class for performing principal component analyis on genotype matrices.
     Test for population structure significance tests the largest eigenvalue
     of the genotype covarience matrix. Details can be found in the paper:
     Population Structure and Eigenanalysis Patterson et al 2006.
-    """
+
     def __init__(self, pop, loci, qt_data):
         self.pop = pop
         self.loci = loci
@@ -682,10 +318,9 @@ class PCA(object):
         test_statistic = (lowercase_l - mu_hat) / sigma_hat
         return test_statistic
 
-class GWAS(object):
-    """
+.. py:class::GWAS
+
     A class to collect and format all data in preparation for GWAS using TASSEL.
-    """
 
     def __init__(self, pop, individual_names, locus_names, positions, *args,
                  **kwargs):
