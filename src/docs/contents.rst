@@ -9,24 +9,11 @@ Welcome to saegus's documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
-   introduction.rst
-   terms.rst
-   breed.rst
-   analyze.rst
-   operators.rst
-   parameters.rst
-   simulate.rst
-   standard_magic.rst
    magic1478.rst
    creating_data_for_GWAS_with_magic1478.rst
    analyzing_magic1478_results.rst
-   specifying_a_simulation.rst
-   gwas_with_tassel.rst
-   making-a-base-population.rst
-   nam_prefounders.rst
-
 
 Indices and tables
 ==================

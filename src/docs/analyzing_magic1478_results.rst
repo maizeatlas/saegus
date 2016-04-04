@@ -1,4 +1,4 @@
-.. analyze-magic1478-rdm-mating-results:
+.. _analyze-magic1478-rdm-mating-results:
 
 =====================================
 Analyzing Results of GWAS with TASSEL
@@ -96,12 +96,20 @@ Dataset Specifics
 
 This is some useful information about the data-set used in the TASSEL MLM:
 
-Population Size: 2000
-QTL: 2, 10, 20
+   **Population Size**
+      2000
+   **QTL**
+      [2, 10, 20]
 
-qvalues in R
-------------
+.. parsed-literal:: Allele Effects
 
+    {2: {1: 1.6039383268614498, 3: 2.795016834003455},
+     10: {1: 3.3259920171422936, 3: 3.1695014054478565},
+     20: {0: 2.4204478909872953, 3: 4.269861858273051}}
+
+
+QVALUES in R
+============
 
 
 We will follow Jim's tutorial to use the :mod:`qvalue` package in R; however, I
@@ -143,3 +151,18 @@ obtain the q-values.
    qobj$qvalues
    qvalues_of_magic1478_results = data.frame(qobj$qvalues)
    write.table(qvalues_of_magic1478_results, "qvalues_of_magic1478.txt", sep="\t")
+
+We use the :func:`qqunif` function in R to produce the quantile-quantile plot of
+the p-values.
+
+.. figure:: qqplot.png
+
+   Quantile-Quantile plot.
+
+TASSEL detected two of the three QTL: 2 and 20.
+The Q-values are 4.1451249e-25 and 1.606586e-73 respectively.
+
+Two observations that are immediately obvious:
+
+   1) there is almost no difference between allele effects at locus 10
+   2) locus 10 is very close to 2 and 20 which might mute its already small effect

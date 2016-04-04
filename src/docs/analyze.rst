@@ -33,8 +33,7 @@
    :param int number_gens: Number of generations of selection or drift
    :param dict allele_frq_data: Allele frequency data and the major/minor alleles at each locus.
    :param list recombination_rates: Recombination rates for each locus in order.
-   :param pd.DataFrame genetic_map: Chromosome:cM position correspondence.
-
+   :param genetic_map: Chromosome:cM position correspondence.
 
    Columns
    -------
@@ -83,20 +82,13 @@
       allele_frequency_table = selection_qtd.allele_frq_table(pop, 10, allele_frq_data, recombination_rates,
                                                             genetic_map)
 
+.. py:function:: qt_allele_table(qt_alleles, allele_effects)
 
-
-
-
-
-.. py:function:: qt_allele_table(self, qt_alleles, allele_effects):
    Generates a pd.DataFrame object of data relevant to quantitative
    trait alleles across all generations.
+
    :param qt_alleles:
-   :type qt_alleles:
    :param allele_effects:
-   :type allele_effects:
-   :return:
-   :rtype:
 
 .. py:function:: collect_haplotype_data(pop, allele_effects, quantitative_trait_loci)
 
@@ -104,20 +96,13 @@
     :param allele_effects:
     :param quantitative_trait_loci:
 
-
-
 .. py:function:: generate_haplotype_data_table(pop, haplotype_data)
 
     Generates a table for easy analysis and visualization of haplotypes,
     effects, frequencies and locations.
 
-
     :param pop:
-    :type pop:
     :param haplotype_data:
-    :type haplotype_data:
-    :return:
-    :rtype:
 
 .. py:function:: plot_frequency_vs_effect(pop, haplotype_table, plot_title,
                              plot_file_name,
@@ -128,6 +113,7 @@
     haplotype frequency over time. Haplotypes are dots with fixed
     x-position which shows their effect. Their motion along the y-axis
     which is frequency shows changes over time.
+
     :param plot_title:
     :param plot_file_name:
     :param color_map:
