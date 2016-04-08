@@ -8,184 +8,211 @@ import os
 from scipy import linalg
 import matplotlib.pyplot as plt
 
-
-
-
-
-class Frq(object):
+def allele_data(pop, alleles, loci):
     """
-    A class to encapsulate information about alleles at quantitative trait
-    loci. Requires a list of quantitative trait loci, a dictionary of
-    alleles present in prefounder population and allele effects used to
-    determine phenotypes for population.
+    Determines the minor alleles, minor allele frequencies, major alleles and
+    major allele frequencies.
+
+    Example
+    ~~~~~~~
+
+        pop = sim.loadPopulation('magic1478.pop')
+        loci = list(range(10, 200, 5))
+        alleles = shelve.open('magic_1478_simulation_parameters')
+
+
+
+
+
+    :param pop:
+    :type pop:
+    :param loci:
+    :type loci:
+    :return:
+    :rtype:
     """
-    def __init__(self, pop, *args, **kwargs):
-        self.pop = pop
+    sim.stat(pop, alleleFreq=loci, vars=['alleleFreq'])
 
-    @staticmethod
-    def allele_frequencies(pop, alleles, loci: list):
-        """
-        Determine major and minor alleles in each generation the aggregate
-        population. Generations in a meta-populations correspond to
-        sub-populations.
-        :param pop:
-        :type pop:
-        :param loci:
-        :type loci:
-        :return:
-        :rtype:
-        """
-        sim.stat(pop, alleleFreq=loci, vars=['alleleFreq', 'alleleFreq_sp'])
+    reversed_allele_frequencies = {}
+    allele_frq = {}
 
-        reversed_allele_frequencies = {}
-        allele_frq = {}
+    for locus in loci:
+        reversed_allele_frequencies[locus] = {}
+        for allele in alleles[locus]:
+            frequency = pop.dvars().alleleFreq[locus][allele]
+            reversed_allele_frequencies[locus][frequency] = allele
 
-        for locus in range(pop.totNumLoci()):
-            reversed_allele_frequencies[locus] = {}
-            for allele in alleles[locus]:
-                frequency = pop.dvars().alleleFreq[locus][allele]
-                reversed_allele_frequencies[locus][frequency] = allele
+    allele_frq['minor', 'alleles'] = col.OrderedDict()
+    allele_frq['minor', 'frequency'] = col.OrderedDict()
+    allele_frq['frequencies'] = col.OrderedDict()
+    allele_frq['major', 'alleles'] = col.OrderedDict()
+    allele_frq['major', 'frequency'] = col.OrderedDict()
 
-        allele_frq['minor', 'alleles'] = {}
-        allele_frq['minor', 'frequency'] = {}
-        allele_frq['frequencies'] = {}
-        allele_frq['major', 'alleles'] = {}
-        allele_frq['major', 'frequency'] = {}
+    # Determine major/minor allele in aggregate population
+    for locus in loci:
+        temp_frq = []
+        for allele in alleles[locus]:
+            np.array([pop.dvars().alleleFreq[locus][allele]])
+            temp_frq.append(pop.dvars().alleleFreq[locus][allele])
 
-        # Determine major/minor allele in aggregate population
-        for locus in loci:
-            temp_frq = []
-            for allele in alleles[locus]:
-                temp_frq.append(pop.dvars().alleleFreq[locus][allele])
-            allele_frq['frequencies'][locus] = temp_frq
-            minor_frequency = min(allele_frq['frequencies'][locus])
-            major_frequency = max(allele_frq['frequencies'][locus])
-            allele_frq['minor', 'alleles'][locus] = \
-                reversed_allele_frequencies[locus][minor_frequency]
-            allele_frq["major", "alleles"][locus] = \
-                reversed_allele_frequencies[locus][major_frequency]
+        allele_frq['frequencies'][locus] = temp_frq
+        minor_frequency = min(allele_frq['frequencies'][locus])
+        major_frequency = max(allele_frq['frequencies'][locus])
+        allele_frq['minor', 'alleles'][locus] = reversed_allele_frequencies[locus][minor_frequency]
+        allele_frq["major", "alleles"][locus] = reversed_allele_frequencies[locus][major_frequency]
 
-        for locus in loci:
-            major_allele = allele_frq['major', 'alleles'][locus]
-            minor_allele = allele_frq['minor', 'alleles'][locus]
-            allele_frq['major', 'frequency'][locus] = pop.dvars().alleleFreq[locus][major_allele]
-            allele_frq['minor', 'frequency'][locus] = pop.dvars().alleleFreq[locus][minor_allele]
-        return allele_frq
+    # In some cases alleles may be at exactly equal frequencies i.e. both alleles
+    # at 0.5. The result will be the inability to consistently distinguish
+    # bewtween the major and minor allele.
 
-    def rank_allele_effects(self, pop, loci, alleles,
-                           allele_effects):
-        """
-        Collects information about alleles at quantitative trait loci into a
-        dictionary. Determines favorable/unfavorable allele and corresponding
-        frequency. Keys of quantitative_trait_alleles have similar hierarchy
-        for both the alleles and their frequencies.
-        :param pop:
-        :param loci:
-        :param alleles:
-        :param allele_effects:
+    ties = np.array([locus for locus in loci
+                    if allele_frq['minor', 'alleles'][locus] ==
+                         allele_frq['major', 'alleles'][locus]])
 
+    for tied_alleles in ties:
+        allele_frq['major', 'alleles'][tied_alleles] = list(pop.dvars().alleleFreq[tied_alleles])[0]
+        allele_frq['minor', 'alleles'][tied_alleles] = list(pop.dvars().alleleFreq[tied_alleles])[1]
 
-        """
-        quantitative_trait_alleles = {}
-        quantitative_trait_alleles['effects'] = col.OrderedDict()
-        quantitative_trait_alleles['alleles'] = col.OrderedDict()
-        quantitative_trait_alleles['alleles']['favorable'] = col.OrderedDict()
-        quantitative_trait_alleles['alleles']['unfavorable'] = col.OrderedDict()
-        quantitative_trait_alleles['frequency'] = col.OrderedDict()
-        quantitative_trait_alleles['frequency']['favorable'] = col.OrderedDict()
-        quantitative_trait_alleles['frequency']['unfavorable'] = col.OrderedDict()
-        for locus in loci:
-            temp_effects = []
-            for allele in alleles[locus]:
-                temp_effects.append(allele_effects[locus][allele])
-            quantitative_trait_alleles['effects'][locus] = temp_effects
+    # Test to make sure the major/minor allele conflict has been resolved to
+    # by making sure that the major and minor alleles are different at every
+    # locus. Assert that the number of matches is equal to 0.
 
-        for locus in loci:
-            for allele in alleles[locus]:
-                if allele_effects[locus][allele] == max(
-                        quantitative_trait_alleles['effects'][locus]):
-                    quantitative_trait_alleles['alleles']['favorable'][locus] =\
-                        allele
-                if allele_effects[locus][allele] == min(
-                        quantitative_trait_alleles['effects'][locus]):
-                    quantitative_trait_alleles['alleles']['unfavorable'][locus] =\
-                        allele
+    major_minor_allele_conflicts = sum(
+        np.equal(list(allele_frq['minor', 'alleles'].values()),
+                 list(allele_frq['major', 'alleles'].values())))
 
-        for locus, allele in quantitative_trait_alleles['alleles']['favorable'].items():
-            quantitative_trait_alleles['frequency']['favorable'][locus] = \
-                pop.dvars().alleleFreq[locus][allele]
-        for locus, allele in quantitative_trait_alleles['alleles']['unfavorable'].items():
-            quantitative_trait_alleles['frequency']['unfavorable'][locus] =\
-                pop.dvars().alleleFreq[locus][allele]
+    assert major_minor_allele_conflicts == 0, "At least one locus defines the major allele to be the same" \
+                                              "as the minor allele.: {}".format(ties)
 
-        return quantitative_trait_alleles
+    minor_alleles = [allele_frq['minor', 'alleles'][locus] for locus in loci]
+    minor_frequencies = [pop.dvars().alleleFreq[locus][minor_allele] for locus, minor_allele in enumerate(minor_alleles)]
+    major_alleles = [allele_frq['major', 'alleles'][locus] for locus in loci]
+    major_frequencies = [pop.dvars().alleleFreq[locus][major_allele] for locus, major_allele in enumerate(major_alleles)]
 
-    def allele_frq_table(self, pop, number_gens,
-        allele_frq_data, recombination_rates, genetic_map):
-        """
-        Generates a large table which centralizes all allele frequency data.
-        The data is inserted into a pandas DataFrame object.
-        Useful for downstream analysis and insertion into a database.
+    allele_data_structure = \
+        pd.DataFrame(np.array([minor_alleles, minor_frequencies, major_alleles, major_frequencies]),
+                     index=['minor_allele', 'minor_frequency', 'major_allele', 'major_frequency'],
+                     columns=loci).T
 
-        Allele frequency data is first built up in a regular *dict* object
-        then inserted into a
-        :param pop:
-        :param number_gens:
-        :param allele_frq_data:
-        :param recombination_rates:
-        :param genetic_map:
-        """
+    return allele_data_structure
 
 
-        data_columns = ['abs_index', 'chrom', 'locus', 'major',
-                        'minor', 'recom_rate', 'cM', 'v']
-        generation_labels = ['G_'+str(i)
-                             for i in range(0, number_gens+1, 2)]
-        data_columns = data_columns + generation_labels + ['aggregate']
-        data = {}
-        breakpoints = col.OrderedDict()
-        for locus in range(pop.totNumLoci()):
-            if recombination_rates[locus] == 0.01:
-                breakpoints[locus] = locus + 1
-
-        diagram = ["|"]*pop.totNumLoci()
-
-        for locus, point in breakpoints.items():
-            try:
-                diagram[point] = '*'
-            except IndexError:
-                pass
-
-        qtl_diagram = ['o']*pop.totNumLoci()
-        for locus in pop.dvars().triplet_qtl:
-            qtl_diagram[locus] = 'x'
-
-        chromosomes = []
-        relative_loci = []
-        for locus in range(pop.totNumLoci()):
-            pair = pop.chromLocusPair(locus)
-            chromosomes.append(pair[0]+1)
-            relative_loci.append(pair[1])
-
-        data['chrom'] = chromosomes
-        data['locus'] = relative_loci
 
 
-        data['recom_rate'] = recombination_rates
-        data['v'] = diagram
-        data['cM'] = genetic_map['cM_pos']
-        data['qtl'] = qtl_diagram
+def rank_allele_effects(self, pop, loci, alleles,
+                       allele_effects):
+    """
+    Collects information about alleles at quantitative trait loci into a
+    dictionary. Determines favorable/unfavorable allele and corresponding
+    frequency. Keys of quantitative_trait_alleles have similar hierarchy
+    for both the alleles and their frequencies.
+    :param pop:
+    :param loci:
+    :param alleles:
+    :param allele_effects:
 
 
-        data['abs_index'] = [locus for locus in range(pop.totNumLoci())]
-        data['minor'] = [allele_frq_data['minor', 'alleles'][locus] for locus in range(pop.totNumLoci())]
-        data['major'] = [allele_frq_data['major', 'alleles'][locus] for locus in range(pop.totNumLoci())]
-        for sp_idx, label in enumerate(generation_labels):
-            data[label] = [allele_frq_data['minor', 'frequency', sp_idx][
-                               locus] for locus in range(pop.totNumLoci())]
-        data['aggregate'] = [allele_frq_data['minor', 'frequency'][locus] for locus in range(pop.totNumLoci())]
-        af_table = pd.DataFrame(data, columns=data_columns)
-        return af_table
+    """
+    quantitative_trait_alleles = {}
+    quantitative_trait_alleles['effects'] = col.OrderedDict()
+    quantitative_trait_alleles['alleles'] = col.OrderedDict()
+    quantitative_trait_alleles['alleles']['favorable'] = col.OrderedDict()
+    quantitative_trait_alleles['alleles']['unfavorable'] = col.OrderedDict()
+    quantitative_trait_alleles['frequency'] = col.OrderedDict()
+    quantitative_trait_alleles['frequency']['favorable'] = col.OrderedDict()
+    quantitative_trait_alleles['frequency']['unfavorable'] = col.OrderedDict()
+    for locus in loci:
+        temp_effects = []
+        for allele in alleles[locus]:
+            temp_effects.append(allele_effects[locus][allele])
+        quantitative_trait_alleles['effects'][locus] = temp_effects
+
+    for locus in loci:
+        for allele in alleles[locus]:
+            if allele_effects[locus][allele] == max(
+                    quantitative_trait_alleles['effects'][locus]):
+                quantitative_trait_alleles['alleles']['favorable'][locus] =\
+                    allele
+            if allele_effects[locus][allele] == min(
+                    quantitative_trait_alleles['effects'][locus]):
+                quantitative_trait_alleles['alleles']['unfavorable'][locus] =\
+                    allele
+
+    for locus, allele in quantitative_trait_alleles['alleles']['favorable'].items():
+        quantitative_trait_alleles['frequency']['favorable'][locus] = \
+            pop.dvars().alleleFreq[locus][allele]
+    for locus, allele in quantitative_trait_alleles['alleles']['unfavorable'].items():
+        quantitative_trait_alleles['frequency']['unfavorable'][locus] =\
+            pop.dvars().alleleFreq[locus][allele]
+
+    return quantitative_trait_alleles
+
+def allele_frq_table(self, pop, number_gens,
+    allele_frq_data, recombination_rates, genetic_map):
+    """
+    Generates a large table which centralizes all allele frequency data.
+    The data is inserted into a pandas DataFrame object.
+    Useful for downstream analysis and insertion into a database.
+
+    Allele frequency data is first built up in a regular *dict* object
+    then inserted into a
+    :param pop:
+    :param number_gens:
+    :param allele_frq_data:
+    :param recombination_rates:
+    :param genetic_map:
+    """
+
+
+    data_columns = ['abs_index', 'chrom', 'locus', 'major',
+                    'minor', 'recom_rate', 'cM', 'v']
+    generation_labels = ['G_'+str(i)
+                         for i in range(0, number_gens+1, 2)]
+    data_columns = data_columns + generation_labels + ['aggregate']
+    data = {}
+    breakpoints = col.OrderedDict()
+    for locus in range(pop.totNumLoci()):
+        if recombination_rates[locus] == 0.01:
+            breakpoints[locus] = locus + 1
+
+    diagram = ["|"]*pop.totNumLoci()
+
+    for locus, point in breakpoints.items():
+        try:
+            diagram[point] = '*'
+        except IndexError:
+            pass
+
+    qtl_diagram = ['o']*pop.totNumLoci()
+    for locus in pop.dvars().triplet_qtl:
+        qtl_diagram[locus] = 'x'
+
+    chromosomes = []
+    relative_loci = []
+    for locus in range(pop.totNumLoci()):
+        pair = pop.chromLocusPair(locus)
+        chromosomes.append(pair[0]+1)
+        relative_loci.append(pair[1])
+
+    data['chrom'] = chromosomes
+    data['locus'] = relative_loci
+
+
+    data['recom_rate'] = recombination_rates
+    data['v'] = diagram
+    data['cM'] = genetic_map['cM_pos']
+    data['qtl'] = qtl_diagram
+
+
+    data['abs_index'] = [locus for locus in range(pop.totNumLoci())]
+    data['minor'] = [allele_frq_data['minor', 'alleles'][locus] for locus in range(pop.totNumLoci())]
+    data['major'] = [allele_frq_data['major', 'alleles'][locus] for locus in range(pop.totNumLoci())]
+    for sp_idx, label in enumerate(generation_labels):
+        data[label] = [allele_frq_data['minor', 'frequency', sp_idx][
+                           locus] for locus in range(pop.totNumLoci())]
+    data['aggregate'] = [allele_frq_data['minor', 'frequency'][locus] for locus in range(pop.totNumLoci())]
+    af_table = pd.DataFrame(data, columns=data_columns)
+    return af_table
 
 
 def qt_allele_table(pop, qt_alleles, allele_effects,
@@ -549,12 +576,6 @@ class PCA(object):
     def __init__(self, pop, loci, qt_data):
         self.pop = pop
         self.loci = loci
-        self.qt_data = qt_data
-
-    def __str__(self):
-        return "Parameters: PopSize {}, Number of Loci: {}, " \
-               "Keys of Data: {}.".format(self.pop.popSize(), len(self.loci),
-                                         self.qt_data.keys())
 
     def calculate_count_matrix(self, pop, alleles, count_matrix_filename):
         """
@@ -568,6 +589,8 @@ class PCA(object):
         """
         comparison_array = [alleles[locus] for locus in range(pop.totNumLoci())]
         count_matrix = np.zeros((pop.popSize(), len(alleles)))
+
+
         for i, ind in enumerate(pop.individuals()):
             alpha = np.equal(np.array(comparison_array), ind.genotype(
                 ploidy=0), dtype=np.int8)

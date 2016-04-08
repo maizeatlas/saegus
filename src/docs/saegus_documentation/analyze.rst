@@ -4,15 +4,135 @@
 
 
 
-.. py:function:: allele_frequencies(pop, alleles, loci)
+.. py:function:: allele_data(pop, alleles, loci)
 
-   Determine major and minor alleles in each generation the aggregate
-   population. Generations in a meta-populations correspond to
-   sub-populations.
+   Determines the minor alleles, minor allele frequencies, major alleles and
+   major allele frequencies.
 
-   :param pop:
-   :param loci:
 
+   :parameter pop: Population intended for GWAS analysis
+   :parameter list loci: All loci of a population or a subset
+   :parameter dict alleles: Dictionary of alleles present at each locus
+
+   This function is used to find the major/minor alleles of a Population
+   ``pop`` given a list of ``alleles`` at each locus given in ``loci``.
+   The output is intended to be used in other functions to determine the
+   kinship matrix and population structure.
+
+   Additionally this function will also resolve ties between the
+   major and minor alleles which result when both alleles have exactly equal
+   frequency i.e. 0.50.
+
+
+.. code-block:: python
+
+   pop = sim.loadPopulation('magic1478.pop')
+   loci = list(range(pop.totNumLoci()))
+   alleles = shelve.open('magic_1478_simulation_parameters')
+   alleles
+
+   {0: [1, 2],
+    1: [1, 3],
+    2: [3, 1],
+    3: [0, 2],
+    4: [2, 0],
+    5: [0, 2],
+    6: [0, 2],
+    7: [3, 1],
+    8: [0, 2],
+    ...}
+
+    af = analyze.allele_data(magic1478_2718, alleles, list(range(1478)))
+    af
+
+.. raw:: html
+
+    <div>
+    <table border="1" class="dataframe">
+      <thead>
+        <tr style="text-align: right;">
+          <th></th>
+          <th>minor_allele</th>
+          <th>minor_frequency</th>
+          <th>major_allele</th>
+          <th>major_frequency</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>0</th>
+          <td>2</td>
+          <td>0.00000</td>
+          <td>1</td>
+          <td>1.00000</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>3</td>
+          <td>0.13275</td>
+          <td>1</td>
+          <td>0.86725</td>
+        </tr>
+        <tr>
+          <th>2</th>
+          <td>1</td>
+          <td>0.06575</td>
+          <td>3</td>
+          <td>0.93425</td>
+        </tr>
+        <tr>
+          <th>3</th>
+          <td>2</td>
+          <td>0.00000</td>
+          <td>0</td>
+          <td>1.00000</td>
+        </tr>
+        <tr>
+          <th>4</th>
+          <td>0</td>
+          <td>0.05675</td>
+          <td>2</td>
+          <td>0.94325</td>
+        </tr>
+        <tr>
+          <th>5</th>
+          <td>2</td>
+          <td>0.24875</td>
+          <td>0</td>
+          <td>0.75125</td>
+        </tr>
+        <tr>
+          <th>6</th>
+          <td>2</td>
+          <td>0.12300</td>
+          <td>0</td>
+          <td>0.87700</td>
+        </tr>
+        <tr>
+          <th>7</th>
+          <td>1</td>
+          <td>0.00000</td>
+          <td>3</td>
+          <td>1.00000</td>
+        </tr>
+        <tr>
+          <th>8</th>
+          <td>2</td>
+          <td>0.24000</td>
+          <td>0</td>
+          <td>0.76000</td>
+        </tr>
+        <tr>
+          <th>...</th>
+          <td>...</td>
+          <td>...</td>
+          <td>...</td>
+          <td>...</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>1478 rows × 4 columns</p>
+    </div>
 .. py:function:: rank_allele_effects(pop, loci, alleles, allele_effects)
 
    Collects information about alleles at quantitative trait loci into a
