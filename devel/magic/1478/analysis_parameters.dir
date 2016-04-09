@@ -1,0 +1,4 @@
+'generations', (1024, 5)
+'output_prefix', (1536, 20)
+'population_name', (0, 20)
+'scenario', (512, 23)

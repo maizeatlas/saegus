@@ -1,0 +1,7 @@
+'snp_to_integer', (1536, 68)
+'integer_to_snp', (2048, 68)
+'mating_scheme', (3072, 15)
+'founders', (512, 44)
+'prefounder_names', (0, 363)
+'development_population_size', (3584, 6)
+'prefounder_file_name', (2560, 30)

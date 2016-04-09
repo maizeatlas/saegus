@@ -1,0 +1,6 @@
+'qtl', (512, 38)
+'allele_effect_distribution', (2048, 21)
+'epsilon', (3072, 117)
+'allele_effects', (1024, 800)
+'number_of_qtl', (0, 5)
+'heritability', (2560, 12)
