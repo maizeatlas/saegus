@@ -220,6 +220,8 @@ def generate_allele_effects_table(qtl, alleles, allele_effects):
     Creates a simple pd.DataFrame for allele effects. Hard-coded
     for bi-allelic case.
 
+
+
     :parameter list qtl: List of loci declared as QTL
     :parameter np.array alleles: Array of alleles at each locus
     :parameter dict allele_effects: Mapping of effects for alleles at each QTLocus
@@ -523,35 +525,48 @@ class PCA(object):
     of the genotype covarience matrix. Details can be found in the paper:
     Population Structure and Eigenanalysis Patterson et al 2006.
     """
-    def __init__(self, pop, loci, qt_data):
+    def __init__(self, pop, loci, allele_subset):
         self.pop = pop
         self.loci = loci
+        self.allele_subset = allele_subset
 
-    def calculate_count_matrix(self, pop, alleles, count_matrix_filename):
+    def calculate_count_matrix(self, count_matrix_filename):
         """
         A function to calculate the copy numbers of either the minor or
         major allele for each individual at each locus. Minor or major
         alleles parameter is a single set of alleles which determines if the
         return is the minor or major allele count matrix.
         :param pop:
-        :param alleles:
+        :param allele_subset:
         :param count_matrix_filename:
         """
-        comparison_array = [alleles[locus] for locus in range(pop.totNumLoci())]
-        count_matrix = np.zeros((pop.popSize(), len(alleles)))
+        comparison_array = np.array([self.allele_subset[locus]
+                                     for locus in self.loci], dtype=np.int8)
+
+        count_matrix = np.zeros((self.pop.popSize(), len(self.loci)))
 
 
-        for i, ind in enumerate(pop.individuals()):
-            alpha = np.equal(np.array(comparison_array), ind.genotype(
-                ploidy=0), dtype=np.int8)
-            beta = np.equal(np.array(comparison_array), ind.genotype(ploidy=1),
-                            dtype=np.int8)
-            counts = np.add(alpha, beta, dtype=np.int8)
+        for i, ind in enumerate(self.pop.individuals()):
+            alpha_genotype = np.array([ind.genotype(ploidy=0)[locus]
+                              for locus in self.loci])
+
+            alpha_comparisons = np.equal(comparison_array, alpha_genotype,
+                                         dtype=np.int8)
+
+
+            beta_genotype = [ind.genotype(ploidy=1)[locus]
+                             for locus in self.loci]
+
+            beta_comparisons = np.equal(comparison_array, beta_genotype,
+                                         dtype=np.int8)
+
+            counts = np.add(alpha_comparisons, beta_comparisons, dtype=np.int8)
             count_matrix[i, :] = counts
+
         np.savetxt(count_matrix_filename, count_matrix, fmt="%d")
         return count_matrix
 
-    def svd(self, pop, count_matrix):
+    def svd(self, count_matrix):
         """
 
         Follows procedure of Population Structure and Eigenanalysis
@@ -567,17 +582,19 @@ class PCA(object):
         p_vector = np.divide(shift, 2)
         scale = np.sqrt(np.multiply(p_vector, (1-p_vector)))
 
-        shift_matrix = np.zeros((pop.popSize(), pop.totNumLoci()))
-        scale_matrix = np.zeros((pop.popSize(), pop.totNumLoci()))
-        for i in range(pop.totNumLoci()):
+        shift_matrix = np.zeros((count_matrix.shape[0], count_matrix.shape[1]))
+        scale_matrix = np.zeros((count_matrix.shape[0], count_matrix.shape[1]))
+        for i in range(len(self.loci)):
             shift_matrix[:, i] = shift
             scale_matrix[:, i] = scale
 
         corrected_matrix = (count_matrix - shift_matrix)/scale_matrix
         # singular value decomposition using scipy linalg module
         eigenvectors, s, v = linalg.svd(corrected_matrix)
-        eigenvalues = np.diagonal(np.square(linalg.diagsvd(s, pop.popSize(),
-                                                           pop.totNumLoci()))).T
+        eigenvalues = np.diagonal(
+            np.square(
+                linalg.diagsvd(s, count_matrix.shape[1], count_matrix.shape[0]))).T
+
         sum_of_eigenvalues = np.sum(eigenvalues)
         fraction_of_variance = np.divide(eigenvalues, sum_of_eigenvalues)
         eigen_data = {}
@@ -586,16 +603,16 @@ class PCA(object):
         eigen_data['fraction_variance'] = fraction_of_variance
         return eigen_data
 
-    def test_statistic(self, pop, eigenvalues):
+    def test_statistic(self, eigenvalues):
         sum_of_eigenvalues = np.sum(eigenvalues)
-        n_hat_numerator = (pop.popSize() + 1)*sum_of_eigenvalues
-        n_hat_denom = (pop.popSize()-1)*sum_of_eigenvalues - sum_of_eigenvalues
+        n_hat_numerator = (self.pop.popSize() + 1)*sum_of_eigenvalues
+        n_hat_denom = (self.pop.popSize()-1)*sum_of_eigenvalues - sum_of_eigenvalues
         n_hat = n_hat_numerator/n_hat_denom
-        lowercase_l = (pop.popSize() - 1)*eigenvalues[0]
+        lowercase_l = (self.pop.popSize() - 1)*eigenvalues[0]
         mu_hat = np.square((np.sqrt(n_hat - 1) +
-                            np.sqrt(pop.popSize()))) / n_hat
-        sigma_hat = ((np.sqrt(n_hat - 1) + np.sqrt(pop.popSize()))/n_hat) * \
-                    (((1/np.sqrt(n_hat - 1)) + 1/np.sqrt(pop.popSize())) ** (
+                            np.sqrt(self.pop.popSize()))) / n_hat
+        sigma_hat = ((np.sqrt(n_hat - 1) + np.sqrt(self.pop.popSize()))/n_hat) * \
+                    (((1/np.sqrt(n_hat - 1)) + 1/np.sqrt(self.pop.popSize())) ** (
                         1 / 3.0))
         test_statistic = (lowercase_l - mu_hat) / sigma_hat
         return test_statistic
