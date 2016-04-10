@@ -75,6 +75,17 @@ There is a great deal of data and parameters moving around inside even a single
 simulation of ``saegus``. For debug and sanity purposes I keep a file for
 intermediate data during this development phase.
 
+.. code-block::python
+
+   intermediate_data = shelve.open('daoko_girl_debug_data')
+   intermediate_data['allele_frequencies'] = af
+   intermediate_data['segregating_allele_frequencies'] = segregating_frame
+   intermediate_data['g'] = np.array(magic1478.indInfo('g'))
+   intermediate_data['p'] = np.array(magic1478.indInfo('p'))
+   intermediate_data['segregating_loci'] = segregating_loci
+   intermediate_data['run_name'] = 'daoko_girl'
+   intermediate_data.close()
+
 
 .. code-block:: shell
 

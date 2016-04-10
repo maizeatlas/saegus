@@ -2,10 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/magic/1478/daoko_girl_trait_parameters.dat" afterPath="$PROJECT_DIR$/devel/magic/1478/daoko_girl_trait_parameters.dat" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/magic/1478/.ipynb_checkpoints/run_daoko_girl_development-checkpoint.ipynb" afterPath="$PROJECT_DIR$/devel/magic/1478/.ipynb_checkpoints/run_daoko_girl_development-checkpoint.ipynb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/magic/1478/run_daoko_girl_development.ipynb" afterPath="$PROJECT_DIR$/devel/magic/1478/run_daoko_girl_development.ipynb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/docs/analysis_reports/logging_daoko_girl_development.rst" afterPath="$PROJECT_DIR$/src/docs/analysis_reports/logging_daoko_girl_development.rst" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/saegus/__init__.py" afterPath="$PROJECT_DIR$/src/saegus/__init__.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/saegus/analyze.py" afterPath="$PROJECT_DIR$/src/saegus/analyze.py" />
     </list>
     <ignored path="saegus_project.iws" />
@@ -40,6 +42,26 @@
       <file url="file://$PROJECT_DIR$/src/saegus/analyze.py" />
     </disable_hints>
   </component>
+  <component name="DockManager">
+    <window id="1">
+      <content type="file-editors">
+        <state>
+          <leaf>
+            <file leaf-file-name="logging_daoko_girl_development.rst" pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/src/docs/analysis_reports/logging_daoko_girl_development.rst">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="1156">
+                    <caret line="74" column="73" selection-start-line="74" selection-start-column="73" selection-end-line="74" selection-end-column="73" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+          </leaf>
+        </state>
+      </content>
+    </window>
+  </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
     <favorites_list name="saegus_project" />
@@ -49,21 +71,28 @@
       <file leaf-file-name="analyze.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="487">
-              <caret line="667" column="56" selection-start-line="667" selection-start-column="56" selection-end-line="667" selection-end-column="56" />
+            <state relative-caret-position="289">
+              <caret line="778" column="34" selection-start-line="778" selection-start-column="34" selection-end-line="778" selection-end-column="34" />
               <folding>
-                <element signature="e#11285#12845#0" expanded="false" />
-                <element signature="e#13009#15744#0" expanded="false" />
+                <element signature="e#24#45#0" expanded="true" />
+                <element signature="e#11282#12842#0" expanded="false" />
+                <element signature="e#13006#15741#0" expanded="false" />
+                <element signature="e#15777#21106#0" expanded="false" />
+                <element signature="e#24998#25861#0" expanded="false" />
+                <element signature="e#25914#26620#0" expanded="false" />
+                <element signature="e#26710#29351#0" expanded="false" />
+                <element signature="e#29408#30408#0" expanded="false" />
+                <element signature="e#32582#34892#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="logging_daoko_girl_development.rst" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/docs/analysis_reports/logging_daoko_girl_development.rst">
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/saegus/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="294">
-              <caret line="33" column="22" selection-start-line="33" selection-start-column="22" selection-end-line="33" selection-end-column="22" />
+            <state relative-caret-position="34">
+              <caret line="2" column="24" selection-start-line="2" selection-start-column="24" selection-end-line="2" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -97,7 +126,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/devel/development_scripts/universal_parameters.yaml" />
         <option value="$PROJECT_DIR$/devel/data_dump/fourth_generation_simulated_gwas/rs_L10_H04/simulation_parameters/rs_L10_H04_generate_gwas_data.py" />
         <option value="$PROJECT_DIR$/src/docs/tutorials/gwas_with_tassel.rst" />
         <option value="$PROJECT_DIR$/src/tests/test_synbreed_recreation.py" />
@@ -143,10 +171,11 @@
         <option value="$PROJECT_DIR$/src/docs/analysis_reports/parameter_combinations.html" />
         <option value="$PROJECT_DIR$/src/docs/standard_directory_structure/project_structure.rst" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/src/docs/analysis_reports/logging_daoko_girl_development.rst" />
         <option value="$PROJECT_DIR$/src/data/nam_prefounder_file_names.txt" />
         <option value="$PROJECT_DIR$/devel/magic/1478/parameters/nam_prefounder_file_names.txt" />
         <option value="$PROJECT_DIR$/src/docs/saegus_documentation/analyze.rst" />
+        <option value="$PROJECT_DIR$/src/docs/analysis_reports/logging_daoko_girl_development.rst" />
+        <option value="$PROJECT_DIR$/src/saegus/__init__.py" />
         <option value="$PROJECT_DIR$/src/saegus/analyze.py" />
       </list>
     </option>
@@ -162,9 +191,10 @@
     </layout>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1" />
-    <option name="width" value="1358" />
-    <option name="height" value="728" />
+    <option name="x" value="1592" />
+    <option name="y" value="-8" />
+    <option name="width" value="1376" />
+    <option name="height" value="784" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -256,11 +286,32 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="saegus_project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="saegus_project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="saegus_project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="devel" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
+      </pane>
+      <pane id="Scratches">
+        <subPane />
       </pane>
       <pane id="Scope">
         <subPane subId="Problems" />
@@ -280,9 +331,6 @@
             </PATH_ELEMENT>
           </PATH>
         </subPane>
-      </pane>
-      <pane id="Scratches">
-        <subPane />
       </pane>
     </panes>
   </component>
@@ -1006,18 +1054,18 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1" y="0" width="1358" height="728" extended-state="0" />
+    <frame x="1592" y="-8" width="1376" height="784" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27195686" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" x="1138" y="410" width="124" height="40" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.57741934" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" x="1138" y="410" width="124" height="40" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32258064" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.49862638" sideWeight="0.13898027" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6994135" sideWeight="0.4974293" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6989247" sideWeight="0.4974293" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3130016" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3563403" sideWeight="0.48971722" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.20820668" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.5159129" sideWeight="0.86101973" order="4" side_tool="false" content_ui="tabs" x="234" y="323" width="777" height="220" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21625766" sideWeight="0.86101973" order="4" side_tool="false" content_ui="tabs" x="234" y="323" width="777" height="220" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="DB Browser" active="false" anchor="top" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.329904" sideWeight="0.5" order="0" side_tool="true" content_ui="combo" />
@@ -1098,18 +1146,11 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="3" />
+      <option name="time" value="4" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/devel/testing_and_detecting/test_generate_pop.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="535">
-          <caret line="79" column="58" selection-start-line="79" selection-start-column="58" selection-end-line="79" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/devel/testing_and_detecting/conftest.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1190">
@@ -1168,13 +1209,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/README.rst">
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
         </state>
-      </provider>
-      <provider editor-type-id="MarkdownPreviewEditor">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/docs/saegus_documentation/Makefile">
@@ -1377,7 +1418,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="294">
           <caret line="25" column="7" selection-start-line="25" selection-start-column="7" selection-end-line="25" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1385,7 +1425,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="165" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="165" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1393,7 +1432,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1401,7 +1439,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="294">
           <caret line="149" column="29" selection-start-line="149" selection-start-column="29" selection-end-line="149" selection-end-column="29" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1417,7 +1454,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="14" column="28" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1449,15 +1485,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="8" column="8" selection-start-line="8" selection-start-column="8" selection-end-line="8" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/docs/analysis_reports/logging_daoko_girl_development.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="33" column="22" selection-start-line="33" selection-start-column="22" selection-end-line="33" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1473,7 +1500,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="694">
           <caret line="294" column="0" selection-start-line="294" selection-start-column="0" selection-end-line="295" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1481,17 +1507,39 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" column="17" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/saegus/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="24" selection-start-line="2" selection-start-column="24" selection-end-line="2" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/docs/analysis_reports/logging_daoko_girl_development.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1156">
+          <caret line="74" column="73" selection-start-line="74" selection-start-column="73" selection-end-line="74" selection-end-column="73" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="487">
-          <caret line="667" column="56" selection-start-line="667" selection-start-column="56" selection-end-line="667" selection-end-column="56" />
+        <state relative-caret-position="289">
+          <caret line="778" column="34" selection-start-line="778" selection-start-column="34" selection-end-line="778" selection-end-column="34" />
           <folding>
-            <element signature="e#11285#12845#0" expanded="false" />
-            <element signature="e#13009#15744#0" expanded="false" />
+            <element signature="e#24#45#0" expanded="true" />
+            <element signature="e#11282#12842#0" expanded="false" />
+            <element signature="e#13006#15741#0" expanded="false" />
+            <element signature="e#15777#21106#0" expanded="false" />
+            <element signature="e#24998#25861#0" expanded="false" />
+            <element signature="e#25914#26620#0" expanded="false" />
+            <element signature="e#26710#29351#0" expanded="false" />
+            <element signature="e#29408#30408#0" expanded="false" />
+            <element signature="e#32582#34892#0" expanded="false" />
           </folding>
         </state>
       </provider>

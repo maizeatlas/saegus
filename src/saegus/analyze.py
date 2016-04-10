@@ -21,9 +21,6 @@ def allele_data(pop, alleles, loci):
         alleles = shelve.open('magic_1478_simulation_parameters')
 
 
-
-
-
     :param pop:
     :type pop:
     :param loci:
@@ -518,17 +515,26 @@ class MetaData(object):
         return genomic_dispersal
 
 
-class PCA(object):
+class GWAS(object):
     """
     Class for performing principal component analyis on genotype matrices.
     Test for population structure significance tests the largest eigenvalue
     of the genotype covarience matrix. Details can be found in the paper:
     Population Structure and Eigenanalysis Patterson et al 2006.
     """
-    def __init__(self, pop, loci, allele_subset):
+    def __init__(self, pop, loci, allele_subset, run_id):
         self.pop = pop
         self.loci = loci
         self.allele_subset = allele_subset
+        self.run_id = run_id
+
+        self.individual_names = ['I_' + str(ind.ind_id)
+                                 for ind in pop.individuals()]
+
+        self.locus_names = ['RL_' + str(pop.chromLocusPair(locus)[1])
+                            for locus in loci]
+
+        self.pos_names = ['AL_' + str(locus) for locus in loci]
 
     def calculate_count_matrix(self, count_matrix_filename):
         """
@@ -566,7 +572,7 @@ class PCA(object):
         np.savetxt(count_matrix_filename, count_matrix, fmt="%d")
         return count_matrix
 
-    def svd(self, count_matrix):
+    def pop_struct_svd(self, count_matrix):
         """
 
         Follows procedure of Population Structure and Eigenanalysis
@@ -603,6 +609,34 @@ class PCA(object):
         eigen_data['fraction_variance'] = fraction_of_variance
         return eigen_data
 
+    def population_structure_formatter(self, eigen_data, structure_filename):
+        """
+        Writes the first two of the population structure matrix to a
+        file. First column of the file is are names.
+        :param structure_filename:
+        :param eigen_data:
+        """
+
+        ordered_names = self.individual_names
+
+        structure_matrix = pd.DataFrame([list(eigen_data['vectors'][:, 0].T),
+                                         list(eigen_data['vectors'][:, 1].T)]).T
+
+        structure_matrix.index = ordered_names
+
+        header = "<Covariate>\t\t\n<Trait>\td1\td2\n"
+
+        cwd = os.getcwd()
+        file_out_path = os.path.join(cwd, structure_filename)
+
+        if os.path.exists(file_out_path):
+            os.remove(file_out_path)
+        with open(structure_filename, 'w') as f:
+            f.write(header)
+            structure_matrix.to_csv(f, sep='\t', index=True, header=False)
+
+        return structure_matrix
+
     def test_statistic(self, eigenvalues):
         sum_of_eigenvalues = np.sum(eigenvalues)
         n_hat_numerator = (self.pop.popSize() + 1)*sum_of_eigenvalues
@@ -616,19 +650,6 @@ class PCA(object):
                         1 / 3.0))
         test_statistic = (lowercase_l - mu_hat) / sigma_hat
         return test_statistic
-
-class GWAS(object):
-    """
-    A class to collect and format all data in preparation for GWAS using TASSEL.
-    """
-
-    def __init__(self, pop, individual_names, locus_names, positions, *args,
-                 **kwargs):
-        self.pop = pop
-        self.individual_names = individual_names
-        self.locus_names = locus_names
-        self.positions = positions
-
 
     def hapmap_formatter(self, int_to_snp_conversions, hapmap_matrix_filename):
         """
@@ -644,17 +665,16 @@ class GWAS(object):
         """
         hapmap_data = {}
         hapmap_data['rs'] = self.locus_names
-        hapmap_data['alleles'] = ['NA']*self.pop.totNumLoci()
+        hapmap_data['alleles'] = ['NA']*len(self.loci)
         hapmap_data['chrom'] = [self.pop.chromLocusPair(locus)[0]+1 for
-                                locus in
-                                range(self.pop.totNumLoci())]
-        hapmap_data['pos'] = self.positions
+                                locus in self.loci]
+        hapmap_data['pos'] = self.pos_names
 
         # Several columns which are set to 'NA'.
         extraneous_columns = ['strand', 'assembly', 'center', 'protLSID',
                               'assayLSID', 'panelLSID', 'QCcode']
         for column in extraneous_columns:
-            hapmap_data[column] = ['NA']*self.pop.totNumLoci()
+            hapmap_data[column] = ['NA']*len(self.loci)
 
         # Each individual has a column. Simulated individuals will have names
         # reflecting some information about them. 'RS' recurrent selection,
@@ -662,24 +682,28 @@ class GWAS(object):
 
         # Finally each individual's genotype must be converted to HapMap format
 
-        for ind in self.pop.individuals():
-            alpha, beta = ind.genotype(ploidy=0), ind.genotype(ploidy=1)
-            hapmap_data[self.individual_names[ind.ind_id]] = [
+
+        for i, ind in enumerate(self.pop.individuals()):
+            alpha_genotype = np.array([ind.genotype(ploidy=0)[locus]
+                                       for locus in self.loci])
+
+            beta_genotype = [ind.genotype(ploidy=1)[locus]
+                             for locus in self.loci]
+
+            hapmap_data[self.individual_names[i]] = [
                 ''.join(sorted(int_to_snp_conversions[a]
                                + int_to_snp_conversions[b]))
-                                 for a, b in zip(alpha, beta)]
+                                 for a, b in zip(alpha_genotype, beta_genotype)]
 
 
         # Need to guarantee that the column names are in same order as the
         # genoype data. Iterate over individuals in population to build up a
         #  list of names will guarantee that col names are in same order as
         # the hapmap_data
-        ordered_names = [self.individual_names[ind.ind_id] for ind in
-                         self.pop.individuals()]
 
         hapmap_ordered_columns = ['rs', 'alleles', 'chrom', 'pos', 'strand',
                            'assembly', 'center', 'protLSID', 'assayLSID',
-                               'panelLSID', 'QCcode'] + ordered_names
+                               'panelLSID', 'QCcode'] + self.individual_names
 
         hapmap_matrix = pd.DataFrame(columns=hapmap_ordered_columns)
         for k, v in hapmap_data.items():
@@ -702,7 +726,6 @@ class GWAS(object):
 
         # Ensure phenotype and name are coming from the same individual
 
-
         phenotypes = []
         ind_names = []
         for ind in self.pop.individuals():
@@ -716,40 +739,11 @@ class GWAS(object):
 
         if os.path.exists(file_out_path):
             os.remove(file_out_path)
-        with open(trait_filename, 'a') as f:
+        with open(trait_filename, 'w') as f:
             f.write(header)
             trait_vector.to_csv(f, sep=' ', index=False, header=False)
 
         return trait_vector
-
-    def population_structure_formatter(self, eigen_data, structure_filename):
-        """
-        Writes the first two of the population structure matrix to a
-        file. First column of the file is are names.
-        :param structure_filename:
-        :param eigen_data:
-        """
-
-        ordered_names = [self.individual_names[ind.ind_id] for ind in
-                         self.pop.individuals()]
-
-        structure_matrix = pd.DataFrame([list(eigen_data['vectors'][:, 0].T),
-                                     list(eigen_data['vectors'][:, 1].T)]).T
-
-        structure_matrix.index = ordered_names
-
-        header = "<Covariate>\t\t\n<Trait>\td1\td2\n"
-
-        cwd = os.getcwd()
-        file_out_path = os.path.join(cwd, structure_filename)
-
-        if os.path.exists(file_out_path):
-            os.remove(file_out_path)
-        with open(structure_filename, 'a') as f:
-            f.write(header)
-            structure_matrix.to_csv(f, sep='\t', index=True, header=False)
-
-        return structure_matrix
 
     def calc_kinship_matrix(self, allele_count_matrix, allele_data,
                             kinship_filename):
@@ -765,7 +759,7 @@ class GWAS(object):
         Unsure if I should use the G0 allele or not.
         Will decide after TASSEL results.
 
-        :param allele_counts:
+        :param allele_count_matrix:
         :param allele_data:
         :param kinship_filename:
         :return:
@@ -776,24 +770,21 @@ class GWAS(object):
 
         # Second allele in the unselected, un-inbred base population.
         # Refers to major allele in G_0
-        allele_frequencies = np.array([allele_data['minor', 'frequency'][locus]
-                                    for locus in range(self.pop.totNumLoci())])
+        allele_frequencies = np.array([allele_data['minor_frequency'][locus] for locus in self.loci])
 
         P = 2*(allele_frequencies - 0.5)
 
         Z = M - P
 
-        scaling_terms = np.zeros((self.pop.totNumLoci()))
-        for locus, probability in enumerate(allele_frequencies):
-            scaling_terms[locus] = 2*probability*(1 - probability)
+        scaling_terms = np.zeros((len(self.loci)))
+        for idx, probability in enumerate(allele_frequencies):
+            scaling_terms[idx] = 2*probability*(1 - probability)
 
         scaling_factor = sum(scaling_terms)
 
         G = Z*Z.T/scaling_factor
 
-        annotated_G = pd.DataFrame(G, index=[self.individual_names[ind.ind_id]
-                                             for ind in
-                                             self.pop.individuals()])
+        annotated_G = pd.DataFrame(G, index=self.individual_names)
 
         # Tassel example has number of individuals in the header of the G
         # matrix file
@@ -810,67 +801,65 @@ class GWAS(object):
 
         return annotated_G
 
-
-def generate_tassel_gwas_configs(input_directory_prefix,
-                                 out_directory_prefix,
-                                 config_file_prefix,
-                                 run_identifier_prefix,
-                                 xml_pipeline_template):
-    """
-    Creates an xml file to run TASSEL using a mixed linear model approach.
-    Assumes use of hapmap, kinship, phenotype and population structure files.
+    def generate_tassel_gwas_configs(self, input_directory_prefix,
+                                     output_directory_prefix,
+                                     config_file_prefix,
+                                     xml_pipeline_template):
+        """
+        Creates an xml file to run TASSEL using a mixed linear model approach.
+        Assumes use of hapmap, kinship, phenotype and population structure files.
 
 
 
 
-    The TASSEL command line interface requires a considerable number of
-    options to run GWAS. It is impractical to run the command line manually
-    for the number of replications in a simulated study. The TASSEL command
-    line interface allows the user to input a .xml file with the same
-    information which is used in the terminal.
+        The TASSEL command line interface requires a considerable number of
+        options to run GWAS. It is impractical to run the command line manually
+        for the number of replications in a simulated study. The TASSEL command
+        line interface allows the user to input a .xml file with the same
+        information which is used in the terminal.
 
-    :param input_directory_prefix: Directory path to send the input files.
-    :param run_identifier_prefix: Identifier for single replicate of data
-    :param xml_pipeline_template: XML file already setup for running a
-    specific kind of GWAS
-    :return: XML file to run a single replicate of data using TASSEL
-    """
+        :param input_directory_prefix: Directory path to send the input files.
+        :param run_identifier_prefix: Identifier for single replicate of data
+        :param xml_pipeline_template: XML file already setup for running a
+        specific kind of GWAS
+        :return: XML file to run a single replicate of data using TASSEL
+        """
 
 
-    import xml.etree.ElementTree as ET
-    import lxml.etree as etree
+        import xml.etree.ElementTree as ET
+        import lxml.etree as etree
 
-    tree = ET.parse(xml_pipeline_template)
-    root = tree.getroot()
-    lxml_tree = etree.fromstring(ET.tostring(root))
-    lxml_root = lxml_tree.getroottree()
+        tree = ET.parse(xml_pipeline_template)
+        root = tree.getroot()
+        lxml_tree = etree.fromstring(ET.tostring(root))
+        lxml_root = lxml_tree.getroottree()
 
-    hapmap_filename = input_directory_prefix + run_identifier_prefix + \
-                      'simulated_hapmap.txt'
-    phenotype_filename = input_directory_prefix + run_identifier_prefix + \
-        'phenotype_vector.txt'
-    pop_struct_filename = input_directory_prefix + run_identifier_prefix + \
-                          'structure_matrix.txt'
-    kinship_filename = input_directory_prefix + run_identifier_prefix + \
-                       'kinship_matrix.txt'
+        hapmap_filename = input_directory_prefix + self.run_id + \
+                          'simulated_hapmap.txt'
+        phenotype_filename = input_directory_prefix + self.run_id + \
+            'phenotype_vector.txt'
+        pop_struct_filename = input_directory_prefix + self.run_id + \
+                              'structure_matrix.txt'
+        kinship_filename = input_directory_prefix + self.run_id + \
+                           'kinship_matrix.txt'
 
-    tassel_outputs = out_directory_prefix + run_identifier_prefix + 'gwas_out_'
+        tassel_outputs = output_directory_prefix + self.run_id + '_gwas_out_'
 
-    config_filname = config_file_prefix + run_identifier_prefix + \
-                     'sim_gwas_pipeline.xml'
+        config_filname = config_file_prefix + self.run_id + \
+                         '_sim_gwas_pipeline.xml'
 
-    lxml_root.find('fork1/h').text = hapmap_filename
-    lxml_root.find('fork2/t').text = phenotype_filename
-    lxml_root.find('fork3/q').text = pop_struct_filename
-    lxml_root.find('fork4/k').text = kinship_filename
+        lxml_root.find('fork1/h').text = hapmap_filename
+        lxml_root.find('fork2/t').text = phenotype_filename
+        lxml_root.find('fork3/q').text = pop_struct_filename
+        lxml_root.find('fork4/k').text = kinship_filename
 
-    lxml_root.find('combine6/export').text = tassel_outputs
+        lxml_root.find('combine6/export').text = tassel_outputs
 
-    config_file_out = config_filname
+        config_file_out = config_filname
 
-    lxml_root.write(config_file_out, encoding="UTF-8",
-                   method="xml", xml_declaration=True, standalone='',
-                    pretty_print=True)
+        lxml_root.write(config_file_out, encoding="UTF-8",
+                       method="xml", xml_declaration=True, standalone='',
+                        pretty_print=True)
 
 
 def parameter_set_writer(directory_prefix, run_prefix, mating,
