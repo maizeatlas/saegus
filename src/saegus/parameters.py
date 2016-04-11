@@ -311,12 +311,14 @@ class Genotype(object):
 
 
 class Trait(object):
-
     """
     This class carries functions responsible for assigning and handling
     trait models: Decision making process simulator uses to assign phenotypes.
 
     """
+
+    def __init__(self):
+        pass
 
     def seg_qtl_chooser(self, pop: sim.Population, loci_subset: list, number_qtl: int):
         """
@@ -351,3 +353,5 @@ class Trait(object):
                     sum([distribution_function(*distribution_function_parameters)
                          for i in range(multiplicity)])
         return allele_effects
+
+

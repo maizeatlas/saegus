@@ -8,7 +8,7 @@ import os
 import random
 import shelve
 from scipy import linalg
-from . import analyze, operators, parameters
+from . import operators, parameters
 
 import parameters
 
@@ -795,9 +795,12 @@ class GWAS(object):
 
         return annotated_G
 
-    def generate_tassel_gwas_configs(self, tassel_executable,
-                                     input_directory,
-                                     output_directory,
+    def generate_tassel_gwas_configs(self, sample_size,
+                                     hapmap_file_name,
+                                     kinship_file_name,
+                                     phenotype_file_name,
+                                     structure_file_name,
+                                     output_file_prefix,
                                      config_file_template):
         """
         Creates an xml file to run TASSEL using a mixed linear model approach.
@@ -828,37 +831,22 @@ class GWAS(object):
         lxml_tree = etree.fromstring(ET.tostring(root))
         lxml_root = lxml_tree.getroottree()
 
-        hapmap_filename = input_directory + 'simulated_hapmap.txt'
-        phenotype_filename = input_directory + \
-            'phenotype_vector.txt'
-        pop_struct_filename = input_directory + \
-                              'structure_matrix.txt'
-        kinship_filename = input_directory + \
-                           'kinship_matrix.txt'
+        lxml_root.find('fork1/h').text = hapmap_file_name
+        lxml_root.find('fork2/t').text = phenotype_file_name
+        lxml_root.find('fork3/q').text = structure_file_name
+        lxml_root.find('fork4/k').text = kinship_file_name
 
-        tassel_outputs = output_directory + 'gwas_out_'
+        lxml_root.find('combine6/export').text = output_file_prefix
 
-        config_filname = config_file_template + \
-                         '_sim_gwas_pipeline.xml'
-
-        lxml_root.find('fork1/h').text = hapmap_filename
-        lxml_root.find('fork2/t').text = phenotype_filename
-        lxml_root.find('fork3/q').text = pop_struct_filename
-        lxml_root.find('fork4/k').text = kinship_filename
-
-        lxml_root.find('combine6/export').text = tassel_outputs
-
-        config_file_out = config_filname
 
         lxml_root.write("C:\\tassel\\bin\\daoko_girl_sim_gwas_pipeline.xml", encoding="UTF-8",
                        method="xml", xml_declaration=True, standalone='',
                         pretty_print=True)
 
 def population_sample_analyzer(full_population, sample_size,
-                                       number_of_qtl, alleles,
-                                       dist_function, *dist_func_parameters,
-                                       multiplicity=3, heritability=0.7,
-                                       run_id='daoko_girl', **kwargs):
+                               quantitative_trait_loci, alleles,
+                                       allele_effects, heritability,
+                                       run_id='daoko_girl'):
 
     """
     A function to call all of the functions in order to get from population
@@ -878,47 +866,53 @@ def population_sample_analyzer(full_population, sample_size,
     int_to_snp_map = syn_parameters['integer_to_snp']
     syn_parameters.close()
 
+    from . import parameters
+
     sample_population = sim.sampling.drawRandomSample(full_population,
                                                       sizes=sample_size)
     sim.stat(sample_population, alleleFreq=sim.ALL_AVAIL)
     sim.stat(sample_population, numOfSegSites=sim.ALL_AVAIL,
              vars=['segSites', 'numOfSegSites'])
     segregating_loci = sample_population.dvars().segSites
-    quantitative_trait_loci = sorted(
-        random.sample(sample_population.dvars().segSites, number_of_qtl))
-    add_trait = parameters.Trait()
-    aes = add_trait.assign_allele_effects(alleles, quantitative_trait_loci,
-                                          dist_function,
-                                          *dist_func_parameters,
-                                          multiplicity=multiplicity)
-    aes_table = analyze.generate_allele_effects_table(quantitative_trait_loci,
-                                                      alleles, aes)
-    operators.assign_additive_g(full_population, quantitative_trait_loci, aes)
+  #  quantitative_trait_loci = sorted(
+   #     random.sample(sample_population.dvars().segSites, number_of_qtl))
+   # add_trait = parameters.Trait()
+
+    #aes = add_trait.assign_allele_effects(alleles, quantitative_trait_loci,
+     #                                     dist_function,
+      #                                    *dist_func_parameters,
+       #                                   multiplicity=multiplicity)
+    aes_table = generate_allele_effects_table(quantitative_trait_loci,
+                                                      alleles, allele_effects)
+    operators.assign_additive_g(full_population, quantitative_trait_loci, allele_effects)
     operators.calculate_error_variance(sample_population, heritability)
     operators.phenotypic_effect_calculator(sample_population)
-    af = analyze.allele_data(sample_population, alleles,
+    af = allele_data(sample_population, alleles,
                              range(sample_population.totNumLoci()))
 
-    gwas = analyze.GWAS(sample_population, segregating_loci,
+    gwas = GWAS(sample_population, segregating_loci,
                         np.array(af['minor_allele']), run_id)
 
     indir = "C:\\tassel\\input\\"
     ccm = gwas.calculate_count_matrix(indir + 'daoko_girl_MAC.txt')
     ps_svd = gwas.pop_struct_svd(ccm)
-    ps_m = gwas.population_structure_formatter(ps_svd, indir + sample_size +
+    ps_m = gwas.population_structure_formatter(ps_svd, indir + str(sample_size) +
                                                '_daoko_girl_structure_matrix.txt')
     hmap = gwas.hapmap_formatter(int_to_snp_map,
-                                 indir + sample_size + '_daoko_girl_simulated_hapmap.txt')
-    phenos = gwas.trait_formatter(indir + sample_size + '_daoko_girl_phenotype_vector.txt')
+                                 indir + str(sample_size) + '_daoko_girl_simulated_hapmap.txt')
+    phenos = gwas.trait_formatter(indir + str(sample_size) + '_daoko_girl_phenotype_vector.txt')
     ks_m = gwas.calc_kinship_matrix(ccm, af,
-                                    indir + sample_size + '_daoko_girl_kinship_matrix.txt')
+                                    indir + str(sample_size) + '_daoko_girl_kinship_matrix.txt')
 
-    gwas.generate_tassel_gwas_configs("C:\\tassel\\bin\\" + sample_size + '_daoko_girl_',
-                                      "C:\\tassel\\input\\" + sample_size + '_daoko_girl_',
-                                      "C:\\tassel\\output\\" + sample_size + "_daoko_girl_",
-                                      "C:\\Users\DoubleDanks\\BISB\\wisser\\code\\rjwlab-scripts\\"
-                                      "saegus_project\\devel\\magic\\1478\\daoko_girl_gwas_pipeline.xml")
-    return aes_table
+    gwas.generate_tassel_gwas_configs(sample_size,
+                  indir + str(sample_size) + '_daoko_girl_simulated_hapmap.txt',
+                  indir + str(sample_size) + '_daoko_girl_kinship_matrix.txt',
+                  indir + str(sample_size) + '_daoko_girl_phenotype_vector.txt',
+                  indir + str(sample_size) + '_daoko_girl_structure_matrix.txt',
+                  "C:\\tassel\\bin\\" + str(sample_size) + "_daoko_girl_out_",
+                  "C:\\Users\DoubleDanks\\BISB\\wisser\\code\\rjwlab-scripts\\"
+              "saegus_project\\devel\\magic\\1478\\daoko_girl_gwas_pipeline.xml")
+    return segregating_loci, aes_table
 
 def remap_ae_table_loci(allele_effect_table, saegus_to_tassel_loci):
     """
@@ -927,15 +921,18 @@ def remap_ae_table_loci(allele_effect_table, saegus_to_tassel_loci):
     """
     remapped_loci = [saegus_to_tassel_loci[locus]
                      for locus in allele_effect_table['locus']]
-    allele_effects_table['locus'] = remapped_loci
-    allele_effects_table['difference'] = np.abs(allele_effects_table['alpha_effect'] -
-                                          allele_effects_table['beta_effect'])
+    allele_effect_table['locus'] = remapped_loci
+
+    allele_effect_table['difference'] = np.abs(allele_effect_table['alpha_effect'] -
+                                          allele_effect_table['beta_effect'])
+
+    allele_effect_table.index = allele_effect_table.locus
+
     expanded_ae_table = pd.DataFrame(np.zeros((len(saegus_to_tassel_loci))).T,
-                                              index=list(range(len(saegus_to_tassel_loci))),
                                               columns=['difference'])
 
-    for qtlocus in list(allele_effects_table.index):
-        expanded_ae_table.ix[qtlocus, 'difference'] =  allele_effects_table.ix[qtlocus, 'difference']
+    for qtlocus in allele_effect_table.locus:
+        expanded_ae_table.ix[qtlocus, 'difference'] =  allele_effect_table.ix[qtlocus, 'difference']
 
     return expanded_ae_table
 
