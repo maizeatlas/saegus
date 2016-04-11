@@ -905,19 +905,61 @@ def population_sample_analyzer(full_population, sample_size,
     indir = "C:\\tassel\\input\\"
     ccm = gwas.calculate_count_matrix(indir + 'daoko_girl_MAC.txt')
     ps_svd = gwas.pop_struct_svd(ccm)
-    ps_m = gwas.population_structure_formatter(ps_svd, indir + 'daoko_girl_structure_matrix.txt')
+    ps_m = gwas.population_structure_formatter(ps_svd, indir + sample_size +
+                                               '_daoko_girl_structure_matrix.txt')
     hmap = gwas.hapmap_formatter(int_to_snp_map,
-                                 indir + 'daoko_girl_simulated_hapmap.txt')
-    phenos = gwas.trait_formatter(indir + 'daoko_girl_phenotype_vector.txt')
+                                 indir + sample_size + '_daoko_girl_simulated_hapmap.txt')
+    phenos = gwas.trait_formatter(indir + sample_size + '_daoko_girl_phenotype_vector.txt')
     ks_m = gwas.calc_kinship_matrix(ccm, af,
-                                    indir + 'daoko_girl_kinship_matrix.txt')
+                                    indir + sample_size + '_daoko_girl_kinship_matrix.txt')
 
-    gwas.generate_tassel_gwas_configs("C:\\tassel\\bin\\daoko_girl_",
-                                      "C:\\tassel\\input\\daoko_girl_",
-                                      "C:\\tassel\\output\\daoko_girl_",
+    gwas.generate_tassel_gwas_configs("C:\\tassel\\bin\\" + sample_size + '_daoko_girl_',
+                                      "C:\\tassel\\input\\" + sample_size + '_daoko_girl_',
+                                      "C:\\tassel\\output\\" + sample_size + "_daoko_girl_",
                                       "C:\\Users\DoubleDanks\\BISB\\wisser\\code\\rjwlab-scripts\\"
                                       "saegus_project\\devel\\magic\\1478\\daoko_girl_gwas_pipeline.xml")
     return aes_table
+
+def remap_ae_table_loci(allele_effect_table, saegus_to_tassel_loci):
+    """
+    Converts the absolute indices of saegus population to the indices of the truncated
+    set of segregating loci. Allows for appropriate comparisons of loci.
+    """
+    remapped_loci = [saegus_to_tassel_loci[locus]
+                     for locus in allele_effect_table['locus']]
+    allele_effects_table['locus'] = remapped_loci
+    allele_effects_table['difference'] = np.abs(allele_effects_table['alpha_effect'] -
+                                          allele_effects_table['beta_effect'])
+    expanded_ae_table = pd.DataFrame(np.zeros((len(saegus_to_tassel_loci))).T,
+                                              index=list(range(len(saegus_to_tassel_loci))),
+                                              columns=['difference'])
+
+    for qtlocus in list(allele_effects_table.index):
+        expanded_ae_table.ix[qtlocus, 'difference'] =  allele_effects_table.ix[qtlocus, 'difference']
+
+    return expanded_ae_table
+
+def reconfigure_gwas_results(gwas_results_file, q_values_file, expanded_allele_effects_table, delim="\t"):
+    """
+    Useful function which parses the output from TASSEL, collects the useful
+    pieces of information such as p values, q values and allele effects
+    into a useful table.
+    """
+
+    gwas_results = pd.read_csv(gwas_results_file, sep=delim)
+    gwas_results.drop('Trait', axis=1, inplace=True)
+    gwas_results.drop('Pos', axis=1, inplace=True)
+    gwas_results.drop(0, axis=0, inplace=True)
+    gwas_results = gwas_results.ix[:, 'Marker':'p']
+    gwas_results.index = gwas_results.index - 1
+    gwas_results.drop('Marker', axis=1, inplace=True)
+    qvalues = pd.read_csv(q_values_file, sep=delim)
+    qvalues.columns = ['q']
+    qvalues.index = qvalues.index - 1
+    results = gwas_results.join(qvalues)
+    greater_results = results.join(expanded_allele_effects_table)
+
+    return greater_results
 
 
 
