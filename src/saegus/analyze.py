@@ -528,13 +528,11 @@ class GWAS(object):
         self.allele_subset = allele_subset
         self.run_id = run_id
 
-        self.individual_names = ['I_' + str(ind.ind_id)
+        self.individual_names = ['I' + str(ind.ind_id)[:-2]
                                  for ind in pop.individuals()]
 
-        self.locus_names = ['RL_' + str(pop.chromLocusPair(locus)[1])
-                            for locus in loci]
-
-        self.pos_names = ['AL_' + str(locus) for locus in loci]
+        self.locus_names = list(range(len(loci)))
+        self.pos_names = list(range(len(loci)))
 
     def calculate_count_matrix(self, count_matrix_filename):
         """
@@ -722,17 +720,10 @@ class GWAS(object):
         unsuspected bug.
         :param trait_filename:
         """
-        header = "<Trait> sim\n"
+        header = "<Trait>\tsim\n"
 
-        # Ensure phenotype and name are coming from the same individual
-
-        phenotypes = []
-        ind_names = []
-        for ind in self.pop.individuals():
-            phenotypes.append(ind.p)
-            ind_names.append(self.individual_names[ind.ind_id])
-
-        trait_vector = pd.DataFrame([ind_names, phenotypes]).T
+        trait_vector = pd.DataFrame(np.array([self.individual_names,
+                               self.pop.indInfo('p')]).T)
 
         cwd = os.getcwd()
         file_out_path = os.path.join(cwd, trait_filename)
@@ -741,7 +732,7 @@ class GWAS(object):
             os.remove(file_out_path)
         with open(trait_filename, 'w') as f:
             f.write(header)
-            trait_vector.to_csv(f, sep=' ', index=False, header=False)
+            trait_vector.to_csv(f, sep='\t', index=False, header=False)
 
         return trait_vector
 
@@ -797,7 +788,8 @@ class GWAS(object):
             os.remove(file_out_path)
         with open(kinship_filename, 'w') as f:
             f.write(header)
-            annotated_G.to_csv(f, sep=' ', index=True, header=False)
+            annotated_G.to_csv(f, sep='\t', index=True, header=False,
+                               float_format='%.3f')
 
         return annotated_G
 
