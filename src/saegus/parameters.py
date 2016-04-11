@@ -318,8 +318,6 @@ class Trait(object):
 
     """
 
-
-
     def seg_qtl_chooser(self, pop: sim.Population, loci_subset: list, number_qtl: int):
         """
         Chooses a random sample of ``number_qtl`` loci to be designated as QTL.
@@ -341,44 +339,15 @@ class Trait(object):
         qtl = sorted(random.sample(permissible_qtl, number_qtl))
         return qtl
 
+    def assign_allele_effects(self, alleles, qtl, distribution_function,
+                                  *distribution_function_parameters,
+                                  multiplicity):
 
-    def assign_identical_qtl_parameters(self, multi_pop, alleles,  qtl_subset, \
-                                                    number_of_qtl, ae_parameters):
-        """
-        Assigns each replicate in a population the same exact set of QTL and corresponding
-        allele effects.
-
-        :param multi_pop: simuPOP Simulator object containing multiple replicates.
-        :param number_of_qtl: Number of loci to declare as QTL
-        :param qtl_subset: List of loci which can be chosen as QTL
-        :param ae_parameters: Parameters of the allele effect distribution.
-
-
-
-        """
-        triplet_qtl = {i: [] for i in range(multi_pop.numRep())}
-        single_pop = multi_pop.population(0)
-        sim.stat(single_pop, numOfSegSites=qtl_subset, vars=['numOfSegSites', 'segSites'])
-        qtl = seg_qtl_chooser(single_pop, qtl_subset, number_of_qtl)
-
-        for i, pop_rep in enumerate(multi_pop.populations()):
-            for locus in qtl:
-                triplet_qtl[i].append(locus - 1)
-                triplet_qtl[i].append(locus)
-                triplet_qtl[i].append(locus + 1)
-
-        allele_effects = {rep_id: {locus: {} for locus in triplet_qtl[rep_id]}
-                              for rep_id in range(multi_pop.numRep())}
-
-        for locus in triplet_qtl[0]:
+        allele_effects = {}
+        for locus in qtl:
+            allele_effects[locus] = {}
             for allele in alleles[locus]:
-                allele_effects[0][locus][allele] = random.expovariate(
-                    *ae_parameters)
-
-        for i in range(1, multi_pop.numRep()):
-            allele_effects[i] = allele_effects[0]
-            assert allele_effects[i] == allele_effects[0], "One set of allele " \
-                                                           "effects is not equal " \
-                                                           "to the 0th one."
-
-        return triplet_qtl, allele_effects
+                allele_effects[locus][allele] = \
+                    sum([distribution_function(*distribution_function_parameters)
+                         for i in range(multiplicity)])
+        return allele_effects

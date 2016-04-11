@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<TasselPipeline>
+    <fork1>
+        <h>C:\tassel\input\simulated_hapmap.txt</h>
+    </fork1>
+    <fork2>
+        <t>C:\tassel\input\phenotype_vector.txt</t>
+    </fork2>
+    <fork3>
+        <q>C:\tassel\input\structure_matrix.txt</q>
+    </fork3>
+    <fork4>
+        <k>C:\tassel\input\kinship_matrix.txt</k>
+    </fork4>
+    <combine5>
+        <input1/>
+        <input2/>
+        <input3/>
+        <intersect/>
+    </combine5>
+    <combine6>
+        <input5/>
+        <input4/>
+        <mlm/>
+        <mlmCompressionLevel>
+            None
+        </mlmCompressionLevel>
+        <export>C:\tassel\output\_gwas_out_</export>
+    </combine6>
+    <runfork1/>
+    <runfork2/>
+    <runfork3/>
+    <runfork4/>
+</TasselPipeline>

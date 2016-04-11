@@ -293,5 +293,34 @@ class DiscardRandomOffspring(sim.PyOperator):
         pop.removeIndividuals(removed_inds)
         return True
 
+def calculate_error_variance(pop, heritability):
+    """
+    Calculates the parameter ``epsilon`` to be used as the variance
+    of the error distribution. The error distribution generates noise
+    found in real experiments.
+    """
+    variance_of_g = np.var(pop.indInfo('g'))
+    epsilon = variance_of_g*(1/heritability - 1)
+    pop.dvars().epsilon = epsilon
 
+def phenotypic_effect_calculator(pop):
+    """
+    Simulate measurement error by adding random error to genotypic
+    contribution.
+    """
+    for ind in pop.individuals():
+        ind.p = ind.g + random.normalvariate(0, pop.dvars().epsilon)
 
+def assign_additive_g(pop, qtl, allele_effects):
+    """
+    Calculates genotypic contribution ``g`` by summing the effect of each
+    allele at each quantitative trait locus. Assumes a bi-allelic case.
+    """
+    for ind in pop.individuals():
+        genotypic_contribution = \
+            sum([
+                    allele_effects[locus][ind.genotype(ploidy=0)[locus]] +\
+                    allele_effects[locus][ind.genotype(ploidy=1)[locus]]
+                 for locus
+                 in qtl])
+        ind.g = genotypic_contribution

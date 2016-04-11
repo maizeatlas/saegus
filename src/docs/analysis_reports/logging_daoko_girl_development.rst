@@ -1,9 +1,11 @@
+
 .. run-daoko-girl:
 
 ======================================
 Log of Development for Run: Daoko.girl
 ======================================
 
+.. daoko-girl-parameters:
 
 Location and Definition of Parameters
 =====================================
@@ -39,7 +41,7 @@ Trait Parameters
 
 ``saegus`` was developed with the intention of simulating quantitative phenotypes.
 ``trait_parameters`` should tell the user exactly how the phenotypes, ``p``, were
-caclculated. At present ``trait_parameters`` has the following entries:
+calculated. At present ``trait_parameters`` has the following entries:
 
    * ``number_of_qtl``
    * ``qtl``
@@ -67,15 +69,23 @@ connection between input and output.
    * ``generations``
    * ``operating_population_size``
    * ``output_prefix``
+   * ``sample_size``
+   * ``sample_ind_ids``
+   * ``sample_allele_frequencies``
+   * ``segregating_loci``
+   * ``saegus_to_tassel_loci``
+   * ``tassel_to_saegus_loci``
 
 Intermediate Data
 ~~~~~~~~~~~~~~~~~
 
 There is a great deal of data and parameters moving around inside even a single
-simulation of ``saegus``. For debug and sanity purposes I keep a file for
-intermediate data during this development phase.
+simulation of ``saegus``. It is wasteful to generate new data each time I work on
+``saegus``. ``intermediate_data`` records parameters or data that in the case
+I take a break from developing. ``intermediate_data`` can also be used for debugging
+and metadata.
 
-.. code-block::python
+.. code-block:: python
 
    intermediate_data = shelve.open('daoko_girl_debug_data')
    intermediate_data['allele_frequencies'] = af
@@ -86,6 +96,10 @@ intermediate data during this development phase.
    intermediate_data['run_name'] = 'daoko_girl'
    intermediate_data.close()
 
+
+
+Running the Simulation and Formatting Output for TASSEL
+=======================================================
 
 .. code-block:: shell
 

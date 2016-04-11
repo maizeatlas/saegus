@@ -5,8 +5,13 @@ import numpy as np
 import pandas as pd
 import collections as col
 import os
+import random
+import shelve
 from scipy import linalg
-import matplotlib.pyplot as plt
+from . import analyze, operators, parameters
+
+import parameters
+
 
 def allele_data(pop, alleles, loci):
     """
@@ -217,12 +222,9 @@ def generate_allele_effects_table(qtl, alleles, allele_effects):
     Creates a simple pd.DataFrame for allele effects. Hard-coded
     for bi-allelic case.
 
-
-
     :parameter list qtl: List of loci declared as QTL
     :parameter np.array alleles: Array of alleles at each locus
     :parameter dict allele_effects: Mapping of effects for alleles at each QTLocus
-
     """
     ae_table = {
         'locus': [],
@@ -793,10 +795,10 @@ class GWAS(object):
 
         return annotated_G
 
-    def generate_tassel_gwas_configs(self, input_directory_prefix,
-                                     output_directory_prefix,
-                                     config_file_prefix,
-                                     xml_pipeline_template):
+    def generate_tassel_gwas_configs(self, tassel_executable,
+                                     input_directory,
+                                     output_directory,
+                                     config_file_template):
         """
         Creates an xml file to run TASSEL using a mixed linear model approach.
         Assumes use of hapmap, kinship, phenotype and population structure files.
@@ -810,9 +812,9 @@ class GWAS(object):
         line interface allows the user to input a .xml file with the same
         information which is used in the terminal.
 
-        :param input_directory_prefix: Directory path to send the input files.
+        :param input_directory: Directory path to send the input files.
         :param run_identifier_prefix: Identifier for single replicate of data
-        :param xml_pipeline_template: XML file already setup for running a
+        :param config_file_templae: XML file already setup for running a
         specific kind of GWAS
         :return: XML file to run a single replicate of data using TASSEL
         """
@@ -821,23 +823,22 @@ class GWAS(object):
         import xml.etree.ElementTree as ET
         import lxml.etree as etree
 
-        tree = ET.parse(xml_pipeline_template)
+        tree = ET.parse(config_file_template)
         root = tree.getroot()
         lxml_tree = etree.fromstring(ET.tostring(root))
         lxml_root = lxml_tree.getroottree()
 
-        hapmap_filename = input_directory_prefix + self.run_id + \
-                          'simulated_hapmap.txt'
-        phenotype_filename = input_directory_prefix + self.run_id + \
+        hapmap_filename = input_directory + 'simulated_hapmap.txt'
+        phenotype_filename = input_directory + \
             'phenotype_vector.txt'
-        pop_struct_filename = input_directory_prefix + self.run_id + \
+        pop_struct_filename = input_directory + \
                               'structure_matrix.txt'
-        kinship_filename = input_directory_prefix + self.run_id + \
+        kinship_filename = input_directory + \
                            'kinship_matrix.txt'
 
-        tassel_outputs = output_directory_prefix + self.run_id + '_gwas_out_'
+        tassel_outputs = output_directory + 'gwas_out_'
 
-        config_filname = config_file_prefix + self.run_id + \
+        config_filname = config_file_template + \
                          '_sim_gwas_pipeline.xml'
 
         lxml_root.find('fork1/h').text = hapmap_filename
@@ -849,53 +850,75 @@ class GWAS(object):
 
         config_file_out = config_filname
 
-        lxml_root.write(config_file_out, encoding="UTF-8",
+        lxml_root.write("C:\\tassel\\bin\\daoko_girl_sim_gwas_pipeline.xml", encoding="UTF-8",
                        method="xml", xml_declaration=True, standalone='',
                         pretty_print=True)
 
+def population_sample_analyzer(full_population, sample_size,
+                                       number_of_qtl, alleles,
+                                       dist_function, *dist_func_parameters,
+                                       multiplicity=3, heritability=0.7,
+                                       run_id='daoko_girl', **kwargs):
 
-def parameter_set_writer(directory_prefix, run_prefix, mating,
-                         quantitative, effects,
-                         genetic_structure):
     """
-    Simulation parameters are collected in separate dictionary objects.
-    This function writes all parameter information into a set of human
-    readable .yaml files.
+    A function to call all of the functions in order to get from population
+    to TASSEL input and output.
 
-    :param directory_prefix:
-    :param run_prefix: Identifier for a set of simulated data
-    :param mating: Parameters which specifying mating
-    :param quantitative: Dictionary of qtl for each replicate
-    :param effects:
-    :param genetic_structure:
-    :return:
-    """
+    For the time being it is hard-coded in many aspects; however, this one
+    function replaces an entire IPython notebook's worth of code.
 
-    import yaml
+    In future development this function will probably be separated into
+    two or three separate methods under the same class.
 
-
-    file_names = {}
-
-    file_names[run_prefix + 'mating.yaml'] = mating
-    file_names[run_prefix + 'qtl.yaml'] = quantitative
-    file_names[run_prefix + 'allele_effects.yaml'] = effects
-    file_names[run_prefix + 'genetic_structure.yaml'] = genetic_structure
-
-    for name, param_set in file_names.items():
-        with open(name, 'w') as p_stream:
-            yaml.dump(param_set, p_stream)
-
-
-def parameter_set_reader(parameter_filename):
-    """
-    Reads a file of .yaml parameters for an easy way to parameterize a
-    simulation. Alternately the user would have to derive a great deal of
-    information from raw files.
-    :param parameter_filename:
-    :return:
+    :warning: The paths for the location of the TasselIO are hard-coded for the time being.
+    :warning: The path for the int_to_snp_map is also hard-coded.
     """
 
-    pass
+    syn_parameters = shelve.open('synthesis_parameters')
+    int_to_snp_map = syn_parameters['integer_to_snp']
+    syn_parameters.close()
+
+    sample_population = sim.sampling.drawRandomSample(full_population,
+                                                      sizes=sample_size)
+    sim.stat(sample_population, alleleFreq=sim.ALL_AVAIL)
+    sim.stat(sample_population, numOfSegSites=sim.ALL_AVAIL,
+             vars=['segSites', 'numOfSegSites'])
+    segregating_loci = sample_population.dvars().segSites
+    quantitative_trait_loci = sorted(
+        random.sample(sample_population.dvars().segSites, number_of_qtl))
+    add_trait = parameters.Trait()
+    aes = add_trait.assign_allele_effects(alleles, quantitative_trait_loci,
+                                          dist_function,
+                                          *dist_func_parameters,
+                                          multiplicity=multiplicity)
+    aes_table = analyze.generate_allele_effects_table(quantitative_trait_loci,
+                                                      alleles, aes)
+    operators.assign_additive_g(full_population, quantitative_trait_loci, aes)
+    operators.calculate_error_variance(sample_population, heritability)
+    operators.phenotypic_effect_calculator(sample_population)
+    af = analyze.allele_data(sample_population, alleles,
+                             range(sample_population.totNumLoci()))
+
+    gwas = analyze.GWAS(sample_population, segregating_loci,
+                        np.array(af['minor_allele']), run_id)
+
+    indir = "C:\\tassel\\input\\"
+    ccm = gwas.calculate_count_matrix(indir + 'daoko_girl_MAC.txt')
+    ps_svd = gwas.pop_struct_svd(ccm)
+    ps_m = gwas.population_structure_formatter(ps_svd, indir + 'daoko_girl_structure_matrix.txt')
+    hmap = gwas.hapmap_formatter(int_to_snp_map,
+                                 indir + 'daoko_girl_simulated_hapmap.txt')
+    phenos = gwas.trait_formatter(indir + 'daoko_girl_phenotype_vector.txt')
+    ks_m = gwas.calc_kinship_matrix(ccm, af,
+                                    indir + 'daoko_girl_kinship_matrix.txt')
+
+    gwas.generate_tassel_gwas_configs("C:\\tassel\\bin\\daoko_girl_",
+                                      "C:\\tassel\\input\\daoko_girl_",
+                                      "C:\\tassel\\output\\daoko_girl_",
+                                      "C:\\Users\DoubleDanks\\BISB\\wisser\\code\\rjwlab-scripts\\"
+                                      "saegus_project\\devel\\magic\\1478\\daoko_girl_gwas_pipeline.xml")
+    return aes_table
+
 
 
 class Synbreed(object):

@@ -133,6 +133,7 @@
     </table>
     <p>1478 rows × 4 columns</p>
     </div>
+
 .. py:function:: rank_allele_effects(pop, loci, alleles, allele_effects)
 
    Collects information about alleles at quantitative trait loci into a
@@ -214,7 +215,7 @@
 
 **Example**
 
-.. code:: python
+.. code-block:: python
 
    alleles
    array([[1, 2],
@@ -240,12 +241,7 @@
    981: {0: 3.9513501430851568, 3: 1.78843909724396},
    1065: {0: 0.998194377898828, 2: 1.5139052352904945}}
 
-**Return**
-
     aeframe
-
-
-
 
 .. raw:: html
 
@@ -564,110 +560,48 @@
         test_statistic = (lowercase_l - mu_hat) / sigma_hat
         return test_statistic
 
-.. py:class::GWAS
+.. py:class:: GWAS(pop, loci, allele_subset, run_id, individual_names, locus_names, pos_names)
 
-    A class to collect and format all data in preparation for GWAS using TASSEL.
+   A class to collect all the functions necessary to prepare viable input for TASSEL's
+   mixed linear model method. Most of the methods contribute to generating one
+   of the files required to run MLM in TASSEL.
 
-    def __init__(self, pop, individual_names, locus_names, positions, *args,
-                 **kwargs):
-        self.pop = pop
-        self.individual_names = individual_names
-        self.locus_names = locus_names
-        self.positions = positions
-
-
-    def hapmap_formatter(self, int_to_snp_conversions, hapmap_matrix_filename):
-        """
-        Converts genotype data from sim.Population object to HapMap file format
-        in expectation to be used in TASSEL for GWAS. At present the column
-        names will be hardcoded as will some of the values.
-        ``hapmap_matrix_filename`` is the name of the file the formatted
-        matrix will be written to.
-        :param int_to_snp_conversions:
-        :param hapmap_matrix_filename:
-        :return:
-        :rtype:
-        """
-        hapmap_data = {}
-        hapmap_data['rs'] = self.locus_names
-        hapmap_data['alleles'] = ['NA']*self.pop.totNumLoci()
-        hapmap_data['chrom'] = [self.pop.chromLocusPair(locus)[0]+1 for
-                                locus in
-                                range(self.pop.totNumLoci())]
-        hapmap_data['pos'] = self.positions
-
-        # Several columns which are set to 'NA'.
-        extraneous_columns = ['strand', 'assembly', 'center', 'protLSID',
-                              'assayLSID', 'panelLSID', 'QCcode']
-        for column in extraneous_columns:
-            hapmap_data[column] = ['NA']*self.pop.totNumLoci()
-
-        # Each individual has a column. Simulated individuals will have names
-        # reflecting some information about them. 'RS' recurrent selection,
-        # 'R' rep, 'G' generation and 'I' ind_id
-
-        # Finally each individual's genotype must be converted to HapMap format
-
-        for ind in self.pop.individuals():
-            alpha, beta = ind.genotype(ploidy=0), ind.genotype(ploidy=1)
-            hapmap_data[self.individual_names[ind.ind_id]] = [
-                int_to_snp_conversions[a]+int_to_snp_conversions[b]
-                                 for a, b in zip(alpha, beta)]
+   :parameter pop: Population under analysis. Can be full sized or sample.
+   :parameter loci: Either all loci in a population or a subset. Usually the segregating loci.
+   :parameter allele_subset: A 1D list of alleles at each locus. Typically a list of minor alleles.
+   :parameter run_id: A string prefixed to files and various objects to track the corresponding meta-data
+   :parameter individual_names: Stringified version of the individual IDs of :param:`pop`. Can be used to attach meta-data to each ID
+   :parameter locus_names: List of loci indices for the ``hapmap`` required by TASSEL.
+   :parameter pos_names: Dummy column for our purposes. However, it is properly used to represent physical position on a genome.
 
 
-        # Need to guarantee that the column names are in same order as the
-        # genoype data. Iterate over individuals in population to build up a
-        #  list of names will guarantee that col names are in same order as
-        # the hapmap_data
-        ordered_names = [self.individual_names[ind.ind_id] for ind in
-                         self.pop.individuals()]
+   .. py:method:: hapmap_formatter(self, int_to_snp_conversions, hapmap_matrix_filename)
 
-        hapmap_ordered_columns = ['rs', 'alleles', 'chrom', 'pos', 'strand',
-                           'assembly', 'center', 'protLSID', 'assayLSID',
-                               'panelLSID', 'QCcode'] + ordered_names
+      :parameter dict int_to_snp_conversions: Simple dictionary which encodes integer alleles as strings
+      :parameter hapmap_matrix_filename: Output filename
 
-        hapmap_matrix = pd.DataFrame(columns=hapmap_ordered_columns)
-        for k, v in hapmap_data.items():
-            hapmap_matrix[k] = v
+      Converts genotype data from sim.Population object to HapMap file format
+      in expectation to be used in TASSEL for GWAS. At present the column
+      names will be hardcoded as will some of the values. ``hapmap_matrix_filename``
+      is the name of the file the formatted will be written to.
 
-        hapmap_matrix.to_csv(hapmap_matrix_filename, sep='\t',
-                             index=False)
+   .. py:method:: trait_formatter(self, trait_filename)
 
-        return hapmap_matrix
+      :parameter str trait_filename: Output for the ID-phenotype vector
 
-    def trait_formatter(self, trait_filename):
-        """
-        Simple function to automate the formatting of the phenotypic data.
-        Because of the way the header must be written the file is opened in
-        append mode. Rewriting to the same file many times could introduce an
-        unsuspected bug.
-        :param trait_filename:
-        """
-        header = "<Trait> sim\n"
+      Simple function to automate the formatting of the phenotype data.
+      TASSEL requires a specific header in the trait file. This function
+      simply write the header first and then adds the rest of the data in using
+      :function:`np.savetxt`
 
-        # Ensure phenotype and name are coming from the same individual
+      **Example**
+
+      .. code-block:: python
+
+         header = "<Trait> sim\n"
 
 
-        phenotypes = []
-        ind_names = []
-        for ind in self.pop.individuals():
-            phenotypes.append(ind.p)
-            ind_names.append(self.individual_names[ind.ind_id])
-
-        trait_vector = pd.DataFrame([ind_names, phenotypes]).T
-
-        cwd = os.getcwd()
-        file_out_path = os.path.join(cwd, trait_filename)
-
-        if os.path.exists(file_out_path):
-            os.remove(file_out_path)
-        with open(trait_filename, 'a') as f:
-            f.write(header)
-            trait_vector.to_csv(f, sep=' ', index=False, header=False)
-
-        return trait_vector
-
-    def population_structure_formatter(self, eigen_data, structure_filename):
+   def population_structure_formatter(self, eigen_data, structure_filename):
         """
         Writes the first two of the population structure matrix to a
         file. First column of the file is are names.
@@ -806,46 +740,3 @@ def generate_tassel_gwas_configs(input_directory_prefix,
                    method="xml", xml_declaration=True, standalone='',
                     pretty_print=True)
 
-
-def parameter_set_writer(directory_prefix, run_prefix, mating,
-                         quantitative, effects,
-                         genetic_structure):
-    """
-    Simulation parameters are collected in separate dictionary objects.
-    This function writes all parameter information into a set of human
-    readable .yaml files.
-
-    :param directory_prefix:
-    :param run_prefix: Identifier for a set of simulated data
-    :param mating: Parameters which specifying mating
-    :param quantitative: Dictionary of qtl for each replicate
-    :param effects:
-    :param genetic_structure:
-    :return:
-    """
-
-    import yaml
-
-
-    file_names = {}
-
-    file_names[run_prefix + 'mating.yaml'] = mating
-    file_names[run_prefix + 'qtl.yaml'] = quantitative
-    file_names[run_prefix + 'allele_effects.yaml'] = effects
-    file_names[run_prefix + 'genetic_structure.yaml'] = genetic_structure
-
-    for name, param_set in file_names.items():
-        with open(name, 'w') as p_stream:
-            yaml.dump(param_set, p_stream)
-
-
-def parameter_set_reader(parameter_filename):
-    """
-    Reads a file of .yaml parameters for an easy way to parameterize a
-    simulation. Alternately the user would have to derive a great deal of
-    information from raw files.
-    :param parameter_filename:
-    :return:
-    """
-
-    pass
