@@ -909,7 +909,7 @@ def population_sample_analyzer(full_population, sample_size,
                   indir + str(sample_size) + '_daoko_girl_kinship_matrix.txt',
                   indir + str(sample_size) + '_daoko_girl_phenotype_vector.txt',
                   indir + str(sample_size) + '_daoko_girl_structure_matrix.txt',
-                  "C:\\tassel\\bin\\" + str(sample_size) + "_daoko_girl_out_",
+                  "C:\\tassel\\output\\" + str(sample_size) + "_daoko_girl_out_",
                   "C:\\Users\DoubleDanks\\BISB\\wisser\\code\\rjwlab-scripts\\"
               "saegus_project\\devel\\magic\\1478\\daoko_girl_gwas_pipeline.xml")
     return segregating_loci, aes_table
