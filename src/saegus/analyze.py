@@ -890,6 +890,9 @@ def population_sample_analyzer(full_population, sample_size,
     af = allele_data(sample_population, alleles,
                              range(sample_population.totNumLoci()))
 
+    af.to_hdf(str(sample_size) + '_daoko_girl_af.hdf', 'af')
+
+
     gwas = GWAS(sample_population, segregating_loci,
                         np.array(af['minor_allele']), run_id)
 
