@@ -806,9 +806,6 @@ class GWAS(object):
         Creates an xml file to run TASSEL using a mixed linear model approach.
         Assumes use of hapmap, kinship, phenotype and population structure files.
 
-
-
-
         The TASSEL command line interface requires a considerable number of
         options to run GWAS. It is impractical to run the command line manually
         for the number of replications in a simulated study. The TASSEL command
@@ -839,7 +836,8 @@ class GWAS(object):
         lxml_root.find('combine6/export').text = output_file_prefix
 
 
-        lxml_root.write("C:\\tassel\\bin\\daoko_girl_sim_gwas_pipeline.xml", encoding="UTF-8",
+        lxml_root.write("C:\\tassel\\bin\\daoko_girl_" + str(sample_size) + "_sim_gwas_pipeline.xml",
+                        encoding="UTF-8",
                        method="xml", xml_declaration=True, standalone='',
                         pretty_print=True)
 
@@ -960,7 +958,6 @@ def reconfigure_gwas_results(gwas_results_file, q_values_file, expanded_allele_e
     greater_results = results.join(expanded_allele_effects_table)
 
     return greater_results
-
 
 
 class Synbreed(object):
