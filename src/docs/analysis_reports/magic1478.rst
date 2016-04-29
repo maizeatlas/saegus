@@ -1,6 +1,6 @@
-====================================
-MAGIC Population with Subset of Loci
-====================================
+======================
+MAGIC1478 vs MAGIC7386
+======================
 
 The ``standard_magic`` population uses all 7386 loci from :file:`hapmap3.txt`. However,
 if I use all 7386 loci and the triplet scheme this alters the GWAS results. I need

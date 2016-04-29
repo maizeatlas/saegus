@@ -10,8 +10,6 @@ import shelve
 from scipy import linalg
 from . import operators, parameters
 
-import parameters
-
 
 def allele_data(pop, alleles, loci):
     """
@@ -413,11 +411,6 @@ def plot_frequency_vs_effect(pop, haplotype_table, plot_title,
     f.savefig(plot_file_name, dpi=300)
 
     return effect_frq_by_chromosome
-
-
-
-
-
 
 
 class MetaData(object):
@@ -872,16 +865,8 @@ def population_sample_analyzer(full_population, sample_size,
     sim.stat(sample_population, numOfSegSites=sim.ALL_AVAIL,
              vars=['segSites', 'numOfSegSites'])
     segregating_loci = sample_population.dvars().segSites
-  #  quantitative_trait_loci = sorted(
-   #     random.sample(sample_population.dvars().segSites, number_of_qtl))
-   # add_trait = parameters.Trait()
-
-    #aes = add_trait.assign_allele_effects(alleles, quantitative_trait_loci,
-     #                                     dist_function,
-      #                                    *dist_func_parameters,
-       #                                   multiplicity=multiplicity)
-    aes_table = generate_allele_effects_table(quantitative_trait_loci,
-                                                      alleles, allele_effects)
+    #aes_table = generate_allele_effects_table(quantitative_trait_loci,
+    #                                                  alleles, allele_effects)
     operators.assign_additive_g(full_population, quantitative_trait_loci, allele_effects)
     operators.calculate_error_variance(sample_population, heritability)
     operators.phenotypic_effect_calculator(sample_population)

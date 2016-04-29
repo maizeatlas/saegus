@@ -17,8 +17,8 @@
     <option name="requirementsPath" value="C:\Users\DoubleDanks\BISB\wisser\code\rjwlab-scripts\saegus_project\src\requirements.txt" />
   </component>
   <component name="ReSTService">
-    <option name="workdir" value="C:\Users\DoubleDanks\BISB\wisser\code\rjwlab-scripts\saegus_project\src\docs" />
-    <option name="DOC_DIR" value="C:\Users\DoubleDanks\BISB\wisser\code\rjwlab-scripts\saegus_project\src\docs" />
+    <option name="workdir" value="C:\Users\DoubleDanks\BISB\wisser\code\rjwlab-scripts\saegus_project\src\docs\saegus_documentation" />
+    <option name="DOC_DIR" value="C:\Users\DoubleDanks\BISB\wisser\code\rjwlab-scripts\saegus_project\src\docs\saegus_documentation" />
   </component>
   <component name="TestRunnerService">
     <option name="projectConfiguration" value="py.test" />

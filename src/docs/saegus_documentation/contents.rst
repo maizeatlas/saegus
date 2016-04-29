@@ -11,9 +11,9 @@ Contents:
 .. toctree::
    :maxdepth: 1
 
-   magic1478.rst
-   creating_data_for_GWAS_with_magic1478.rst
-   analyzing_magic1478_results.rst
+   breed.rst
+
+
 
 Indices and tables
 ==================

@@ -24,7 +24,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="magic-gwas 1.0 documentation" href="contents.html" />
+    <link rel="top" title="magic-gwas 1.0 documentation" href="analysis.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -169,18 +169,6 @@ Instead I use the values:</p>
 </ul>
 <p>The edited file name is <code class="docutils literal"><span class="pre">edited_gwas_out_2.txt</span></code>. I use these commands to
 obtain the q-values.</p>
-<div class="highlight-R"><div class="highlight"><pre><span></span>results_header <span class="o">=</span> <span class="kp">scan</span><span class="p">(</span><span class="s">&quot;edited_gwas_out_2.txt&quot;</span><span class="p">,</span> what<span class="o">=</span><span class="s">&quot;character&quot;</span><span class="p">,</span> nlines<span class="o">=</span><span class="m">1</span><span class="p">,</span> sep<span class="o">=</span><span class="s">&quot;\t&quot;</span><span class="p">)</span>
-gwas_results <span class="o">=</span> read.table<span class="p">(</span><span class="s">&quot;edited_gwas_out_2.txt&quot;</span><span class="p">,</span> header<span class="o">=</span><span class="bp">F</span><span class="p">,</span> row.names<span class="o">=</span><span class="kc">NULL</span><span class="p">,</span> skip<span class="o">=</span><span class="m">2</span><span class="p">)</span>
-<span class="kp">colnames</span><span class="p">(</span>gwas_results<span class="p">)</span> <span class="o">=</span> results_header
-
-pvalues <span class="o">=</span> gwas_results<span class="o">$</span>p
-<span class="kn">library</span><span class="p">(</span>qvalue<span class="p">)</span>
-qobj <span class="o">=</span> qvalue<span class="p">(</span>p <span class="o">=</span> pvalues<span class="p">)</span>
-qobj<span class="o">$</span>qvalues
-qvalues_of_magic1478_results <span class="o">=</span> <span class="kt">data.frame</span><span class="p">(</span>qobj<span class="o">$</span>qvalues<span class="p">)</span>
-write.table<span class="p">(</span>qvalues_of_magic1478_results<span class="p">,</span> <span class="s">&quot;qvalues_of_magic1478.txt&quot;</span><span class="p">,</span> sep<span class="o">=</span><span class="s">&quot;\t&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
 <p>We use the <code class="xref py py-func docutils literal"><span class="pre">qqunif()</span></code> function in R to produce the quantile-quantile plot of
 the p-values.</p>
 <div class="figure" id="id1">
@@ -205,7 +193,7 @@ The Q-values are 4.1451249e-25 and 1.606586e-73 respectively.</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="contents.html">Table Of Contents</a></h3>
+  <h3><a href="analysis.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Analyzing Results of GWAS with TASSEL</a><ul>
 <li><a class="reference internal" href="#dataset-specifics">Dataset Specifics</a></li>
@@ -216,7 +204,7 @@ The Q-values are 4.1451249e-25 and 1.606586e-73 respectively.</p>
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
-  <li><a href="contents.html">Documentation overview</a><ul>
+  <li><a href="analysis.html">Documentation overview</a><ul>
   </ul></li>
 </ul>
 </div>

@@ -103,12 +103,10 @@ Simulation Parameters
 ~~~~~~~~~~~~~~~~~~~~~
 
 
-Mean and Variance Data
-~~~~~~~~~~~~~~~~~~~~~~
-
-
 Minor Allele Matrix
 ~~~~~~~~~~~~~~~~~~~
+
+
 
 Configuration Files
 ~~~~~~~~~~~~~~~~~~~

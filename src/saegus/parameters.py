@@ -7,7 +7,6 @@ import collections as col
 import random
 import numpy as np
 import yaml
-from mock.mock import self
 from scipy import stats
 
 

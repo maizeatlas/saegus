@@ -111,7 +111,6 @@ This is some useful information about the data-set used in the TASSEL MLM:
 QVALUES in R
 ============
 
-
 We will follow Jim's tutorial to use the :mod:`qvalue` package in R; however, I
 have found that the function we want to use :func:`qvalue` does not handle
 missing data i.e. ``NaN``. Because I am more proficient with ``python`` than
@@ -139,7 +138,7 @@ Instead I use the values:
 The edited file name is ``edited_gwas_out_2.txt``. I use these commands to
 obtain the q-values.
 
-.. code-block:: R
+.. code-block::
 
    results_header = scan("edited_gwas_out_2.txt", what="character", nlines=1, sep="\t")
    gwas_results = read.table("edited_gwas_out_2.txt", header=F, row.names=NULL, skip=2)
