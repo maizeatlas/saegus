@@ -1,0 +1,276 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Analyzing Results of GWAS with TASSEL &mdash; saegus 0.1.2 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="saegus 0.1.2 documentation" href="contents.html" />
+    <link rel="prev" title="Generating Input for TASSEL with MAGIC1478" href="creating_data_for_GWAS_with_magic1478.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="creating_data_for_GWAS_with_magic1478.html" title="Generating Input for TASSEL with MAGIC1478"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="contents.html">saegus 0.1.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="analyzing-results-of-gwas-with-tassel">
+<span id="analyze-magic1478-rdm-mating-results"></span><h1>Analyzing Results of GWAS with TASSEL<a class="headerlink" href="#analyzing-results-of-gwas-with-tassel" title="Permalink to this headline">¶</a></h1>
+<p>We use the mixed-linear modeling method implemented in TASSEL.
+The MLM in TASSEL requires three files at minimum with the option for a fourth.</p>
+<blockquote>
+<div><ul class="simple">
+<li>genotypes in <em>hapmap</em> format</li>
+<li>kinship matrix</li>
+<li>phenotypes</li>
+<li>population structure matrix (optional)</li>
+</ul>
+</div></blockquote>
+<p><code class="xref py py-mod docutils literal"><span class="pre">saegus</span></code> generates all four files. In this particular case the file names
+are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">simulated_hapmap.txt</span></code></li>
+<li><code class="docutils literal"><span class="pre">phenotype_vector.txt</span></code></li>
+<li><code class="docutils literal"><span class="pre">kinship_matrix.txt</span></code></li>
+<li><code class="docutils literal"><span class="pre">structure_matrix.txt</span></code></li>
+</ul>
+</div></blockquote>
+<p>For the sake of simplicity I placed them in same directory as the
+TASSEL executable file: <code class="docutils literal"><span class="pre">sTASSEL.jar</span></code>. Running an analysis
+with four files using the TASSEL command line interface requires typing
+a very long string of code. Fortunately TASSEL allows the user to create
+a <code class="docutils literal"><span class="pre">config</span></code> file in <code class="docutils literal"><span class="pre">xml</span></code> format. A <code class="docutils literal"><span class="pre">config</span></code> file provides a much clearer
+description of how TASSEL is processing the input. Below is the exact file I used
+to run the current analysis.</p>
+<div class="highlight-xml"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&#39;1.0&#39; encoding=&#39;UTF-8&#39; standalone=&#39;no&#39;?&gt;</span>
+<span class="nt">&lt;TasselPipeline&gt;</span>
+    <span class="nt">&lt;fork1&gt;</span>
+        <span class="nt">&lt;h&gt;</span>simulated_hapmap.txt<span class="nt">&lt;/h&gt;</span>
+    <span class="nt">&lt;/fork1&gt;</span>
+    <span class="nt">&lt;fork2&gt;</span>
+        <span class="nt">&lt;t&gt;</span>phenotype_vector.txt<span class="nt">&lt;/t&gt;</span>
+    <span class="nt">&lt;/fork2&gt;</span>
+    <span class="nt">&lt;fork3&gt;</span>
+        <span class="nt">&lt;q&gt;</span>structure_matrix.txt<span class="nt">&lt;/q&gt;</span>
+    <span class="nt">&lt;/fork3&gt;</span>
+    <span class="nt">&lt;fork4&gt;</span>
+        <span class="nt">&lt;k&gt;</span>kinship_matrix.txt<span class="nt">&lt;/k&gt;</span>
+    <span class="nt">&lt;/fork4&gt;</span>
+    <span class="nt">&lt;combine5&gt;</span>
+        <span class="nt">&lt;input1/&gt;</span>
+        <span class="nt">&lt;input2/&gt;</span>
+        <span class="nt">&lt;input3/&gt;</span>
+        <span class="nt">&lt;intersect/&gt;</span>
+    <span class="nt">&lt;/combine5&gt;</span>
+    <span class="nt">&lt;combine6&gt;</span>
+        <span class="nt">&lt;input5/&gt;</span>
+        <span class="nt">&lt;input4/&gt;</span>
+        <span class="nt">&lt;mlm/&gt;</span>
+        <span class="nt">&lt;mlmCompressionLevel&gt;</span>
+            None
+        <span class="nt">&lt;/mlmCompressionLevel&gt;</span>
+        <span class="nt">&lt;export&gt;</span>gwas_out_<span class="nt">&lt;/export&gt;</span>
+    <span class="nt">&lt;/combine6&gt;</span>
+    <span class="nt">&lt;runfork1/&gt;</span>
+    <span class="nt">&lt;runfork2/&gt;</span>
+    <span class="nt">&lt;runfork3/&gt;</span>
+    <span class="nt">&lt;runfork4/&gt;</span>
+<span class="nt">&lt;/TasselPipeline&gt;</span>
+</pre></div>
+</div>
+<p>The output from this analysis is a set of three files. The file names
+are determined by <code class="docutils literal"><span class="pre">&lt;export&gt;gwas_out_&lt;/export&gt;</span></code> so that the exact file names
+are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">gwas_out_1.txt</span></code></li>
+<li><code class="docutils literal"><span class="pre">gwas_out_2.txt</span></code></li>
+<li><code class="docutils literal"><span class="pre">gwas_out_3.txt</span></code></li>
+</ul>
+</div></blockquote>
+<p>Given this config file and the input files we use a <code class="docutils literal"><span class="pre">.cmd</span></code> file to run
+the analysis in TASSEL:</p>
+<div class="highlight-bat"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="se">%%</span>f <span class="k">in</span> <span class="p">(</span>sim_gwas_pipeline.xml<span class="p">)</span> <span class="k">do</span> <span class="p">(</span>
+   <span class="k">echo</span> <span class="se">%%</span>~nf
+   run_pipeline.bat -configFile <span class="s2">&quot;</span><span class="se">%%</span><span class="s2">f&quot;</span>
+   <span class="p">)</span>
+</pre></div>
+</div>
+<p>The file we are primarily interested in is <code class="docutils literal"><span class="pre">gwas_out_2.txt</span></code>. This is the file
+which records the values and p-values of all the statistical tests. The goal is
+to import the <code class="docutils literal"><span class="pre">gwas_out_2.txt</span></code> into R and determine the Q values using the false
+discovery rate to control for false-positives.</p>
+<div class="section" id="dataset-specifics">
+<h2>Dataset Specifics<a class="headerlink" href="#dataset-specifics" title="Permalink to this headline">¶</a></h2>
+<p>This is some useful information about the data-set used in the TASSEL MLM:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt><strong>Population Size</strong></dt>
+<dd>2000</dd>
+<dt><strong>QTL</strong></dt>
+<dd>[2, 10, 20]</dd>
+</dl>
+</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span></span>Allele Effects
+
+{2: {1: 1.6039383268614498, 3: 2.795016834003455},
+ 10: {1: 3.3259920171422936, 3: 3.1695014054478565},
+ 20: {0: 2.4204478909872953, 3: 4.269861858273051}}
+</pre></div>
+</div>
+</div>
+<div class="section" id="qvalues-in-r">
+<h2>QVALUES in R<a class="headerlink" href="#qvalues-in-r" title="Permalink to this headline">¶</a></h2>
+<p>We will follow Jim&#8217;s tutorial to use the <code class="xref py py-mod docutils literal"><span class="pre">qvalue</span></code> package in R; however, I
+have found that the function we want to use <code class="xref py py-func docutils literal"><span class="pre">qvalue()</span></code> does not handle
+missing data i.e. <code class="docutils literal"><span class="pre">NaN</span></code>. Because I am more proficient with <code class="docutils literal"><span class="pre">python</span></code> than
+<code class="docutils literal"><span class="pre">R</span></code> I used the <code class="docutils literal"><span class="pre">python</span></code> <code class="xref py py-mod docutils literal"><span class="pre">pandas</span></code> package to convert all <code class="docutils literal"><span class="pre">NaN</span></code> p-values
+into values of <span class="math">\(1.0\)</span></p>
+<p>For example a sample of the P-values of <code class="docutils literal"><span class="pre">gwas_out_2.txt</span></code> are:</p>
+<ul class="simple">
+<li>0.4968</li>
+<li>5.6091E-28</li>
+<li>NaN</li>
+<li>0.6236</li>
+<li>0.16525</li>
+</ul>
+<p>If we use the <code class="xref py py-func docutils literal"><span class="pre">qvalue()</span></code> function directly it will result in an error.
+Instead I use the values:</p>
+<ul class="simple">
+<li>0.4968</li>
+<li>5.6091E-28</li>
+<li>1.0</li>
+<li>0.6236</li>
+<li>0.16525</li>
+</ul>
+<p>The edited file name is <code class="docutils literal"><span class="pre">edited_gwas_out_2.txt</span></code>. I use these commands to
+obtain the q-values.</p>
+<div class="highlight-R"><div class="highlight"><pre><span></span>results_header <span class="o">=</span> <span class="kp">scan</span><span class="p">(</span><span class="s">&quot;edited_gwas_out_2.txt&quot;</span><span class="p">,</span> what<span class="o">=</span><span class="s">&quot;character&quot;</span><span class="p">,</span> nlines<span class="o">=</span><span class="m">1</span><span class="p">,</span> sep<span class="o">=</span><span class="s">&quot;\t&quot;</span><span class="p">)</span>
+gwas_results <span class="o">=</span> read.table<span class="p">(</span><span class="s">&quot;edited_gwas_out_2.txt&quot;</span><span class="p">,</span> header<span class="o">=</span><span class="bp">F</span><span class="p">,</span> row.names<span class="o">=</span><span class="kc">NULL</span><span class="p">,</span> skip<span class="o">=</span><span class="m">2</span><span class="p">)</span>
+<span class="kp">colnames</span><span class="p">(</span>gwas_results<span class="p">)</span> <span class="o">=</span> results_header
+
+pvalues <span class="o">=</span> gwas_results<span class="o">$</span>p
+<span class="kn">library</span><span class="p">(</span>qvalue<span class="p">)</span>
+qobj <span class="o">=</span> qvalue<span class="p">(</span>p <span class="o">=</span> pvalues<span class="p">)</span>
+qobj<span class="o">$</span>qvalues
+qvalues_of_magic1478_results <span class="o">=</span> <span class="kt">data.frame</span><span class="p">(</span>qobj<span class="o">$</span>qvalues<span class="p">)</span>
+write.table<span class="p">(</span>qvalues_of_magic1478_results<span class="p">,</span> <span class="s">&quot;qvalues_of_magic1478.txt&quot;</span><span class="p">,</span> sep<span class="o">=</span><span class="s">&quot;\t&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We use the <code class="xref py py-func docutils literal"><span class="pre">qqunif()</span></code> function in R to produce the quantile-quantile plot of
+the p-values.</p>
+<div class="figure" id="id1">
+<img alt="_images/qqplot.png" src="_images/qqplot.png" />
+<p class="caption"><span class="caption-text">Quantile-Quantile plot.</span></p>
+</div>
+<p>TASSEL detected two of the three QTL: 2 and 20.
+The Q-values are 4.1451249e-25 and 1.606586e-73 respectively.</p>
+<p>Two observations that are immediately obvious:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>there is almost no difference between allele effects at locus 10</li>
+<li>locus 10 is very close to 2 and 20 which might mute its already small effect</li>
+</ol>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Analyzing Results of GWAS with TASSEL</a><ul>
+<li><a class="reference internal" href="#dataset-specifics">Dataset Specifics</a></li>
+<li><a class="reference internal" href="#qvalues-in-r">QVALUES in R</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="creating_data_for_GWAS_with_magic1478.html"
+                        title="previous chapter">Generating Input for TASSEL with MAGIC1478</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/analyzing_magic1478_results.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="creating_data_for_GWAS_with_magic1478.html" title="Generating Input for TASSEL with MAGIC1478"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="contents.html">saegus 0.1.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, John J. Dougherty III.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

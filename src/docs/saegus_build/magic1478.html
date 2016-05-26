@@ -1,0 +1,293 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>MAGIC Population with Subset of Loci &mdash; saegus 0.1.2 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="saegus 0.1.2 documentation" href="contents.html" />
+    <link rel="next" title="Generating Input for TASSEL with MAGIC1478" href="creating_data_for_GWAS_with_magic1478.html" />
+    <link rel="prev" title="Welcome to saegus’s documentation!" href="contents.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="creating_data_for_GWAS_with_magic1478.html" title="Generating Input for TASSEL with MAGIC1478"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="contents.html" title="Welcome to saegus’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="contents.html">saegus 0.1.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="magic-population-with-subset-of-loci">
+<h1>MAGIC Population with Subset of Loci<a class="headerlink" href="#magic-population-with-subset-of-loci" title="Permalink to this headline">¶</a></h1>
+<p>The <code class="docutils literal"><span class="pre">standard_magic</span></code> population uses all 7386 loci from <code class="file docutils literal"><span class="pre">hapmap3.txt</span></code>. However,
+if I use all 7386 loci and the triplet scheme this alters the GWAS results. I need
+to create a population which uses the loci which occupy integer-valued positions on the
+genetic map i.e. 1.0 cM, 2.0 cM. <code class="docutils literal"><span class="pre">standard_magic</span></code> has the loci at 0.6 cM, 0.8 cM, 1.0 cM, 1.2 cM
+so on and so forth.</p>
+<div class="section" id="allele-effects-and-triplets-of-non-recombining-loci">
+<h2>Allele Effects and Triplets of Non-Recombining Loci<a class="headerlink" href="#allele-effects-and-triplets-of-non-recombining-loci" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal"><span class="pre">standard_magic</span></code> population assigns effects to an integer-valued position
+and the positions immediately upstream and downstream. When I use the subset of 1478 loci
+I will assign the alleles at those loci effects as <strong>three independent</strong> draws from
+an exponential distribution. The goal is to make <code class="docutils literal"><span class="pre">magic1478</span></code> somewhat comparable to <code class="docutils literal"><span class="pre">standard_magic</span></code>.</p>
+</div>
+<div class="section" id="strategy-of-creating-magic1478">
+<h2>Strategy of Creating MAGIC1478<a class="headerlink" href="#strategy-of-creating-magic1478" title="Permalink to this headline">¶</a></h2>
+<p>I am going to use the <code class="docutils literal"><span class="pre">nam_prefounders</span></code> and withdraw the integer-valued positions of each individual.
+This saves me the work of building up the population from the raw files.</p>
+<div class="section" id="creating-the-simupop-population-object-for-magic1478">
+<h3>Creating the simuPOP Population Object for MAGIC1478<a class="headerlink" href="#creating-the-simupop-population-object-for-magic1478" title="Permalink to this headline">¶</a></h3>
+<p>A simuPOP <code class="docutils literal"><span class="pre">Population</span></code> requires the number of chromosomes and the number of loci per chromosome.
+Luckily I saved the absolute indexes of the integer-valued positions of the genetic map in a
+<code class="xref py py-mod docutils literal"><span class="pre">shelve</span></code> instance.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">misc_gmap</span> <span class="o">=</span> <span class="n">shelve</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;misc_gmap&#39;</span><span class="p">)</span>
+<span class="n">integral_valued_loci</span> <span class="o">=</span> <span class="n">misc_gmap</span><span class="p">[</span><span class="s1">&#39;integral_valued_loci&#39;</span><span class="p">]</span>
+<span class="n">relative_integral_valued_loci</span> <span class="o">=</span> <span class="n">misc_gmap</span><span class="p">[</span><span class="s1">&#39;relative_integral_valued_loci&#39;</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="n">integral_valued_loci</span><span class="p">[:</span><span class="mi">10</span><span class="p">])</span>
+<span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">39</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">49</span><span class="p">]</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">relative_integral_valued_loci</span></code> is a <code class="docutils literal"><span class="pre">dict</span></code> which is keyed by absolute locus index. We will extract the chromosome
+of each absolute valued index and then use <code class="docutils literal"><span class="pre">collections.Counter</span></code> to count how many loci are on each chromosome.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">relative_integral_valued_loci</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+<span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mf">4.0</span><span class="p">)</span>
+
+<span class="n">integer_loci_per_chromosome</span> <span class="o">=</span> <span class="p">[</span><span class="n">relative_integral_valued_loci</span><span class="p">[</span><span class="n">abs_locus</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">abs_locus</span> <span class="ow">in</span> <span class="n">integral_valued_loci</span><span class="p">]</span>
+
+<span class="kn">import</span> <span class="nn">collections</span> <span class="kn">as</span> <span class="nn">col</span>
+
+<span class="n">integer_valued_loci_per_chromosome</span> <span class="o">=</span> <span class="n">col</span><span class="o">.</span><span class="n">Counter</span><span class="p">(</span><span class="n">loci_per_chromosome</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">integer_valued_loci_per_chromosome</span><span class="p">)</span>
+
+<span class="n">Counter</span><span class="p">({</span><span class="mf">1.0</span><span class="p">:</span> <span class="mi">210</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">:</span> <span class="mi">164</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">:</span> <span class="mi">161</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">:</span> <span class="mi">157</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">:</span> <span class="mi">152</span><span class="p">,</span> <span class="mf">7.0</span><span class="p">:</span> <span class="mi">139</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">:</span> <span class="mi">138</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">:</span> <span class="mi">132</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">:</span> <span class="mi">113</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">:</span> <span class="mi">112</span><span class="p">})</span>
+
+<span class="n">loci_per_chromosome</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">integer_valued_loci_per_chromosome</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">loci_per_chromosome</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">210</span><span class="p">,</span> <span class="mi">161</span><span class="p">,</span> <span class="mi">164</span><span class="p">,</span> <span class="mi">152</span><span class="p">,</span> <span class="mi">157</span><span class="p">,</span> <span class="mi">112</span><span class="p">,</span> <span class="mi">139</span><span class="p">,</span> <span class="mi">138</span><span class="p">,</span> <span class="mi">132</span><span class="p">,</span> <span class="mi">113</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>So then I can simply do:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">prefounders_1478</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">Population</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">26</span><span class="p">,</span> <span class="n">ploidy</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">loci</span><span class="o">=</span><span class="n">loci_per_chromosome</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This initializes the population and now I can copy over genotypes at the integer valued positions from
+the prefounders7386 population.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">prefounders7386</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">loadPopulation</span><span class="p">(</span><span class="s1">&#39;nam_prefounders.pop&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ind_7386</span><span class="p">,</span> <span class="n">ind_1478</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">prefounders_7386</span><span class="o">.</span><span class="n">individuals</span><span class="p">(),</span> <span class="n">prefounders_1478</span><span class="o">.</span><span class="n">individuals</span><span class="p">()):</span>
+   <span class="n">sub_alpha</span> <span class="o">=</span> <span class="p">[</span><span class="n">ind_7386</span><span class="o">.</span><span class="n">genotype</span><span class="p">(</span><span class="n">ploidy</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="n">integer_position</span><span class="p">]</span>
+               <span class="k">for</span> <span class="n">integer_position</span> <span class="ow">in</span> <span class="n">integer_subset</span><span class="p">]</span>
+   <span class="n">sub_beta</span> <span class="o">=</span> <span class="p">[</span><span class="n">ind_7386</span><span class="o">.</span><span class="n">genotype</span><span class="p">(</span><span class="n">ploidy</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="n">integer_position</span><span class="p">]</span>
+              <span class="k">for</span> <span class="n">integer_position</span> <span class="ow">in</span> <span class="n">integer_subset</span><span class="p">]</span>
+   <span class="n">genotype_1478</span> <span class="o">=</span> <span class="n">sub_alpha</span> <span class="o">+</span> <span class="n">sub_beta</span>
+   <span class="n">ind_1478</span><span class="o">.</span><span class="n">setGenotype</span><span class="p">(</span><span class="n">genotype_1478</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="generating-standard-magic1478-from-prefounders1478">
+<span id="making-prefounders-1478"></span><h2>Generating Standard MAGIC1478 from Prefounders1478<a class="headerlink" href="#generating-standard-magic1478-from-prefounders1478" title="Permalink to this headline">¶</a></h2>
+<p>I followed the same mating and testing strategy to make a <code class="docutils literal"><span class="pre">standard_magic_1478.pop</span></code> file. I used
+the same founders as in <code class="docutils literal"><span class="pre">standard_magic</span></code> i.e. founders 1 through 8.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">prefounders_1478</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">loadPopulation</span><span class="p">(</span><span class="s1">&#39;prefounders_1478.pop&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="determine-the-mating-pairs-of-each-generation">
+<h3>Determine the Mating Pairs of Each Generation<a class="headerlink" href="#determine-the-mating-pairs-of-each-generation" title="Permalink to this headline">¶</a></h3>
+<p>I created a standardized MAGIC1478 population as I did with MAGIC7386. At each step
+I pre-determine the mating pairs and record them in <code class="docutils literal"><span class="pre">lists</span></code> which have the title
+<code class="docutils literal"><span class="pre">expected_x_mother_ids</span></code> and <code class="docutils literal"><span class="pre">expected_x_father_ids</span></code>. The expected parental id pairs are
+mated in order. The offspring have infoFields which record the ID of their mother and ID father.</p>
+<p>After mating the offspring parental IDs are compared with the expected parental IDs.
+Below is an example of this mating-testing cycle.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">first_sp_mothers</span> <span class="o">=</span> <span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">pop</span><span class="o">.</span><span class="n">indInfo</span><span class="p">(</span><span class="s1">&#39;ind_id&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">)]</span>
+<span class="n">second_sp_fathers</span> <span class="o">=</span> <span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">pop</span><span class="o">.</span><span class="n">indInfo</span><span class="p">(</span><span class="s1">&#39;ind_id&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">)]</span>
+<span class="n">third_sp_mothers</span> <span class="o">=</span> <span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">pop</span><span class="o">.</span><span class="n">indInfo</span><span class="p">(</span><span class="s1">&#39;ind_id&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">)]</span>
+<span class="n">fourth_sp_fathers</span> <span class="o">=</span> <span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">pop</span><span class="o">.</span><span class="n">indInfo</span><span class="p">(</span><span class="s1">&#39;ind_id&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1000</span><span class="p">)]</span>
+
+<span class="n">expected_f_two_mother_ids</span> <span class="o">=</span> <span class="n">first_sp_mothers</span> <span class="o">+</span> <span class="n">third_sp_mothers</span>
+<span class="n">expected_f_two_father_ids</span> <span class="o">=</span> <span class="n">second_sp_fathers</span> <span class="o">+</span> <span class="n">fourth_sp_fathers</span>
+</pre></div>
+</div>
+<p>The expected parental IDs are written to disk using a <code class="docutils literal"><span class="pre">shelve</span></code> for post-comparison should it be necessary.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">breeding_parameters</span><span class="p">[</span><span class="s1">&#39;expected_f_two_mother_ids&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">expected_f_two_mother_ids</span>
+<span class="n">breeding_parameters</span><span class="p">[</span><span class="s1">&#39;expected_f_two_father_ids&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">expected_f_two_father_ids</span>
+</pre></div>
+</div>
+<p>A <code class="docutils literal"><span class="pre">parent_chooser</span></code> is initiated which determines how offspring are created.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">second_order_pc</span> <span class="o">=</span> <span class="n">breed</span><span class="o">.</span><span class="n">SecondOrderPairIDChooser</span><span class="p">(</span><span class="n">expected_f_two_mother_ids</span><span class="p">,</span> <span class="n">expected_f_two_father_ids</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Then mating occurs:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">pop</span><span class="o">.</span><span class="n">evolve</span><span class="p">(</span>
+    <span class="n">matingScheme</span><span class="o">=</span><span class="n">sim</span><span class="o">.</span><span class="n">HomoMating</span><span class="p">(</span>
+        <span class="n">sim</span><span class="o">.</span><span class="n">PyParentsChooser</span><span class="p">(</span><span class="n">second_order_pc</span><span class="o">.</span><span class="n">snd_ord_id_pairs</span><span class="p">),</span>
+        <span class="n">sim</span><span class="o">.</span><span class="n">OffspringGenerator</span><span class="p">(</span><span class="n">ops</span><span class="o">=</span><span class="p">[</span>
+            <span class="n">sim</span><span class="o">.</span><span class="n">IdTagger</span><span class="p">(),</span>
+            <span class="n">sim</span><span class="o">.</span><span class="n">ParentsTagger</span><span class="p">(),</span>
+            <span class="n">sim</span><span class="o">.</span><span class="n">PedigreeTagger</span><span class="p">(),</span>
+            <span class="n">sim</span><span class="o">.</span><span class="n">Recombinator</span><span class="p">(</span><span class="n">rates</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+        <span class="p">],</span>
+            <span class="n">numOffspring</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+        <span class="n">subPopSize</span><span class="o">=</span><span class="p">[</span><span class="mi">2000</span><span class="p">],</span>
+    <span class="p">),</span>
+    <span class="n">gen</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>We organize mother and father IDs into <code class="docutils literal"><span class="pre">observed</span></code> lists and compare them to the expected IDs.
+We count the number of matches between expected and observed mother IDs and expected and observed father IDs.
+The number should be equal to the population size.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">breeding_parameters</span><span class="p">[</span><span class="s1">&#39;expected_f_two_mother_ids&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">expected_f_two_mother_ids</span>
+<span class="n">breeding_parameters</span><span class="p">[</span><span class="s1">&#39;expected_f_two_father_ids&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">expected_f_two_father_ids</span>
+
+<span class="n">breeding_parameters</span><span class="p">[</span><span class="s1">&#39;observed_f_two_mother_ids&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">observed_f_two_mother_ids</span>
+<span class="n">breeding_parameters</span><span class="p">[</span><span class="s1">&#39;observed_f_two_father_ids&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">observed_f_two_father_ids</span>
+
+<span class="n">breeding_parameters</span><span class="p">[</span><span class="s1">&#39;number_of_matches_f_two_mother_ids&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">expected_f_two_mother_ids</span><span class="p">,</span> <span class="n">observed_f_two_mother_ids</span><span class="p">))</span>
+<span class="n">breeding_parameters</span><span class="p">[</span><span class="s1">&#39;number_of_matches_f_two_father_ids&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">expected_f_two_father_ids</span><span class="p">,</span> <span class="n">observed_f_two_father_ids</span><span class="p">))</span>
+
+<span class="k">assert</span> <span class="n">breeding_parameters</span><span class="p">[</span><span class="s1">&#39;number_of_matches_f_two_father_ids&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2000</span><span class="p">,</span> <span class="s2">&quot;Incorrect father IDs.&quot;</span>
+
+<span class="n">breeding_parameters</span><span class="p">[</span><span class="s1">&#39;number_of_matches_f_two_mother_ids&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2000</span><span class="p">,</span> <span class="s2">&quot;Incorrect mother IDs.&quot;</span>
+</pre></div>
+</div>
+<p>The function <code class="xref py py-func docutils literal"><span class="pre">np.equal()</span></code> checks if the IDs match by location so the order is preserved.
+Otherwise the script will crash via an <code class="docutils literal"><span class="pre">AssertionError</span></code>.</p>
+</div>
+</div>
+<div class="section" id="parameter-set-stored-using-shelve">
+<h2>Parameter Set Stored Using <code class="xref py py-mod docutils literal"><span class="pre">shelve</span></code><a class="headerlink" href="#parameter-set-stored-using-shelve" title="Permalink to this headline">¶</a></h2>
+<p>I used the <code class="docutils literal"><span class="pre">shelve</span></code> module to store the parameters and entire mating history of <code class="docutils literal"><span class="pre">standard_magic</span></code>.
+I did the same thing for <code class="docutils literal"><span class="pre">magic_1478</span></code>.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">m1478_sim_parameters</span> <span class="o">=</span> <span class="n">shelve</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;magic_1478_simulation_parameters&#39;</span><span class="p">)</span>
+<span class="n">m1478_sim_parameters</span><span class="p">[</span><span class="s1">&#39;founders&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">founders</span>
+<span class="n">m1478_sim_parameters</span><span class="p">[</span><span class="s1">&#39;number_of_replicates&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">m1478_sim_parameters</span><span class="p">[</span><span class="s1">&#39;prefounder_file_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;prefounders_1478.pop&#39;</span>
+<span class="n">m1478_sim_parameters</span><span class="p">[</span><span class="s1">&#39;alleles&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">magic1478_alleles</span>
+<span class="n">m1478_sim_parameters</span><span class="p">[</span><span class="s1">&#39;operating_population_size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2000</span>
+<span class="n">m1478_sim_parameters</span><span class="p">[</span><span class="s1">&#39;recombination_rates&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">]</span><span class="o">*</span><span class="mi">1478</span>
+<span class="n">m1478_sim_parameters</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="n">m1478_trait_parameters</span> <span class="o">=</span> <span class="n">shelve</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;magic_1478_trait_parameters&#39;</span><span class="p">)</span>
+<span class="n">m1478_trait_parameters</span><span class="p">[</span><span class="s1">&#39;number_of_qtl&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">m1478_trait_parameters</span><span class="p">[</span><span class="s1">&#39;allele_effect_parameters&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">m1478_trait_parameters</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">MAGIC Population with Subset of Loci</a><ul>
+<li><a class="reference internal" href="#allele-effects-and-triplets-of-non-recombining-loci">Allele Effects and Triplets of Non-Recombining Loci</a></li>
+<li><a class="reference internal" href="#strategy-of-creating-magic1478">Strategy of Creating MAGIC1478</a><ul>
+<li><a class="reference internal" href="#creating-the-simupop-population-object-for-magic1478">Creating the simuPOP Population Object for MAGIC1478</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#generating-standard-magic1478-from-prefounders1478">Generating Standard MAGIC1478 from Prefounders1478</a><ul>
+<li><a class="reference internal" href="#determine-the-mating-pairs-of-each-generation">Determine the Mating Pairs of Each Generation</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#parameter-set-stored-using-shelve">Parameter Set Stored Using <code class="docutils literal"><span class="pre">shelve</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="contents.html"
+                        title="previous chapter">Welcome to saegus&#8217;s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="creating_data_for_GWAS_with_magic1478.html"
+                        title="next chapter">Generating Input for TASSEL with MAGIC1478</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/magic1478.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="creating_data_for_GWAS_with_magic1478.html" title="Generating Input for TASSEL with MAGIC1478"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="contents.html" title="Welcome to saegus’s documentation!"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="contents.html">saegus 0.1.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, John J. Dougherty III.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,607 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Generating Input for TASSEL with MAGIC1478 &mdash; saegus 0.1.2 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="saegus 0.1.2 documentation" href="contents.html" />
+    <link rel="next" title="Analyzing Results of GWAS with TASSEL" href="analyzing_magic1478_results.html" />
+    <link rel="prev" title="MAGIC Population with Subset of Loci" href="magic1478.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="analyzing_magic1478_results.html" title="Analyzing Results of GWAS with TASSEL"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="magic1478.html" title="MAGIC Population with Subset of Loci"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="contents.html">saegus 0.1.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="generating-input-for-tassel-with-magic1478">
+<span id="magic1478-input-for-tassel"></span><h1>Generating Input for TASSEL with MAGIC1478<a class="headerlink" href="#generating-input-for-tassel-with-magic1478" title="Permalink to this headline">¶</a></h1>
+<p>This document records the exact steps I took to create a set
+of data which serves as input to TASSEL for mixed-linear-modeling.
+In this case we are simply performing random mating to create the population
+which we will analyze. Other times we will use a recurrently selected population for analysis.</p>
+<div class="section" id="allele-effects-for-magic1478">
+<span id="allele-effects-magic1478"></span><h2>Allele Effects for MAGIC1478<a class="headerlink" href="#allele-effects-for-magic1478" title="Permalink to this headline">¶</a></h2>
+<p>Our usual population uses all 7386 loci and assigns appropriate <code class="docutils literal"><span class="pre">recombination_rates</span></code> to
+create triplets of non-recombining loci. In an attempt to make MAGIC1478 and MAGIC7386 comparable
+I have assigned allele effects in MAGIC1478 as three independent draws for each allele at each locus.
+For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">qtl</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The alleles at loci <code class="docutils literal"><span class="pre">qtl</span></code> are:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">alleles</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">alleles</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">alleles</span><span class="p">[</span><span class="mi">20</span><span class="p">]</span>
+
+<span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>So then we assign an effect to each <code class="docutils literal"><span class="pre">allele</span></code> at each <code class="docutils literal"><span class="pre">locus</span></code> as such:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">allele_effects</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">locus</span> <span class="ow">in</span> <span class="n">qtl</span><span class="p">:</span>
+   <span class="n">allele_effects</span><span class="p">[</span><span class="n">locus</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+   <span class="k">for</span> <span class="n">allele</span> <span class="ow">in</span> <span class="n">alleles</span><span class="p">[</span><span class="n">locus</span><span class="p">]:</span>
+      <span class="n">allele_effects</span><span class="p">[</span><span class="n">locus</span><span class="p">][</span><span class="n">allele</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">random</span><span class="o">.</span><span class="n">expovariate</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">allele_effects</span>
+
+<span class="p">{</span>
+   <span class="mi">2</span><span class="p">:</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="mf">3.57</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="mf">1.874</span><span class="p">},</span>
+   <span class="mi">10</span><span class="p">:</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="mf">3.29</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="mf">3.44</span><span class="p">},</span>
+   <span class="mi">20</span><span class="p">:</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mf">2.05</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="mf">3.03</span><span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>I defined a function which generalizes assignment of allele effects <a class="reference internal" href="#assign-any-allele-effects">assign-any-allele-effects</a></p>
+</div>
+<div class="section" id="random-mating-magic1478-for-gwas">
+<span id="random-mating-magic1478"></span><h2>Random Mating MAGIC1478 for GWAS<a class="headerlink" href="#random-mating-magic1478-for-gwas" title="Permalink to this headline">¶</a></h2>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">assign_additive_g</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">qtl</span><span class="p">,</span> <span class="n">allele_effects</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates genotypic contribution ``g`` by summing the effect of each</span>
+<span class="sd">    allele at each QTL triplet.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">pop</span><span class="o">.</span><span class="n">individuals</span><span class="p">():</span>
+        <span class="n">genotypic_contribution</span> <span class="o">=</span> \
+            <span class="nb">sum</span><span class="p">([</span>
+                    <span class="n">allele_effects</span><span class="p">[</span><span class="n">locus</span><span class="p">][</span><span class="n">ind</span><span class="o">.</span><span class="n">genotype</span><span class="p">(</span><span class="n">ploidy</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="n">locus</span><span class="p">]]</span> <span class="o">+</span>\
+                    <span class="n">allele_effects</span><span class="p">[</span><span class="n">locus</span><span class="p">][</span><span class="n">ind</span><span class="o">.</span><span class="n">genotype</span><span class="p">(</span><span class="n">ploidy</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="n">locus</span><span class="p">]]</span>
+                 <span class="k">for</span> <span class="n">locus</span>
+                 <span class="ow">in</span> <span class="n">qtl</span><span class="p">])</span>
+        <span class="n">ind</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="n">genotypic_contribution</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">magic1478</span> <span class="o">=</span> <span class="n">sim</span><span class="o">.</span><span class="n">loadPopulation</span><span class="p">(</span><span class="s1">&#39;magic_1478.pop&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">sim</span><span class="o">.</span><span class="n">tagID</span><span class="p">(</span><span class="n">magic1478</span><span class="p">,</span> <span class="n">reset</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="n">genetic_map</span> <span class="o">=</span> <span class="n">shelve</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;magic_1478_genetic_map&#39;</span><span class="p">)</span>
+<span class="n">history</span> <span class="o">=</span> <span class="n">shelve</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;magic_1478_history&#39;</span><span class="p">)</span>
+<span class="n">simulation</span> <span class="o">=</span> <span class="n">shelve</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;magic_1478_simulation_parameters&#39;</span><span class="p">)</span>
+<span class="n">trait</span> <span class="o">=</span> <span class="n">shelve</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;magic_1478_trait_parameters&#39;</span><span class="p">)</span>
+
+<span class="n">locus_1478_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1478</span><span class="p">))</span>
+<span class="n">pos_1478_column</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1478</span><span class="p">))</span>
+
+<span class="n">breed_magic_1478</span> <span class="o">=</span> <span class="n">breed</span><span class="o">.</span><span class="n">MAGIC</span><span class="p">(</span><span class="n">magic1478</span><span class="p">,</span> <span class="n">simulation</span><span class="p">[</span><span class="s1">&#39;recombination_rates&#39;</span><span class="p">])</span>
+<span class="n">breed_magic_1478</span><span class="o">.</span><span class="n">interim_random_mating</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2000</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span>Initiating interim random mating for 3 generations.
+Generation: 3
+Generation: 4
+Generation: 5
+</pre></div>
+</div>
+<div class="section" id="determining-g-and-p-in-the-1478-population">
+<h3>Determining G and P in the 1478 Population<a class="headerlink" href="#determining-g-and-p-in-the-1478-population" title="Permalink to this headline">¶</a></h3>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">ae</span> <span class="o">=</span> <span class="n">assign_allele_effects</span><span class="p">(</span><span class="n">simulation</span><span class="p">[</span><span class="s1">&#39;alleles&#39;</span><span class="p">],</span> <span class="n">trait</span><span class="p">[</span><span class="s1">&#39;qtl&#39;</span><span class="p">],</span> <span class="mi">3</span><span class="p">,</span> <span class="n">random</span><span class="o">.</span><span class="n">expovariate</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">ae</span>
+<span class="p">{</span><span class="mi">2</span><span class="p">:</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="mf">1.6039383268614498</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="mf">2.795016834003455</span><span class="p">},</span>
+ <span class="mi">10</span><span class="p">:</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="mf">3.3259920171422936</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="mf">3.1695014054478565</span><span class="p">},</span>
+ <span class="mi">20</span><span class="p">:</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mf">2.4204478909872953</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span> <span class="mf">4.269861858273051</span><span class="p">}}</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">assign_additive_g</span><span class="p">(</span><span class="n">magic1478</span><span class="p">,</span> <span class="n">qtl</span><span class="p">,</span> <span class="n">ae</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">calculate_error_variance</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">heritability</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculates the parameter ``epsilon`` to be used as the variance</span>
+<span class="sd">    of the error distribution. The error distribution generates noise</span>
+<span class="sd">    found in real experiments.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">variance_of_g</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">pop</span><span class="o">.</span><span class="n">indInfo</span><span class="p">(</span><span class="s1">&#39;g&#39;</span><span class="p">))</span>
+    <span class="n">epsilon</span> <span class="o">=</span> <span class="n">variance_of_g</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">heritability</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">pop</span><span class="o">.</span><span class="n">dvars</span><span class="p">()</span><span class="o">.</span><span class="n">epsilon</span> <span class="o">=</span> <span class="n">epsilon</span>
+
+<span class="k">def</span> <span class="nf">phenotypic_effect_calculator</span><span class="p">(</span><span class="n">pop</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Simulate measurement error by adding random error to genotypic</span>
+<span class="sd">    contribution.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">pop</span><span class="o">.</span><span class="n">individuals</span><span class="p">():</span>
+        <span class="n">ind</span><span class="o">.</span><span class="n">p</span> <span class="o">=</span> <span class="n">ind</span><span class="o">.</span><span class="n">g</span> <span class="o">+</span> <span class="n">random</span><span class="o">.</span><span class="n">normalvariate</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">pop</span><span class="o">.</span><span class="n">dvars</span><span class="p">()</span><span class="o">.</span><span class="n">epsilon</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">heritability</span> <span class="o">=</span> <span class="mf">0.7</span>
+<span class="n">calculate_error_variance</span><span class="p">(</span><span class="n">magic1478</span><span class="p">,</span> <span class="n">heritability</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">magic1478</span><span class="o">.</span><span class="n">dvars</span><span class="p">()</span><span class="o">.</span><span class="n">epsilon</span><span class="p">)</span>
+<span class="n">phenotypic_effect_calculator</span><span class="p">(</span><span class="n">magic1478</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="mf">0.849336297482</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">trait</span><span class="p">[</span><span class="s1">&#39;heritability&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">heritability</span>
+<span class="n">trait</span><span class="p">[</span><span class="s1">&#39;epsilon&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">magic1478</span><span class="o">.</span><span class="n">dvars</span><span class="p">()</span><span class="o">.</span><span class="n">epsilon</span>
+<span class="n">trait</span><span class="p">[</span><span class="s1">&#39;qtl&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">qtl</span>
+<span class="n">trait</span><span class="p">[</span><span class="s1">&#39;allele_effects&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ae</span>
+<span class="n">trait</span><span class="p">[</span><span class="s1">&#39;g&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">magic1478</span><span class="o">.</span><span class="n">indInfo</span><span class="p">(</span><span class="s1">&#39;g&#39;</span><span class="p">))</span>
+<span class="n">trait</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">magic1478</span><span class="o">.</span><span class="n">indInfo</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">trait</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">pop</span><span class="o">.</span><span class="n">indInfo</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">)),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">pop</span><span class="o">.</span><span class="n">indInfo</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">)))</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">pop</span><span class="o">.</span><span class="n">indInfo</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">collections</span> <span class="kn">as</span> <span class="nn">col</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">Design</span> <span class="o">=</span> <span class="n">col</span><span class="o">.</span><span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;Design&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;genetic&quot;</span><span class="p">,</span> <span class="s2">&quot;history&quot;</span><span class="p">,</span> <span class="s2">&quot;simulation&quot;</span><span class="p">,</span> <span class="s2">&quot;trait&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span>trait[]
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">trait</span><span class="p">[</span><span class="s1">&#39;allele_effects&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">allele_effects</span>
+<span class="n">trait</span><span class="p">[</span><span class="s1">&#39;qtl&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">qtl</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">trait</span><span class="p">[</span><span class="s1">&#39;heritability&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">heritability</span>
+<span class="n">trait</span><span class="p">[</span><span class="s1">&#39;epsilon&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pop</span><span class="o">.</span><span class="n">dvars</span><span class="p">()</span><span class="o">.</span><span class="n">epsilon</span>
+<span class="n">trait</span><span class="p">[</span><span class="s1">&#39;g&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">pop</span><span class="o">.</span><span class="n">indInfo</span><span class="p">(</span><span class="s1">&#39;g&#39;</span><span class="p">))</span>
+<span class="n">trait</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">pop</span><span class="o">.</span><span class="n">indInfo</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">trait</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">trait</span> <span class="o">=</span> <span class="n">shelve</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;magic_1478_trait_parameters&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">history</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">calc_error_variance</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">heritability</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">operators</span><span class="o">.</span><span class="n">CalculateErrorVariance</span><span class="p">(</span><span class="n">heritability</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">pop</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">magic_rep</span> <span class="ow">in</span> <span class="n">multi_std_pop</span><span class="o">.</span><span class="n">populations</span><span class="p">():</span>
+    <span class="n">calc_error_variance</span><span class="p">(</span><span class="n">magic_rep</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">multi_g</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">multi_std_pop</span><span class="o">.</span><span class="n">population</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">indInfo</span><span class="p">(</span><span class="s1">&#39;g&#39;</span><span class="p">)),</span>
+           <span class="mi">1</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">multi_std_pop</span><span class="o">.</span><span class="n">population</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">indInfo</span><span class="p">(</span><span class="s1">&#39;g&#39;</span><span class="p">))}</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">multi_p</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">multi_std_pop</span><span class="o">.</span><span class="n">population</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">indInfo</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">)),</span>
+           <span class="mi">1</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">multi_std_pop</span><span class="o">.</span><span class="n">population</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">indInfo</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">))}</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">multi_g</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">multi_g</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">magic_rep</span> <span class="ow">in</span> <span class="n">multi_std_pop</span><span class="o">.</span><span class="n">populations</span><span class="p">():</span>
+    <span class="n">pheno_calc</span><span class="p">(</span><span class="n">magic_rep</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">trait_parameter_storeage</span> <span class="o">=</span> <span class="n">shelve</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;magic_random_trait_parameters&quot;</span><span class="p">)</span>
+<span class="n">trait_parameter_storeage</span><span class="p">[</span><span class="s1">&#39;triplet_qtl&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">triplet_qtl</span>
+<span class="n">trait_parameter_storeage</span><span class="p">[</span><span class="s1">&#39;allele_effects&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">allele_effects</span>
+<span class="n">trait_parameter_storeage</span><span class="p">[</span><span class="s1">&#39;epsilon&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">epsilon_reps</span>
+<span class="n">trait_parameter_storeage</span><span class="p">[</span><span class="s1">&#39;g&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">multi_g</span>
+<span class="n">trait_parameter_storeage</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">multi_p</span>
+<span class="n">trait_parameter_storeage</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">importlib</span> <span class="kn">as</span> <span class="nn">imp</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+    <span class="n">sim</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">multi_std_pop</span><span class="o">.</span><span class="n">population</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">alleleFreq</span><span class="o">=</span><span class="n">sim</span><span class="o">.</span><span class="n">ALL_AVAIL</span><span class="p">,</span> <span class="nb">vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">imp</span><span class="o">.</span><span class="n">reload</span><span class="p">(</span><span class="n">analyze</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">pop</span><span class="o">.</span><span class="n">dvars</span><span class="p">()</span><span class="o">.</span><span class="n">qtl</span> <span class="o">=</span> <span class="n">qtl</span>
+<span class="n">pop</span><span class="o">.</span><span class="n">dvars</span><span class="p">()</span><span class="o">.</span><span class="n">allele_effects</span> <span class="o">=</span> <span class="n">allele_effects</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">alleles</span> <span class="o">=</span> <span class="n">simrams</span><span class="p">[</span><span class="s1">&#39;alleles&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">alleles</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">sim</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">pop</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">simupop</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">pop</span><span class="p">,</span> <span class="n">alleleFreq</span><span class="o">=</span><span class="n">simupop</span><span class="o">.</span><span class="n">ALL_AVAIL</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">frq</span> <span class="o">=</span> <span class="n">analyze</span><span class="o">.</span><span class="n">Frq</span><span class="p">(</span><span class="n">magic1478</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">af</span> <span class="o">=</span> <span class="n">frq</span><span class="o">.</span><span class="n">allele_frequencies</span><span class="p">(</span><span class="n">magic1478</span><span class="p">,</span> <span class="n">alleles</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1478</span><span class="p">)))</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">minor_alleles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">af</span><span class="p">[</span><span class="s1">&#39;minor&#39;</span><span class="p">,</span> <span class="s1">&#39;alleles&#39;</span><span class="p">][</span><span class="n">locus</span><span class="p">]</span> <span class="k">for</span> <span class="n">locus</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1478</span><span class="p">)])</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">ties</span> <span class="o">=</span> <span class="p">[</span><span class="n">locus</span> <span class="k">for</span> <span class="n">locus</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">magic1478</span><span class="o">.</span><span class="n">totNumLoci</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">af</span><span class="p">[</span><span class="s1">&#39;minor&#39;</span><span class="p">,</span> <span class="s1">&#39;alleles&#39;</span><span class="p">][</span><span class="n">locus</span><span class="p">]</span> <span class="o">==</span> <span class="n">af</span><span class="p">[</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="s1">&#39;alleles&#39;</span><span class="p">][</span><span class="n">locus</span><span class="p">]]</span>
+
+<span class="k">for</span> <span class="n">st</span> <span class="ow">in</span> <span class="n">ties</span><span class="p">:</span>
+    <span class="n">af</span><span class="p">[</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="s1">&#39;alleles&#39;</span><span class="p">][</span><span class="n">st</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">magic1478</span><span class="o">.</span><span class="n">dvars</span><span class="p">()</span><span class="o">.</span><span class="n">alleleFreq</span><span class="p">[</span><span class="n">st</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">af</span><span class="p">[</span><span class="s1">&#39;minor&#39;</span><span class="p">,</span> <span class="s1">&#39;alleles&#39;</span><span class="p">][</span><span class="n">st</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">magic1478</span><span class="o">.</span><span class="n">dvars</span><span class="p">()</span><span class="o">.</span><span class="n">alleleFreq</span><span class="p">[</span><span class="n">st</span><span class="p">])[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">major_minor_allele_conflicts</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">af</span><span class="p">[</span><span class="s1">&#39;minor&#39;</span><span class="p">,</span> <span class="s1">&#39;alleles&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span>
+                                            <span class="nb">list</span><span class="p">(</span><span class="n">af</span><span class="p">[</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="s1">&#39;alleles&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">())))</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">pca</span> <span class="o">=</span> <span class="n">analyze</span><span class="o">.</span><span class="n">PCA</span><span class="p">(</span><span class="n">magic1478</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">magic1478</span><span class="o">.</span><span class="n">totNumLoci</span><span class="p">()),</span> <span class="n">frq</span><span class="p">)</span>
+<span class="n">minor_ac</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">calculate_count_matrix</span><span class="p">(</span><span class="n">magic1478</span><span class="p">,</span> <span class="n">af</span><span class="p">[</span><span class="s1">&#39;minor&#39;</span><span class="p">,</span> <span class="s1">&#39;alleles&#39;</span><span class="p">],</span>
+                              <span class="s1">&#39;minor_allele_count.txt&#39;</span><span class="p">)</span>
+<span class="n">eigendata</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">magic1478</span><span class="p">,</span> <span class="n">minor_ac</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="p">[</span><span class="s1">&#39;snp_to_integer&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">snp_to_integer</span>
+<span class="n">simulation</span><span class="p">[</span><span class="s1">&#39;integer_to_snp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">integer_to_snp</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">individual_names</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">magic1478</span><span class="o">.</span><span class="n">individuals</span><span class="p">():</span>
+    <span class="n">individual_names</span><span class="p">[</span><span class="n">ind</span><span class="o">.</span><span class="n">ind_id</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">ind</span><span class="o">.</span><span class="n">ind_id</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">gwas</span> <span class="o">=</span> <span class="n">analyze</span><span class="o">.</span><span class="n">GWAS</span><span class="p">(</span><span class="n">magic1478</span><span class="p">,</span> <span class="n">individual_names</span><span class="p">,</span> <span class="n">locus_1478_names</span><span class="p">,</span> <span class="n">pos_1478_column</span><span class="p">)</span>
+<span class="n">hmap</span> <span class="o">=</span> <span class="n">gwas</span><span class="o">.</span><span class="n">hapmap_formatter</span><span class="p">(</span><span class="n">integer_to_snp</span><span class="p">,</span> <span class="s1">&#39;simulated_hapmap.txt&#39;</span><span class="p">)</span>
+<span class="n">phenos</span> <span class="o">=</span> <span class="n">gwas</span><span class="o">.</span><span class="n">trait_formatter</span><span class="p">(</span><span class="s1">&#39;phenotype_vector.txt&#39;</span><span class="p">)</span>
+<span class="n">kinship_matrix</span> <span class="o">=</span> <span class="n">gwas</span><span class="o">.</span><span class="n">calc_kinship_matrix</span><span class="p">(</span><span class="n">minor_ac</span><span class="p">,</span> <span class="n">af</span><span class="p">,</span> <span class="s1">&#39;kinship_matrix.txt&#39;</span><span class="p">)</span>
+<span class="n">pop_struct_matrix</span> <span class="o">=</span> <span class="n">gwas</span><span class="o">.</span><span class="n">population_structure_formatter</span><span class="p">(</span><span class="n">eigendata</span><span class="p">,</span> <span class="s1">&#39;structure_matrix.txt&#39;</span><span class="p">)</span>
+<span class="c1">#pd.DataFrame(multipop.population(i).dvars().statistics).to_csv(prefix + &#39;means_and_vars.txt&#39;, sep=&#39;\t&#39;)</span>
+<span class="n">analyze</span><span class="o">.</span><span class="n">generate_tassel_gwas_configs</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+                                     <span class="s1">&#39;&#39;</span><span class="p">,</span>
+                                     <span class="s1">&#39;&#39;</span><span class="p">,</span>
+                                     <span class="s1">&#39;&#39;</span><span class="p">,</span>
+                                     <span class="s1">&#39;sim_mlm_gwas_pipeline.xml&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">simulation</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">hmap</span> <span class="o">=</span> <span class="n">gwas</span><span class="o">.</span><span class="n">hapmap_formatter</span><span class="p">(</span><span class="n">integer_to_snp</span><span class="p">,</span> <span class="s1">&#39;simulated_hapmap.txt&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">pre_GWAS_grinder</span><span class="p">(</span><span class="n">multi_pop</span><span class="p">,</span> <span class="n">founder_alleles</span><span class="p">,</span> <span class="n">info_prefix</span><span class="p">,</span> <span class="n">triplet_qtl</span><span class="p">,</span> <span class="n">allele_effects</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">pop_rep</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">multi_pop</span><span class="o">.</span><span class="n">populations</span><span class="p">()):</span>
+        <span class="n">pop_rep_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">pop_rep</span><span class="o">.</span><span class="n">dvars</span><span class="p">()</span><span class="o">.</span><span class="n">rep</span><span class="p">)</span>
+        <span class="n">prefix</span> <span class="o">=</span> <span class="n">info_prefix</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">pop_rep_id</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span>
+        <span class="n">qtl</span> <span class="o">=</span> <span class="n">triplet_qtl</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+        <span class="n">pop_rep</span><span class="o">.</span><span class="n">dvars</span><span class="p">()</span><span class="o">.</span><span class="n">qtl</span> <span class="o">=</span> <span class="n">qtl</span>
+        <span class="n">pop_rep</span><span class="o">.</span><span class="n">dvars</span><span class="p">()</span><span class="o">.</span><span class="n">triplet_qtl</span> <span class="o">=</span> <span class="n">triplet_qtl</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">pop_rep</span><span class="o">.</span><span class="n">dvars</span><span class="p">()</span><span class="o">.</span><span class="n">allele_effects</span> <span class="o">=</span> <span class="n">allele_effects</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">frq</span> <span class="o">=</span> <span class="n">analyze</span><span class="o">.</span><span class="n">Frq</span><span class="p">(</span><span class="n">pop_rep</span><span class="p">,</span> <span class="p">)</span>
+        <span class="n">af</span> <span class="o">=</span> <span class="n">frq</span><span class="o">.</span><span class="n">allele_frequencies</span><span class="p">(</span><span class="n">pop_rep</span><span class="p">,</span> <span class="n">alleles</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">pop_rep</span><span class="o">.</span><span class="n">totNumLoci</span><span class="p">()))</span>
+
+        <span class="n">ties</span> <span class="o">=</span> <span class="p">[</span><span class="n">locus</span> <span class="k">for</span> <span class="n">locus</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">pop_rep</span><span class="o">.</span><span class="n">totNumLoci</span><span class="p">())</span>
+                <span class="k">if</span> <span class="n">af</span><span class="p">[</span><span class="s1">&#39;minor&#39;</span><span class="p">,</span> <span class="s1">&#39;alleles&#39;</span><span class="p">][</span><span class="n">locus</span><span class="p">]</span> <span class="o">==</span> <span class="n">af</span><span class="p">[</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="s1">&#39;alleles&#39;</span><span class="p">][</span><span class="n">locus</span><span class="p">]]</span>
+
+        <span class="k">for</span> <span class="n">st</span> <span class="ow">in</span> <span class="n">ties</span><span class="p">:</span>
+            <span class="n">af</span><span class="p">[</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="s1">&#39;alleles&#39;</span><span class="p">][</span><span class="n">st</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">pop_rep</span><span class="o">.</span><span class="n">dvars</span><span class="p">()</span><span class="o">.</span><span class="n">alleleFreq</span><span class="p">[</span><span class="n">st</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">af</span><span class="p">[</span><span class="s1">&#39;minor&#39;</span><span class="p">,</span> <span class="s1">&#39;alleles&#39;</span><span class="p">][</span><span class="n">st</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">pop_rep</span><span class="o">.</span><span class="n">dvars</span><span class="p">()</span><span class="o">.</span><span class="n">alleleFreq</span><span class="p">[</span><span class="n">st</span><span class="p">])[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">major_minor_allele_conflicts</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">af</span><span class="p">[</span><span class="s1">&#39;minor&#39;</span><span class="p">,</span> <span class="s1">&#39;alleles&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span>
+                                                    <span class="nb">list</span><span class="p">(</span><span class="n">af</span><span class="p">[</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="s1">&#39;alleles&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">())))</span>
+
+        <span class="k">assert</span> <span class="n">major_minor_allele_conflicts</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;There is a tie in at least one locus.&quot;</span>
+
+        <span class="n">pca</span> <span class="o">=</span> <span class="n">analyze</span><span class="o">.</span><span class="n">PCA</span><span class="p">(</span><span class="n">pop_rep</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">pop_rep</span><span class="o">.</span><span class="n">totNumLoci</span><span class="p">()),</span> <span class="n">frq</span><span class="p">)</span>
+
+
+        <span class="n">minor_ac</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">calculate_count_matrix</span><span class="p">(</span><span class="n">pop_rep</span><span class="p">,</span> <span class="n">af</span><span class="p">[</span><span class="s1">&#39;minor&#39;</span><span class="p">,</span> <span class="s1">&#39;alleles&#39;</span><span class="p">],</span>
+                                          <span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;minor_allele_count.txt&#39;</span><span class="p">)</span>
+
+        <span class="n">eigendata</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">pop_rep</span><span class="p">,</span> <span class="n">minor_ac</span><span class="p">)</span>
+
+
+        <span class="n">individual_names</span> <span class="o">=</span> <span class="p">{</span><span class="n">ind</span><span class="o">.</span><span class="n">ind_id</span><span class="p">:</span> <span class="n">info_prefix</span> <span class="o">+</span> <span class="n">pop_rep_id</span> <span class="o">+</span><span class="s1">&#39;_G&#39;</span> <span class="o">+</span>
+                        <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">ind</span><span class="o">.</span><span class="n">generation</span><span class="p">))</span> <span class="o">+</span>
+                        <span class="s1">&#39;_I&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">ind</span><span class="o">.</span><span class="n">ind_id</span><span class="p">))</span>
+                        <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">pop_rep</span><span class="o">.</span><span class="n">individuals</span><span class="p">()}</span>
+
+
+
+
+        <span class="n">gwas</span> <span class="o">=</span> <span class="n">analyze</span><span class="o">.</span><span class="n">GWAS</span><span class="p">(</span><span class="n">pop_rep</span><span class="p">,</span> <span class="n">individual_names</span><span class="p">,</span> <span class="n">locus_names</span><span class="p">,</span> <span class="n">pos_column</span><span class="p">)</span>
+        <span class="n">hmap</span> <span class="o">=</span> <span class="n">gwas</span><span class="o">.</span><span class="n">hapmap_formatter</span><span class="p">(</span><span class="n">integer_to_snp</span><span class="p">,</span> <span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;simulated_hapmap.txt&#39;</span><span class="p">)</span>
+        <span class="n">phenos</span> <span class="o">=</span> <span class="n">gwas</span><span class="o">.</span><span class="n">trait_formatter</span><span class="p">(</span><span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;phenotype_vector.txt&#39;</span><span class="p">)</span>
+        <span class="n">kinship_matrix</span> <span class="o">=</span> <span class="n">gwas</span><span class="o">.</span><span class="n">calc_kinship_matrix</span><span class="p">(</span><span class="n">minor_ac</span><span class="p">,</span> <span class="n">af</span><span class="p">,</span> <span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;kinship_matrix.txt&#39;</span><span class="p">)</span>
+        <span class="n">pop_struct_matrix</span> <span class="o">=</span> <span class="n">gwas</span><span class="o">.</span><span class="n">population_structure_formatter</span><span class="p">(</span><span class="n">eigendata</span><span class="p">,</span> <span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;structure_matrix.txt&#39;</span><span class="p">)</span>
+        <span class="c1">#pd.DataFrame(multipop.population(i).dvars().statistics).to_csv(prefix + &#39;means_and_vars.txt&#39;, sep=&#39;\t&#39;)</span>
+        <span class="n">analyze</span><span class="o">.</span><span class="n">generate_tassel_gwas_configs</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+                                             <span class="s1">&#39;&#39;</span><span class="p">,</span>
+                                             <span class="s1">&#39;&#39;</span><span class="p">,</span>
+                                             <span class="n">prefix</span><span class="p">,</span>
+                                             <span class="s1">&#39;sim_mlm_gwas_pipeline.xml&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">rd_sample</span><span class="o">.</span><span class="n">indInfo</span><span class="p">(</span><span class="s1">&#39;ind_id&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">st</span> <span class="ow">in</span> <span class="n">ties</span><span class="p">:</span>
+    <span class="n">af</span><span class="p">[</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="s1">&#39;alleles&#39;</span><span class="p">][</span><span class="n">st</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">pop_rep</span><span class="o">.</span><span class="n">dvars</span><span class="p">()</span><span class="o">.</span><span class="n">alleleFreq</span><span class="p">[</span><span class="n">st</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">af</span><span class="p">[</span><span class="s1">&#39;minor&#39;</span><span class="p">,</span> <span class="s1">&#39;alleles&#39;</span><span class="p">][</span><span class="n">st</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">pop_rep</span><span class="o">.</span><span class="n">dvars</span><span class="p">()</span><span class="o">.</span><span class="n">alleleFreq</span><span class="p">[</span><span class="n">st</span><span class="p">])[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">major_minor_allele_conflicts</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">af</span><span class="p">[</span><span class="s1">&#39;minor&#39;</span><span class="p">,</span> <span class="s1">&#39;alleles&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span>
+                                            <span class="nb">list</span><span class="p">(</span><span class="n">af</span><span class="p">[</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="s1">&#39;alleles&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">())))</span>
+
+<span class="k">assert</span> <span class="n">major_minor_allele_conflicts</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;There is a tie in at least one locus.&quot;</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">pre_GWAS_grinder</span><span class="p">(</span><span class="n">multi_std_pop</span><span class="p">,</span> <span class="n">alleles</span><span class="p">,</span> <span class="s1">&#39;magic_rdm_mating_&#39;</span><span class="p">,</span> <span class="n">triplet_qtl</span><span class="p">,</span> <span class="n">allele_effects</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">magic_rep</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">multi_std_pop</span><span class="o">.</span><span class="n">populations</span><span class="p">()):</span>
+
+    <span class="n">magic_rep_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">magic_rep</span><span class="o">.</span><span class="n">dvars</span><span class="p">()</span><span class="o">.</span><span class="n">rep</span><span class="p">)</span>
+    <span class="n">prefix</span> <span class="o">=</span> <span class="s1">&#39;magic_RM_L10_H07_R&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">meta_rep_id</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;_&#39;</span>
+
+    <span class="n">qtl</span> <span class="o">=</span> <span class="n">triplet_qtl</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+
+    <span class="n">meta_rep</span><span class="o">.</span><span class="n">dvars</span><span class="p">()</span><span class="o">.</span><span class="n">qtl</span> <span class="o">=</span> <span class="n">qtl</span>
+    <span class="n">meta_rep</span><span class="o">.</span><span class="n">dvars</span><span class="p">()</span><span class="o">.</span><span class="n">triplet_qtl</span> <span class="o">=</span> <span class="n">triplet_qtl</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">meta_rep</span><span class="o">.</span><span class="n">dvars</span><span class="p">()</span><span class="o">.</span><span class="n">allele_effects</span> <span class="o">=</span> <span class="n">allele_effects</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+
+    <span class="n">frq</span> <span class="o">=</span> <span class="n">analyze</span><span class="o">.</span><span class="n">Frq</span><span class="p">(</span><span class="n">meta_rep</span><span class="p">,</span> <span class="n">triplet_qtl</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">alleles</span><span class="p">,</span> <span class="n">allele_effects</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">af</span> <span class="o">=</span> <span class="n">frq</span><span class="o">.</span><span class="n">allele_frequencies</span><span class="p">(</span><span class="n">meta_rep</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">meta_rep</span><span class="o">.</span><span class="n">totNumLoci</span><span class="p">()))</span>
+
+
+    <span class="c1">#qtalleles = frq.rank_allele_effects(meta_rep, triplet_qtl[i], alleles, allele_effects[i])</span>
+    <span class="n">ties</span> <span class="o">=</span> <span class="p">[</span><span class="n">locus</span> <span class="k">for</span> <span class="n">locus</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">meta_rep</span><span class="o">.</span><span class="n">totNumLoci</span><span class="p">())</span>
+            <span class="k">if</span> <span class="n">af</span><span class="p">[</span><span class="s1">&#39;minor&#39;</span><span class="p">,</span> <span class="s1">&#39;alleles&#39;</span><span class="p">][</span><span class="n">locus</span><span class="p">]</span> <span class="o">==</span> <span class="n">af</span><span class="p">[</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="s1">&#39;alleles&#39;</span><span class="p">][</span><span class="n">locus</span><span class="p">]]</span>
+
+    <span class="k">for</span> <span class="n">st</span> <span class="ow">in</span> <span class="n">ties</span><span class="p">:</span>
+        <span class="n">af</span><span class="p">[</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="s1">&#39;alleles&#39;</span><span class="p">][</span><span class="n">st</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">meta_rep</span><span class="o">.</span><span class="n">dvars</span><span class="p">()</span><span class="o">.</span><span class="n">alleleFreq</span><span class="p">[</span><span class="n">st</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">af</span><span class="p">[</span><span class="s1">&#39;minor&#39;</span><span class="p">,</span> <span class="s1">&#39;alleles&#39;</span><span class="p">][</span><span class="n">st</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">meta_rep</span><span class="o">.</span><span class="n">dvars</span><span class="p">()</span><span class="o">.</span><span class="n">alleleFreq</span><span class="p">[</span><span class="n">st</span><span class="p">])[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">major_minor_allele_conflicts</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">af</span><span class="p">[</span><span class="s1">&#39;minor&#39;</span><span class="p">,</span> <span class="s1">&#39;alleles&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span>
+                                                <span class="nb">list</span><span class="p">(</span><span class="n">af</span><span class="p">[</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="s1">&#39;alleles&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">())))</span>
+
+    <span class="k">assert</span> <span class="n">major_minor_allele_conflicts</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;There is a tie in at least one locus.&quot;</span>
+
+    <span class="c1">#af_table = frq.allele_frq_table(meta_rep, meta_rep.numSubPop(), af,</span>
+    <span class="c1">#                                                       recombination_rates, genetic_map)</span>
+    <span class="c1">#qtaf_table = analyze.qt_allele_table(meta_rep, qtalleles, allele_effects[i], 10)</span>
+
+    <span class="c1">#af_table.to_csv(various_simulation_info_prefix + prefix + &#39;allele_frequency_table.txt&#39;, sep=&#39;,&#39;, index=0)</span>
+    <span class="c1">#qtaf_table.to_csv(various_simulation_info_prefix + prefix + &#39;qt_allele_info.txt&#39;, sep=&#39;,&#39;, index=0)</span>
+
+    <span class="c1">#del af_table, qtaf_table</span>
+
+
+
+    <span class="n">pca</span> <span class="o">=</span> <span class="n">analyze</span><span class="o">.</span><span class="n">PCA</span><span class="p">(</span><span class="n">meta_rep</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">meta_rep</span><span class="o">.</span><span class="n">totNumLoci</span><span class="p">()),</span> <span class="n">frq</span><span class="p">)</span>
+
+
+    <span class="n">minor_ac</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">calculate_count_matrix</span><span class="p">(</span><span class="n">meta_rep</span><span class="p">,</span> <span class="n">af</span><span class="p">[</span><span class="s1">&#39;minor&#39;</span><span class="p">,</span> <span class="s1">&#39;alleles&#39;</span><span class="p">],</span>
+                                          <span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;minor_allele_count.txt&#39;</span><span class="p">)</span>
+
+    <span class="n">eigendata</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">meta_rep</span><span class="p">,</span> <span class="n">minor_ac</span><span class="p">)</span>
+
+
+    <span class="n">individual_names</span> <span class="o">=</span> <span class="p">{</span><span class="n">ind</span><span class="o">.</span><span class="n">ind_id</span><span class="p">:</span> <span class="s1">&#39;rs_L10_H07_R&#39;</span><span class="o">+</span> <span class="n">meta_rep_id</span> <span class="o">+</span><span class="s1">&#39;_G&#39;</span> <span class="o">+</span>
+                        <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">ind</span><span class="o">.</span><span class="n">generation</span><span class="p">))</span> <span class="o">+</span>
+                        <span class="s1">&#39;_I&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">ind</span><span class="o">.</span><span class="n">ind_id</span><span class="p">))</span>
+                        <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">meta_rep</span><span class="o">.</span><span class="n">individuals</span><span class="p">()}</span>
+
+    <span class="n">ind_names_for_gwas</span><span class="p">[</span><span class="n">meta_rep_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">individual_names</span>
+
+    <span class="c1">#meta_rep.save(populations_prefix + prefix + &#39;metapopulation.pop&#39;)</span>
+
+<span class="c1">#    names_filename = prefix + &#39;individual_names.yaml&#39;</span>
+<span class="c1">#    with open(names_filename, &#39;w&#39;) as name_stream:</span>
+<span class="c1">#        yaml.dump(individual_names, name_stream)</span>
+
+
+
+
+
+    <span class="n">gwas</span> <span class="o">=</span> <span class="n">analyze</span><span class="o">.</span><span class="n">GWAS</span><span class="p">(</span><span class="n">meta_rep</span><span class="p">,</span> <span class="n">individual_names</span><span class="p">,</span> <span class="n">locus_names</span><span class="p">,</span> <span class="n">pos_column</span><span class="p">)</span>
+    <span class="n">hmap</span> <span class="o">=</span> <span class="n">gwas</span><span class="o">.</span><span class="n">hapmap_formatter</span><span class="p">(</span><span class="n">integer_to_snp</span><span class="p">,</span> <span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;simulated_hapmap.txt&#39;</span><span class="p">)</span>
+    <span class="n">phenos</span> <span class="o">=</span> <span class="n">gwas</span><span class="o">.</span><span class="n">trait_formatter</span><span class="p">(</span><span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;phenotype_vector.txt&#39;</span><span class="p">)</span>
+    <span class="n">kinship_matrix</span> <span class="o">=</span> <span class="n">gwas</span><span class="o">.</span><span class="n">calc_kinship_matrix</span><span class="p">(</span><span class="n">minor_ac</span><span class="p">,</span> <span class="n">af</span><span class="p">,</span> <span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;kinship_matrix.txt&#39;</span><span class="p">)</span>
+    <span class="n">pop_struct_matrix</span> <span class="o">=</span> <span class="n">gwas</span><span class="o">.</span><span class="n">population_structure_formatter</span><span class="p">(</span><span class="n">eigendata</span><span class="p">,</span> <span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;structure_matrix.txt&#39;</span><span class="p">)</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">multipop</span><span class="o">.</span><span class="n">population</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">dvars</span><span class="p">()</span><span class="o">.</span><span class="n">statistics</span><span class="p">)</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">prefix</span> <span class="o">+</span> <span class="s1">&#39;means_and_vars.txt&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">analyze</span><span class="o">.</span><span class="n">generate_tassel_gwas_configs</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+                                         <span class="s1">&#39;&#39;</span><span class="p">,</span>
+                                         <span class="s1">&#39;&#39;</span><span class="p">,</span>
+                                         <span class="n">prefix</span><span class="p">,</span>
+                                         <span class="s1">&#39;sim_mlm_gwas_pipeline.xml&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">minor_af_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">7386</span><span class="p">)</span>
+<span class="n">minor_af_vector</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[</span><span class="n">meta_rep</span><span class="o">.</span><span class="n">dvars</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">alleleFreq</span><span class="p">[</span><span class="n">locus</span><span class="p">][</span><span class="n">af</span><span class="p">[</span><span class="s1">&#39;minor&#39;</span><span class="p">,</span> <span class="s1">&#39;alleles&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">][</span><span class="n">locus</span><span class="p">]]</span>
+                      <span class="k">for</span> <span class="n">locus</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">meta_rep</span><span class="o">.</span><span class="n">totNumLoci</span><span class="p">())]</span>
+
+<span class="n">minor_alleles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">7386</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+<span class="n">major_alleles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">7386</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+<span class="n">minor_alleles</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[</span><span class="n">af</span><span class="p">[</span><span class="s1">&#39;minor&#39;</span><span class="p">,</span> <span class="s1">&#39;alleles&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">][</span><span class="n">locus</span><span class="p">]</span>
+                      <span class="k">for</span> <span class="n">locus</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">meta_rep</span><span class="o">.</span><span class="n">totNumLoci</span><span class="p">())]</span>
+<span class="n">major_alleles</span><span class="p">[:]</span> <span class="o">=</span> <span class="p">[</span><span class="n">af</span><span class="p">[</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="s1">&#39;alleles&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">][</span><span class="n">locus</span><span class="p">]</span>
+                       <span class="k">for</span> <span class="n">locus</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">meta_rep</span><span class="o">.</span><span class="n">totNumLoci</span><span class="p">())]</span>
+
+<span class="n">minor_ae</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">7386</span><span class="p">)</span>
+<span class="n">major_ae</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">7386</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">locus</span> <span class="ow">in</span> <span class="n">qtl</span><span class="p">:</span>
+    <span class="n">minor_ae</span><span class="p">[</span><span class="n">locus</span><span class="p">]</span> <span class="o">=</span> <span class="n">allele_effects</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">locus</span><span class="p">][</span><span class="n">minor_alleles</span><span class="p">[</span><span class="n">locus</span><span class="p">]]</span>
+    <span class="n">major_ae</span><span class="p">[</span><span class="n">locus</span><span class="p">]</span> <span class="o">=</span> <span class="n">allele_effects</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">locus</span><span class="p">][</span><span class="n">major_alleles</span><span class="p">[</span><span class="n">locus</span><span class="p">]]</span>
+
+
+
+<span class="n">avg_locus_effects</span> <span class="o">=</span> <span class="n">minor_af_vector</span><span class="o">*</span><span class="n">minor_ae</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">minor_af_vector</span><span class="p">)</span><span class="o">*</span><span class="n">major_ae</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="allele-effects-using-any-number-of-qtl-and-any-distribution">
+<span id="assign-any-allele-effects"></span><h2>Allele Effects Using any Number of QTL and any Distribution<a class="headerlink" href="#allele-effects-using-any-number-of-qtl-and-any-distribution" title="Permalink to this headline">¶</a></h2>
+<p>I defined a function which allows the user to define allele effects for any number
+of <code class="docutils literal"><span class="pre">qtl</span></code>, any number of <code class="docutils literal"><span class="pre">alleles</span></code> at those loci and as random draws from any
+distribution.</p>
+<dl class="function">
+<dt id="assign_allele_effects">
+<code class="descname">assign_allele_effects</code><span class="sig-paren">(</span><em>alleles</em>, <em>qtl</em>, <em>distribution_function</em>, <em>*distribution_function_parameters</em>, <em>multiplicity=1</em><span class="sig-paren">)</span><a class="headerlink" href="#assign_allele_effects" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>alleles</strong> &#8211; Dictionary of alleles at each locus</li>
+<li><strong>qtl</strong> &#8211; Loci which contribute to a quantitative trait</li>
+<li><strong>distribution_function</strong> &#8211; Function used to determine allele effects as random draws</li>
+<li><strong>distribution_function_parameters</strong> &#8211; Parameters required for the distribution function</li>
+<li><strong>multiplicity</strong> &#8211; Number of independent random draws from the distribution_function to assign as alelle effects.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>What do I have so far.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Generating Input for TASSEL with MAGIC1478</a><ul>
+<li><a class="reference internal" href="#allele-effects-for-magic1478">Allele Effects for MAGIC1478</a></li>
+<li><a class="reference internal" href="#random-mating-magic1478-for-gwas">Random Mating MAGIC1478 for GWAS</a><ul>
+<li><a class="reference internal" href="#determining-g-and-p-in-the-1478-population">Determining G and P in the 1478 Population</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#allele-effects-using-any-number-of-qtl-and-any-distribution">Allele Effects Using any Number of QTL and any Distribution</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="magic1478.html"
+                        title="previous chapter">MAGIC Population with Subset of Loci</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="analyzing_magic1478_results.html"
+                        title="next chapter">Analyzing Results of GWAS with TASSEL</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/creating_data_for_GWAS_with_magic1478.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="analyzing_magic1478_results.html" title="Analyzing Results of GWAS with TASSEL"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="magic1478.html" title="MAGIC Population with Subset of Loci"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="contents.html">saegus 0.1.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, John J. Dougherty III.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

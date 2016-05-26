@@ -829,15 +829,61 @@ class GWAS(object):
         lxml_root.find('combine6/export').text = output_file_prefix
 
 
-        lxml_root.write("C:\\tassel\\bin\\daoko_girl_" + str(sample_size) + "_sim_gwas_pipeline.xml",
+        lxml_root.write("C:\\tassel\\bin\\" + self.run_id + '_' + str(sample_size) + "_sim_gwas_pipeline.xml",
                         encoding="UTF-8",
                        method="xml", xml_declaration=True, standalone='',
                         pretty_print=True)
 
-def population_sample_analyzer(full_population, sample_size,
+    def replicate_tassel_gwas_configs(self, rep_id, sample_size,
+                                         hapmap_file_name,
+                                         kinship_file_name,
+                                         phenotype_file_name,
+                                         structure_file_name,
+                                         output_file_prefix,
+                                         config_file_template):
+
+        """
+        Creates an xml file to run TASSEL using a mixed linear model approach.
+        Assumes use of hapmap, kinship, phenotype and population structure files.
+
+        The TASSEL command line interface requires a considerable number of
+        options to run GWAS. It is impractical to run the command line manually
+        for the number of replications in a simulated study. The TASSEL command
+        line interface allows the user to input a .xml file with the same
+        information which is used in the terminal.
+
+        :param input_directory: Directory path to send the input files.
+        :param run_identifier_prefix: Identifier for single replicate of data
+        :param config_file_templae: XML file already setup for running a
+        specific kind of GWAS
+        :return: XML file to run a single replicate of data using TASSEL
+        """
+
+        import xml.etree.ElementTree as ET
+        import lxml.etree as etree
+
+        tree = ET.parse(config_file_template)
+        root = tree.getroot()
+        lxml_tree = etree.fromstring(ET.tostring(root))
+        lxml_root = lxml_tree.getroottree()
+
+        lxml_root.find('fork1/h').text = hapmap_file_name
+        lxml_root.find('fork2/t').text = phenotype_file_name
+        lxml_root.find('fork3/q').text = structure_file_name
+        lxml_root.find('fork4/k').text = kinship_file_name
+
+        lxml_root.find('combine6/export').text = output_file_prefix
+
+        lxml_root.write("C:\\tassel\\bin\\" + 'R' + rep_id + '_' + str(sample_size) + '_' + self.run_id + '_' + "_sim_gwas_pipeline.xml",
+                        encoding="UTF-8",
+                        method="xml", xml_declaration=True, standalone='',
+                        pretty_print=True)
+
+
+def single_sample_analyzer(full_population, sample_size,
                                quantitative_trait_loci, alleles,
                                        allele_effects, heritability,
-                                       run_id='daoko_girl'):
+                                       run_id='infinite'):
 
     """
     A function to call all of the functions in order to get from population
@@ -865,8 +911,6 @@ def population_sample_analyzer(full_population, sample_size,
     sim.stat(sample_population, numOfSegSites=sim.ALL_AVAIL,
              vars=['segSites', 'numOfSegSites'])
     segregating_loci = sample_population.dvars().segSites
-    #aes_table = generate_allele_effects_table(quantitative_trait_loci,
-    #                                                  alleles, allele_effects)
     operators.assign_additive_g(full_population, quantitative_trait_loci, allele_effects)
     operators.calculate_error_variance(sample_population, heritability)
     operators.phenotypic_effect_calculator(sample_population)
@@ -900,6 +944,57 @@ def population_sample_analyzer(full_population, sample_size,
               "saegus_project\\devel\\magic\\1478\\daoko_girl_gwas_pipeline.xml")
     return segregating_loci, aes_table
 
+def multiple_sample_analyzer(replicate_population, sample_size_list,
+                             quantitative_trait_loci, alleles, allele_effects,
+                             heritability, segregating_loci, run_id='infinite'):
+
+
+    syn_parameters = shelve.open('synthesis_parameters')
+    int_to_snp_map = syn_parameters['integer_to_snp']
+    syn_parameters.close()
+
+    for rep in replicate_population.populations():
+        for sample_size in sample_size_list:
+            sample_population = sim.sampling.drawRandomSample(rep,
+                                                              sizes=sample_size)
+
+            rep_prefix = str(rep.dvars().rep)
+
+            operators.assign_additive_g(sample_population, quantitative_trait_loci,
+                                        allele_effects)
+            operators.calculate_error_variance(sample_population, heritability)
+            operators.phenotypic_effect_calculator(sample_population)
+            af = allele_data(sample_population, alleles,
+                             range(sample_population.totNumLoci()))
+
+            af.to_hdf('R' + rep_prefix + '_' + str(sample_size) + '_infinite_af.hdf', 'af')
+
+            gwas = GWAS(sample_population, segregating_loci,
+                        np.array(af['minor_allele']), 'infinite')
+
+
+            indir = "C:\\tassel\\input\\"
+            ccm = gwas.calculate_count_matrix(indir + 'R' + rep_prefix + '_' + str(sample_size) +  '_infinite_MAC.txt')
+            ps_svd = gwas.pop_struct_svd(ccm)
+            ps_m = gwas.population_structure_formatter(ps_svd, indir + 'R'+ rep_prefix + '_' + str(sample_size) + '_infinite_structure_matrix.txt')
+            hmap = gwas.hapmap_formatter(int_to_snp_map,
+                                         indir + 'R' + rep_prefix + '_' + str(sample_size) + '_infinite_simulated_hapmap.txt')
+            phenos = gwas.trait_formatter(indir + 'R' + rep_prefix + '_' + str(sample_size) + '_infinite_phenotype_vector.txt')
+            ks_m = gwas.calc_kinship_matrix(ccm, af,
+                                            indir + 'R' + rep_prefix + '_' + str(sample_size) + '_infinite_kinship_matrix.txt')
+
+            gwas.replicate_tassel_gwas_configs(rep_prefix, sample_size,
+                indir + 'R' + rep_prefix + '_' + str(sample_size) + '_infinite_simulated_hapmap.txt',
+                indir + 'R' + rep_prefix + '_' + str(sample_size) + '_infinite_kinship_matrix.txt',
+                indir + 'R' + rep_prefix + '_' + str(sample_size) + '_infinite_phenotype_vector.txt',
+                indir + 'R' + rep_prefix + '_' + str(sample_size) + '_infinite_structure_matrix.txt',
+                "C:\\tassel\\output\\" + 'R' + rep_prefix + '_' + str(sample_size) + "_infinite_out_",
+                                              "C:\\Users\DoubleDanks\\BISB\\wisser\\code\\rjwlab-scripts\\"
+                                              "saegus_project\\devel\\magic\\1478\\infinite_gwas_pipeline.xml")
+
+
+
+
 def remap_ae_table_loci(allele_effect_table, saegus_to_tassel_loci):
     """
     Converts the absolute indices of saegus population to the indices of the truncated
@@ -921,6 +1016,7 @@ def remap_ae_table_loci(allele_effect_table, saegus_to_tassel_loci):
         expanded_ae_table.ix[qtlocus, 'difference'] =  allele_effect_table.ix[qtlocus, 'difference']
 
     return expanded_ae_table
+
 
 def reconfigure_gwas_results(gwas_results_file, q_values_file, expanded_allele_effects_table, delim="\t"):
     """
@@ -944,6 +1040,29 @@ def reconfigure_gwas_results(gwas_results_file, q_values_file, expanded_allele_e
 
     return greater_results
 
+
+def replicate_gwas_results(gwas_results_file, q_values_file, expanded_allele_effects_table, delim="\t"):
+    """
+    Useful function which parses the output from TASSEL, collects the useful
+    pieces of information such as p values, q values and allele effects
+    into a useful table.
+    """
+
+
+    gwas_results = pd.read_csv(gwas_results_file, sep=delim)
+    gwas_results.drop('Trait', axis=1, inplace=True)
+    gwas_results.drop('Pos', axis=1, inplace=True)
+    gwas_results.drop(0, axis=0, inplace=True)
+    gwas_results = gwas_results.ix[:, 'Marker':'p']
+    gwas_results.index = gwas_results.index - 1
+    gwas_results.drop('Marker', axis=1, inplace=True)
+    qvalues = pd.read_csv(q_values_file, sep=delim)
+    qvalues.columns = ['q']
+    qvalues.index = qvalues.index - 1
+    results = gwas_results.join(qvalues)
+    greater_results = results.join(expanded_allele_effects_table)
+
+    return greater_results
 
 class Synbreed(object):
 

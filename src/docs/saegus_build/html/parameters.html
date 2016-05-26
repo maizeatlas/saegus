@@ -1,0 +1,537 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>parameterizer &mdash; saegus 0.1.2 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="saegus 0.1.2 documentation" href="contents.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="contents.html">saegus 0.1.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="parameterizer">
+<h1><code class="xref py py-mod docutils literal"><span class="pre">parameterizer</span></code><a class="headerlink" href="#parameterizer" title="Permalink to this headline">¶</a></h1>
+<p>Copy and paste of all functions in the module.</p>
+<dl class="function">
+<dt>
+<code class="descname">assign_identical_qtl_parameters(multi_pop, alleles,</code></dt>
+<dd></dd></dl>
+
+<p>qtl_subset, number_of_qtl, ae_parameters)</p>
+<blockquote>
+<div><p>Assigns each replicate in a population the same set of QTL and
+corresponding allele effects.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">param multi_pop:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">A simuPOP Simulator object with multiple replicates.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">param alleles:</th><td class="field-body">Alleles at each locus in the the founder population.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param qtl_subset:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">List of loci which can be chosen as QTL</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">param number_of_qtl:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">Number of loci to declare as QTL</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param ae_parameters:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">Parameters of the allele effect distribution</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p># -<em>- coding: utf-8 -</em>-</p>
+<p>import simuPOP as sim
+import pandas as pd
+import collections as col
+import random
+import numpy as np
+import yaml
+from scipy import stats</p>
+<p>class PopulationStructure(object):</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>def __init__(self, pop, population_structure_matrix_filename, threshold, error):</dt>
+<dd>self.pop = pop
+self.population_structure_matrix_filename = population_structure_matrix_filename
+self.threshold = threshold
+self.error = error</dd>
+<dt>def generate_population_structure(self):</dt>
+<dd>&#8220;&#8221;&#8221;
+Parses a population structure matrix from a file and converts it into a native Python dictionary.
+Extra steps needed because the population structure file is not in the same order as the genotype file.
+&#8220;&#8221;&#8221;
+popst = pd.read_excel(self.population_structure_matrix_filename)
+indid_to_sampleid = {popst.index[i]: popst[&#8216;sample_id&#8217;][i] for i in range(len(popst))}
+popst_proportions = {popst[&#8216;sample_id&#8217;][i]: list(popst.ix[i, 1:7]) for i in range(len(popst))}
+structure = {indid_to_sampleid[i]: popst_proportions[indid_to_sampleid[i]] for i in range(len(popst))}
+return structure</dd>
+<dt>def population_structure_filter(self, population_structure: dict):</dt>
+<dd><p class="first">&#8220;&#8221;&#8221;
+In populations with population structure spread over several subpopulations takes individuals whose genomes are
+derived from at most 2 subpopulations plus/minus error. This function also removes the invalid individuals
+referenced by absolute index. Resulting population is initial pop size - len(invalids.keys())
+&#8220;&#8221;&#8221;
+invalids = col.defaultdict()
+for k, v in population_structure.items():</p>
+<blockquote>
+<div><p>primary = max(v)
+secondary = sorted(v)[-2]
+if len(set(v)) &gt; 3:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>if (sum(v) - primary - secondary) &gt; (self.threshold + self.error):</dt>
+<dd>invalids[k] = v</dd>
+<dt>else:</dt>
+<dd>pass</dd>
+</dl>
+</div></blockquote>
+</div></blockquote>
+<p class="last">self.pop.removeIndividuals(indexes=list(invalids.keys()))
+return list(invalids.keys())</p>
+</dd>
+<dt>def assign_population_structure(self, population_structure):</dt>
+<dd><p class="first">&#8220;&#8221;&#8221;
+Assigns every individual a primary and secondary subpopulation according to the population structure matrix.
+:param population_structure_dict:
+:param number_of_individuals:
+:return:
+&#8220;&#8221;&#8221;
+assigned_structure = col.OrderedDict()
+for ind in list(self.pop.indInfo(&#8216;ind_id&#8217;)):</p>
+<blockquote>
+<div><p>assigned_structure[int(ind)] = col.OrderedDict()
+for i, prop in enumerate(population_structure[int(ind)]):</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>if max(population_structure[int(ind)]) == prop:</dt>
+<dd>assigned_structure[int(ind)][0] = i</dd>
+<dt>elif population_structure[int(ind)][i] == sorted(population_structure[int(ind)])[-2]:</dt>
+<dd>assigned_structure[int(ind)][1] = i</dd>
+<dt>else:</dt>
+<dd>pass</dd>
+</dl>
+</div></blockquote>
+<dl class="docutils">
+<dt>if min(population_structure[int(ind)]) == 0.000000:</dt>
+<dd>assigned_structure[int(ind)][1] = assigned_structure[int(ind)][0]</dd>
+</dl>
+</div></blockquote>
+<p class="last">return assigned_structure</p>
+</dd>
+<dt>def assign_structured_mating_probabilities(self, population_structure, assigned_primary_secondary_structure):</dt>
+<dd><p class="first">&#8220;&#8221;&#8221;
+Sums the proportions which are non-primary and non-secondary and adds half of the sum to the primary and secondary.
+The primary and secondary probabilities is the probability of mating with an individual from that primary
+subpopulation (or selfing).
+:param population_structure_dict:
+:param assigned_structure_dict:
+:return:
+&#8220;&#8221;&#8221;
+mating_probabilities = col.OrderedDict()
+for ind in self.pop.indInfo(&#8216;ind_id&#8217;):</p>
+<blockquote>
+<div>ind = int(ind)
+mating_probabilities[ind] = col.OrderedDict()
+primary_proportion = population_structure[ind][assigned_primary_secondary_structure[ind][0]]
+secondary_proportion = population_structure[ind][assigned_primary_secondary_structure[ind][1]]
+remainder = (1 - primary_proportion - secondary_proportion)/2
+mating_probabilities[ind][0] = primary_proportion + remainder
+mating_probabilities[ind][1] = secondary_proportion + remainder</div></blockquote>
+<p class="last">return mating_probabilities</p>
+</dd>
+<dt>def generate_mating_probability_mass_functions(self, assigned_primary_secondary_structure: dict,</dt>
+<dd><blockquote class="first">
+<div>assigned_mating_probabilities: dict):</div></blockquote>
+<p>&#8220;&#8221;&#8221;
+Assigns mating probabilities as dictionary values keyed by individual ids.
+:param pop:
+:param population_structure:
+:param assigned_structure:
+:return:
+&#8220;&#8221;&#8221;
+mating_probability_mass_functions = col.OrderedDict()
+for ind in list(self.pop.indInfo(&#8216;ind_id&#8217;)):</p>
+<blockquote>
+<div><p>ind_id = int(ind)
+if assigned_primary_secondary_structure[ind_id][0] == assigned_primary_secondary_structure[ind_id][1]:</p>
+<blockquote>
+<div><p>single_subpopulation = (assigned_primary_secondary_structure[ind_id][0])
+mating_probability = 1.0
+mating_probability_mass_functions[ind_id] = </p>
+<blockquote>
+<div><dl class="docutils">
+<dt>stats.rv_discrete(values=(single_subpopulation,</dt>
+<dd>mating_probability))</dd>
+</dl>
+</div></blockquote>
+</div></blockquote>
+<dl class="docutils">
+<dt>else:</dt>
+<dd><dl class="first last docutils">
+<dt>primary_and_secondary_subpopulations = (assigned_primary_secondary_structure[ind_id][0],</dt>
+<dd>assigned_primary_secondary_structure[ind_id][1])</dd>
+<dt>mating_probabilities = (float(assigned_mating_probabilities[ind_id][0]),</dt>
+<dd>float(assigned_mating_probabilities[ind_id][1]))</dd>
+<dt>mating_probability_mass_functions[ind_id] = stats.rv_discrete(</dt>
+<dd>values=(primary_and_secondary_subpopulations, mating_probabilities))</dd>
+</dl>
+</dd>
+</dl>
+</div></blockquote>
+<p class="last">return mating_probability_mass_functions</p>
+</dd>
+<dt>def setup_mating_structure(self):</dt>
+<dd><p class="first">&#8220;&#8221;&#8221;
+Function which applies all the functions necessary to create the mating_pmfs. The mating_pmfs are
+assigned to self.pop&#8217;s local namespace where they can be accessed by a parent_chooser function.
+&#8220;&#8221;&#8221;
+pop_structure = self.generate_population_structure()
+self.pop.dvars().invalids = self.population_structure_filter(pop_structure)
+self.pop.dvars().assigned_structure = self.assign_population_structure(pop_structure)
+self.pop.dvars().mating_probabilities = self.assign_structured_mating_probabilities(pop_structure,</p>
+<blockquote>
+<div>self.pop.dvars().assigned_structure)</div></blockquote>
+<dl class="docutils">
+<dt>self.pop.dvars().mating_pmfs = self.generate_mating_probability_mass_functions(</dt>
+<dd>self.pop.dvars().assigned_structure, self.pop.dvars().mating_probabilities,</dd>
+</dl>
+<p class="last">)</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="docutils">
+<dt>class AE(object):</dt>
+<dd><p class="first">&#8220;&#8221;&#8221;
+Allele effects of the simulator are assigned as random draws of a statistical distribution. The user specifies the
+type of distribution as a string when creating an instance of the class. The types of distributions are:
+exponential, normal, poisson
+&#8220;&#8221;&#8220;</p>
+<dl class="last docutils">
+<dt>def exponential(self, pop, parameter_of_exponential):</dt>
+<dd><p class="first">&#8220;&#8221;&#8220;</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param pop:</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">param parameter_of_exponential:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<p>Draws allele effects an exponential distribution.
+Creates a copy of the AE map convienient for plotting.
+&#8220;&#8221;&#8221;
+allele_effects = col.OrderedDict()
+for_plot_allele_effects = col.OrderedDict()
+for idx in pop.dvars().properQTL:</p>
+<blockquote>
+<div><p>idxtwo = idx + pop.totNumLoci()
+for nucleotide in range(6):</p>
+<blockquote>
+<div>allele_effects[idx - 1, nucleotide] = random.expovariate(parameter_of_exponential)
+allele_effects[idx, nucleotide] = random.expovariate(parameter_of_exponential)
+allele_effects[idx + 1, nucleotide] = random.expovariate(parameter_of_exponential)
+allele_effects[idxtwo - 1, nucleotide] = allele_effects[idx - 1, nucleotide]
+allele_effects[idxtwo, nucleotide] = allele_effects[idx, nucleotide]
+allele_effects[idxtwo + 1, nucleotide] = allele_effects[idx + 1, nucleotide]
+for_plot_allele_effects[float(idx) - 0.2, nucleotide] = allele_effects[idx - 1, nucleotide]
+for_plot_allele_effects[float(idx), nucleotide] = allele_effects[idx, nucleotide]
+for_plot_allele_effects[float(idx) + 0.2, nucleotide] = allele_effects[idx + 1, nucleotide]</div></blockquote>
+</div></blockquote>
+<p class="last">return allele_effects, for_plot_allele_effects</p>
+</dd>
+</dl>
+</dd>
+<dt>class GenotypeData(object):</dt>
+<dd><p class="first">&#8220;&#8221;&#8221;
+Code not in working state.
+10/14/15
+&#8220;&#8221;&#8221;
+def __init__(self, genotype_matrix_filename):</p>
+<blockquote>
+<div>self.genotype_matrix_filename = genotype_matrix_filename</div></blockquote>
+<dl class="docutils">
+<dt>def parse_genotype_matrix(self, columns_to_drop=&#8217;popdata&#8217;):</dt>
+<dd>genotype_matrix = pd.read_csv(self.genotype_matrix_filename, sep=&#8217;t&#8217;, index_col=0, low_memory=False)
+droppable_individuals = list(genotype_matrix.index[105:])
+genotype_matrix = genotype_matrix.drop(droppable_individuals, axis=0)
+genotype_matrix = genotype_matrix.drop(columns_to_drop, axis=1)
+return genotype_matrix</dd>
+<dt>def genotype_counts_to_frequencies(self, genotype_counts: dict, missing_loci: list):</dt>
+<dd><p class="first">&#8220;&#8221;&#8221;
+Converts a the dictionaries of genotype: count for each locus into their
+frequency equivalents by dropping and missing data and dividing by the adjusted
+total.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">param genotype_counts:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">param missing_loci:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">type genotype_counts str:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">param missing_loci:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body"></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<p>&#8220;&#8221;&#8221;
+geno_frq = {}
+for mlocus in missing_loci:</p>
+<blockquote>
+<div><p>geno_frq[mlocus] = {}
+if np.nan in genotype_counts[mlocus]:</p>
+<blockquote>
+<div>del genotype_counts[mlocus][np.nan]</div></blockquote>
+<p>inds_counted = sum(genotype_counts[mlocus].values())
+for genotype, cnt in genotype_counts[mlocus].items():</p>
+<blockquote>
+<div>geno_frq[mlocus][genotype] = cnt/inds_counted</div></blockquote>
+</div></blockquote>
+<p class="last">return geno_frq</p>
+</dd>
+</dl>
+<p>&#64;staticmethod
+def centralized_genotype_pmfs(genotype_frequencies):</p>
+<blockquote>
+<div><p>&#8220;&#8221;&#8221;
+For the time being all of the information required to compute a custom
+probability mass function for each locus is stored a dictionary keyed by locus.
+The values are tuples:
+0: genotype: frequency
+1: integer: genotype
+2: density
+3: genotype: integer
+&#8220;&#8221;&#8221;
+centralized_pmfs = col.OrderedDict()
+for locus, frq_map in genotype_frequencies.items():</p>
+<blockquote>
+<div>pre_density = {genotype: frequency for genotype, frequency in frq_map.items()}
+genotype_to_int_map = {genotype: i for i, genotype in list(enumerate(frq_map.keys()))}
+density = {genotype_to_int_map[genotype]: frequency for genotype, frequency in frq_map.items()}
+int_to_genotype_map = {i: genotype for i, genotype in list(enumerate(frq_map.keys()))}
+centralized_pmfs[locus] = (pre_density, genotype_to_int_map, density, int_to_genotype_map)</div></blockquote>
+<p>return centralized_pmfs</p>
+</div></blockquote>
+<p>&#64;staticmethod
+def individual_missing_data(genotype_matrix):</p>
+<blockquote>
+<div><p>&#8220;&#8221;&#8221;
+Each individual has a particular set of loci for which they are missing data. For each individual we need
+to know what loci are missing. Given the missing locus we can replace the &#8216;NA&#8217; with a random draw
+from the genotype pmf of that locus.
+:param genotype_matrix:
+&#8220;&#8221;&#8221;
+nan_dict = {}
+nan_array = np.array(pd.isnull(genotype_matrix))
+for individual, row in enumerate(nan_array):</p>
+<blockquote>
+<div>nan_dict[individual] = [locus for locus, val in enumerate(row) if val == True]</div></blockquote>
+<p>return nan_dict</p>
+</div></blockquote>
+<p>&#64;staticmethod
+def replace_missing_genotypes(genotype_matrix, population_genotype_pmfs):</p>
+<blockquote class="last">
+<div><p>&#8220;&#8221;&#8221;
+A function to replace each individuals missing genotype data with random draws from a dictionary of
+genotype pmfs. Parameter missing_loci_per_individual is a dictionary of individual: list_of_missing_loci pairs.
+population_genotype_pmfs is a nested dictionary which provides all the necessary mapping data to create the
+replacement data.
+Note: Assumes that genotype_matrix has rows=individuals and columns=genotypes.
+&#8220;&#8221;&#8221;
+for ind in range(genotype_matrix.shape[0]):</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>individuals_missing_loci = [genotype_matrix[ind, i] for i in range(genotype_matrix.shape[1])</dt>
+<dd>if genotype_matrix[ind, i] == np.nan]</dd>
+<dt>for locus in individuals_missing_loci:</dt>
+<dd>integer_genotype = population_genotype_pmfs[locus][&#8216;pmf&#8217;].rvs()
+geno_state = population_genotype_pmfs[locus][&#8216;integer_to_state&#8217;][integer_genotype]
+genotype_matrix[ind, locus] = geno_state</dd>
+</dl>
+</div></blockquote>
+<p>return genotype_matrix</p>
+</div></blockquote>
+</dd>
+<dt>def seg_qtl_chooser(pop: sim.Population, loci_subset: list, number_qtl: int):</dt>
+<dd><p class="first">&#8220;&#8221;&#8221;
+Chooses a random sample of <code class="docutils literal"><span class="pre">number_qtl</span></code> loci to be designated as QTL.
+Only chooses from among loci which are segregating in <code class="docutils literal"><span class="pre">pop</span></code>.
+Determines which loci are segregating in <code class="docutils literal"><span class="pre">loci_subset</span></code>.
+<code class="docutils literal"><span class="pre">loci_subset</span></code> can be all loci or a subset of them.
+:param number_qtl:
+:type number_qtl:
+:return:
+:rtype:
+&#8220;&#8221;&#8221;
+sim.stat(pop, numOfSegSites=loci_subset, vars=[&#8216;numOfSegSites&#8217;,</p>
+<blockquote>
+<div>&#8216;numOfSegSites_sp&#8217;,
+&#8216;segSites&#8217;, &#8216;segSites_sp&#8217;])</div></blockquote>
+<dl class="docutils">
+<dt>permissible_qtl = [locus for locus in pop.dvars().segSites if locus in</dt>
+<dd>loci_subset]</dd>
+</dl>
+<p class="last">qtl = sorted(random.sample(permissible_qtl, number_qtl))
+return qtl</p>
+</dd>
+<dt>def assign_identical_qtl_parameters(multi_pop, alleles,  qtl_subset, </dt>
+<dd><blockquote class="first">
+<div>number_of_qtl, ae_parameters):</div></blockquote>
+<p>&#8220;&#8221;&#8221;
+Assigns each replicate in a population the same exact set of QTL and corresponding
+allele effects.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">param multi_pop:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">simuPOP Simulator object containing multiple replicates.</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">param number_of_qtl:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">Number of loci to declare as QTL</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">param qtl_subset:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">List of loci which can be chosen as QTL</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">param ae_parameters:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body">Parameters of the allele effect distribution.</td>
+</tr>
+</tbody>
+</table>
+<p>&#8220;&#8221;&#8221;
+triplet_qtl = {i: [] for i in range(multi_pop.numRep())}
+single_pop = multi_pop.population(0)
+sim.stat(single_pop, numOfSegSites=qtl_subset, vars=[&#8216;numOfSegSites&#8217;, &#8216;segSites&#8217;])
+qtl = seg_qtl_chooser(single_pop, qtl_subset, number_of_qtl)</p>
+<dl class="docutils">
+<dt>for i, pop_rep in enumerate(multi_pop.populations()):</dt>
+<dd><dl class="first last docutils">
+<dt>for locus in qtl:</dt>
+<dd>triplet_qtl[i].append(locus - 1)
+triplet_qtl[i].append(locus)
+triplet_qtl[i].append(locus + 1)</dd>
+</dl>
+</dd>
+<dt>allele_effects = {rep_id: {locus: {} for locus in triplet_qtl[rep_id]}</dt>
+<dd>for rep_id in range(multi_pop.numRep())}</dd>
+<dt>for locus in triplet_qtl[0]:</dt>
+<dd><dl class="first last docutils">
+<dt>for allele in alleles[locus]:</dt>
+<dd><dl class="first last docutils">
+<dt>allele_effects[0][locus][allele] = random.expovariate(</dt>
+<dd><a href="#id1"><span class="problematic" id="id2">*</span></a>ae_parameters)</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+<dt>for i in range(1, multi_pop.numRep()):</dt>
+<dd><p class="first">allele_effects[i] = allele_effects[0]
+assert allele_effects[i] == allele_effects[0], &#8220;One set of allele &#8221; </p>
+<blockquote class="last">
+<div>&#8220;effects is not equal &#8221; &#8220;to the 0th one.&#8221;</div></blockquote>
+</dd>
+</dl>
+<p class="last">return triplet_qtl, allele_effects</p>
+</dd>
+</dl>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/parameters.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="contents.html">saegus 0.1.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, John J. Dougherty III.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

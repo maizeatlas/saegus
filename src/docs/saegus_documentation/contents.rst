@@ -9,9 +9,14 @@ Welcome to saegus's documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
+   introduction.rst
    breed.rst
+   operators.rst
+   analyze.rst
+   parameters.rst
+   simulate.rst
 
 
 

@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+<ncx version="2005-1" xmlns="http://www.daisy.org/z3986/2005/ncx/">
+  <head>
+    <meta name="dtb:uid" content="unknown"/>
+    <meta name="dtb:depth" content="3"/>
+    <meta name="dtb:totalPageCount" content="0"/>
+    <meta name="dtb:maxPageNumber" content="0"/>
+  </head>
+  <docTitle>
+    <text>saegus 0.1.2 documentation</text>
+  </docTitle>
+  <navMap>
+    <navPoint id="navPoint1" playOrder="1">
+      <navLabel>
+        <text>Welcome to saegus&#39;s documentation!</text>
+      </navLabel>
+      <content src="contents.html" />
+    </navPoint>
+    <navPoint id="navPoint2" playOrder="2">
+      <navLabel>
+        <text>MAGIC Population with Subset of Loci</text>
+      </navLabel>
+      <content src="magic1478.html" />
+      <navPoint id="navPoint3" playOrder="2">
+        <navLabel>
+          <text>MAGIC Population with Subset of Loci</text>
+        </navLabel>
+        <content src="magic1478.html" />
+      </navPoint>
+      <navPoint id="navPoint4" playOrder="3">
+        <navLabel>
+          <text>Allele Effects and Triplets of Non-Recombining Loci</text>
+        </navLabel>
+        <content src="magic1478.html#allele-effects-and-triplets-of-non-recombining-loci" />
+      </navPoint>
+      <navPoint id="navPoint5" playOrder="4">
+        <navLabel>
+          <text>Strategy of Creating MAGIC1478</text>
+        </navLabel>
+        <content src="magic1478.html#strategy-of-creating-magic1478" />
+        <navPoint id="navPoint6" playOrder="4">
+          <navLabel>
+            <text>Strategy of Creating MAGIC1478</text>
+          </navLabel>
+          <content src="magic1478.html#strategy-of-creating-magic1478" />
+        </navPoint>
+        <navPoint id="navPoint7" playOrder="5">
+          <navLabel>
+            <text>Creating the simuPOP Population Object for MAGIC1478</text>
+          </navLabel>
+          <content src="magic1478.html#creating-the-simupop-population-object-for-magic1478" />
+        </navPoint>
+      </navPoint>
+      <navPoint id="navPoint8" playOrder="6">
+        <navLabel>
+          <text>Generating Standard MAGIC1478 from Prefounders1478</text>
+        </navLabel>
+        <content src="magic1478.html#generating-standard-magic1478-from-prefounders1478" />
+        <navPoint id="navPoint9" playOrder="6">
+          <navLabel>
+            <text>Generating Standard MAGIC1478 from Prefounders1478</text>
+          </navLabel>
+          <content src="magic1478.html#generating-standard-magic1478-from-prefounders1478" />
+        </navPoint>
+        <navPoint id="navPoint10" playOrder="7">
+          <navLabel>
+            <text>Determine the Mating Pairs of Each Generation</text>
+          </navLabel>
+          <content src="magic1478.html#determine-the-mating-pairs-of-each-generation" />
+        </navPoint>
+      </navPoint>
+      <navPoint id="navPoint11" playOrder="8">
+        <navLabel>
+          <text>Parameter Set Stored Using shelve</text>
+        </navLabel>
+        <content src="magic1478.html#parameter-set-stored-using-shelve" />
+      </navPoint>
+    </navPoint>
+    <navPoint id="navPoint12" playOrder="9">
+      <navLabel>
+        <text>Generating Input for TASSEL with MAGIC1478</text>
+      </navLabel>
+      <content src="creating_data_for_GWAS_with_magic1478.html" />
+      <navPoint id="navPoint13" playOrder="9">
+        <navLabel>
+          <text>Generating Input for TASSEL with MAGIC1478</text>
+        </navLabel>
+        <content src="creating_data_for_GWAS_with_magic1478.html" />
+      </navPoint>
+      <navPoint id="navPoint14" playOrder="10">
+        <navLabel>
+          <text>Allele Effects for MAGIC1478</text>
+        </navLabel>
+        <content src="creating_data_for_GWAS_with_magic1478.html#allele-effects-for-magic1478" />
+      </navPoint>
+      <navPoint id="navPoint15" playOrder="11">
+        <navLabel>
+          <text>Random Mating MAGIC1478 for GWAS</text>
+        </navLabel>
+        <content src="creating_data_for_GWAS_with_magic1478.html#random-mating-magic1478-for-gwas" />
+        <navPoint id="navPoint16" playOrder="11">
+          <navLabel>
+            <text>Random Mating MAGIC1478 for GWAS</text>
+          </navLabel>
+          <content src="creating_data_for_GWAS_with_magic1478.html#random-mating-magic1478-for-gwas" />
+        </navPoint>
+        <navPoint id="navPoint17" playOrder="12">
+          <navLabel>
+            <text>Determining G and P in the 1478 Population</text>
+          </navLabel>
+          <content src="creating_data_for_GWAS_with_magic1478.html#determining-g-and-p-in-the-1478-population" />
+        </navPoint>
+      </navPoint>
+      <navPoint id="navPoint18" playOrder="13">
+        <navLabel>
+          <text>Allele Effects Using any Number of QTL and any Distribution</text>
+        </navLabel>
+        <content src="creating_data_for_GWAS_with_magic1478.html#allele-effects-using-any-number-of-qtl-and-any-distribution" />
+      </navPoint>
+    </navPoint>
+    <navPoint id="navPoint19" playOrder="14">
+      <navLabel>
+        <text>Analyzing Results of GWAS with TASSEL</text>
+      </navLabel>
+      <content src="analyzing_magic1478_results.html" />
+      <navPoint id="navPoint20" playOrder="14">
+        <navLabel>
+          <text>Analyzing Results of GWAS with TASSEL</text>
+        </navLabel>
+        <content src="analyzing_magic1478_results.html" />
+      </navPoint>
+      <navPoint id="navPoint21" playOrder="15">
+        <navLabel>
+          <text>Dataset Specifics</text>
+        </navLabel>
+        <content src="analyzing_magic1478_results.html#dataset-specifics" />
+      </navPoint>
+      <navPoint id="navPoint22" playOrder="16">
+        <navLabel>
+          <text>QVALUES in R</text>
+        </navLabel>
+        <content src="analyzing_magic1478_results.html#qvalues-in-r" />
+      </navPoint>
+    </navPoint>
+  </navMap>
+</ncx>

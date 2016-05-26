@@ -19,7 +19,12 @@ class MAGIC(object):
         procedure.
         """
         self.pop = pop
-        self. recombination_rates = recombination_rates
+        self.recombination_rates = recombination_rates
+
+    def __str__(self):
+        return "Population Name: {popname}\n" \
+               "Population Size: {popsize}".\
+            format(popname=self.pop.subPopName(0), popsize=self.pop.popSize())
 
     def generate_f_one(self, parental_id_pairs, offspring_per_pair):
         """
@@ -33,14 +38,12 @@ class MAGIC(object):
         number_of_pairs = len(parental_id_pairs)
         self.pop.evolve(
             preOps=[
-                sim.PyEval(r'"Generation: %d\n" % gen',
-                           ),
-            ],
+                sim.PyEval(r'"Generation: %d\n" % gen',),
+                ],
             matingScheme=sim.HomoMating(
                 sim.PyParentsChooser(founder_chooser.by_id_pairs),
                 sim.OffspringGenerator(ops=[
                     sim.IdTagger(),
-                    sim.ParentsTagger(),
                     sim.PedigreeTagger(),
                     sim.Recombinator(rates=self.recombination_rates)],
                     numOffspring=1),
@@ -49,40 +52,12 @@ class MAGIC(object):
             gen=1,
         )
 
-
-    def generate_f_two(self, pop: sim.Population) -> sim.Population:
+    def random_mating(self, generations_of_random_mating, pop_size):
         """
-        Creates an F2 subpopulations generation by selfing the individuals
-        of 'pop'. Works on a population with one or more subpopulations.
+        Randomly mates 'pop' for 'gens_of_random_mating' generations to further
+        recombine founder genomes and dissolve population structure.
         """
-        pop.vars()['generations'][2] = 'F_2'
-        self.odd_to_even(pop)
-        num_sub_pops = pop.numSubPop()
-        progeny_per_individual = int(self.selected_population_size/2)
-        print("Creating the F_two population.")
-        return pop.evolve(
-            preOps=[
-                sim.MergeSubPops(),
-                sim.PyEval(r'"Generation: %d\n" % gen'),
-                sim.PyExec('triplet_freq[gen]=tripletFreq'),
-                sim.SplitSubPops(sizes=[1]*num_sub_pops, randomize=False),
-            ],
-            matingScheme=sim.SelfMating(subPopSize=[progeny_per_individual] * num_sub_pops,
-                                        numOffspring=progeny_per_individual,
-                                        ops=[sim.Recombinator(rates=0.01), sim.IdTagger(), sim.PedigreeTagger()],
-                                        ),
-            gen=1,
-        )
-
-
-    def interim_random_mating(self, generations_of_random_mating, pop_size):
-        """
-        Randomly mates 'pop' for 'gens_of_random_mating' generations to further recombine founder genomes and dissolve
-        population structure.
-        :param pop: Founder population after mate_and_merge procedure
-        :return: Population ready to be subjected to selection
-        """
-        print("Initiating interim random mating for {} generations.".format(generations_of_random_mating))
+        print("Initiating random mating for {} generations.".format(generations_of_random_mating))
         self.pop.evolve(
             preOps=[
                 sim.PyEval(r'"Generation: %d\n" % gen'),
@@ -90,60 +65,11 @@ class MAGIC(object):
             matingScheme=sim.RandomMating(
                 subPopSize=pop_size,
                 ops=[sim.IdTagger(), sim.PedigreeTagger(),
-                     sim.Recombinator(
-                         rates=self.recombination_rates)]),
+                     sim.Recombinator(rates=self.recombination_rates)]),
             gen=generations_of_random_mating,
         )
 
 
-    def restructure_offspring(self, offspring_per_subpop, number_subpops):
-        """
-        Rearranges offspring after the F_1 mating scenario. F_1 is merged into
-        a single population. This function splits single aggregate population into
-        uniformly sized sub-populations to easily choose mating pairs.
-
-        """
-        self.pop.splitSubPop(0, offspring_per_subpop * number_subpops)
-        subpop_list = list(range(self.pop.numSubPop()))
-
-        breeding_groups = []
-        for pair in zip(subpop_list[0::2], subpop_list[1::2]):
-            first_maters = random.sample(self.pop.indInfo('ind_id', pair[0]), offspring_per_subpop)
-            second_maters = random.sample(self.pop.indInfo('ind_id', pair[1]), offspring_per_subpop)
-            breeding_groups.append([first_maters, second_maters])
-        breeding_array = np.array(breeding_groups)
-
-        return breeding_array
-
-class ForcedPopulationStructureParentChooser(object):
-    """
-    For use in expanding the 105 Tuson founders into a population of
-    ``expanded_population_size`` individuals while maintaining the empirical
-    population structure.
-    """
-    def __init__(self, expanded_population_size, mating_probabilities):
-        self.expanded_population_size = expanded_population_size
-        self.mating_probabilities = mating_probabilities
-
-    def forced_structure_parent_chooser(self, pop):
-
-        for i in range(self.expanded_population_size):
-            first_random_id = random.choice(list(pop.indInfo('ind_id')))
-            first_parent = pop.indByID(first_random_id)
-            compatible_mating_subpopulation = \
-                self.mating_probabilities[first_random_id].rvs()
-
-            second_random_id = random.choice(list(
-                pop.indInfo(
-                    'ind_id', subPop=[0, compatible_mating_subpopulation])))
-            second_parent = pop.indByID(second_random_id)
-
-            if first_parent.sex() == second_parent.sex():
-                if first_parent.sex() == 1:
-                    second_parent.setSex(2)
-                elif first_parent.sex() == 2:
-                    second_parent.setSex(1)
-            yield pop.indByID(first_random_id), pop.indByID(second_random_id)
 
 class PairwiseIDChooser(object):
     """
@@ -165,7 +91,7 @@ class PairwiseIDChooser(object):
 
         ::
 
-           >>> founders = [[0, 1], [10, 11]]
+           >>> founders = [[1, 2], [3, 4], [5, 6], [7, 8]]
            >>> offspring_per_parental_pair = 1
            >>> parent_chooser = PairwiseIDChooser(founders, offspring_per_parental_pair)
            >>> for pair in founders:
@@ -237,26 +163,100 @@ class SecondOrderPairIDChooser(object):
             yield pop.indByID(male_id), pop.indByID(female_id)
 
 
-
-class ListsOfIDsChooser(object):
+class MultiRandomCross(object):
     """
-    The user provides a pair of lists of ``float``s corresponding to the female
-    and male ``ind_id``s.
+    A class intended for use with simulations using multiple replicates which
+    requires predictable mating among sub-populations of each replicate.
     """
 
-    def __init__(self, female_parent_ids, male_parent_ids):
-        self.female_parent_ids = female_parent_ids
-        self.male_parent_ids = male_parent_ids
+    def __init__(self, multiple_replicate_population, number_sub_pops,
+                 sub_pop_size):
+        """
+        :parameter multiple_replicate_population: simuPOP.Simulator object
+        :parameter int number_sub_pops: Determines number of sub-populations of each replicate
+        :parameter int sub_pop_size: Uniform size of sub-populations
+        """
+        self.multiple_replicate_population = multiple_replicate_population
+        self.number_sub_pops = number_sub_pops
+        self.sub_pop_size = sub_pop_size
 
-    def by_lists(self, pop):
-        for female_id, male_id in zip(self.female_parent_ids,
-                                      self.male_parent_ids):
-            female = pop.indByID(float(female_id))
-            male = pop.indByID(float(male_id))
+    def __str__(self):
+        return "Number of Sub-Populations: {nbr_sps}\n" \
+               "Sub-Population Size: {sp_size}"\
+            .format(nbr_sps=self.number_sub_pops, sp_size=self.sub_pop_size)
+
+    def determine_random_cross(self):
+        """
+        Creates separate dictionaries for IDs of mothers and fathers respectively.
+        Entries are keyed corresponding to ``rep`` of the replicate the
+        IDs are taken from.
+        """
+
+        multi_mothers = {}
+        multi_fathers = {}
+
+        for rep in self.multiple_replicate_population.populations():
+            rep.splitSubPop(0, sizes=[self.sub_pop_size] * self.number_sub_pops)
+
+            cross_choices = np.zeros((self.number_sub_pops,
+                                      2 * self.sub_pop_size))
+
+            for sp in range(rep.numSubPop()):
+                cross_choices[sp] = [random.choice(rep.indInfo('ind_id', sp))
+                                     for k in range(2*self.sub_pop_size)]
+
+            mother_idxs = list(range(self.number_sub_pops))[::2]
+            father_idxs = list(range(self.number_sub_pops))[1::2]
+
+            mothers = np.concatenate([cross_choices[m_idx]
+                                      for m_idx in mother_idxs])
+            fathers = np.concatenate([cross_choices[f_idx]
+                                      for f_idx in father_idxs])
+            multi_mothers[rep.dvars().rep] = mothers
+            multi_fathers[rep.dvars().rep] = fathers
+
+            rep.mergeSubPops()
+
+        return multi_mothers, multi_fathers
+
+
+class MultiSecondOrderPairIDChooser(object):
+    """
+    MultiSecondOrderPairIDChooser supports controlled mating of multiple
+    replicate populations.
+
+    """
+
+    def __init__(self,
+                 multi_mother_ids,
+                 multi_father_ids,
+                 offspring_per_parental_pair=1):
+        """
+        This chooser uses a separate list for each parent i.e.
+
+
+        female_parent_ids = [1, 3, 5, 7]
+         male_parent_ids = [2, 4, 6, 8]
+
+
+        :parameter female_parent_ids: Dict by rep of lists of individual IDs (selfing allowed)
+        :parameter male_parent_ids: Dict by rep of lists of individual IDS (selfing allowed)
+        :parameter offspring_per_parental_pair: Family size per pair of parents.
+
+        """
+        self.multi_mother_ids = multi_mother_ids
+        self.multi_father_ids = multi_father_ids
+        self.offspring_per_parental_pair = offspring_per_parental_pair
+
+    def snd_ord_id_pairs(self, pop):
+        rep = pop.dvars().rep
+        for female_id, male_id in zip(self.multi_mother_ids[rep],
+                                      self.multi_father_ids[rep]):
+            female = pop.indByID(female_id)
+            male = pop.indByID(male_id)
             female.setSex(2)
             male.setSex(1)
-            yield pop.indByID(float(male_id)), pop.indByID(float(female_id))
-
+            yield pop.indByID(male_id), pop.indByID(female_id)
 
 
 class HalfSibBulkBalanceChooser(object):
@@ -291,25 +291,33 @@ class HalfSibBulkBalanceChooser(object):
                 yield random.choice(males), f
 
 
-class MaximumRecombinatorialConvergenceChooser(object):
+class ForcedPopulationStructureParentChooser(object):
+    """
+    For use in expanding the 105 Tuson founders into a population of
+    ``expanded_population_size`` individuals while maintaining the empirical
+    population structure.
+    """
+    def __init__(self, expanded_population_size, mating_probabilities):
+        self.expanded_population_size = expanded_population_size
+        self.mating_probabilities = mating_probabilities
 
-    @staticmethod
-    def convergent_parent_chooser(pop: sim.Population, subPop: int):
-        """
-        Currently not in a working state. Do not use.
-        This method is used as the chooser function of sim.PyParentsChooser for a breeding structure which maximizes
-        the number of recombinations between descendants.
-        :param pop: sim.Population with multiple subpopulations of prefounder descendants
-        :param subPop: sim.PyParentsChooser operates subpopulation by subpopulation
-        """
-        female_chooser = sim.RandomParentChooser(True, sexChoice=sim.FEMALE_ONLY)
-        female_chooser.initialize(pop, subPop)
+    def forced_structure_parent_chooser(self, pop):
 
-        male_chooser = sim.RandomParentChooser(True, sexChoice=sim.MALE_ONLY)
-        male_chooser.initialize(pop, subPop)
+        for i in range(self.expanded_population_size):
+            first_random_id = random.choice(list(pop.indInfo('ind_id')))
+            first_parent = pop.indByID(first_random_id)
+            compatible_mating_subpopulation = \
+                self.mating_probabilities[first_random_id].rvs()
 
-        while True:
-            f = female_chooser.chooseParents()[0]
-            m = male_chooser.chooseParents()[0]
-            yield m, f
+            second_random_id = random.choice(list(
+                pop.indInfo(
+                    'ind_id', subPop=[0, compatible_mating_subpopulation])))
+            second_parent = pop.indByID(second_random_id)
+
+            if first_parent.sex() == second_parent.sex():
+                if first_parent.sex() == 1:
+                    second_parent.setSex(2)
+                elif first_parent.sex() == 2:
+                    second_parent.setSex(1)
+            yield pop.indByID(first_random_id), pop.indByID(second_random_id)
 

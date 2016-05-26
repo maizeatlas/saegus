@@ -62,3 +62,8 @@ def pedigree_writer(pop, pedigree_filename):
                                str(ind.mother_id),
                           str(ind.father_id)]
             pedwriter.writerow(ind_lineage)
+
+def af_from_hapmap(hapmap_file_name):
+    """
+    Calculates allele frequencies from a hapmap file outputted by analyze.GWAS.
+    """

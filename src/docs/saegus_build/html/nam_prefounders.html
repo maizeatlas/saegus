@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>NAM Prefounders &mdash; saegus 0.1.2 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="saegus 0.1.2 documentation" href="contents.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="contents.html">saegus 0.1.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="nam-prefounders">
+<h1>NAM Prefounders<a class="headerlink" href="#nam-prefounders" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="features-of-nam-prefounders">
+<h2>Features of NAM Prefounders<a class="headerlink" href="#features-of-nam-prefounders" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>The twenty-six lines which were used to make the maize nested association
+mapping population are used as <em>prefounders</em> in <code class="docutils literal"><span class="pre">wgs</span></code> to construct other
+populations. The genetic map of the NAM <em>prefounders</em> used in <code class="docutils literal"><span class="pre">wgs</span></code>
+gives a SNP every 0.2 centiMorgans (cM). The SNPs are &#8216;A&#8217;, &#8216;C&#8217;, &#8216;G&#8217;, &#8216;T&#8217;,
+&#8216;&#8211;&#8217;, &#8216;+&#8217; where &#8220;&#8211;&#8221;, &#8220;+&#8221; stand for deletion, insertion respectively. The
+raw genetic map gives genotypes at 7368 loci across the ten chromosomes.</div></blockquote>
+<div class="section" id="triplet-scheme">
+<h3>Triplet Scheme<a class="headerlink" href="#triplet-scheme" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>In <code class="docutils literal"><span class="pre">wgs</span></code> we are using a special <em>triplet</em> structure of a locus.
+The newest version of <code class="docutils literal"><span class="pre">wgs</span></code> uses all 7368 loci for the genotypes
+of the prefounders; however, we only use the loci which are at integral
+valued positions in the genetic map are viable QTL (quantitative trait
+locus). There are 1478 loci which have integral-valued cM positions. QTL
+are designated by choosing <em>n</em> from these 1478 loci. Then the loci
+immediately flanking a QTL plus/minus 0.2 cM form a <code class="docutils literal"><span class="pre">haplotype</span></code> with the
+central locus. A <code class="docutils literal"><span class="pre">haplotype</span></code> in this case is a <em>triplet</em> of
+non-recombining loci i.e. there is no recombination between the triplet of
+alleles.</p>
+<p>However, since <code class="docutils literal"><span class="pre">wgs</span></code>-0.1.1 there are extra loci in addition to the triplet
+loci. <code class="docutils literal"><span class="pre">wgs</span></code>-0.1.1 accommodates this by extending the area of zero
+recombination to include loci which are plus/minus 0.4 cM away from the
+integral-valued locus. This allows <code class="docutils literal"><span class="pre">wgs</span></code> to make greater use of the native
+simuPOP operators such as Stat.haploFreq: a statistical operator which
+allows the user to calculate the frequency of specific haplotypes.</p>
+</div></blockquote>
+</div>
+<div class="section" id="quantitative-trait-loci">
+<h3>Quantitative Trait Loci<a class="headerlink" href="#quantitative-trait-loci" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>QTL are chosen at random from the 1478 loci which have integral-valued cM
+positions in the genetic map. The triplet scheme is effected by
+adding the loci immediately flanking the random sample of <code class="docutils literal"><span class="pre">n</span></code> of the
+1478 loci. So for example:
++&#8212;&#8212;&#8212;&#8212;-+&#8212;&#8212;&#8212;&#8212;&#8212;-+
+|    Locus    |    Triplet     |
++=============+================+
+|     100     | 99, 100, 101   |
++&#8212;&#8212;&#8212;&#8212;-+&#8212;&#8212;&#8212;&#8212;&#8212;-+
+|     278     | 277, 278, 279  |
++&#8212;&#8212;&#8212;&#8212;-+&#8212;&#8212;&#8212;&#8212;&#8212;-+
+|     900     | 899, 900, 901  |
++&#8212;&#8212;&#8212;&#8212;-+&#8212;&#8212;&#8212;&#8212;&#8212;-+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">NAM Prefounders</a><ul>
+<li><a class="reference internal" href="#features-of-nam-prefounders">Features of NAM Prefounders</a><ul>
+<li><a class="reference internal" href="#triplet-scheme">Triplet Scheme</a></li>
+<li><a class="reference internal" href="#quantitative-trait-loci">Quantitative Trait Loci</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/nam_prefounders.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="contents.html">saegus 0.1.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, John J. Dougherty III.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

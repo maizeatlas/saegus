@@ -1,0 +1,359 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Making a Base Population &mdash; saegus 0.1.2 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="saegus 0.1.2 documentation" href="../contents.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="making-a-base-population">
+<h1>Making a Base Population<a class="headerlink" href="#making-a-base-population" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>saegus is written with a specific strategy for simulating whole populations.
+Typically the user starts with a relatively small number of individuals
+called &#8216;founders&#8217; or &#8216;pre-founders&#8217;. In the case of the <em>maize NAM</em> population
+26 lines were used to make all 5,000 lines by combinatorial crossing.
+In the <em>Tuson</em> population we used a sample of 105 individuals to create
+a population of 10,000. In both cases we have a file which contains the
+genotype information of all founder individuals and a genetic map which
+contains the number of loci, their distribution on the chromosomes and
+recombination rates of each sequential pair of loci.</p>
+</div>
+<div class="section" id="parsing-genotype-data">
+<h2>Parsing Genotype Data<a class="headerlink" href="#parsing-genotype-data" title="Permalink to this headline">¶</a></h2>
+<p>Imports to handle parsing:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">collections</span> <span class="kn">as</span> <span class="nn">col</span>
+<span class="kn">from</span> <span class="nn">wgs</span> <span class="kn">import</span> <span class="n">parser</span>
+</pre></div>
+</div>
+<p>Genotype matrix and genetic map filenames:</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">raw_genotype_matrix_filename</span> <span class="o">=</span> <span class="s1">&#39;raw_genotype_matrix.txt&#39;</span>
+<span class="n">genetic_map</span> <span class="o">=</span> <span class="s1">&#39;genetic_map.txt&#39;</span>
+</pre></div>
+</div>
+<div class="section" id="genotype-file-formats">
+<h3>Genotype File Formats<a class="headerlink" href="#genotype-file-formats" title="Permalink to this headline">¶</a></h3>
+<p>Here are some examples of file formats for genotype data that I have encountered.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="38%" />
+<col width="31%" />
+<col width="31%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">label</th>
+<th class="head">locus1</th>
+<th class="head">locus2</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>C0_164_1</td>
+<td>2/1</td>
+<td>3/2</td>
+</tr>
+<tr class="row-odd"><td>C0_164_2</td>
+<td>2/1</td>
+<td>NA</td>
+</tr>
+<tr class="row-even"><td>C0_164_3</td>
+<td>2/1</td>
+<td>3/2</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<colgroup>
+<col width="27%" />
+<col width="36%" />
+<col width="36%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">position</th>
+<th class="head">individual_one</th>
+<th class="head">individual_two</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>50486</td>
+<td>0/0</td>
+<td>0/1</td>
+</tr>
+<tr class="row-odd"><td>59185</td>
+<td>0/2</td>
+<td>./.</td>
+</tr>
+<tr class="row-even"><td>59188</td>
+<td>0/1</td>
+<td>0/0</td>
+</tr>
+</tbody>
+</table>
+<p>The <em>hapmap</em> format is a text file with certain information. Most of it is
+extraneous for the purposes of creating a base population. However, a key
+aspect of the <em>hapmap</em> format is that it provides the genetic map and the
+genotypes.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="8%" />
+<col width="13%" />
+<col width="10%" />
+<col width="15%" />
+<col width="27%" />
+<col width="27%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">chr</th>
+<th class="head">marker</th>
+<th class="head">cM</th>
+<th class="head">alleles</th>
+<th class="head">individual_one</th>
+<th class="head">individual_two</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>1</td>
+<td>m1</td>
+<td>1.0</td>
+<td>A/G</td>
+<td>AA</td>
+<td>AG</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>m2</td>
+<td>1.2</td>
+<td>A/C</td>
+<td>CC</td>
+<td>NA</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>m281</td>
+<td>1.0</td>
+<td>G/C</td>
+<td>CG</td>
+<td>GG</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="parsing-genotype-file">
+<h3>Parsing Genotype File<a class="headerlink" href="#parsing-genotype-file" title="Permalink to this headline">¶</a></h3>
+<p>We need to get the genotype out of the file and into a Python object.
+The <a class="reference external" href="http://pandas.pydata.org/">pandas</a> package makes parsing the file very simple. For example
+if we have a tab-delimited file named <code class="docutils literal"><span class="pre">genotypes.txt</span></code> we can assign
+the file contents to <code class="docutils literal"><span class="pre">genotype_data</span></code>.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">genotype_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">genotype_matrix_filename</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">genotype_data</span>
+</pre></div>
+</div>
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th><th>POS</th><th>ind_one</th><th>ind_two</th><th>ind_three</th><th>ind_four</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th><td>50486</td><td>0/0</td><td>./.</td><td>0/0</td><td>0/0</td>
+    </tr>
+    <tr>
+      <th>1</th><td>59185</td><td>0/0</td><td>0/0</td><td>0/0</td><td>0/0</td>
+    </tr>
+    <tr>
+      <th>2</th><td>59188</td><td>0/0</td><td>0/2</td><td>0/1</td><td>0/0</td>
+    </tr>
+    <tr>
+      <th>3</th><td>59189</td><td>0/0</td><td>./.</td><td>0/1</td><td>0/0</td>
+    </tr>
+  </tbody>
+</table>
+</div><p>The &#8221;./.&#8221; in <code class="docutils literal"><span class="pre">genotype_data</span></code> represents missing data. We cannot generate a population
+if some individuals have missing data; however, we do not want
+to throw away individuals with missing data. All of the genotype
+files I have worked with heretofore had missing data. We take
+a simple approach to fill-in missing data.</p>
+</div>
+<div class="section" id="missing-genotype-data">
+<h3>Missing Genotype Data<a class="headerlink" href="#missing-genotype-data" title="Permalink to this headline">¶</a></h3>
+<p>Albeit there might be several ways of handling missing genotype data I decided
+to use the genotype frequencies of Tuson generation zero sample of 105
+individuals as population probability mass functions. Thus whenever an
+individual is missing data we replace the missing data with a draw from the pmf
+of the genotype frequencies for that locus. For example suppose that the
+genotype frequencies for locus2 are: 3/2: 0.65, 2/2: 0.10, 3/3: 0.25
+Assuming that we randomly draw 2/2 we would update our genotype matrix as:</p>
+<p>Genotype matrix with missing data replaced by random draw:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="26%" />
+<col width="26%" />
+<col width="26%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">label</th>
+<th class="head">C0_164_1</th>
+<th class="head">C0_164_2</th>
+<th class="head">C0_164_3</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>locus1</td>
+<td>2/1</td>
+<td>2/1</td>
+<td>2/1</td>
+</tr>
+<tr class="row-odd"><td>locus2</td>
+<td>3/2</td>
+<td>2/2</td>
+<td>3/2</td>
+</tr>
+</tbody>
+</table>
+<p>We repeat the same procedure for every locus until all all loci are assigned an
+appropriate genotype.</p>
+</div>
+</div>
+<div class="section" id="genetic-map">
+<h2>Genetic Map<a class="headerlink" href="#genetic-map" title="Permalink to this headline">¶</a></h2>
+<p>A genetic map gives the positions of genes (in our case single nucleotide
+polymorphisms) in terms of recombination between homologous chromosomes. Our
+particular map has units of centiMorgan (cM). A genetic distance of 1 cM implies
+that there is 1% recombination between a pair of loci. The Tuson genetic map
+uses 44,445 markers and is structured like this:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="31%" />
+<col width="19%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">locus</th>
+<th class="head">chr</th>
+<th class="head">cM</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>locus1</td>
+<td>1</td>
+<td>2.279635824</td>
+</tr>
+<tr class="row-odd"><td>locus2</td>
+<td>1</td>
+<td>2.290091023</td>
+</tr>
+<tr class="row-even"><td>locus3</td>
+<td>1</td>
+<td>2.290716944</td>
+</tr>
+</tbody>
+</table>
+<p>simuPOP does not recognize any unit of measurement of recombination. simuPOP
+requires the <em>probability</em> of recombination between sequential loci. Therefore,
+we take divide the absolute difference between sequential loci by 100 to obtain
+the recombination rates which are supplied as input to the simuPOP Recombinator.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Making a Base Population</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#parsing-genotype-data">Parsing Genotype Data</a><ul>
+<li><a class="reference internal" href="#genotype-file-formats">Genotype File Formats</a></li>
+<li><a class="reference internal" href="#parsing-genotype-file">Parsing Genotype File</a></li>
+<li><a class="reference internal" href="#missing-genotype-data">Missing Genotype Data</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#genetic-map">Genetic Map</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../contents.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/tutorials/making-a-base-population.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, John J. Dougherty III.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="../_sources/tutorials/making-a-base-population.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

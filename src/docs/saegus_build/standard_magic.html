@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Standardization of Development Population &mdash; saegus 0.1.2 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="saegus 0.1.2 documentation" href="contents.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="contents.html">saegus 0.1.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="standardization-of-development-population">
+<h1>Standardization of Development Population<a class="headerlink" href="#standardization-of-development-population" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div>I have decided to create a standard population to use for all further development.
+Instead of creating a brand new population every single time I change something I
+have created a population called <code class="docutils literal"><span class="pre">standard_magic.pop</span></code>. This document explains
+how I created the population. <code class="docutils literal"><span class="pre">standard_magic.pop</span></code> was tested at every single
+generation for an expected pedigree. Below I explain the implementation of
+MAGIC in <code class="docutils literal"><span class="pre">saegus</span></code> and how I tested its correctness.</div></blockquote>
+<div class="section" id="creating-a-population-with-saegus">
+<h2>Creating a Population with Saegus<a class="headerlink" href="#creating-a-population-with-saegus" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>The general scenario in saegus is to begin with a relatively small number of
+individuals called <code class="docutils literal"><span class="pre">prefounders</span></code> and use a customized mating procedure
+to generate a full sized <code class="docutils literal"><span class="pre">operating_population</span></code>. <code class="docutils literal"><span class="pre">saegus</span></code> is coded
+on top of the excellent general purpose and highly memory optimized package
+<a class="reference external" href="http://simupop.sourceforge.net/">simuPOP</a>. However, <code class="docutils literal"><span class="pre">simuPOP</span></code> emphasizes quantitative models of disease
+in humans. In saegus we are primarily concerned with quantitative traits.</div></blockquote>
+</div>
+<div class="section" id="overview-of-magic-in-saegus">
+<h2>Overview of MAGIC in saegus<a class="headerlink" href="#overview-of-magic-in-saegus" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>For simplicity I used 8 distinct individuals from our pool of 26 <code class="docutils literal"><span class="pre">prefounders</span></code>.
+At minimum every individual in saegus has a unique identifier called <code class="docutils literal"><span class="pre">ind_id</span></code>,
+<code class="docutils literal"><span class="pre">mother_id</span></code> and <code class="docutils literal"><span class="pre">father_id</span></code>. We can easily examine, store or manipulate full
+pedigrees. The <code class="docutils literal"><span class="pre">standard_magic.pop</span></code> is created from <code class="docutils literal"><span class="pre">founders</span></code> 1 through 8. The
+<code class="docutils literal"><span class="pre">f_one</span></code> population is specified by pairs of individuals as a list. Hence 1 is
+crossed with 2, 3 is crossed with 4 so on and so forth.</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">operating_population_size</span></code>: size of our population remains fixed starting with the f_one generation.</li>
+<li><code class="docutils literal"><span class="pre">pop</span></code>: Our workhorse simuPOP.Population to carry out all evolutionary processes.</li>
+<li><code class="docutils literal"><span class="pre">ind_id</span></code>: A unique floating point number corresponding to an individual. <code class="docutils literal"><span class="pre">simuPOP</span></code> gives us to use  <code class="docutils literal"><span class="pre">ind_id</span></code> to arbitrarily manipulate populations.</li>
+<li><code class="docutils literal"><span class="pre">mother_id</span></code>: Albeit <em>Zea mays</em> can be considered both female and male it is useful at times to distinguish  <code class="docutils literal"><span class="pre">mother</span></code> from <code class="docutils literal"><span class="pre">father</span></code>.</li>
+<li><code class="docutils literal"><span class="pre">father_id</span></code>: Defined for the same reason as <code class="docutils literal"><span class="pre">mother_id</span></code>. In general we follow the genetics convention of writing the <em>female</em> on the left of the cross.</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">note:</th><td class="field-body">All of the parameters are stored in using the Python <a class="reference external" href="https://docs.python.org/3.4/library/shelve.html">shelve</a> module.</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+<div class="section" id="implementation-of-the-magic-mating-procedure">
+<h2>Implementation of the MAGIC Mating Procedure<a class="headerlink" href="#implementation-of-the-magic-mating-procedure" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>The major change from previous version of the MAGIC implementation in saegus is how
+I choose which individuals mate at each generation. In previous versions beyond <code class="docutils literal"><span class="pre">f_one</span></code>
+I would simply specify which sub-populations <em>could</em> mate with one another. However, in
+this version I specify every single mating interaction before the <code class="docutils literal"><span class="pre">evolve</span></code> process.</div></blockquote>
+<div class="section" id="creating-the-f-1">
+<h3>Creating the F <sub>1</sub><a class="headerlink" href="#creating-the-f-1" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>The F <sub>1</sub> is graphical depiction of the MAGIC mating scheme applied
+to our choice of 8 founders.</p>
+<blockquote>
+<div><img alt="_images/reformed_graph.png" src="_images/reformed_graph.png" />
+</div></blockquote>
+</div></blockquote>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Standardization of Development Population</a><ul>
+<li><a class="reference internal" href="#creating-a-population-with-saegus">Creating a Population with Saegus</a></li>
+<li><a class="reference internal" href="#overview-of-magic-in-saegus">Overview of MAGIC in saegus</a></li>
+<li><a class="reference internal" href="#implementation-of-the-magic-mating-procedure">Implementation of the MAGIC Mating Procedure</a><ul>
+<li><a class="reference internal" href="#creating-the-f-1">Creating the F <sub>1</sub></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/standard_magic.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="contents.html">saegus 0.1.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, John J. Dougherty III.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>

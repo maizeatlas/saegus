@@ -107,7 +107,6 @@ class Truncation(object):
                 sim.PyParentsChooser(founder_chooser.by_id_pairs),
                 sim.OffspringGenerator(ops=[
                     sim.IdTagger(),
-                    sim.ParentsTagger(),
                     sim.PedigreeTagger(),
                     sim.Recombinator(rates=recombination_rates)],
                     numOffspring=1),

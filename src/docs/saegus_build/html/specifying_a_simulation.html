@@ -1,0 +1,353 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Parameters of a Simulation &mdash; saegus 0.1.2 documentation</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="saegus 0.1.2 documentation" href="contents.html" /> 
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="contents.html">saegus 0.1.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="parameters-of-a-simulation">
+<h1>Parameters of a Simulation<a class="headerlink" href="#parameters-of-a-simulation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="notes-on-standard-simulation-parameters">
+<h2>Notes on Standard Simulation Parameters<a class="headerlink" href="#notes-on-standard-simulation-parameters" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>I am writing this document to record the method i used when developing the
+typical parameters I use in a simulation.</p>
+<p>Recombination Rates</p>
+<p>The variable <code class="docutils literal"><span class="pre">alleles</span></code> refers to the alleles which are present in the NAM
+prefounders at each locus. The alleles present at each locus is conveniently
+given by the <code class="docutils literal"><span class="pre">alleles</span></code> column in <code class="docutils literal"><span class="pre">hapmap3.txt</span></code>. For the sake of clarity I
+put the allele information into a separate file called <code class="docutils literal"><span class="pre">alleles_by_locus.txt</span></code>
+which looks like:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="40%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">locus</th>
+<th class="head">first(allele)</th>
+<th class="head">second(allele)</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>A</td>
+<td>G</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>G</td>
+<td>A</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>G</td>
+<td>A</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>C</td>
+<td>T</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>C</td>
+<td>G</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td><code class="docutils literal"><span class="pre">+</span></code></td>
+<td><code class="docutils literal"><span class="pre">-</span></code></td>
+</tr>
+<tr class="row-even"><td>6</td>
+<td>G</td>
+<td>A</td>
+</tr>
+</tbody>
+</table>
+<p>Where <cite>-</cite> means deletion and <cite>+</cite> means insertion. For simuPOP each allele
+must be represented by an integer. So I mapped each allele onto an integer
+starting with 0 according to alphabetical order. The mapping is specified in
+a Python <code class="docutils literal"><span class="pre">dict</span></code> object. The following code snippet shows the code I used to
+map each nucleotide abbreviation onto an integer.</p>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span>snp_to_integer = {&#39;A&#39;: 0, &#39;C&#39;: 1, &#39;G&#39;: 2, &#39;T&#39;: 3, &#39;-&#39;:4, &#39;+&#39;:5}
+alleles = {i: (snp_to_integer[hapmap.ix[i, &#39;alleles&#39;][0]], snp_to_integer[
+                  hapmap.ix[i, &#39;alleles&#39;][-1]])
+                  for i in range(len(hapmap))}
+
+print(alleles)
+
+ {0: [0, 2],
+  1: [2, 0],
+  2: [2, 0],
+  3: [1, 3],
+  4: [1, 2],
+  5: [5, 4],
+  6: [2, 0],
+
+  ...
+
+  }
+</pre></div>
+</div>
+<p>Which would convert the above table into:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="40%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">locus</th>
+<th class="head">first(allele)</th>
+<th class="head">second(allele)</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>0</td>
+<td>2</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>5</td>
+<td>4</td>
+</tr>
+<tr class="row-even"><td>6</td>
+<td>2</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>The variable <code class="docutils literal"><span class="pre">recombination_rates</span></code> or <code class="docutils literal"><span class="pre">recom_rates</span></code> is a list of floats which specify the probability of a
+recombination at the locus immediately <em>after</em>. In other words the probability of recombination at the region between
+two loci.</p>
+<p><strong>Recombination Rates</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="26%" />
+<col width="23%" />
+<col width="23%" />
+<col width="29%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">locus</th>
+<th class="head">rate</th>
+<th class="head">after</th>
+<th class="head">before</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td colspan="2">0.00  |   NA</td>
+<td>NA</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td colspan="2">0.01  |   1</td>
+<td>2</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td colspan="2">0.00  |   NA</td>
+<td>NA</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td colspan="2">0.01  |    3</td>
+<td>4</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td colspan="2">0.00  |   NA</td>
+<td>NA</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td colspan="2">0.00  |   NA</td>
+<td>NA</td>
+</tr>
+<tr class="row-even"><td>6</td>
+<td colspan="2">0.01  |   6</td>
+<td>7</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>For example in the above table at locus 0 the rate is 0.00. Because there is no recombination after that locus the after
+and before columns are <cite>NA</cite>. At locus 1: the rate is 0.01 which means that recombination occurs after locus 1 but before
+locus 2 with probability 0.01. So on and so forth for the other loci.</p>
+<div class="section" id="universal-parameters">
+<h3>Universal Parameters<a class="headerlink" href="#universal-parameters" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div>I created a .yaml file to hold the parameters which I re-use over and over again. Instead of recreating the
+parameters for every single run of the simulator I opted to write the constantly re-used parameters to a human
+readable format.</div></blockquote>
+<p>#chr_cM_positions = {}
+#for i in range(1, 11):
+#    chr_cM_positions[i] = []</p>
+<p>#for idx in range(len(genetic_map)):
+#    chrome = str(int())
+#    chr_cM_positions[int(genetic_map.iloc[idx][&#8216;chr&#8217;])].append(genetic_map.iloc[idx][&#8216;cM_pos&#8217;])</p>
+<p>#cM_positions = []
+#for i in range(1, 11):
+#    cM_positions.append(chr_cM_positions[i])</p>
+<p>#integral_valued_loci = []
+#relative_integral_valued_loci = {}
+#for idx in range(len(genetic_map)):
+#    if str(genetic_map.iloc[idx][&#8216;cM_pos&#8217;])[-2:] == &#8216;.0&#8217;:
+#        integral_valued_loci.append(idx)
+#        relative_integral_valued_loci[idx] = (genetic_map.iloc[idx][&#8216;chr&#8217;], genetic_map.iloc[idx][&#8216;cM_pos&#8217;])</p>
+<p>#alleles = {i: [snp_to_integer[hapmap.ix[i, &#8216;alleles&#8217;][0]],
+#               snp_to_integer[hapmap.ix[i, &#8216;alleles&#8217;][-1]]] for i in
+#          range(len(hapmap))}</p>
+<p>#recombination_rates = []
+#for chromosome in cM_positions:
+#    for cM in chromosome:
+#        if str(cM)[-2:] == &#8216;.6&#8217;:
+#            recombination_rates.append(0.01)
+#        else:
+#            recombination_rates.append(0.0)</p>
+<p>#flat_cM_positions = []
+#for cMs in cM_positions:
+#    flat_cM_positions.extend(cMs)</p>
+<p>#genetic_map_parameters = dict(
+#    cM_positions=cM_positions, chr_cM_positions=chr_cM_positions, integral_valued_loci=integral_valued_loci,
+#    relative_integral_valued_loci=relative_integral_valued_loci, alleles=alleles,
+#    recombination_rates=recombination_rates
+#)</p>
+<dl class="docutils">
+<dt>universal_parameters = dict(generations_of_selection=10,</dt>
+<dd><p class="first">generations_of_random_mating=3,
+number_of_replicates=2,
+operating_population_size=200,
+proportion_of_individuals_saved=0.05,
+overshoot_as_proportion=0.50,
+individuals_per_breeding_subpop=5, heritability=0.7,
+prefounder_file_name=&#8217;nam_prefounders.pop&#8217;,
+founders=[[3, 18], [2, 13], [7, 14], [1, 19],</p>
+<blockquote>
+<div>[14, 17], [1, 20], [17, 21], [9, 22]],</div></blockquote>
+<p>allele_names=[&#8216;A&#8217;, &#8216;C&#8217;, &#8216;T&#8217;, &#8216;G&#8217;, &#8216;D&#8217;, &#8216;I&#8217;],
+snp_to_integer={&#8216;A&#8217;: 0, &#8216;C&#8217;: 1, &#8216;G&#8217;: 2, &#8216;T&#8217;: 3,</p>
+<blockquote>
+<div>&#8216;-&#8216;: 4, &#8216;+&#8217;: 5},</div></blockquote>
+<dl class="docutils">
+<dt>integer_to_snp={0: &#8216;A&#8217;, 1: &#8216;C&#8217;, 2: &#8216;G&#8217;, 3: &#8216;T&#8217;,</dt>
+<dd>4: &#8216;-&#8216;, 5: &#8216;+&#8217;},</dd>
+</dl>
+<p class="last">number_of_qtl=10,
+allele_effect_parameters=[1], pos_column=pos_column,
+locus_names=locus_names,
+)</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="contents.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Parameters of a Simulation</a><ul>
+<li><a class="reference internal" href="#notes-on-standard-simulation-parameters">Notes on Standard Simulation Parameters</a><ul>
+<li><a class="reference internal" href="#universal-parameters">Universal Parameters</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/specifying_a_simulation.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="contents.html">saegus 0.1.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &copy; Copyright 2016, John J. Dougherty III.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.1.
+    </div>
+  </body>
+</html>
