@@ -2,7 +2,13 @@
 Introduction
 ============
 
-The saegus package is built on top of the incredibly powerful package simuPOP_.
+Welcome to the `saegus` documentation! This page serves as an introduction for
+some fairly basic information
+
+Concepts of simuPOP
+===================
+
+The saegus package is built on top of the incredibly powerful package simuPOP
 The power of simuPOP_ comes at a price: intellectual burden to learn
 how to write scripts to utilize the simuPOP_ machinery. In this introduction
 we define some basic terminology and concepts required to understand the rest

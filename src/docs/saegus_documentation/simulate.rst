@@ -22,7 +22,7 @@
         Crosses pairs of founders as they are listed in founder indices
         using breed.PairwiseIDChooser
 
-        .. code-block::
+        .. code-block:: python
 
            founder_chooser = breed.PairwiseIDChooser(parental_id_pairs)
            if len(parental_id_pairs) % 2 != 0:

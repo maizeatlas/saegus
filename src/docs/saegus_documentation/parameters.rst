@@ -8,17 +8,17 @@ Parameters
 
 .. py:class:: Trait
 
-   .. _assign_ae::
+   .. _assign_ae:
 
    .. py:method:: assign_allele_effects(alleles, qtl, distribution_function, *distribution_function_args, multiplicity=3)
 
       :parameter list alleles: np.array or list of lists of alleles at each locus
       :parameter list qtl: loci designated as contributing to a quantitative trait
       :parameter distribution_function: function such as random.expovariate
-      :parameter *distribution_function_args: arguments necessary for the distribution function
+      :parameter distribution_function_args: arguments necessary for the distribution function
       :parameter int multiplicity: Number of random draws to take from the distribution
 
-   **Example**: *Assigning allele effects to an additive trait.*
+   Example: Assigning allele effects to an additive trait.
 
    .. code-block:: python
 

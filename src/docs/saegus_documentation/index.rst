@@ -17,6 +17,7 @@ Contents:
    analyze.rst
    parameters.rst
    simulate.rst
+   parse.rst
 
 
 

@@ -220,6 +220,8 @@ The results from TASSEL are edited to contain the following columns:
 
 An example output would be:
 
+.. _results_dataframe_example:
+
 .. raw:: html
 
     <div>
@@ -305,10 +307,35 @@ An example output would be:
     </div>
 
 
-Deriving Allele Frequency Data from Hapmap (Genotype) File
-==========================================================
 
 Analyzing TASSEL Results: Power and False Positive Rate
 =======================================================
 
-R
+In order to determine if the simulation is working as expected I calculuated
+`power` and `false positive rate`. Power is defined as the probability to
+detect a locus which truly has an effect. In other words it is :math:`1 - B`
+where :math:`B` is the `false negative rate`. For `power` I simply counted
+the how many QTL were detected and divided by the number of QTL: 10 in this case.
+For the false positive rate I counted the number of loci which were declared significant
+but had no effect. Shown below is the criterion in code.
+
+.. code-block:: python
+
+   >>> for tds, panel in zip(testing_data_sets, sample_panels):
+   ...    for rep in range(50):
+   ...        tds[rep, 0] = len(panel[rep][(panel[rep].ix[:, 'q'] < 0.05)
+   ...                                     & (panel[rep].ix[:, 'difference'] > 0.0)]) / 10
+   ...        tds[rep, 1] = len(panel[rep][(panel[rep].ix[:, 'q'] < 0.05)
+   ...                                     & (panel[rep].ix[:, 'difference'] == 0.0)]) / 855
+
+
+I analyzed each set of results from at each sample size. The results show an
+increase in `power` as sample size increases. Albeit the power is low we have
+captured a general trend.
+
+Power and FPR Data Format
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+At present the data is in 3 `hdf` files which contain 50 data frames each.
+At present things are extremely unorganized and messy; however, I will clean
+everthing up very soon. The main thing is that I keep everything documented.
