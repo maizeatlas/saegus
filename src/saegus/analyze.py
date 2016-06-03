@@ -942,6 +942,41 @@ def single_sample_analyzer(full_population, sample_size,
               "saegus_project\\devel\\magic\\1478\\daoko_girl_gwas_pipeline.xml")
     return segregating_loci, aes_table
 
+def collect_samples(replicate_populations, sample_sizes, run_id):
+    """
+    Testing for concordance of segregating loci among samples requires that
+    the samples be gathered in advance. Collects samples from replicate_populations
+
+    :param replicate_populations: Multi-replicate population to analyze
+    :param sample_sizes: Size of sample to gather.
+
+    :note: :py:func:`len(sample_sizez)` == number of samples gathered from each replicate.
+
+    :param str run_id: Identifier
+    :return: List of populations
+    """
+    samples = {}
+    for rep in replicate_populations.populations():
+        samples[rep] = [sim.sampling.drawRandomSample(rep, sizes=sample_size) for sample_size in sample_sizes]
+    return samples
+
+
+def multi_sample_allele_frq_storage(library_of_samples, alleles, run_id='hdenies'):
+
+    hdf_store = pd.HDFStore(run_id + '_storage.h5')
+
+    for rep_id, samples in library_of_samples.items():
+        for sample in samples:
+            af = analyze.allele_data(sample, alleles,
+                                 range(sample.totNumLoci()))
+
+            name = run_id + '/' + str(rep_id) + '/' + str(sample.popSize())
+
+            hdf_store.put(name, af)
+    hdf_store.close()
+
+
+
 def multiple_sample_analyzer(replicate_population, sample_size_list,
                              quantitative_trait_loci, alleles, allele_effects,
                              heritability, segregating_loci, run_id='infinite'):
