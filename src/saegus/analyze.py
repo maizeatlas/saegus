@@ -967,30 +967,30 @@ def multiple_sample_analyzer(replicate_population, sample_size_list,
             af = allele_data(sample_population, alleles,
                              range(sample_population.totNumLoci()))
 
-            af.to_hdf('R' + rep_prefix + '_' + str(sample_size) + '_infinite_af.hdf', 'af')
+            af.to_hdf('R' + rep_prefix + '_' + str(sample_size) + '_' + run_id + '_af.hdf', 'af')
 
             gwas = GWAS(sample_population, segregating_loci,
                         np.array(af['minor_allele']), 'infinite')
 
 
             indir = "C:\\tassel\\input\\"
-            ccm = gwas.calculate_count_matrix(indir + 'R' + rep_prefix + '_' + str(sample_size) +  '_infinite_MAC.txt')
+            ccm = gwas.calculate_count_matrix(indir + 'R' + rep_prefix + '_' + str(sample_size) +  '_' + run_id + '_MAC.txt')
             ps_svd = gwas.pop_struct_svd(ccm)
-            ps_m = gwas.population_structure_formatter(ps_svd, indir + 'R'+ rep_prefix + '_' + str(sample_size) + '_infinite_structure_matrix.txt')
+            ps_m = gwas.population_structure_formatter(ps_svd, indir + 'R'+ rep_prefix + '_' + str(sample_size) + '_' + run_id + '_structure_matrix.txt')
             hmap = gwas.hapmap_formatter(int_to_snp_map,
-                                         indir + 'R' + rep_prefix + '_' + str(sample_size) + '_infinite_simulated_hapmap.txt')
-            phenos = gwas.trait_formatter(indir + 'R' + rep_prefix + '_' + str(sample_size) + '_infinite_phenotype_vector.txt')
+                                         indir + 'R' + rep_prefix + '_' + str(sample_size) + '_' + run_id + '_simulated_hapmap.txt')
+            phenos = gwas.trait_formatter(indir + 'R' + rep_prefix + '_' + str(sample_size) + '_' + run_id + '_phenotype_vector.txt')
             ks_m = gwas.calc_kinship_matrix(ccm, af,
-                                            indir + 'R' + rep_prefix + '_' + str(sample_size) + '_infinite_kinship_matrix.txt')
+                                            indir + 'R' + rep_prefix + '_' + str(sample_size) + '_' + run_id + '_kinship_matrix.txt')
 
             gwas.replicate_tassel_gwas_configs(rep_prefix, sample_size,
-                indir + 'R' + rep_prefix + '_' + str(sample_size) + '_infinite_simulated_hapmap.txt',
-                indir + 'R' + rep_prefix + '_' + str(sample_size) + '_infinite_kinship_matrix.txt',
-                indir + 'R' + rep_prefix + '_' + str(sample_size) + '_infinite_phenotype_vector.txt',
-                indir + 'R' + rep_prefix + '_' + str(sample_size) + '_infinite_structure_matrix.txt',
-                "C:\\tassel\\output\\" + 'R' + rep_prefix + '_' + str(sample_size) + "_infinite_out_",
+                indir + 'R' + rep_prefix + '_' + str(sample_size) + '_' + run_id + '_simulated_hapmap.txt',
+                indir + 'R' + rep_prefix + '_' + str(sample_size) + '_' + run_id + '_kinship_matrix.txt',
+                indir + 'R' + rep_prefix + '_' + str(sample_size) + '_' + run_id + '_phenotype_vector.txt',
+                indir + 'R' + rep_prefix + '_' + str(sample_size) + '_' + run_id + '_structure_matrix.txt',
+                "C:\\tassel\\output\\" + 'R' + rep_prefix + '_' + str(sample_size) + '_' + run_id + '_out_',
                                               "C:\\Users\DoubleDanks\\BISB\\wisser\\code\\rjwlab-scripts\\"
-                                              "saegus_project\\devel\\magic\\1478\\infinite_gwas_pipeline.xml")
+                                              "saegus_project\\devel\\magic\\1478\\" + run_id + "_gwas_pipeline.xml")
 
 
 
