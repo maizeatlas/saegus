@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/saegus/analyze.py" afterPath="$PROJECT_DIR$/src/saegus/analyze.py" />
     </list>
     <ignored path="saegus_project.iws" />
@@ -65,8 +66,8 @@
       <file leaf-file-name="analyze.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="337">
-              <caret line="985" column="30" selection-start-line="985" selection-start-column="30" selection-end-line="985" selection-end-column="30" />
+            <state relative-caret-position="7715">
+              <caret line="996" column="64" selection-start-line="996" selection-start-column="64" selection-end-line="996" selection-end-column="64" />
               <folding />
             </state>
           </provider>
@@ -1480,8 +1481,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="985" column="30" selection-start-line="985" selection-start-column="30" selection-end-line="985" selection-end-column="30" />
+        <state relative-caret-position="7715">
+          <caret line="996" column="64" selection-start-line="996" selection-start-column="64" selection-end-line="996" selection-end-column="64" />
           <folding />
         </state>
       </provider>

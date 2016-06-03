@@ -977,34 +977,44 @@ def multi_sample_allele_frq_storage(library_of_samples, alleles, run_id='hdenies
 
 
 
-def multiple_sample_analyzer(replicate_population, sample_size_list,
+def multiple_sample_analyzer(library_of_samples, sample_size_list,
                              quantitative_trait_loci, alleles, allele_effects,
-                             heritability, segregating_loci, run_id='infinite'):
+                             heritability, segregating_loci, run_id='infinite',
+                             allele_frequency_hdf='hdenies_library_storage.h5'):
 
 
     syn_parameters = shelve.open('synthesis_parameters')
     int_to_snp_map = syn_parameters['integer_to_snp']
     syn_parameters.close()
 
+    allele_frqs = pd.HDFStore(allele_frequency_hdf, mode='r')
+    gwas_object_library = {}
 
-    for rep in replicate_population.populations():
-        for sample_size in sample_size_list:
-            sample_population = sim.sampling.drawRandomSample(rep,
-                                                              sizes=sample_size)
 
-            rep_prefix = str(rep.dvars().rep)
+    for rep_id, sample_list in library_of_samples.items():
+        for sample_population in sample_list:
+#            sample_population = sim.sampling.drawRandomSample(rep,
+#                                                              sizes=sample_size)
+
+            rep_prefix = str(rep_id)
 
             operators.assign_additive_g(sample_population, quantitative_trait_loci,
                                         allele_effects)
-            operators.calculate_error_variance(sample_population, heritability)
-            operators.phenotypic_effect_calculator(sample_population)
-            af = allele_data(sample_population, alleles,
-                             range(sample_population.totNumLoci()))
 
-            af.to_hdf('R' + rep_prefix + '_' + str(sample_size) + '_' + run_id + '_af.hdf', 'af')
+            operators.calculate_error_variance(sample_population, heritability)
+
+            operators.phenotypic_effect_calculator(sample_population)
+#            af = allele_data(sample_population, alleles,
+#                             range(sample_population.totNumLoci()))
+#
+#            af.to_hdf('R' + rep_prefix + '_' + str(sample_size) + '_' + run_id + '_af.hdf', 'af')
+
+            name = run_id + '/' + str(rep_id) + '/' + str(sample_population.popSize())
+            minor_alleles = allele_frqs[name]['minor_allele']
 
             gwas = GWAS(sample_population, segregating_loci,
-                        np.array(af['minor_allele']), 'infinite')
+                        np.array(minor_alleles), run_id)
+            gwas_object_library[name] = gwas
 
 
             indir = "C:\\tassel\\input\\"
