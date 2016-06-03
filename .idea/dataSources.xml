@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="1003423572">
+    <data-source source="LOCAL" name="gwas_input_data" uuid="351a4bc9-f930-40ec-a5f6-8beddfc62633">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/devel/magic/1478/hdenies_tassel_in.h5</jdbc-url>
+    </data-source>
+  </component>
+</project>

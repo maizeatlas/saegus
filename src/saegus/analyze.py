@@ -529,7 +529,7 @@ class GWAS(object):
         self.locus_names = list(range(len(loci)))
         self.pos_names = list(range(len(loci)))
 
-    def calculate_count_matrix(self, count_matrix_filename):
+    def calculate_count_matrix(self):
         """
         A function to calculate the copy numbers of either the minor or
         major allele for each individual at each locus. Minor or major
@@ -562,7 +562,7 @@ class GWAS(object):
             counts = np.add(alpha_comparisons, beta_comparisons, dtype=np.int8)
             count_matrix[i, :] = counts
 
-        np.savetxt(count_matrix_filename, count_matrix, fmt="%d")
+#        np.savetxt(count_matrix_filename, count_matrix, fmt="%d")
         return count_matrix
 
     def pop_struct_svd(self, count_matrix):
@@ -602,7 +602,7 @@ class GWAS(object):
         eigen_data['fraction_variance'] = fraction_of_variance
         return eigen_data
 
-    def population_structure_formatter(self, eigen_data, structure_filename):
+    def population_structure_formatter(self, eigen_data):
         """
         Writes the first two of the population structure matrix to a
         file. First column of the file is are names.
@@ -617,16 +617,16 @@ class GWAS(object):
 
         structure_matrix.index = ordered_names
 
-        header = "<Covariate>\t\t\n<Trait>\td1\td2\n"
+#        header = "<Covariate>\t\t\n<Trait>\td1\td2\n"
 
-        cwd = os.getcwd()
-        file_out_path = os.path.join(cwd, structure_filename)
+#        cwd = os.getcwd()
+#        file_out_path = os.path.join(cwd, structure_filename)
 
-        if os.path.exists(file_out_path):
-            os.remove(file_out_path)
-        with open(structure_filename, 'w') as f:
-            f.write(header)
-            structure_matrix.to_csv(f, sep='\t', index=True, header=False)
+#        if os.path.exists(file_out_path):
+#            os.remove(file_out_path)
+#        with open(structure_filename, 'w') as f:
+#            f.write(header)
+#            structure_matrix.to_csv(f, sep='\t', index=True, header=False)
 
         return structure_matrix
 
@@ -644,7 +644,7 @@ class GWAS(object):
         test_statistic = (lowercase_l - mu_hat) / sigma_hat
         return test_statistic
 
-    def hapmap_formatter(self, int_to_snp_conversions, hapmap_matrix_filename):
+    def hapmap_formatter(self, int_to_snp_conversions):
         """
         Converts genotype data from sim.Population object to HapMap file format
         in expectation to be used in TASSEL for GWAS. At present the column
@@ -700,12 +700,12 @@ class GWAS(object):
         for k, v in hapmap_data.items():
             hapmap_matrix[k] = v
 
-        hapmap_matrix.to_csv(hapmap_matrix_filename, sep='\t',
-                             index=False)
+#        hapmap_matrix.to_csv(hapmap_matrix_filename, sep='\t',
+#                             index=False)
 
         return hapmap_matrix
 
-    def trait_formatter(self, trait_filename):
+    def trait_formatter(self):
         """
         Simple function to automate the formatting of the phenotypic data.
         Because of the way the header must be written the file is opened in
@@ -718,19 +718,18 @@ class GWAS(object):
         trait_vector = pd.DataFrame(np.array([self.individual_names,
                                self.pop.indInfo('p')]).T)
 
-        cwd = os.getcwd()
-        file_out_path = os.path.join(cwd, trait_filename)
+#        cwd = os.getcwd()
+#        file_out_path = os.path.join(cwd, trait_filename)
 
-        if os.path.exists(file_out_path):
-            os.remove(file_out_path)
-        with open(trait_filename, 'w') as f:
-            f.write(header)
-            trait_vector.to_csv(f, sep='\t', index=False, header=False)
+#        if os.path.exists(file_out_path):
+#            os.remove(file_out_path)
+#        with open(trait_filename, 'w') as f:
+#            f.write(header)
+#            trait_vector.to_csv(f, sep='\t', index=False, header=False)
 
         return trait_vector
 
-    def calc_kinship_matrix(self, allele_count_matrix, allele_data,
-                            kinship_filename):
+    def calc_kinship_matrix(self, allele_count_matrix, allele_frequencies):
         """
         Calculates the kinship matrix according to VanRaden 2008:
         Efficient Methods to Compute Genomic Predictions and writes it to a
@@ -750,11 +749,14 @@ class GWAS(object):
         :rtype:
         """
 
+
+
         M = np.matrix(allele_count_matrix - 1)
 
         # Second allele in the unselected, un-inbred base population.
         # Refers to major allele in G_0
-        allele_frequencies = np.array([allele_data['minor_frequency'][locus] for locus in self.loci])
+
+#        allele_frequencies = np.array([allele_data_hdf_store[rep_id]['minor_frequency'][locus] for locus in self.loci])
 
         P = 2*(allele_frequencies - 0.5)
 
@@ -772,17 +774,17 @@ class GWAS(object):
 
         # Tassel example has number of individuals in the header of the G
         # matrix file
-        header = "{}\n".format(self.pop.popSize())
+#        header = "{}\n".format(self.pop.popSize())
 
-        cwd = os.getcwd()
-        file_out_path = os.path.join(cwd, kinship_filename)
-
-        if os.path.exists(file_out_path):
-            os.remove(file_out_path)
-        with open(kinship_filename, 'w') as f:
-            f.write(header)
-            annotated_G.to_csv(f, sep='\t', index=True, header=False,
-                               float_format='%.3f')
+#        cwd = os.getcwd()
+#        file_out_path = os.path.join(cwd, kinship_filename)
+#
+#        if os.path.exists(file_out_path):
+#            os.remove(file_out_path)
+#        with open(kinship_filename, 'w') as f:
+#            f.write(header)
+#            annotated_G.to_csv(f, sep='\t', index=True, header=False,
+#                               float_format='%.3f')
 
         return annotated_G
 
