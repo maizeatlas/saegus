@@ -657,17 +657,17 @@ class GWAS(object):
         :rtype:
         """
         hapmap_data = {}
-        hapmap_data['rs'] = self.locus_names
-        hapmap_data['alleles'] = ['NA']*len(self.loci)
+        #hapmap_data['rs'] = self.locus_names
+        #hapmap_data['alleles'] = ['NA']*len(self.loci)
         hapmap_data['chrom'] = [self.pop.chromLocusPair(locus)[0]+1 for
                                 locus in self.loci]
         hapmap_data['pos'] = self.pos_names
 
         # Several columns which are set to 'NA'.
-        extraneous_columns = ['strand', 'assembly', 'center', 'protLSID',
-                              'assayLSID', 'panelLSID', 'QCcode']
-        for column in extraneous_columns:
-            hapmap_data[column] = ['NA']*len(self.loci)
+        #extraneous_columns = ['strand', 'assembly', 'center', 'protLSID',
+        #                      'assayLSID', 'panelLSID', 'QCcode']
+        #for column in extraneous_columns:
+        #    hapmap_data[column] = ['NA']*len(self.loci)
 
         # Each individual has a column. Simulated individuals will have names
         # reflecting some information about them. 'RS' recurrent selection,
@@ -694,9 +694,7 @@ class GWAS(object):
         #  list of names will guarantee that col names are in same order as
         # the hapmap_data
 
-        hapmap_ordered_columns = ['rs', 'alleles', 'chrom', 'pos', 'strand',
-                           'assembly', 'center', 'protLSID', 'assayLSID',
-                               'panelLSID', 'QCcode'] + self.individual_names
+        hapmap_ordered_columns = ['chrom', 'pos'] + self.individual_names
 
         hapmap_matrix = pd.DataFrame(columns=hapmap_ordered_columns)
         for k, v in hapmap_data.items():
@@ -986,7 +984,7 @@ def multiple_sample_analyzer(replicate_population, sample_size_list,
             gwas.replicate_tassel_gwas_configs(rep_prefix, sample_size,
                 indir + 'R' + rep_prefix + '_' + str(sample_size) + '_' + run_id + '_simulated_hapmap.txt',
                 indir + 'R' + rep_prefix + '_' + str(sample_size) + '_' + run_id + '_kinship_matrix.txt',
-                indir + 'R' + rep_prefix + '_' + str(sample_size) + '_' + run_id + '_phenotype_vector.txt',
+                indir + 'R' + rep_prefix + '_' + str(sample_size) + '_' + run_id + '_phenotype._vector.txt',
                 indir + 'R' + rep_prefix + '_' + str(sample_size) + '_' + run_id + '_structure_matrix.txt',
                 "C:\\tassel\\output\\" + 'R' + rep_prefix + '_' + str(sample_size) + '_' + run_id + '_out_',
                                               "C:\\Users\DoubleDanks\\BISB\\wisser\\code\\rjwlab-scripts\\"

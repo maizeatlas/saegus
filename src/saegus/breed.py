@@ -38,7 +38,7 @@ class MAGIC(object):
         number_of_pairs = len(parental_id_pairs)
         self.pop.evolve(
             preOps=[
-                sim.PyEval(r'"Generation: %d\n" % gen',),
+#                sim.PyEval(r'"Generation: %d\n" % gen',),
                 ],
             matingScheme=sim.HomoMating(
                 sim.PyParentsChooser(founder_chooser.by_id_pairs),
@@ -60,7 +60,7 @@ class MAGIC(object):
         print("Initiating random mating for {} generations.".format(generations_of_random_mating))
         self.pop.evolve(
             preOps=[
-                sim.PyEval(r'"Generation: %d\n" % gen'),
+#                sim.PyEval(r'"Generation: %d\n" % gen'),
             ],
             matingScheme=sim.RandomMating(
                 subPopSize=pop_size,
