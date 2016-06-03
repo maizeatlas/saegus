@@ -951,6 +951,7 @@ def multiple_sample_analyzer(replicate_population, sample_size_list,
     int_to_snp_map = syn_parameters['integer_to_snp']
     syn_parameters.close()
 
+
     for rep in replicate_population.populations():
         for sample_size in sample_size_list:
             sample_population = sim.sampling.drawRandomSample(rep,

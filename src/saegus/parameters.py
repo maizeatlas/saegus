@@ -354,3 +354,32 @@ class Trait(object):
         return allele_effects
 
 
+
+
+def count_qtl_concordance(array_of_seg_loci, qtl):
+    qtl_agreement_counts = col.defaultdict(int, default=0)
+    for i, row in enumerate(array_of_seg_loci):
+        for locus in qtl:
+            if locus in row:
+                qtl_agreement_counts[i] += 1
+    return qtl_agreement_counts
+
+def test_qtl_concordance(agreement_counts, qtl):
+    qtl_concordance = True
+    for k, v in agreement_counts.items():
+        if v != len(qtl) and k != 'default':
+            qtl_concordance = False
+            print("Disagrement of QTL at sample {}".format(k))
+    return qtl_concordance
+
+def count_segregating_site_concordance(array_of_seg_loci):
+    segregating_loci_concordance_counts = col.defaultdict(int, default=0)
+    for row in array_of_seg_loci:
+        segregating_loci_concordance_counts[tuple(row)] += 1
+    return segregating_loci_concordance_counts
+
+def test_segregatng_loci_concordance(seg_loci_agreement_counts):
+    seg_loci_agreement = True
+    if len(seg_loci_agreement_counts) > 2:
+        seg_loci_agreement = False
+    return seg_loci_agreement
