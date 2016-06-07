@@ -215,7 +215,8 @@ def allele_frq_table(self, pop, number_gens,
     return af_table
 
 
-def generate_allele_effects_table(qtl, alleles, allele_effects):
+def generate_allele_effects_table(qtl, alleles, allele_effects,
+                                  saegus_to_tassel_conversions):
     """
     Creates a simple pd.DataFrame for allele effects. Hard-coded
     for bi-allelic case.
@@ -226,6 +227,7 @@ def generate_allele_effects_table(qtl, alleles, allele_effects):
     """
     ae_table = {
         'locus': [],
+        'tassel_locus': [],
         'alpha_allele': [],
         'alpha_effect': [],
         'beta_allele': [],
@@ -235,6 +237,7 @@ def generate_allele_effects_table(qtl, alleles, allele_effects):
 
     for locus in qtl:
         ae_table['locus'].append(locus)
+        ae_table['tassel_locus'].append(saegus_to_tassel_conversions[locus])
         alpha_allele, beta_allele = alleles[locus]
         ae_table['alpha_allele'].append(alpha_allele)
         ae_table['beta_allele'].append(beta_allele)
@@ -244,9 +247,10 @@ def generate_allele_effects_table(qtl, alleles, allele_effects):
         ae_table['beta_effect'].append(beta_effect)
         difference = math.fabs(alpha_effect - beta_effect)
         ae_table['difference'].append(difference)
-    order_of_columns = ['locus', 'alpha_allele', 'alpha_effect', 'beta_allele', 'beta_effect', 'difference']
-    allele_effect_frame = pd.DataFrame(ae_table, columns=order_of_columns)
-    return allele_effect_frame
+    order_of_columns = ['locus', 'tassel_locus', 'alpha_allele', 'alpha_effect',
+                        'beta_allele', 'beta_effect', 'difference']
+    allele_effect_table = pd.DataFrame(ae_table, columns=order_of_columns)
+    return allele_effect_table
 
 
 def collect_haplotype_data(pop, allele_effects, quantitative_trait_loci):
@@ -1101,24 +1105,23 @@ def remap_ae_table_loci(allele_effect_table, saegus_to_tassel_loci):
     Converts the absolute indices of saegus population to the indices of the truncated
     set of segregating loci. Allows for appropriate comparisons of loci.
     """
-
-    reindexed_allele_effect_table = pd.DataFrame(np.array(allele_effect_table)
-                                                 )
+    remapped_ae_table = allele_effect_table.copy()
 
     remapped_loci = [saegus_to_tassel_loci[locus]
                      for locus in allele_effect_table['locus']]
-    allele_effect_table['locus'] = remapped_loci
 
-    allele_effect_table['difference'] = np.abs(allele_effect_table['alpha_effect'] -
-                                          allele_effect_table['beta_effect'])
+    remapped_ae_table['locus'] = remapped_loci
 
-    allele_effect_table.index = allele_effect_table.locus
+#    remapped_ae_table['difference'] = np.abs(allele_effect_table['alpha_effect'] -
+#                                          allele_effect_table['beta_effect'])
+
+    remapped_ae_table.index = remapped_ae_table.locus
 
     expanded_ae_table = pd.DataFrame(np.zeros((len(saegus_to_tassel_loci))).T,
                                               columns=['difference'])
 
-    for qtlocus in allele_effect_table.locus:
-        expanded_ae_table.ix[qtlocus, 'difference'] =  allele_effect_table.ix[qtlocus, 'difference']
+    for qtlocus in remapped_ae_table.locus:
+        expanded_ae_table.ix[qtlocus, 'difference'] =  remapped_ae_table.ix[qtlocus, 'difference']
 
     return expanded_ae_table
 
