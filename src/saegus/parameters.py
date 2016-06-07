@@ -340,6 +340,18 @@ class Trait(object):
         qtl = sorted(random.sample(permissible_qtl, number_qtl))
         return qtl
 
+    def load_alleles(self, allele_file_name):
+        """
+        Loads alleles for all loci formatted in a way appropriate for assign_allele_effects.
+
+
+        :param str allele_filename: HDF Filename containing alleles at each locus.
+        :return:
+        """
+
+        alleles = np.array(pd.read_hdf(allele_file_name))
+        return alleles
+
     def assign_allele_effects(self, alleles, qtl, distribution_function,
                                   *distribution_function_parameters,
                                   multiplicity):

@@ -8,6 +8,28 @@ Parameters
 
 .. py:class:: Trait
 
+
+   .. _load_alleles:
+
+   .. py:method:: load_alleles(allele_file_name)
+
+      :parameter str allele_file_name: HDF File name containing alleles at each locus
+
+      .. code-block:: python
+         :caption: load_alleles_example
+
+         >>> alleles = load_alleles('parameters\\alleles_at_1478_loci.hdf')
+         >>> alleles
+          array([[1, 2],
+          [1, 3],
+          [3, 1],
+          ...,
+          [1, 0],
+          [3, 0],
+          [3, 1]], dtype=int64)
+
+
+
    .. _assign_ae:
 
    .. py:method:: assign_allele_effects(alleles, qtl, distribution_function, *distribution_function_args, multiplicity=3)

@@ -12,14 +12,18 @@ class MAGIC(object):
     crossed with each other until only a single ``line`` remains.
     """
 
-    def __init__(self, pop, recombination_rates):
+    def __init__(self, pop, founders, recombination_rates):
         """
         An instance of MAGIC is intended to use in a particular population
         assuming recombination rates stay constant throughout breeding
         procedure.
         """
         self.pop = pop
+        self.founders = founders
         self.recombination_rates = recombination_rates
+        self._merging_progress = len(founders)
+        self._convergence = False
+
 
     def __str__(self):
         return "Population Name: {popname}\n" \
@@ -69,7 +73,30 @@ class MAGIC(object):
             gen=generations_of_random_mating,
         )
 
+class TopCross(object):
+    """
+    Contains functions to implement top crossing or self mating to produce
+    families for further analysis. Parental ID can be mapped to offspring via
+    father_id information field.
 
+    """
+
+
+
+
+    def create_top_crosses(self, existing_pop, offspring_per_individual):
+        new_pop_size = offspring_per_individual * existing_pop.popSize()
+
+        existing_pop.evolve(
+            matingScheme=sim.SelfMating(replacement=False,
+                                        numOffspring=offspring_per_individual,
+                                        subPopSize=new_pop_size,
+                                        ops=[
+                                            sim.IdTagger(),
+                                            sim.PedigreeTagger(),
+                                            sim.Recombinator(rates=0.01)], ),
+            gen=1,
+        )
 
 class PairwiseIDChooser(object):
     """

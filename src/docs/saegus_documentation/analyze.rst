@@ -3,6 +3,8 @@
 ==============
 
 
+.. py:class:: GWAS(pop, loci, allele_subset, run_id)
+
 
 .. py:function:: allele_data(pop, alleles, loci)
 

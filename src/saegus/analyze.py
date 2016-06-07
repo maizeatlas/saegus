@@ -230,6 +230,7 @@ def generate_allele_effects_table(qtl, alleles, allele_effects):
         'alpha_effect': [],
         'beta_allele': [],
         'beta_effect': [],
+        'difference': []
     }
 
     for locus in qtl:
@@ -241,7 +242,9 @@ def generate_allele_effects_table(qtl, alleles, allele_effects):
         ae_table['alpha_effect'].append(alpha_effect)
         beta_effect = allele_effects[locus][beta_allele]
         ae_table['beta_effect'].append(beta_effect)
-    order_of_columns = ['locus', 'alpha_allele', 'alpha_effect', 'beta_allele', 'beta_effect']
+        difference = math.fabs(alpha_effect - beta_effect)
+        ae_table['difference'].append(difference)
+    order_of_columns = ['locus', 'alpha_allele', 'alpha_effect', 'beta_allele', 'beta_effect', 'difference']
     allele_effect_frame = pd.DataFrame(ae_table, columns=order_of_columns)
     return allele_effect_frame
 
@@ -517,10 +520,9 @@ class GWAS(object):
     of the genotype covarience matrix. Details can be found in the paper:
     Population Structure and Eigenanalysis Patterson et al 2006.
     """
-    def __init__(self, pop, loci, allele_subset, run_id):
+    def __init__(self, pop, loci, run_id):
         self.pop = pop
         self.loci = loci
-        self.allele_subset = allele_subset
         self.run_id = run_id
 
         self.individual_names = ['I' + str(ind.ind_id)[:-2]
@@ -529,41 +531,37 @@ class GWAS(object):
         self.locus_names = list(range(len(loci)))
         self.pos_names = list(range(len(loci)))
 
-    def calculate_count_matrix(self):
+    # noinspection PyArgumentList
+    def calculate_count_matrix(self, allele_subset, count_matrix_file_name = None):
         """
         A function to calculate the copy numbers of either the minor or
-        major allele for each individual at each locus. Minor or major
+        major allele for each individual at each locus.
+        Minor or major
         alleles parameter is a single set of alleles which determines if the
         return is the minor or major allele count matrix.
-        :param pop:
-        :param allele_subset:
-        :param count_matrix_filename:
+        :param allele_subset: Allows user to choose a custom set of alleles to use i.e. minor vs major.
+        :param count_matrix_filename: Output file name. If defined will write a file. Otherwise returns the count_matrix
         """
-        comparison_array = np.array([self.allele_subset[locus]
+        comparison_array = np.array([allele_subset[locus]
                                      for locus in self.loci], dtype=np.int8)
-
         count_matrix = np.zeros((self.pop.popSize(), len(self.loci)))
-
-
         for i, ind in enumerate(self.pop.individuals()):
             alpha_genotype = np.array([ind.genotype(ploidy=0)[locus]
                               for locus in self.loci])
-
             alpha_comparisons = np.equal(comparison_array, alpha_genotype,
                                          dtype=np.int8)
-
-
             beta_genotype = [ind.genotype(ploidy=1)[locus]
                              for locus in self.loci]
-
             beta_comparisons = np.equal(comparison_array, beta_genotype,
                                          dtype=np.int8)
-
             counts = np.add(alpha_comparisons, beta_comparisons, dtype=np.int8)
             count_matrix[i, :] = counts
 
-#        np.savetxt(count_matrix_filename, count_matrix, fmt="%d")
+        if count_matrix_file_name is not None:
+            np.savetxt(count_matrix_file_name, count_matrix, fmt="%d")
+
         return count_matrix
+
 
     def pop_struct_svd(self, count_matrix):
         """
@@ -596,13 +594,11 @@ class GWAS(object):
 
         sum_of_eigenvalues = np.sum(eigenvalues)
         fraction_of_variance = np.divide(eigenvalues, sum_of_eigenvalues)
-        eigen_data = {}
-        eigen_data['vectors'] = eigenvectors
-        eigen_data['values'] = eigenvalues
-        eigen_data['fraction_variance'] = fraction_of_variance
+        eigen_data = {'vectors': eigenvectors, 'values': eigenvalues,
+                      'fraction_variance': fraction_of_variance}
         return eigen_data
 
-    def population_structure_formatter(self, eigen_data):
+    def population_structure_formatter(self, eigen_data, pop_struct_file_name = None):
         """
         Writes the first two of the population structure matrix to a
         file. First column of the file is are names.
@@ -614,20 +610,14 @@ class GWAS(object):
 
         structure_matrix = pd.DataFrame([list(eigen_data['vectors'][:, 0].T),
                                          list(eigen_data['vectors'][:, 1].T)]).T
-
         structure_matrix.index = ordered_names
 
-#        header = "<Covariate>\t\t\n<Trait>\td1\td2\n"
-
-#        cwd = os.getcwd()
-#        file_out_path = os.path.join(cwd, structure_filename)
-
-#        if os.path.exists(file_out_path):
-#            os.remove(file_out_path)
-#        with open(structure_filename, 'w') as f:
-#            f.write(header)
-#            structure_matrix.to_csv(f, sep='\t', index=True, header=False)
-
+        if pop_struct_file_name is not None:
+            header = "<Covariate>\t\t\n<Trait>\td1\td2\n"
+            with open(pop_struct_file_name, 'w') as f:
+                f.write(header)
+                structure_matrix.to_csv(f, sep='\t', index=True, header=False)
+#       structure_matrix.index = ordered_names
         return structure_matrix
 
     def test_statistic(self, eigenvalues):
@@ -644,7 +634,7 @@ class GWAS(object):
         test_statistic = (lowercase_l - mu_hat) / sigma_hat
         return test_statistic
 
-    def hapmap_formatter(self, int_to_snp_conversions):
+    def hapmap_formatter(self, int_to_snp_conversions, hapmap_file_name):
         """
         Converts genotype data from sim.Population object to HapMap file format
         in expectation to be used in TASSEL for GWAS. At present the column
@@ -657,17 +647,17 @@ class GWAS(object):
         :rtype:
         """
         hapmap_data = {}
-        #hapmap_data['rs'] = self.locus_names
-        #hapmap_data['alleles'] = ['NA']*len(self.loci)
+        hapmap_data['rs'] = self.locus_names
+        hapmap_data['alleles'] = ['NA']*len(self.loci)
         hapmap_data['chrom'] = [self.pop.chromLocusPair(locus)[0]+1 for
                                 locus in self.loci]
         hapmap_data['pos'] = self.pos_names
 
         # Several columns which are set to 'NA'.
-        #extraneous_columns = ['strand', 'assembly', 'center', 'protLSID',
-        #                      'assayLSID', 'panelLSID', 'QCcode']
-        #for column in extraneous_columns:
-        #    hapmap_data[column] = ['NA']*len(self.loci)
+        extraneous_columns = ['strand', 'assembly', 'center', 'protLSID',
+                              'assayLSID', 'panelLSID', 'QCcode']
+        for column in extraneous_columns:
+            hapmap_data[column] = ['NA']*len(self.loci)
 
         # Each individual has a column. Simulated individuals will have names
         # reflecting some information about them. 'RS' recurrent selection,
@@ -694,18 +684,18 @@ class GWAS(object):
         #  list of names will guarantee that col names are in same order as
         # the hapmap_data
 
-        hapmap_ordered_columns = ['chrom', 'pos'] + self.individual_names
+        hapmap_ordered_columns = ['rs', 'alleles', 'chrom', 'pos'] + extraneous_columns + self.individual_names
 
         hapmap_matrix = pd.DataFrame(columns=hapmap_ordered_columns)
         for k, v in hapmap_data.items():
             hapmap_matrix[k] = v
 
-#        hapmap_matrix.to_csv(hapmap_matrix_filename, sep='\t',
-#                             index=False)
+        hapmap_matrix.to_csv(hapmap_file_name, sep='\t',
+                             index=False)
 
         return hapmap_matrix
 
-    def trait_formatter(self):
+    def trait_formatter(self, trait_file_name = None):
         """
         Simple function to automate the formatting of the phenotypic data.
         Because of the way the header must be written the file is opened in
@@ -713,23 +703,40 @@ class GWAS(object):
         unsuspected bug.
         :param trait_filename:
         """
-        header = "<Trait>\tsim\n"
-
         trait_vector = pd.DataFrame(np.array([self.individual_names,
                                self.pop.indInfo('p')]).T)
 
-#        cwd = os.getcwd()
-#        file_out_path = os.path.join(cwd, trait_filename)
-
-#        if os.path.exists(file_out_path):
-#            os.remove(file_out_path)
-#        with open(trait_filename, 'w') as f:
-#            f.write(header)
-#            trait_vector.to_csv(f, sep='\t', index=False, header=False)
+        if trait_file_name is not None:
+            header = "<Trait>\tsim\n"
+            with open(trait_file_name, 'w') as f:
+                f.write(header)
+                trait_vector.to_csv(f, sep='\t', index=False, header=False)
 
         return trait_vector
 
-    def calc_kinship_matrix(self, allele_count_matrix, allele_frequencies):
+    def replacement_trait_formatter(self, existing_trait_file_name, new_trait_file_name, new_trait_values):
+        """
+        Reads an existing phenotype vector and replaces the values for each individual
+        with new values specified by new_trait_values. The new file is written
+        to new_trait_file_name in the TASSEL_in format.
+
+        :param existing_trait_file_name:
+        :param new_trait_file_name:
+        :param new_trait_values:
+        :return:
+        """
+
+        pd.read_csv(existing_trait_file_name, sep='\t')
+
+        if trait_file_name is not None:
+            header = "<Trait>\tsim\n"
+            with open(trait_file_name, 'w') as f:
+                f.write(header)
+                trait_vector.to_csv(f, sep='\t', index=False, header=False)
+
+        return trait_vector
+
+    def calc_kinship_matrix(self, allele_count_matrix, allele_frequencies, kinship_matrix_file_name = None):
         """
         Calculates the kinship matrix according to VanRaden 2008:
         Efficient Methods to Compute Genomic Predictions and writes it to a
@@ -772,19 +779,12 @@ class GWAS(object):
 
         annotated_G = pd.DataFrame(G, index=self.individual_names)
 
-        # Tassel example has number of individuals in the header of the G
-        # matrix file
-#        header = "{}\n".format(self.pop.popSize())
-
-#        cwd = os.getcwd()
-#        file_out_path = os.path.join(cwd, kinship_filename)
-#
-#        if os.path.exists(file_out_path):
-#            os.remove(file_out_path)
-#        with open(kinship_filename, 'w') as f:
-#            f.write(header)
-#            annotated_G.to_csv(f, sep='\t', index=True, header=False,
-#                               float_format='%.3f')
+        if kinship_matrix_file_name is not None:
+            header = "{}\n".format(self.pop.popSize())
+            with open(kinship_matrix_file_name, 'w') as f:
+                f.write(header)
+                annotated_G.to_csv(f, sep='\t', index=True, header=False,
+                                      float_format='%.3f')
 
         return annotated_G
 
@@ -834,6 +834,8 @@ class GWAS(object):
                        method="xml", xml_declaration=True, standalone='',
                         pretty_print=True)
 
+
+
     def replicate_tassel_gwas_configs(self, rep_id, sample_size,
                                          hapmap_file_name,
                                          kinship_file_name,
@@ -878,6 +880,50 @@ class GWAS(object):
                         encoding="UTF-8",
                         method="xml", xml_declaration=True, standalone='',
                         pretty_print=True)
+
+def modify_gwas_config(rep_id, sample_size, new_run_id,
+                                      new_phenotype_file_name,
+                                      new_output_file_prefix,
+                                      existing_config_file):
+
+
+    """
+    Creates an xml file to run TASSEL using a mixed linear model approach.
+    Assumes use of hapmap, kinship, phenotype and population structure files.
+
+    The TASSEL command line interface requires a considerable number of
+    options to run GWAS. It is impractical to run the command line manually
+    for the number of replications in a simulated study. The TASSEL command
+    line interface allows the user to input a .xml file with the same
+    information which is used in the terminal.
+
+    :param input_directory: Directory path to send the input files.
+    :param run_identifier_prefix: Identifier for single replicate of data
+    :param config_file_templae: XML file already setup for running a
+    specific kind of GWAS
+    :return: XML file to run a single replicate of data using TASSEL
+    """
+
+    import xml.etree.ElementTree as ET
+    import lxml.etree as etree
+
+    tree = ET.parse(existing_config_file)
+    root = tree.getroot()
+    lxml_tree = etree.fromstring(ET.tostring(root))
+    lxml_root = lxml_tree.getroottree()
+
+#        lxml_root.find('fork1/h').text = hapmap_file_name
+    lxml_root.find('fork2/t').text = new_phenotype_file_name
+#        lxml_root.find('fork3/q').text = structure_file_name
+#        lxml_root.find('fork4/k').text = kinship_file_name
+
+    lxml_root.find('combine6/export').text = new_output_file_prefix
+
+    lxml_root.write("C:\\tassel\\bin\\" + 'R' + rep_id + '_' + str(
+        sample_size) + '_' + new_run_id + '_' + "_sim_gwas_pipeline.xml",
+                    encoding="UTF-8",
+                    method="xml", xml_declaration=True, standalone='',
+                    pretty_print=True)
 
 
 def single_sample_analyzer(full_population, sample_size,
@@ -944,23 +990,41 @@ def single_sample_analyzer(full_population, sample_size,
               "saegus_project\\devel\\magic\\1478\\daoko_girl_gwas_pipeline.xml")
     return segregating_loci, aes_table
 
-def collect_samples(replicate_populations, sample_sizes, run_id):
+class Study(object):
     """
-    Testing for concordance of segregating loci among samples requires that
-    the samples be gathered in advance. Collects samples from replicate_populations
+    Encapsulation of functions and properties to track information about a line
+    of analysis or idea. Required parameter is a str run_id. Hence everything
+    with the same run_id is related.
 
-    :param replicate_populations: Multi-replicate population to analyze
-    :param sample_sizes: Size of sample to gather.
-
-    :note: :py:func:`len(sample_sizez)` == number of samples gathered from each replicate.
-
-    :param str run_id: Identifier
-    :return: List of populations
     """
-    samples = {}
-    for rep in replicate_populations.populations():
-        samples[rep] = [sim.sampling.drawRandomSample(rep, sizes=sample_size) for sample_size in sample_sizes]
-    return samples
+
+
+    def __init__(self, run_id):
+        """
+        Studies are identified by their run_id. A study has its own set of
+        input/output associated with it identifiable by the run_id in the file
+        name.
+        :param str run_id: Unique identifier to naturally group related pieces of data.
+        """
+        self.run_id = run_id
+
+    def collect_samples(self, replicate_populations, sample_sizes):
+        """
+        Testing for concordance of segregating loci among samples requires that
+        the samples be gathered in advance. Collects samples from replicate_populations
+
+        :param replicate_populations: Multi-replicate population to analyze
+        :param sample_sizes: Size of sample to gather.
+
+        :note: :py:func:`len(sample_sizez)` == number of samples gathered from each replicate.
+
+        :param str run_id: Identifier
+        :return: List of populations
+        """
+        samples = {}
+        for rep in replicate_populations.populations():
+            samples[rep] = [sim.sampling.drawRandomSample(rep, sizes=sample_size) for sample_size in sample_sizes]
+        return samples
 
 
 def multi_sample_allele_frq_storage(library_of_samples, alleles, run_id='hdenies'):
@@ -979,7 +1043,7 @@ def multi_sample_allele_frq_storage(library_of_samples, alleles, run_id='hdenies
 
 
 
-def multiple_sample_analyzer(library_of_samples, sample_size_list,
+def write_multiple_sample_analyzer(library_of_samples, sample_size_list,
                              quantitative_trait_loci, alleles, allele_effects,
                              heritability, segregating_loci, run_id='infinite',
                              allele_frequency_hdf='hdenies_library_storage.h5'):
@@ -990,14 +1054,9 @@ def multiple_sample_analyzer(library_of_samples, sample_size_list,
     syn_parameters.close()
 
     allele_frqs = pd.HDFStore(allele_frequency_hdf, mode='r')
-    gwas_object_library = {}
-
 
     for rep_id, sample_list in library_of_samples.items():
         for sample_population in sample_list:
-#            sample_population = sim.sampling.drawRandomSample(rep,
-#                                                              sizes=sample_size)
-
             rep_prefix = str(rep_id)
 
             operators.assign_additive_g(sample_population, quantitative_trait_loci,
@@ -1006,35 +1065,31 @@ def multiple_sample_analyzer(library_of_samples, sample_size_list,
             operators.calculate_error_variance(sample_population, heritability)
 
             operators.phenotypic_effect_calculator(sample_population)
-#            af = allele_data(sample_population, alleles,
-#                             range(sample_population.totNumLoci()))
-#
-#            af.to_hdf('R' + rep_prefix + '_' + str(sample_size) + '_' + run_id + '_af.hdf', 'af')
 
-            name = run_id + '/' + str(rep_id) + '/' + str(sample_population.popSize())
-            minor_alleles = allele_frqs[name]['minor_allele']
+            name = run_id + '_' + str(rep_id) + '_' + str(sample_population.popSize())
+            afrq_name = run_id + '/' + str(rep_id) + '/' + str(sample_population.popSize())
+            minor_alleles = allele_frqs[afrq_name]['minor_allele']
+            minor_allele_frequencies = np.array([allele_frqs[afrq_name]['minor_frequency'][locus] for locus in segregating_loci])
 
-            gwas = GWAS(sample_population, segregating_loci,
-                        np.array(minor_alleles), run_id)
-            gwas_object_library[name] = gwas
-
+            gwas = GWAS(sample_population, segregating_loci, run_id)
 
             indir = "C:\\tassel\\input\\"
-            ccm = gwas.calculate_count_matrix(indir + 'R' + rep_prefix + '_' + str(sample_size) +  '_' + run_id + '_MAC.txt')
-            ps_svd = gwas.pop_struct_svd(ccm)
-            ps_m = gwas.population_structure_formatter(ps_svd, indir + 'R'+ rep_prefix + '_' + str(sample_size) + '_' + run_id + '_structure_matrix.txt')
-            hmap = gwas.hapmap_formatter(int_to_snp_map,
-                                         indir + 'R' + rep_prefix + '_' + str(sample_size) + '_' + run_id + '_simulated_hapmap.txt')
-            phenos = gwas.trait_formatter(indir + 'R' + rep_prefix + '_' + str(sample_size) + '_' + run_id + '_phenotype_vector.txt')
-            ks_m = gwas.calc_kinship_matrix(ccm, af,
-                                            indir + 'R' + rep_prefix + '_' + str(sample_size) + '_' + run_id + '_kinship_matrix.txt')
 
-            gwas.replicate_tassel_gwas_configs(rep_prefix, sample_size,
-                indir + 'R' + rep_prefix + '_' + str(sample_size) + '_' + run_id + '_simulated_hapmap.txt',
-                indir + 'R' + rep_prefix + '_' + str(sample_size) + '_' + run_id + '_kinship_matrix.txt',
-                indir + 'R' + rep_prefix + '_' + str(sample_size) + '_' + run_id + '_phenotype._vector.txt',
-                indir + 'R' + rep_prefix + '_' + str(sample_size) + '_' + run_id + '_structure_matrix.txt',
-                "C:\\tassel\\output\\" + 'R' + rep_prefix + '_' + str(sample_size) + '_' + run_id + '_out_',
+            ccm = gwas.calculate_count_matrix(minor_alleles, indir+name+'_MAC.txt')
+            ps_svd = gwas.pop_struct_svd(ccm)
+            ps_m = gwas.population_structure_formatter(ps_svd, indir + name + '_structure_matrix.txt')
+            hmap = gwas.hapmap_formatter(int_to_snp_map,
+                                         indir + name + '_simulated_hapmap.txt')
+            phenos = gwas.trait_formatter(indir + name + '_phenotype_vector.txt')
+            ks_m = gwas.calc_kinship_matrix(ccm, minor_allele_frequencies,
+                                            indir + name + '_kinship_matrix.txt')
+
+            gwas.replicate_tassel_gwas_configs(rep_prefix, sample_population.popSize(),
+                indir + name + '_simulated_hapmap.txt',
+                indir + name + '_kinship_matrix.txt',
+                indir + name + '_phenotype_vector.txt',
+                indir + name + '_structure_matrix.txt',
+                "C:\\tassel\\output\\" + name + '_out_',
                                               "C:\\Users\DoubleDanks\\BISB\\wisser\\code\\rjwlab-scripts\\"
                                               "saegus_project\\devel\\magic\\1478\\" + run_id + "_gwas_pipeline.xml")
 
@@ -1046,6 +1101,10 @@ def remap_ae_table_loci(allele_effect_table, saegus_to_tassel_loci):
     Converts the absolute indices of saegus population to the indices of the truncated
     set of segregating loci. Allows for appropriate comparisons of loci.
     """
+
+    reindexed_allele_effect_table = pd.DataFrame(np.array(allele_effect_table)
+                                                 )
+
     remapped_loci = [saegus_to_tassel_loci[locus]
                      for locus in allele_effect_table['locus']]
     allele_effect_table['locus'] = remapped_loci
