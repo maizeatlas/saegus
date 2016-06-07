@@ -216,7 +216,8 @@ def allele_frq_table(self, pop, number_gens,
 
 
 def generate_allele_effects_table(qtl, alleles, allele_effects,
-                                  saegus_to_tassel_conversions):
+                                  saegus_to_tassel_conversions,
+                                  output_file_name=None):
     """
     Creates a simple pd.DataFrame for allele effects. Hard-coded
     for bi-allelic case.
@@ -250,6 +251,11 @@ def generate_allele_effects_table(qtl, alleles, allele_effects,
     order_of_columns = ['locus', 'tassel_locus', 'alpha_allele', 'alpha_effect',
                         'beta_allele', 'beta_effect', 'difference']
     allele_effect_table = pd.DataFrame(ae_table, columns=order_of_columns)
+
+    if output_file_name is not None:
+        allele_effect_table.to_csv(output_file_name, sep='\t',
+                                   index=False, float_format='%.3f')
+
     return allele_effect_table
 
 
@@ -1126,7 +1132,8 @@ def remap_ae_table_loci(allele_effect_table, saegus_to_tassel_loci):
     return expanded_ae_table
 
 
-def reconfigure_gwas_results(gwas_results_file, q_values_file, expanded_allele_effects_table, delim="\t"):
+def reconfigure_gwas_results(gwas_results_file, q_values_file,
+                             expanded_allele_effects_table, delim="\t"):
     """
     Useful function which parses the output from TASSEL, collects the useful
     pieces of information such as p values, q values and allele effects
@@ -1147,6 +1154,36 @@ def reconfigure_gwas_results(gwas_results_file, q_values_file, expanded_allele_e
     greater_results = results.join(expanded_allele_effects_table)
 
     return greater_results
+
+
+def calculate_power_fpr(panel_map, sample_sizes, number_of_replicates,
+                            number_of_qtl):
+    analysis_columns = []
+    for size in sample_sizes:
+        analysis_columns.append('_'.join(['power', str(size)]))
+        analysis_columns.append('_'.join(['fpr', str(size)]))
+
+    power_fpr_results = pd.DataFrame(index=range(number_of_replicates),
+                                     columns=analysis_columns)
+    for size in sample_sizes:
+        panel_of_tassel_results = pd.Panel(panel_map[size])
+        potential_false_positives = len(panel_of_tassel_results[0])
+        for rep in range(number_of_replicates):
+            power_column = 'power_' + str(size)
+            fpr_column = 'fpr_' + str(size)
+            power_fpr_results.ix[rep, power_column] = len(
+                panel_of_tassel_results[rep][
+                    (panel_of_tassel_results[rep].ix[:, 'q'] < 0.05)
+                    & (panel_of_tassel_results[rep].ix[:,
+                       'difference'] > 0.0)]) / number_of_qtl
+
+            power_fpr_results.ix[rep, fpr_column] = len(
+                panel_of_tassel_results[rep][
+                    (panel_of_tassel_results[rep].ix[:, 'q'] < 0.05)
+                    & (panel_of_tassel_results[rep].ix[:,
+                       'difference'] == 0.0)]) / potential_false_positives - number_of_qtl
+    return power_fpr_results
+
 
 
 def replicate_gwas_results(gwas_results_file, q_values_file, expanded_allele_effects_table, delim="\t"):
