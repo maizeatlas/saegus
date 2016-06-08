@@ -3,7 +3,44 @@
 ==============
 
 
-.. py:class:: GWAS(pop, loci, allele_subset, run_id)
+.. py:class:: GWAS(pop, loci, run_id)
+
+
+   .. py:method:: calculate_count_matrix(allele_subset, count_matrix_file_name=None)
+
+      :parameter allele_subset:
+      :parameter str count_matrix_file_name:
+
+   .. py:method:: calc_kinship_matrix(allele_count_matrix, allele_frequencies, kinship_matrix_file_name)
+
+      :parameter numpy.array allele_count_matrix: Minor/major allele copy number counts for each individual at each locus
+      :parameter allele_frequencies: Minor/major allele frequencies for each locus. Used for Kinship (K) matrix count.
+      :parameter kinship_matrix_file_name: Output file name to write TASSEL formatted K matrix with additional column for individual IDs
+
+   .. py:method:: pop_struct_svd(count_matrix)
+
+      :parameter count_matrix: numpy.array of minor allele counts of each individual
+
+   .. py:method:: population_structure_formatter(eigen_data, pop_struct_file_name=None)
+
+      :parameter dict eigen_data: Output from pop_struct_svd. Contains eigenvectors of PCA
+      :parameter str pop_struct_file_name: File name to write first two components of PCA
+
+
+   .. py:method:: hapmap_formatter(int_to_snp_conversions, hapmap_file_name)
+
+      :parameter dict int_to_snp_conversions: Converts integer alleles to their corresponding string nucleotides
+      :parameter str hapmap_file_name: Output file name to write tab-delimited columns
+
+   .. py:method:: trait_formatter(trait_file_name=None)
+
+      :parameter str trait_file_name: Output file name with tab-delimited columns and special TASSEL header.
+
+   .. py:method:: replacement_trait_formatter(existing_trait_file_name, new_trait_file_name, new_trait_values)
+
+      :parameter str existing_trait_file_name: Existing file of TASSEL formatted phenotype vector
+      :parameter str new_trait_file_name: New file name written using replacement data
+      :parameter new_trait_values: Values to replace existing phenotype values. Must be same number of values in existing_trait_file_name
 
 
 .. py:function:: allele_data(pop, alleles, loci)

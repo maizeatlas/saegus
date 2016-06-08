@@ -577,7 +577,7 @@ class GWAS(object):
         """
 
         Follows procedure of Population Structure and Eigenanalysis
-        Patterson et al 2006.
+      Patterson et al 2006.
         Constructs a genotype matrix of bi-allelic loci where each entry is
         the number of copies of the major allele at each locus. The genotype
         matrix has dimensions (number_of_individuals)*(number_of_markers).
@@ -891,6 +891,7 @@ class GWAS(object):
                         method="xml", xml_declaration=True, standalone='',
                         pretty_print=True)
 
+
 def modify_gwas_config(rep_id, sample_size, new_run_id,
                                       new_phenotype_file_name,
                                       new_output_file_prefix,
@@ -1033,7 +1034,9 @@ class Study(object):
         """
         samples = {}
         for rep in replicate_populations.populations():
-            samples[rep] = [sim.sampling.drawRandomSample(rep, sizes=sample_size) for sample_size in sample_sizes]
+            samples[rep.dvars().rep] =\
+                [sim.sampling.drawRandomSample(rep, sizes=sample_size)
+                 for sample_size in sample_sizes]
         return samples
 
 
@@ -1067,7 +1070,6 @@ def write_multiple_sample_analyzer(library_of_samples, sample_size_list,
 
     for rep_id, sample_list in library_of_samples.items():
         for sample_population in sample_list:
-            rep_prefix = str(rep_id)
 
             operators.assign_additive_g(sample_population, quantitative_trait_loci,
                                         allele_effects)
@@ -1094,7 +1096,7 @@ def write_multiple_sample_analyzer(library_of_samples, sample_size_list,
             ks_m = gwas.calc_kinship_matrix(ccm, minor_allele_frequencies,
                                             indir + name + '_kinship_matrix.txt')
 
-            gwas.replicate_tassel_gwas_configs(rep_prefix, sample_population.popSize(),
+            gwas.replicate_tassel_gwas_configs(str(rep_id), sample_population.popSize(),
                 indir + name + '_simulated_hapmap.txt',
                 indir + name + '_kinship_matrix.txt',
                 indir + name + '_phenotype_vector.txt',
@@ -1154,6 +1156,18 @@ def reconfigure_gwas_results(gwas_results_file, q_values_file,
     greater_results = results.join(expanded_allele_effects_table)
 
     return greater_results
+
+def collect_power_analysis_data(sample_sizes, number_of_replicates, run_id):
+    for size in sample_sizes:
+        panel_map[size] = {}
+        for rep in range(number_of_replicates):
+            tassel_output_file_name = '_'.join([run_id,
+                                                str(rep), str(size), 'out_2.txt'])
+            q_value_file_name = '_'.join([run_id,
+                                          str(rep), str(size), 'qvalues.txt'])
+            panel_map[size][rep] = analyze.reconfigure_gwas_results(tassel_output_file_name,
+                                            q_value_file_name, expanded)
+    return panel_map
 
 
 def calculate_power_fpr(panel_map, sample_sizes, number_of_replicates,
