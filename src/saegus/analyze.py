@@ -577,7 +577,7 @@ class GWAS(object):
         """
 
         Follows procedure of Population Structure and Eigenanalysis
-      Patterson et al 2006.
+        Patterson et al 2006.
         Constructs a genotype matrix of bi-allelic loci where each entry is
         the number of copies of the major allele at each locus. The genotype
         matrix has dimensions (number_of_individuals)*(number_of_markers).
@@ -930,7 +930,7 @@ def modify_gwas_config(rep_id, sample_size, new_run_id,
 
     lxml_root.find('combine6/export').text = new_output_file_prefix
 
-    lxml_root.write("C:\\tassel\\bin\\" + 'R' + rep_id + '_' + str(
+    lxml_root.write("C:\\tassel\\bin\\" + 'R' + str(rep_id) + '_' + str(
         sample_size) + '_' + new_run_id + '_' + "_sim_gwas_pipeline.xml",
                     encoding="UTF-8",
                     method="xml", xml_declaration=True, standalone='',
@@ -1039,6 +1039,141 @@ class Study(object):
                  for sample_size in sample_sizes]
         return samples
 
+    def save_sample_populations(self, library_of_samples, series_id, sub_group):
+        for rep, sample_list in library_of_samples.items():
+            for sample in sample_list:
+                name = '_'.join(
+                    [run_id, str(rep), str(sample.popSize())]) + '.pop'
+                sample.save(os.path.join(os.getcwd(), name))
+
+    def collect_power_analysis_data(self, sample_sizes, number_of_replicates,
+                                    genome_wide_allele_effect_differences):
+        panel_map = {}
+        for size in sample_sizes:
+            panel_map[size] = {}
+            for rep in range(number_of_replicates):
+                tassel_output_file_name = str('_'.join([self.run_id,
+                                                    str(rep), str(size),
+                                                    'out_2.txt']))
+                q_value_file_name = str('_'.join([self.run_id,
+                                              str(rep), str(size),
+                                              'qvalues.txt']))
+                panel_map[size][rep] = reconfigure_gwas_results(
+                    tassel_output_file_name,
+                    q_value_file_name, genome_wide_allele_effect_differences)
+        return panel_map
+
+    def calculate_power_fpr(self, panel_map, sample_sizes, number_of_replicates,
+                                number_of_qtl):
+        """
+        Determines the power by calculating number of detected loci divided by
+        the number of loci with effects.
+
+        :param panel_map: Dictionary of dictionaries of pandas.DataFrames. Keyed by panel_map[size][rep] = pd.DataFrame
+        :param sample_sizes: List of integers corresponding to how many individuals are sampled from each replicate.
+        :param number_of_replicates: Number of replicates in the run
+        :param number_of_qtl: Loci declared as QTL and assigned an effect
+        :return: pd.DataFrame summarizing power and false positive rate across replicates and sample sizes.
+        """
+
+
+        true_positive_detected_loci = {}
+        false_positive_detected_loci = {}
+
+        analysis_columns = []
+        for size in sample_sizes:
+            analysis_columns.append('_'.join(['power', str(size)]))
+            analysis_columns.append('_'.join(['fpr', str(size)]))
+        power_fpr_results = pd.DataFrame(index=range(number_of_replicates),
+                                         columns=analysis_columns)
+
+        for size in sample_sizes:
+            panel_of_tassel_results = pd.Panel(panel_map[size])
+            potential_false_positives = len(panel_of_tassel_results[0])
+            for rep in range(number_of_replicates):
+                power_column = 'power_' + str(size)
+                fpr_column = 'fpr_' + str(size)
+                power_fpr_results.ix[rep, power_column] = len(
+                    panel_of_tassel_results[rep][
+                        (panel_of_tassel_results[rep].ix[:, 'q'] < 0.05)
+                        & (panel_of_tassel_results[rep].ix[:,
+                           'difference'] > 0.0)]) / number_of_qtl
+
+                true_positive_detected_loci[size, rep] = panel_of_tassel_results[rep][
+                    (panel_of_tassel_results[rep].ix[:, 'q'] < 0.05)
+                    & (panel_of_tassel_results[rep].ix[:, 'difference'] > 0.0)]
+
+                power_fpr_results.ix[rep, fpr_column] = len(
+                    panel_of_tassel_results[rep][
+                        (panel_of_tassel_results[rep].ix[:, 'q'] < 0.05)
+                        & (
+                        panel_of_tassel_results[rep].ix[:, 'difference'] == 0.0)]) / (
+                                                        potential_false_positives - number_of_qtl)
+
+                false_positive_detected_loci[size, rep] = panel_of_tassel_results[rep][
+                    (panel_of_tassel_results[rep].ix[:, 'q'] < 0.05)
+                    & (panel_of_tassel_results[rep].ix[:, 'difference'] == 0.0)]
+
+        return power_fpr_results, true_positive_detected_loci, \
+               false_positive_detected_loci
+
+    def probability_of_detection(self, allele_effects_table, sample_sizes,
+                                     number_of_replicates,
+                                     true_positives_detected):
+        """
+        Calculates the probability that a locus with an effect is detected.
+        Probability of detection is defined as the number of times a locus is detected
+        divided by the total number of realizations
+
+        Example
+        -------
+        If the number of realizations is 200 and a locus is detected in all 200 realizations
+         then its probability of detection is 1.0
+
+        :param allele_effects_table: Allele effects table given by generate_allele_effects_table
+        :param sample_sizes: List of number of individuals sampled from each replicate
+        :param number_of_replicates: Number of replicates in the run
+        :param true_positives_detected: Dictionary of lists of loci with effects that were detected.
+        :return: Modified version of allele effects table which includes the probability of detection column.
+        """
+
+        number_of_realizations = len(sample_sizes) * number_of_replicates
+        aggregate_detected_loci = []
+        for size in sample_sizes:
+            for rep in range(number_of_replicates):
+                aggregate_detected_loci.extend(list(true_positives_detected[size, rep].index))
+
+        prob_detection_table = allele_effects_table.copy()
+        prob_detection_table = pd.DataFrame(prob_detection_table, columns=list(
+            prob_detection_table.columns) + ['detected'])
+        prob_detection_table.fillna(0, inplace=True)
+        prob_detection_table.index = list(prob_detection_table['tassel_locus'])
+        prob_detection_table.drop('tassel_locus', axis=1, inplace=True)
+        for locus, count_detected in col.Counter(aggregate_detected_loci).items():
+            prob_detection_table.ix[
+                locus, 'detected'] = count_detected / number_of_realizations
+
+        return prob_detection_table
+
+    def seg_loci_among_samples(self, sample_library):
+        """
+        Examines the segregating loci of all samples and counts how many
+        times each set of segregating loci occurs among samples. If the final
+        count is equal to number of replicates * length of sample sizes then
+        all loci have the same segregating loci.
+
+        :param sample_library:
+        :return:
+        """
+        for rep in sample_library.values():
+            for sample in rep:
+                sim.stat(sample, numOfSegSites=sim.ALL_AVAIL,
+                         vars=['segSites', 'numOfSegSites'])
+        seg_of_samples = (tuple(sample.dvars().segSites) for rep in
+                          sample_library.values() for sample in rep)
+        segregating_loci_counts = col.Counter(seg_of_samples)
+        return segregating_loci_counts
+
 
 def multi_sample_allele_frq_storage(library_of_samples, alleles, run_id='hdenies'):
 
@@ -1046,7 +1181,7 @@ def multi_sample_allele_frq_storage(library_of_samples, alleles, run_id='hdenies
 
     for rep_id, samples in library_of_samples.items():
         for sample in samples:
-            af = analyze.allele_data(sample, alleles,
+            af = allele_data(sample, alleles,
                                  range(sample.totNumLoci()))
 
             name = run_id + '/' + str(rep_id) + '/' + str(sample.popSize())
@@ -1058,8 +1193,9 @@ def multi_sample_allele_frq_storage(library_of_samples, alleles, run_id='hdenies
 
 def write_multiple_sample_analyzer(library_of_samples, sample_size_list,
                              quantitative_trait_loci, alleles, allele_effects,
-                             heritability, segregating_loci, run_id='infinite',
-                             allele_frequency_hdf='hdenies_library_storage.h5'):
+                         heritability, segregating_loci, run_id='infinite',
+                         sub_run_id = '',
+                         allele_frequency_hdf='hdenies_library_storage.h5'):
 
 
     syn_parameters = shelve.open('synthesis_parameters')
@@ -1073,12 +1209,10 @@ def write_multiple_sample_analyzer(library_of_samples, sample_size_list,
 
             operators.assign_additive_g(sample_population, quantitative_trait_loci,
                                         allele_effects)
-
             operators.calculate_error_variance(sample_population, heritability)
-
             operators.phenotypic_effect_calculator(sample_population)
 
-            name = run_id + '_' + str(rep_id) + '_' + str(sample_population.popSize())
+            name = run_id + sub_run_id + '_' + str(rep_id) + '_' + str(sample_population.popSize())
             afrq_name = run_id + '/' + str(rep_id) + '/' + str(sample_population.popSize())
             minor_alleles = allele_frqs[afrq_name]['minor_allele']
             minor_allele_frequencies = np.array([allele_frqs[afrq_name]['minor_frequency'][locus] for locus in segregating_loci])
@@ -1087,13 +1221,13 @@ def write_multiple_sample_analyzer(library_of_samples, sample_size_list,
 
             indir = "C:\\tassel\\input\\"
 
-            ccm = gwas.calculate_count_matrix(minor_alleles, indir+name+'_MAC.txt')
+            ccm = gwas.calculate_count_matrix(minor_alleles)
             ps_svd = gwas.pop_struct_svd(ccm)
-            ps_m = gwas.population_structure_formatter(ps_svd, indir + name + '_structure_matrix.txt')
-            hmap = gwas.hapmap_formatter(int_to_snp_map,
+            gwas.population_structure_formatter(ps_svd, indir + name + '_structure_matrix.txt')
+            gwas.hapmap_formatter(int_to_snp_map,
                                          indir + name + '_simulated_hapmap.txt')
-            phenos = gwas.trait_formatter(indir + name + '_phenotype_vector.txt')
-            ks_m = gwas.calc_kinship_matrix(ccm, minor_allele_frequencies,
+            gwas.trait_formatter(indir + name + '_phenotype_vector.txt')
+            gwas.calc_kinship_matrix(ccm, minor_allele_frequencies,
                                             indir + name + '_kinship_matrix.txt')
 
             gwas.replicate_tassel_gwas_configs(str(rep_id), sample_population.popSize(),
@@ -1106,6 +1240,78 @@ def write_multiple_sample_analyzer(library_of_samples, sample_size_list,
                                               "saegus_project\\devel\\magic\\1478\\" + run_id + "_gwas_pipeline.xml")
 
 
+def generate_allele_effects_frequencies(sample_population, allele_effects,
+                                        alpha_alleles, beta_alleles):
+    alpha_allele_frequencies = np.array(
+        [sample_population.dvars().alleleFreq[locus][alpha_allele] for
+         locus, alpha_allele in enumerate(alpha_alleles)])
+    beta_allele_frequencies = np.array(
+        [sample_population.dvars().alleleFreq[locus][beta_allele] for
+         locus, beta_allele in enumerate(beta_alleles)])
+
+    alpha_effects, beta_effects = np.zeros(len(alpha_alleles)), np.zeros(
+        len(beta_alleles))
+    for locus in qtl:
+        alpha_effects[locus] = allele_effects[locus][alpha_alleles[locus]]
+        beta_effects[locus] = allele_effects[locus][beta_alleles[locus]]
+
+    difference = np.abs(alpha_effects - beta_effects)
+    loci = np.arange(len(alpha_alleles), dtype=np.int64)
+
+    table_data = dict(locus=loci,
+                      alpha_allele=alpha_alleles,
+                      alpha_frequency=alpha_allele_frequencies,
+                      alpha_effect=alpha_effects,
+                      beta_allele=beta_alleles,
+                      beta_frequency=beta_allele_frequencies,
+                      beta_effect=beta_effects,
+                      difference=difference)
+
+    order_of_columns = ['locus', 'alpha_allele', 'alpha_frequency',
+                        'alpha_effect',
+                        'beta_allele', 'beta_frequency', 'beta_effect',
+                        'difference']
+
+    return pd.DataFrame(table_data, columns=order_of_columns)
+
+
+def generate_super_table(run_id,
+                         rep_id,
+                         sample_size,
+                         gwas_results_file, q_values_file,
+                         sub_run_id='',
+                         subsetted_allele_frequency_table,
+                         expanded_allele_effects_table, sep="\t"):
+
+
+    """
+    Combines the TASSEL output with allele frequencies, allele effects and
+    q values.
+
+
+    """
+    gwas_results_file = '_'.join([run_id, sub_run_id, str(rep_id), str()])
+
+    gwas_results = pd.read_csv(gwas_results_file, sep=sep)
+    gwas_results.drop('Trait', axis=1, inplace=True)
+    gwas_results.drop('Pos', axis=1, inplace=True)
+    gwas_results.drop(0, axis=0, inplace=True)
+    gwas_results = gwas_results.ix[:, 'Marker':'dom_p']
+    gwas_results.index = gwas_results.index - 1
+    gwas_results.drop('Marker', axis=1, inplace=True)
+    qvalues = pd.read_csv(q_values_file, sep=delim)
+    qvalues.columns = ['q']
+    qvalues.index = qvalues.index - 1
+    results = gwas_results.join(qvalues)
+
+    alpha_alleles, beta_alleles = alleles[:, 0], alleles[:, 1]
+
+    expanded_allele_effects_table = generate_allele_effects_frequencies()
+
+    greater_results = results.join(expanded_allele_effects_table)
+    super_table = greater_results.join(subsetted_allele_frequency_table)
+
+    return super_table
 
 
 def remap_ae_table_loci(allele_effect_table, saegus_to_tassel_loci):
@@ -1124,14 +1330,50 @@ def remap_ae_table_loci(allele_effect_table, saegus_to_tassel_loci):
 #                                          allele_effect_table['beta_effect'])
 
     remapped_ae_table.index = remapped_ae_table.locus
-
-    expanded_ae_table = pd.DataFrame(np.zeros((len(saegus_to_tassel_loci))).T,
+    expanded_ae_table = pd.DataFrame(np.zeros(
+        (len(saegus_to_tassel_loci), 6)).T,
                                               columns=['difference'])
 
     for qtlocus in remapped_ae_table.locus:
         expanded_ae_table.ix[qtlocus, 'difference'] =  remapped_ae_table.ix[qtlocus, 'difference']
 
     return expanded_ae_table
+
+def remap_afrq_table_loci(allele_frequency_table,
+                          saegus_to_tassel_loci):
+
+    loci = list(allele_frequency_table.index)
+    segregating_loci = list(saegus_to_tassel_loci.keys())
+    droppable_loci = [locus for locus in loci if locus not in segregating_loci]
+    allele_frequency_table_subset = allele_frequency_table.drop(droppable_loci,
+                                                                axis=0)
+    new_index = list(range(len(segregating_loci)))
+    allele_frequency_table_subset.index = new_index
+    return allele_frequency_table_subset
+
+def remap_allele_effect_and_frq_table_loci(
+            allele_effect_and_frequency_table,
+            saegus_to_tassel_loci):
+    """
+    Drops non-segregating loci from the allele effect - frequency hybrid table.
+
+    :param allele_effect_and_frequency_table:
+    :param saegus_to_tassel_loci:
+    :return:
+    """
+
+
+    loci = list(allele_effect_and_frequency_table.index)
+    segregating_loci = list(saegus_to_tassel_loci.keys())
+    droppable_loci = [locus for locus in loci if locus not in segregating_loci]
+    allele_effect_and_frequency_table_subset = allele_effect_and_frequency_table.drop(
+        droppable_loci,
+        axis=0)
+    new_index = list(range(len(segregating_loci)))
+    allele_effect_and_frequency_table_subset.index = new_index
+    return allele_effect_and_frequency_table_subset
+
+
 
 
 def reconfigure_gwas_results(gwas_results_file, q_values_file,
@@ -1146,7 +1388,7 @@ def reconfigure_gwas_results(gwas_results_file, q_values_file,
     gwas_results.drop('Trait', axis=1, inplace=True)
     gwas_results.drop('Pos', axis=1, inplace=True)
     gwas_results.drop(0, axis=0, inplace=True)
-    gwas_results = gwas_results.ix[:, 'Marker':'p']
+    gwas_results = gwas_results.ix[:, 'Marker':'dom_p']
     gwas_results.index = gwas_results.index - 1
     gwas_results.drop('Marker', axis=1, inplace=True)
     qvalues = pd.read_csv(q_values_file, sep=delim)

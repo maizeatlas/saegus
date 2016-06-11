@@ -73,16 +73,13 @@ class MAGIC(object):
             gen=generations_of_random_mating,
         )
 
-class TopCross(object):
+class SelfCross(object):
     """
     Contains functions to implement top crossing or self mating to produce
     families for further analysis. Parental ID can be mapped to offspring via
     father_id information field.
 
     """
-
-
-
 
     def create_top_crosses(self, existing_pop, offspring_per_individual):
         new_pop_size = offspring_per_individual * existing_pop.popSize()

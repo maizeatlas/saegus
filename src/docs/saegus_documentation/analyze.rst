@@ -2,6 +2,7 @@
 :mod:`analyze`
 ==============
 
+.. _gwas:
 
 .. py:class:: GWAS(pop, loci, run_id)
 
@@ -41,6 +42,202 @@
       :parameter str existing_trait_file_name: Existing file of TASSEL formatted phenotype vector
       :parameter str new_trait_file_name: New file name written using replacement data
       :parameter new_trait_values: Values to replace existing phenotype values. Must be same number of values in existing_trait_file_name
+
+.. _study:
+
+.. py:class:: Study(run_id)
+
+   .. py:method:: collect_samples(replicate_populations, sample_sizes)
+
+      :parameter replicate_populations: simuPOP.Simulator with more than one population.
+      :parameter sample_sizes: A list of integer valued sample sizes to take from each population. Multiple samples taken from each replicate.
+      :return: Dictionary of lists of populations. Dictionary is keyed by ``population.dvars().rep``.
+
+      .. code-block:: python
+         :caption: Example of collect_samples
+
+         >>> sample_sizes = [500, 600, 700, 800, 900, 1000,
+         ...                    1100, 1200, 1300, 1400, 1500]
+         >>> samples = Study.collect_samples(replicate_pops, sample_sizes)
+         >>> samples
+         {0: [<simuPOP.Population>,
+         <simuPOP.Population>,
+         <simuPOP.Population>,
+         <simuPOP.Population>,
+         <simuPOP.Population>,
+         <simuPOP.Population>,
+         <simuPOP.Population>,
+         <simuPOP.Population>,
+         <simuPOP.Population>,
+         <simuPOP.Population>,
+         <simuPOP.Population>],
+         1: [<simuPOP.Population>,
+         <simuPOP.Population>,
+         <simuPOP.Population>,
+         <simuPOP.Population>,
+         <simuPOP.Population>,
+         <simuPOP.Population>,
+         <simuPOP.Population>,
+         <simuPOP.Population>,
+         <simuPOP.Population>,
+         <simuPOP.Population>,
+         <simuPOP.Population>],
+
+   .. py:method:: calculate_power_fpr(panel_map, sample_sizes, number_of_replicates, number_of_qtl)
+
+      Determines the power by calculating number of detected loci divided by
+      the number of loci with effects.
+
+      :param panel_map: Dictionary of dictionaries of pandas.DataFrames. Keyed by panel_map[size][rep] = pd.DataFrame
+      :param sample_sizes: List of integers corresponding to how many individuals are sampled from each replicate.
+      :param number_of_replicates: Number of replicates in the run
+      :param number_of_qtl: Loci declared as QTL and assigned an effect
+      :return: pd.DataFrame summarizing power and false positive rate across replicates and sample sizes, lists of true positive loci detected in each run.
+
+
+   .. py:method:: probability_of_detection(allele_effects_table, sample_sizes, number_of_replicates, true_positives_detected)
+
+      Calculates the probability that a locus with an effect is detected.
+      Probability of detection is defined as the number of times a locus is detected
+      divided by the total number of realizations
+
+      Example
+
+         If the number of realizations is 200 and a locus is detected in all 200 realizations
+         then its probability of detection is 1.0
+
+      :param allele_effects_table: Allele effects table given by generate_allele_effects_table
+      :param sample_sizes: List of number of individuals sampled from each replicate
+      :param number_of_replicates: Number of replicates in the run
+      :param true_positives_detected: Dictionary of lists of loci with effects that were detected.
+      :return: Modified version of allele effects table which includes the probability of detection column.
+
+      .. code-block:: python
+         :caption: Example of the return value
+
+         >>> prob_detection_table(aetable, sample_sizes, 20, true_positives_detected)
+         <div>
+         <table border="1" class="dataframe">
+         <thead>
+           <tr style="text-align: right;">
+             <th></th>
+             <th>locus</th>
+             <th>alpha_allele</th>
+             <th>alpha_effect</th>
+             <th>beta_allele</th>
+             <th>beta_effect</th>
+             <th>difference</th>
+             <th>detected</th>
+           </tr>
+         </thead>
+         <tbody>
+           <tr>
+             <th>58</th>
+             <td>96</td>
+             <td>1</td>
+             <td>3.079182</td>
+             <td>3</td>
+             <td>2.537866</td>
+             <td>0.541317</td>
+             <td>0.0</td>
+           </tr>
+           <tr>
+             <th>274</th>
+             <td>445</td>
+             <td>0</td>
+             <td>3.976630</td>
+             <td>2</td>
+             <td>5.201130</td>
+             <td>1.224500</td>
+             <td>0.0</td>
+           </tr>
+           <tr>
+             <th>392</th>
+             <td>619</td>
+             <td>2</td>
+             <td>2.087530</td>
+             <td>3</td>
+             <td>6.534154</td>
+             <td>4.446624</td>
+             <td>0.0</td>
+           </tr>
+           <tr>
+             <th>431</th>
+             <td>677</td>
+             <td>2</td>
+             <td>2.390493</td>
+             <td>0</td>
+             <td>4.353833</td>
+             <td>1.963340</td>
+             <td>0.0</td>
+           </tr>
+           <tr>
+             <th>447</th>
+             <td>703</td>
+             <td>2</td>
+             <td>4.543503</td>
+             <td>0</td>
+             <td>2.135412</td>
+             <td>2.408091</td>
+             <td>0.0</td>
+           </tr>
+           <tr>
+             <th>620</th>
+             <td>981</td>
+             <td>0</td>
+             <td>0.862903</td>
+             <td>3</td>
+             <td>4.536607</td>
+             <td>3.673704</td>
+             <td>0.0</td>
+           </tr>
+           <tr>
+             <th>671</th>
+             <td>1050</td>
+             <td>3</td>
+             <td>4.559900</td>
+             <td>1</td>
+             <td>0.713189</td>
+             <td>3.846711</td>
+             <td>0.0</td>
+           </tr>
+           <tr>
+             <th>749</th>
+             <td>1174</td>
+             <td>2</td>
+             <td>3.797462</td>
+             <td>0</td>
+             <td>1.208076</td>
+             <td>2.589386</td>
+             <td>0.0</td>
+           </tr>
+           <tr>
+             <th>915</th>
+             <td>1438</td>
+             <td>2</td>
+             <td>1.455625</td>
+             <td>0</td>
+             <td>2.069203</td>
+             <td>0.613578</td>
+             <td>0.0</td>
+           </tr>
+           <tr>
+             <th>924</th>
+             <td>1449</td>
+             <td>0</td>
+             <td>2.051093</td>
+             <td>3</td>
+             <td>0.869114</td>
+             <td>1.181979</td>
+             <td>0.0</td>
+           </tr>
+         </tbody>
+         </table>
+         </div>
+
+
+
+
 
 
 .. py:function:: allele_data(pop, alleles, loci)
