@@ -2,14 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/magic/1478/icqg_loci_conversions.dat" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/magic/1478/icqg_loci_conversions.bak" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/magic/1478/icqg_loci_conversions.dir" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/magic/1478/caramon_gwas_pipeline.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/magic/1478/segregating_loci_storage.dat" afterPath="$PROJECT_DIR$/devel/magic/1478/segregating_loci_storage.dat" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/magic/1478/synthesis_parameters.dat" afterPath="$PROJECT_DIR$/devel/magic/1478/synthesis_parameters.dat" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/magic/1478/destined_for_icqg.ipynb" afterPath="$PROJECT_DIR$/devel/magic/1478/destined_for_icqg.ipynb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/magic/1478/synthesis_parameters.bak" afterPath="$PROJECT_DIR$/devel/magic/1478/synthesis_parameters.bak" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/magic/1478/synthesis_parameters.dir" afterPath="$PROJECT_DIR$/devel/magic/1478/synthesis_parameters.dir" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/magic/1478/segregating_loci_storage.bak" afterPath="$PROJECT_DIR$/devel/magic/1478/segregating_loci_storage.bak" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/magic/1478/segregating_loci_storage.dir" afterPath="$PROJECT_DIR$/devel/magic/1478/segregating_loci_storage.dir" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/saegus/analyze.py" afterPath="$PROJECT_DIR$/src/saegus/analyze.py" />
     </list>
     <ignored path="saegus_project.iws" />
@@ -71,8 +70,8 @@
       <file leaf-file-name="analyze.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="1055" column="8" selection-start-line="1055" selection-start-column="8" selection-end-line="1055" selection-end-column="8" />
+            <state relative-caret-position="175">
+              <caret line="1046" column="38" selection-start-line="1046" selection-start-column="38" selection-end-line="1046" selection-end-column="38" />
               <folding>
                 <element signature="e#24#45#0" expanded="true" />
                 <element signature="e#10207#11834#0" expanded="false" />
@@ -84,10 +83,10 @@
                 <element signature="e#39662#42618#0" expanded="false" />
                 <element signature="e#42645#42852#1" expanded="false" />
                 <element signature="e#43432#44180#0" expanded="false" />
-                <element signature="e#44271#44527#0" expanded="false" />
-                <element signature="e#45749#48422#0" expanded="false" />
-                <element signature="e#48629#50430#0" expanded="false" />
-                <element signature="e#52097#54346#0" expanded="false" />
+                <element signature="e#45743#48416#0" expanded="false" />
+                <element signature="e#48623#50424#0" expanded="false" />
+                <element signature="e#50488#51265#0" expanded="false" />
+                <marker date="1465652381670" expanded="false" signature="45049:45604" ph="..." />
               </folding>
             </state>
           </provider>
@@ -221,9 +220,10 @@
     </layout>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="433" />
-    <option name="width" value="947" />
-    <option name="height" value="860" />
+    <option name="x" value="1592" />
+    <option name="y" value="-8" />
+    <option name="width" value="1616" />
+    <option name="height" value="916" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -360,6 +360,9 @@
             </PATH_ELEMENT>
           </PATH>
         </subPane>
+      </pane>
+      <pane id="Scratches">
+        <subPane />
       </pane>
       <pane id="Scope">
         <subPane subId="Problems" />
@@ -531,9 +534,6 @@
             </PATH_ELEMENT>
           </PATH>
         </subPane>
-      </pane>
-      <pane id="Scratches">
-        <subPane />
       </pane>
     </panes>
   </component>
@@ -1260,17 +1260,17 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="433" y="0" width="947" height="860" extended-state="0" />
-    <editor active="true" />
+    <frame x="1592" y="-8" width="1616" height="916" extended-state="6" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="false" show_stripe_button="true" weight="0.27554616" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" x="-32000" y="-32000" width="678" height="609" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="true" show_stripe_button="true" weight="0.2577121" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" x="754" y="380" width="148" height="78" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32258064" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18205805" sideWeight="0.71728975" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17866324" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31182796" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35579938" sideWeight="0.48971722" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="false" show_stripe_button="true" weight="0.5694151" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="132" y="204" width="808" height="403" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35470086" sideWeight="0.28271028" order="4" side_tool="false" content_ui="tabs" x="234" y="323" width="777" height="220" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="true" show_stripe_button="true" weight="0.529563" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="1800" y="172" width="824" height="441" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32849604" sideWeight="0.28271028" order="4" side_tool="false" content_ui="tabs" x="234" y="323" width="777" height="220" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="DB Browser" active="false" anchor="top" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.329904" sideWeight="0.5" order="0" side_tool="true" content_ui="combo" />
@@ -1664,8 +1664,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="1055" column="8" selection-start-line="1055" selection-start-column="8" selection-end-line="1055" selection-end-column="8" />
+        <state relative-caret-position="175">
+          <caret line="1046" column="38" selection-start-line="1046" selection-start-column="38" selection-end-line="1046" selection-end-column="38" />
           <folding>
             <element signature="e#24#45#0" expanded="true" />
             <element signature="e#10207#11834#0" expanded="false" />
@@ -1677,10 +1677,10 @@
             <element signature="e#39662#42618#0" expanded="false" />
             <element signature="e#42645#42852#1" expanded="false" />
             <element signature="e#43432#44180#0" expanded="false" />
-            <element signature="e#44271#44527#0" expanded="false" />
-            <element signature="e#45749#48422#0" expanded="false" />
-            <element signature="e#48629#50430#0" expanded="false" />
-            <element signature="e#52097#54346#0" expanded="false" />
+            <element signature="e#45743#48416#0" expanded="false" />
+            <element signature="e#48623#50424#0" expanded="false" />
+            <element signature="e#50488#51265#0" expanded="false" />
+            <marker date="1465652381670" expanded="false" signature="45049:45604" ph="..." />
           </folding>
         </state>
       </provider>

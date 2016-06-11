@@ -1042,18 +1042,28 @@ class Study(object):
                  for sample_size in sample_sizes]
         return samples
 
-    def save_sample_populations(self, library_of_samples, series_id, sub_group):
+    def save_sample_populations(self, library_of_samples):
         for rep, sample_list in library_of_samples.items():
             for sample in sample_list:
-                name = '_'.join(
-                    [run_id, str(rep), str(sample.popSize())]) + '.pop'
+                name = '_'.join([self.run_id, str(rep),
+                                 str(sample.popSize())]) + '.pop'
                 sample.save(os.path.join(os.getcwd(), name))
 
-    def collect_power_analysis_data(self, sample_sizes, number_of_replicates,
-                                    genome_wide_allele_effect_differences):
-        """
 
-        
+    def load_sample_library(self, number_of_replicates, sample_sizes, sub_run_id=''):
+        reloaded_sample_library = {rep: [] for rep in range(number_of_replicates)}
+        for rep in range(number_of_replicates):
+            for size in sample_sizes:
+                reloaded_sample_library[rep].append(run_id + '_' + sub_run_id + '_' + str(rep) + '_' + str(size) + '.pop')
+
+
+    def collect_power_analysis_data(self, sample_sizes, number_of_replicates,
+                                    segregating_loci, sub_run_id):
+        """
+        Results will calculated using super tables. No longer reads a file,
+        looks at a table in memory.
+
+
         :param sample_sizes:
         :param number_of_replicates:
         :param genome_wide_allele_effect_differences:
@@ -1063,15 +1073,7 @@ class Study(object):
         for size in sample_sizes:
             panel_map[size] = {}
             for rep in range(number_of_replicates):
-                tassel_output_file_name = str('_'.join([self.run_id,
-                                                    str(rep), str(size),
-                                                    'out_2.txt']))
-                q_value_file_name = str('_'.join([self.run_id,
-                                              str(rep), str(size),
-                                              'qvalues.txt']))
-                panel_map[size][rep] = reconfigure_gwas_results(
-                    tassel_output_file_name,
-                    q_value_file_name, genome_wide_allele_effect_differences)
+                panel_map[size][rep] = generate_super_table(self.run_id, rep, size, segregating_loci,sub_run_id)
         return panel_map
 
     def calculate_power_fpr(self, panel_map, sample_sizes, number_of_replicates,
@@ -1186,19 +1188,19 @@ class Study(object):
         return segregating_loci_counts
 
 
-def multi_sample_allele_frq_storage(library_of_samples, alleles, run_id='hdenies'):
+    def store_allele_frequencies(self, library_of_samples, alleles):
 
-    hdf_store = pd.HDFStore(run_id + '_storage.h5')
+        hdf_store = pd.HDFStore(run_id + '_allele_frequency_storage.h5')
 
-    for rep_id, samples in library_of_samples.items():
-        for sample in samples:
-            af = allele_data(sample, alleles,
-                                 range(sample.totNumLoci()))
+        for rep_id, samples in library_of_samples.items():
+            for sample in samples:
+                af = allele_data(sample, alleles,
+                                     range(sample.totNumLoci()))
 
-            name = run_id + '/' + str(rep_id) + '/' + str(sample.popSize())
+                name = self.run_id + '/' + str(rep_id) + '/' + str(sample.popSize())
+                hdf_store.put(name, af)
 
-            hdf_store.put(name, af)
-    hdf_store.close()
+        hdf_store.close()
 
 
 
@@ -1206,14 +1208,14 @@ def write_multiple_sample_analyzer(library_of_samples, sample_size_list,
                              quantitative_trait_loci, alleles, allele_effects,
                          heritability, segregating_loci, run_id='infinite',
                          sub_run_id = '',
-                         allele_frequency_hdf='hdenies_library_storage.h5'):
+                         allele_frequency_hdf=''):
 
 
     syn_parameters = shelve.open('synthesis_parameters')
     int_to_snp_map = syn_parameters['integer_to_snp']
     syn_parameters.close()
 
-    allele_frqs = pd.HDFStore(allele_frequency_hdf, mode='r')
+    allele_frqs = pd.HDFStore(allele_frequency_hdf)
 
     for rep_id, sample_list in library_of_samples.items():
         for sample_population in sample_list:
@@ -1249,6 +1251,8 @@ def write_multiple_sample_analyzer(library_of_samples, sample_size_list,
                 "C:\\tassel\\output\\" + name + '_out_',
                                               "C:\\Users\DoubleDanks\\BISB\\wisser\\code\\rjwlab-scripts\\"
                                               "saegus_project\\devel\\magic\\1478\\" + run_id + "_gwas_pipeline.xml")
+
+    allele_frqs.close()
 
 
 def generate_allele_effects_frequencies(sample_population,
