@@ -1018,6 +1018,9 @@ class Study(object):
         :param str run_id: Unique identifier to naturally group related pieces of data.
         """
         self.run_id = run_id
+        self.integer_to_snp = {0: 'A', 1: 'C', 2: 'G', 3: 'T', 4: 'D', 5: 'I'}
+        self.snp_to_integer = {'A': 0, 'C': 1, 'D': 4, 'G': 2, 'I': 5, 'T': 3}
+
 
     def collect_samples(self, replicate_populations, sample_sizes):
         """
@@ -1048,6 +1051,14 @@ class Study(object):
 
     def collect_power_analysis_data(self, sample_sizes, number_of_replicates,
                                     genome_wide_allele_effect_differences):
+        """
+
+        
+        :param sample_sizes:
+        :param number_of_replicates:
+        :param genome_wide_allele_effect_differences:
+        :return:
+        """
         panel_map = {}
         for size in sample_sizes:
             panel_map[size] = {}
@@ -1372,7 +1383,7 @@ def reload_allele_frequencies_table(run_id, rep_id, sample_size, sub_run_id=''):
         store_name = '_'.join([run_id, 'storage.h5'])
     else:
         store_name = '_'.join([run_id, 'storage_diff.h5'])
-    table_name = '/' + '/'.join([run_id, sub_run_id, str(rep_id), str(sample_size)])
+    table_name = '/' + '/'.join([run_id, str(rep_id), str(sample_size)])
     reloaded_table = pd.read_hdf(store_name, key=table_name)
     return reloaded_table
 
