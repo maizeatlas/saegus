@@ -6,6 +6,7 @@ import pandas as pd
 import collections as col
 import random
 import numpy as np
+import copy
 import yaml
 from scipy import stats
 
@@ -364,6 +365,26 @@ class Trait(object):
                     sum([distribution_function(*distribution_function_parameters)
                          for i in range(multiplicity)])
         return allele_effects
+
+    def assign_geometric_series(self, allele_effects, base, power):
+        """
+        Assigns the terms of a geometric series determined by base and power to
+        one set of alleles at qtl. The alternate alleles are assigned effect 0.
+
+        :param allele_effects:
+        :param base:
+        :param power:
+        :return:
+        """
+
+        [base ** i_power for i_power in range(1, power+1)]
+        geometric_allele_effects = copy.deepcopy(allele_effects)
+        for locus, i in zip(sorted(allele_effects.keys()),
+                            range(len(geometric_series))):
+            ael = list(allele_effects[locus])
+            geometric_allele_effects[locus][ael[0]] = geometric_series[i]
+            geometric_allele_effects[locus][ael[1]] = 0
+        return geometric_allele_effects
 
 
 

@@ -1275,13 +1275,22 @@ def generate_allele_effects_frequencies(sample_population, allele_effects,
     return pd.DataFrame(table_data, columns=order_of_columns)
 
 
+def store_allele_effect_frequency_tables(sample_library, allele_effects, alpha_alleles, beta_alleles, run_id, sub_run_id):
+    store_name = '_'.join([run_id, sub_run_id, 'allele_effects_and_frequencies.h5'])
+    multi_aef_storage = pd.HDFStore(store_name)
+    for rep_id, samples in sample_library.items():
+        for sample in samples:
+            expanded_allele_effects_and_frequencies = generate_allele_effects_frequencies(sample, ge, alpha_alleles, beta_alleles)
+            name = '/'+ '/'.join([run_id, sub_run_id, str(rep_id), str(sample.popSize())])
+            multi_aef_storage.put(name, expanded_allele_effects_and_frequencies)
+    multi_aef_storage.close()
+
+
 def generate_super_table(run_id,
                          rep_id,
                          sample_size,
-                         gwas_results_file, q_values_file,
-                         sub_run_id='',
-                         subsetted_allele_frequency_table,
-                         expanded_allele_effects_table, sep="\t"):
+                         segregating_loci,
+                         sub_run_id=''):
 
 
     """
@@ -1290,28 +1299,33 @@ def generate_super_table(run_id,
 
 
     """
-    gwas_results_file = '_'.join([run_id, sub_run_id, str(rep_id), str()])
-
-    gwas_results = pd.read_csv(gwas_results_file, sep=sep)
+    gwas_results_file_name = '_'.join([run_id, sub_run_id, str(rep_id), str(sample_size), 'out_2.txt'])
+    gwas_results = pd.read_csv(gwas_results_file_name, sep='\t')
     gwas_results.drop('Trait', axis=1, inplace=True)
     gwas_results.drop('Pos', axis=1, inplace=True)
     gwas_results.drop(0, axis=0, inplace=True)
     gwas_results = gwas_results.ix[:, 'Marker':'dom_p']
     gwas_results.index = gwas_results.index - 1
     gwas_results.drop('Marker', axis=1, inplace=True)
-    qvalues = pd.read_csv(q_values_file, sep=delim)
+
+    q_values_file_name = '_'.join([run_id, sub_run_id, str(rep_id), str(sample_size), 'qvalues.txt'])
+    qvalues = pd.read_csv(q_values_file_name, sep='\t')
     qvalues.columns = ['q']
     qvalues.index = qvalues.index - 1
+
     results = gwas_results.join(qvalues)
 
-    alpha_alleles, beta_alleles = alleles[:, 0], alleles[:, 1]
+    allele_frequency_table = reload_allele_frequencies_table(run_id, rep_id, sample_size, sub_run_id)
+    subsetted_af_table = remap_afrq_table_loci(allele_frequency_table, segregating_loci)
 
-    expanded_allele_effects_table = generate_allele_effects_frequencies()
+    sub_results = results.join(subsetted_af_table)
 
-    greater_results = results.join(expanded_allele_effects_table)
-    super_table = greater_results.join(subsetted_allele_frequency_table)
+    allele_effects_and_frequencies_table = reload_allele_effects_and_frequencies_table(run_id, sub_run_id, rep_id, sample_size)
+    subsetted_aefrq_table = remap_allele_effect_and_frq_table_loci(allele_effects_and_frequencies_table, segregating_loci)
 
-    return super_table
+    super_results = sub_results.join(subsetted_aefrq_table)
+
+    return super_results
 
 
 def remap_ae_table_loci(allele_effect_table, saegus_to_tassel_loci):
@@ -1339,11 +1353,21 @@ def remap_ae_table_loci(allele_effect_table, saegus_to_tassel_loci):
 
     return expanded_ae_table
 
+
+def reload_allele_frequencies_table(run_id, rep_id, sample_size, sub_run_id=''):
+    if sub_run_id != '':
+        store_name = '_'.join([run_id, 'storage.h5'])
+    else:
+        store_name = '_'.join([run_id, 'storage_diff.h5'])
+    table_name = '/' + '/'.join([run_id, sub_run_id, str(rep_id), str(sample_size)])
+    reloaded_table = pd.read_hdf(store_name, key=table_name)
+    return reloaded_table
+
+
 def remap_afrq_table_loci(allele_frequency_table,
-                          saegus_to_tassel_loci):
+                          segregating_loci):
 
     loci = list(allele_frequency_table.index)
-    segregating_loci = list(saegus_to_tassel_loci.keys())
     droppable_loci = [locus for locus in loci if locus not in segregating_loci]
     allele_frequency_table_subset = allele_frequency_table.drop(droppable_loci,
                                                                 axis=0)
@@ -1351,9 +1375,10 @@ def remap_afrq_table_loci(allele_frequency_table,
     allele_frequency_table_subset.index = new_index
     return allele_frequency_table_subset
 
+
 def remap_allele_effect_and_frq_table_loci(
             allele_effect_and_frequency_table,
-            saegus_to_tassel_loci):
+            segregating_loci):
     """
     Drops non-segregating loci from the allele effect - frequency hybrid table.
 
@@ -1364,7 +1389,6 @@ def remap_allele_effect_and_frq_table_loci(
 
 
     loci = list(allele_effect_and_frequency_table.index)
-    segregating_loci = list(saegus_to_tassel_loci.keys())
     droppable_loci = [locus for locus in loci if locus not in segregating_loci]
     allele_effect_and_frequency_table_subset = allele_effect_and_frequency_table.drop(
         droppable_loci,
@@ -1373,7 +1397,11 @@ def remap_allele_effect_and_frq_table_loci(
     allele_effect_and_frequency_table_subset.index = new_index
     return allele_effect_and_frequency_table_subset
 
-
+def reload_allele_effects_and_frequencies_table(run_id, sub_run_id, rep_id, sample_size):
+    store_name = '_'.join([run_id, sub_run_id, 'allele_effects_and_frequencies.h5'])
+    table_name = '/' + '/'.join([run_id, sub_run_id, str(rep_id), str(sample_size)])
+    reloaded_table = pd.read_hdf(store_name, key=table_name)
+    return reloaded_table
 
 
 def reconfigure_gwas_results(gwas_results_file, q_values_file,
