@@ -1240,8 +1240,14 @@ def write_multiple_sample_analyzer(library_of_samples, sample_size_list,
                                               "saegus_project\\devel\\magic\\1478\\" + run_id + "_gwas_pipeline.xml")
 
 
-def generate_allele_effects_frequencies(sample_population, allele_effects,
-                                        alpha_alleles, beta_alleles):
+def generate_allele_effects_frequencies(sample_population,
+                                        alleles,
+                                        qtl,
+                                        allele_effects):
+
+    alpha_alleles = alleles[:, 0]
+    beta_alleles = alleles[:, 1]
+
     alpha_allele_frequencies = np.array(
         [sample_population.dvars().alleleFreq[locus][alpha_allele] for
          locus, alpha_allele in enumerate(alpha_alleles)])
@@ -1275,12 +1281,19 @@ def generate_allele_effects_frequencies(sample_population, allele_effects,
     return pd.DataFrame(table_data, columns=order_of_columns)
 
 
-def store_allele_effect_frequency_tables(sample_library, allele_effects, alpha_alleles, beta_alleles, run_id, sub_run_id):
+def store_allele_effect_frequency_tables(sample_library, alleles,
+                                         qtl,
+                                         allele_effects,
+                                         run_id, sub_run_id):
+
+    alpha_alleles = alleles[:, 0]
+    beta_alleles = alleles[:, 1]
+
     store_name = '_'.join([run_id, sub_run_id, 'allele_effects_and_frequencies.h5'])
     multi_aef_storage = pd.HDFStore(store_name)
     for rep_id, samples in sample_library.items():
         for sample in samples:
-            expanded_allele_effects_and_frequencies = generate_allele_effects_frequencies(sample, ge, alpha_alleles, beta_alleles)
+            expanded_allele_effects_and_frequencies = generate_allele_effects_frequencies(sample, alleles, qtl, allele_effects)
             name = '/'+ '/'.join([run_id, sub_run_id, str(rep_id), str(sample.popSize())])
             multi_aef_storage.put(name, expanded_allele_effects_and_frequencies)
     multi_aef_storage.close()

@@ -377,7 +377,7 @@ class Trait(object):
         :return:
         """
 
-        [base ** i_power for i_power in range(1, power+1)]
+        geometric_series = [base ** i_power for i_power in range(1, power+1)]
         geometric_allele_effects = copy.deepcopy(allele_effects)
         for locus, i in zip(sorted(allele_effects.keys()),
                             range(len(geometric_series))):
