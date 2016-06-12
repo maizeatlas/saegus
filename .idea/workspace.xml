@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/magic/1478/caramon_gwas_pipeline.xml" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/magic/1478/segregating_loci_storage.dat" afterPath="$PROJECT_DIR$/devel/magic/1478/segregating_loci_storage.dat" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/magic/1478/synthesis_parameters.dat" afterPath="$PROJECT_DIR$/devel/magic/1478/synthesis_parameters.dat" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/magic/1478/destined_for_icqg.ipynb" afterPath="$PROJECT_DIR$/devel/magic/1478/destined_for_icqg.ipynb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/magic/1478/segregating_loci_storage.bak" afterPath="$PROJECT_DIR$/devel/magic/1478/segregating_loci_storage.bak" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/magic/1478/segregating_loci_storage.dir" afterPath="$PROJECT_DIR$/devel/magic/1478/segregating_loci_storage.dir" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/saegus/analyze.py" afterPath="$PROJECT_DIR$/src/saegus/analyze.py" />
@@ -70,23 +68,16 @@
       <file leaf-file-name="analyze.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="1046" column="38" selection-start-line="1046" selection-start-column="38" selection-end-line="1046" selection-end-column="38" />
+            <state relative-caret-position="126">
+              <caret line="1465" column="0" selection-start-line="1465" selection-start-column="0" selection-end-line="1465" selection-end-column="0" />
               <folding>
                 <element signature="e#24#45#0" expanded="true" />
-                <element signature="e#10207#11834#0" expanded="false" />
-                <element signature="e#11897#13457#0" expanded="false" />
-                <element signature="e#13621#16356#0" expanded="false" />
-                <element signature="e#16387#21716#0" expanded="false" />
-                <element signature="e#21743#37500#0" expanded="false" />
-                <element signature="e#37751#39404#0" expanded="false" />
-                <element signature="e#39662#42618#0" expanded="false" />
-                <element signature="e#42645#42852#1" expanded="false" />
-                <element signature="e#43432#44180#0" expanded="false" />
-                <element signature="e#45743#48416#0" expanded="false" />
-                <element signature="e#48623#50424#0" expanded="false" />
-                <element signature="e#50488#51265#0" expanded="false" />
-                <marker date="1465652381670" expanded="false" signature="45049:45604" ph="..." />
+                <element signature="e#10219#11846#0" expanded="false" />
+                <element signature="e#13633#16368#0" expanded="false" />
+                <element signature="e#39674#42630#0" expanded="false" />
+                <element signature="e#42657#42864#1" expanded="false" />
+                <element signature="e#45057#47730#0" expanded="false" />
+                <element signature="e#47938#49739#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -220,10 +211,8 @@
     </layout>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1592" />
-    <option name="y" value="-8" />
-    <option name="width" value="1616" />
-    <option name="height" value="916" />
+    <option name="width" value="800" />
+    <option name="height" value="860" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -1260,17 +1249,17 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1592" y="-8" width="1616" height="916" extended-state="6" />
+    <frame x="0" y="0" width="800" height="860" extended-state="0" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="true" show_stripe_button="true" weight="0.2577121" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" x="754" y="380" width="148" height="78" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="true" show_stripe_button="true" weight="0.5418919" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" x="754" y="380" width="148" height="78" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32258064" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18205805" sideWeight="0.71728975" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17866324" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31182796" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35579938" sideWeight="0.48971722" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="true" show_stripe_button="true" weight="0.529563" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="1800" y="172" width="824" height="441" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32849604" sideWeight="0.28271028" order="4" side_tool="false" content_ui="tabs" x="234" y="323" width="777" height="220" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="true" show_stripe_button="true" weight="1.0" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="674" y="116" width="840" height="479" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34615386" sideWeight="0.28271028" order="4" side_tool="false" content_ui="tabs" x="234" y="323" width="777" height="220" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="DB Browser" active="false" anchor="top" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.329904" sideWeight="0.5" order="0" side_tool="true" content_ui="combo" />
@@ -1664,23 +1653,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="1046" column="38" selection-start-line="1046" selection-start-column="38" selection-end-line="1046" selection-end-column="38" />
+        <state relative-caret-position="126">
+          <caret line="1465" column="0" selection-start-line="1465" selection-start-column="0" selection-end-line="1465" selection-end-column="0" />
           <folding>
             <element signature="e#24#45#0" expanded="true" />
-            <element signature="e#10207#11834#0" expanded="false" />
-            <element signature="e#11897#13457#0" expanded="false" />
-            <element signature="e#13621#16356#0" expanded="false" />
-            <element signature="e#16387#21716#0" expanded="false" />
-            <element signature="e#21743#37500#0" expanded="false" />
-            <element signature="e#37751#39404#0" expanded="false" />
-            <element signature="e#39662#42618#0" expanded="false" />
-            <element signature="e#42645#42852#1" expanded="false" />
-            <element signature="e#43432#44180#0" expanded="false" />
-            <element signature="e#45743#48416#0" expanded="false" />
-            <element signature="e#48623#50424#0" expanded="false" />
-            <element signature="e#50488#51265#0" expanded="false" />
-            <marker date="1465652381670" expanded="false" signature="45049:45604" ph="..." />
+            <element signature="e#10219#11846#0" expanded="false" />
+            <element signature="e#13633#16368#0" expanded="false" />
+            <element signature="e#39674#42630#0" expanded="false" />
+            <element signature="e#42657#42864#1" expanded="false" />
+            <element signature="e#45057#47730#0" expanded="false" />
+            <element signature="e#47938#49739#0" expanded="false" />
           </folding>
         </state>
       </provider>

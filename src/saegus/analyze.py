@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 import collections as col
 import os
+import copy
 import random
 import shelve
 from scipy import linalg
@@ -1042,12 +1043,14 @@ class Study(object):
                  for sample_size in sample_sizes]
         return samples
 
+
     def save_sample_populations(self, library_of_samples):
         for rep, sample_list in library_of_samples.items():
             for sample in sample_list:
                 name = '_'.join([self.run_id, str(rep),
                                  str(sample.popSize())]) + '.pop'
                 sample.save(os.path.join(os.getcwd(), name))
+
 
 
     def load_sample_library(self, number_of_replicates, sample_sizes, sub_run_id=''):
@@ -1057,24 +1060,6 @@ class Study(object):
                 reloaded_sample_library[rep].append(run_id + '_' + sub_run_id + '_' + str(rep) + '_' + str(size) + '.pop')
 
 
-    def collect_power_analysis_data(self, sample_sizes, number_of_replicates,
-                                    segregating_loci, sub_run_id):
-        """
-        Results will calculated using super tables. No longer reads a file,
-        looks at a table in memory.
-
-
-        :param sample_sizes:
-        :param number_of_replicates:
-        :param genome_wide_allele_effect_differences:
-        :return:
-        """
-        panel_map = {}
-        for size in sample_sizes:
-            panel_map[size] = {}
-            for rep in range(number_of_replicates):
-                panel_map[size][rep] = generate_super_table(self.run_id, rep, size, segregating_loci,sub_run_id)
-        return panel_map
 
     def calculate_power_fpr(self, panel_map, sample_sizes, number_of_replicates,
                                 number_of_qtl):
@@ -1130,6 +1115,7 @@ class Study(object):
         return power_fpr_results, true_positive_detected_loci, \
                false_positive_detected_loci
 
+
     def probability_of_detection(self, allele_effects_table, sample_sizes,
                                      number_of_replicates,
                                      true_positives_detected):
@@ -1168,6 +1154,7 @@ class Study(object):
 
         return prob_detection_table
 
+
     def seg_loci_among_samples(self, sample_library):
         """
         Examines the segregating loci of all samples and counts how many
@@ -1188,10 +1175,10 @@ class Study(object):
         return segregating_loci_counts
 
 
+
     def store_allele_frequencies(self, library_of_samples, alleles):
 
-        hdf_store = pd.HDFStore(run_id + '_allele_frequency_storage.h5')
-
+        hdf_store = pd.HDFStore(self.run_id + '_allele_frequency_storage.h5')
         for rep_id, samples in library_of_samples.items():
             for sample in samples:
                 af = allele_data(sample, alleles,
@@ -1327,7 +1314,7 @@ def generate_super_table(run_id,
 
 
     """
-    gwas_results_file_name = '_'.join([run_id, sub_run_id, str(rep_id), str(sample_size), 'out_2.txt'])
+    gwas_results_file_name = run_id +'_'+ sub_run_id+'_'+str(rep_id)+'_'+str(sample_size)+'_'+'out_2.txt'
     gwas_results = pd.read_csv(gwas_results_file_name, sep='\t')
     gwas_results.drop('Trait', axis=1, inplace=True)
     gwas_results.drop('Pos', axis=1, inplace=True)
@@ -1336,7 +1323,7 @@ def generate_super_table(run_id,
     gwas_results.index = gwas_results.index - 1
     gwas_results.drop('Marker', axis=1, inplace=True)
 
-    q_values_file_name = '_'.join([run_id, sub_run_id, str(rep_id), str(sample_size), 'qvalues.txt'])
+    q_values_file_name = run_id +'_'+sub_run_id +'_'+ str(rep_id) +'_'+ str(sample_size)+ '_' + 'qvalues.txt'
     qvalues = pd.read_csv(q_values_file_name, sep='\t')
     qvalues.columns = ['q']
     qvalues.index = qvalues.index - 1
@@ -1354,6 +1341,29 @@ def generate_super_table(run_id,
     super_results = sub_results.join(subsetted_aefrq_table)
 
     return super_results
+
+def collect_power_analysis_data(run_id, sample_sizes, number_of_replicates,
+                                    segregating_loci, sub_run_id):
+
+
+    """
+    Results will calculated using super tables. No longer reads a file,
+    looks at a table in memory.
+
+
+    :param sample_sizes:
+    :param number_of_replicates:
+    :param genome_wide_allele_effect_differences:
+    :return:
+    """
+    panel_map = {}
+    for size in sample_sizes:
+        panel_map[size] = {}
+        for rep in range(number_of_replicates):
+            panel_map[size][rep] = generate_super_table(run_id, rep, size,
+                                                        segregating_loci,
+                                                        sub_run_id)
+    return panel_map
 
 
 def remap_ae_table_loci(allele_effect_table, saegus_to_tassel_loci):
@@ -1384,21 +1394,20 @@ def remap_ae_table_loci(allele_effect_table, saegus_to_tassel_loci):
 
 def reload_allele_frequencies_table(run_id, rep_id, sample_size, sub_run_id=''):
     if sub_run_id != '':
-        store_name = '_'.join([run_id, 'storage.h5'])
+        store_name = '_'.join([run_id, 'allele_frequency_storage.h5'])
     else:
         store_name = '_'.join([run_id, 'storage_diff.h5'])
     table_name = '/' + '/'.join([run_id, str(rep_id), str(sample_size)])
     reloaded_table = pd.read_hdf(store_name, key=table_name)
     return reloaded_table
 
-
 def remap_afrq_table_loci(allele_frequency_table,
-                          segregating_loci):
+                              segregating_loci):
 
     loci = list(allele_frequency_table.index)
     droppable_loci = [locus for locus in loci if locus not in segregating_loci]
-    allele_frequency_table_subset = allele_frequency_table.drop(droppable_loci,
-                                                                axis=0)
+    allele_frequency_table_subset = copy.deepcopy(allele_frequency_table)
+    allele_frequency_table_subset.drop(droppable_loci, axis=0, inplace=True)
     new_index = list(range(len(segregating_loci)))
     allele_frequency_table_subset.index = new_index
     return allele_frequency_table_subset
@@ -1454,18 +1463,6 @@ def reconfigure_gwas_results(gwas_results_file, q_values_file,
     greater_results = results.join(expanded_allele_effects_table)
 
     return greater_results
-
-def collect_power_analysis_data(sample_sizes, number_of_replicates, run_id):
-    for size in sample_sizes:
-        panel_map[size] = {}
-        for rep in range(number_of_replicates):
-            tassel_output_file_name = '_'.join([run_id,
-                                                str(rep), str(size), 'out_2.txt'])
-            q_value_file_name = '_'.join([run_id,
-                                          str(rep), str(size), 'qvalues.txt'])
-            panel_map[size][rep] = analyze.reconfigure_gwas_results(tassel_output_file_name,
-                                            q_value_file_name, expanded)
-    return panel_map
 
 
 def calculate_power_fpr(panel_map, sample_sizes, number_of_replicates,
