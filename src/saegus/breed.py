@@ -63,9 +63,6 @@ class MAGIC(object):
         """
         print("Initiating random mating for {} generations.".format(generations_of_random_mating))
         self.pop.evolve(
-            preOps=[
-#                sim.PyEval(r'"Generation: %d\n" % gen'),
-            ],
             matingScheme=sim.RandomMating(
                 subPopSize=pop_size,
                 ops=[sim.IdTagger(), sim.PedigreeTagger(),
@@ -81,9 +78,11 @@ class SelfCross(object):
 
     """
 
-    def create_top_crosses(self, existing_pop, offspring_per_individual):
-        new_pop_size = offspring_per_individual * existing_pop.popSize()
+    def __init__(self, recombination_rates):
+        self.recombination_rates = recombination_rates
 
+    def create_self_crosses(self, existing_pop, offspring_per_individual):
+        new_pop_size = offspring_per_individual * existing_pop.popSize()
         existing_pop.evolve(
             matingScheme=sim.SelfMating(replacement=False,
                                         numOffspring=offspring_per_individual,
@@ -111,22 +110,10 @@ class PairwiseIDChooser(object):
 
     def __init__(self, pairs_of_parents, offspring_per_parental_pair=1):
         """
-        **Example**: *Mate selected pairs of parents*
-
-        ::
-
-           >>> founders = [[1, 2], [3, 4], [5, 6], [7, 8]]
-           >>> offspring_per_parental_pair = 1
-           >>> parent_chooser = PairwiseIDChooser(founders, offspring_per_parental_pair)
-           >>> for pair in founders:
-           >>>     print(pair)
-           ...     [0, 1]
-           ...     [10, 11]
 
 
-        :param pairs_of_parents:
-        :type pairs_of_parents:
-        :param offspring_per_parental_pair:
+        :parameter pairs_of_parents: Pairs of IDs corresponding to individuals
+        :parameter offspring_per_parental_pair: Number of offspring to generate for each pair of parents.
         """
         self.pairs_of_parents = pairs_of_parents
         self.offspring_per_parental_pair = offspring_per_parental_pair
@@ -156,18 +143,11 @@ class SecondOrderPairIDChooser(object):
                  male_parent_ids,
                  offspring_per_parental_pair=1):
         """
-        PairwiseIDChooser which allows separate lists for females and separate
-        list for males. Instead of providing pairs of parents i.e
-        ::
-
-            founders = [[1, 2], [3, 4], [5, 6], [7, 8]]
-
         This chooser uses a separate list for each parent i.e.
         ::
 
-            female_parent_ids = [1, 3, 5, 7]
-             male_parent_ids = [2, 4, 6, 8]
-
+        >>> female_parent_ids = [1, 3, 5, 7]
+        >>> male_parent_ids = [2, 4, 6, 8]
 
         :parameter female_parent_ids: List of individual IDs (selfing allowed)
         :parameter male_parent_ids: List of individual IDS (selfing allowed)

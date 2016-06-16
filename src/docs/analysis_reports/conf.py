@@ -16,6 +16,9 @@
 import sys
 import os
 import shlex
+import alabaster
+
+alabaster_path = alabaster.get_path()
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -37,6 +40,7 @@ extensions = [
     'sphinx.ext.mathjax',
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
+    'alabaster',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -51,7 +55,7 @@ source_suffix = '.rst'
 #source_encoding = 'utf-8-sig'
 
 # The master toctree document.
-master_doc = 'analysis'
+master_doc = 'index'
 
 # General information about the project.
 project = 'magic-gwas'
@@ -137,6 +141,8 @@ html_theme = 'alabaster'
 # of the sidebar.
 #html_logo = None
 
+html_sidebars = {}
+
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
 # pixels large.
@@ -161,7 +167,6 @@ html_static_path = ['saegus_static']
 #html_use_smartypants = True
 
 # Custom sidebar templates, maps document names to template names.
-html_sidebars = {}
 
 # Additional templates that should be rendered to pages, maps page names to
 # template names.

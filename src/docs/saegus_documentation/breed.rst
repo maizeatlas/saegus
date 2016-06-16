@@ -1,11 +1,40 @@
+
+.. _breed_docs:
+
 ================
 The Breed Module
 ================
 
-
 A module which has functions and classes related to customized mating schemes
 implemented in simuPOP. ``saegus`` is unique largely because of its support for
 complex mating schemes.
+
+Mating Schemes
+==============
+
+A list of crosses that I frequently use. Most of these are wrappers around
+the ``Population.evolve`` function with some assumed ``Taggers`` arguments.
+
+.. py:class:: SelfCross(recombination_rates)
+
+   .. py:method:: create_top_crosses(population, offspring_per_individual)
+
+      :param population: Whatever
+
+      Creates a population by selfing each individual of ``population`` without replacement.
+      In other words each individual self-mates a single time.
+      Each individual will generate ``offspring_per_individual`` offspring giving
+      a population of ``offspring_per_individual*population`` individuals.
+
+.. code-block:: python
+   :caption: Example of create_self_crosses
+
+   >>> pop = sim.Population(100, [10, 10])
+   >>> self_crosser = SelfCross([0.01]*20)
+   >>> self_crosser.create_self_crosses(pop, 10)
+   (1,)
+   >>> pop.popSize()
+   1000
 
 .. py:class:: MAGIC(population, recombination_rates)
 
@@ -21,140 +50,62 @@ complex mating schemes.
       where more control is required over which individuals are crossed see the
       class :py:class:`SecondOrderPairwiseIDChooser`.
 
-      .. _example_generate_f_one_single_population:
-
-      **Example**: With a single population:
-
-      .. code-block:: python
-
-         >>> prefounders = sim.loadPopulation('prefounders1478.pop')
-         >>> sim.tagID(prefounders, reset=27)
-         >>> magic = breed.MAGIC(prefounders, [0.01]*1478)
-
-         >>> founders = [[1, 2], [3, 4], [5, 6], [7, 8]]
-         >>> os_per_pair = 500
-
-         >>> magic.generate_f_one(founders, os_per_pair)
-         Generation: 0
-
-      .. _example_generate_f_one_replicates:
-
-      **Example**: With replicates of a population:
-
-      .. code-block:: python
-
-         >>> prefounders = sim.loadPopulation('prefounders1478.pop')
-         >>> sim.tagID(prefounders, reset=27)
-         >>> multi_prefounders = simuPOP.Simulator(prefounders, 5, stealPops=False)
-         >>> multi_magic = breed.MAGIC(multi_prefounders, [0.01]*1478)
-
-         >>> founders = [[1, 2], [3, 4], [5, 6], [7, 8]]
-         >>> os_per_pair = 500
-
-         >>> multi_magic.generate_f_one(founders, os_per_pair)
-         Generation: 0
-         Generation: 0
-         Generation: 0
-         Generation: 0
-         Generation: 0
-
    .. py:method:: random_mating(generations_of_random_mating, pop_size)
 
       :parameter int generations_of_random_mating: Number of generations to randomly mate the population(s).
       :parameter int pop_size: Population size which can be different or the same as starting population(s).
 
-      .. _example_random_mating:
 
-      **Example**: Random mating with some tagging information.
+.. _example_generate_f_one_single_population:
 
-      .. code-block:: python
+.. code-block:: python
+   :caption: Example using a single population
 
-         >>> base_population = simuPOP.loadPopulation('prefounders1478.pop')
-         >>> recombination_rates = [0.01] * 1478
-         >>> magic = breed.MAGIC(base_population, recombination_rates)
-         >>> magic.random_mating(3, 2000)
-         Initiating random mating for 3 generations.
-         Generation: 0
-         Generation: 1
-         Generation: 2
+   >>> prefounders = sim.loadPopulation('prefounders1478.pop')
+   >>> sim.tagID(prefounders, reset=27)
+   >>> magic = breed.MAGIC(prefounders, [0.01]*1478)
 
+   >>> founders = [[1, 2], [3, 4], [5, 6], [7, 8]]
+   >>> os_per_pair = 500
 
-
-MAGIC: Multi-parent Advanced Generation Inter-crosses
-
-MAGIC begins with ``founders`` arranged into pairs. Pairs of parents
-are crossed with each other to make hybrid offspring. The hybrid offspring
-are crossed with a different group of hybrid offspring to make
-double-hybrid offspring. This process continues until only a single
-sub-population of individuals remains. Given the ``founders`` MAGIC
-merges successive generations. The process is demonstrated visually with
-a graph.
-
-   **Example**
-
-   .. code-block:: python
-
-      founders = [[1, 2], [3, 4], [5, 6], [7, 8]]
-
-   .. figure:: reformed_graph.png
-      :scale: 50%
-
-      Successive rounds of mating merges together the genomes of distinct founders.
+   >>> magic.generate_f_one(founders, os_per_pair)
+   Generation: 0
 
 
+.. _example_generate_f_one_replicates:
 
-   The result of these three rounds of crossing is a population with high
-   genetic diversity. High genetic diversity stemming from the combination of
-   many different parental lines greatly enhances mapping resolution.
+.. code-block:: python
+   :caption: With replicates of a population
 
-   .. class::(pop, recombination_rates)
+   >>> prefounders = sim.loadPopulation('prefounders1478.pop')
+   >>> sim.tagID(prefounders, reset=27)
+   >>> multi_prefounders = simuPOP.Simulator(prefounders, 5, stealPops=False)
+   >>> multi_magic = breed.MAGIC(multi_prefounders, [0.01]*1478)
 
-   :param pop: A simuPOP.Population subjected to MAGIC mating scheme.
-   :param recombination_rates: List of recombination rates at each locus.
-   :note: Recombination rates refer to the simuPOP definition.
+   >>> founders = [[1, 2], [3, 4], [5, 6], [7, 8]]
+   >>> os_per_pair = 500
 
-
-Predicting Number of Rounds of Mating
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Given :math:`n` founders to start with:
-
-If :math:`n` is the :math:`m` a power of two, :math:`m`, then there are *m* rounds of mating.
-That is if:
-
-.. math::
-
-   2^m = n
-
-The number of rounds of mating is the largest power of :math:`2` which can
-be subtracted from :math:`n` and then one more generation to combine the final pair
-of individuals.
-
-.. _pairwise_id_chooser:
-
-.. py:class:: PairwiseIDChooser(pairs_of_parents, offspring_per_pair=1)
-
-   :parameter pairs_of_parents: A list of lists or tuples. Contents of inner lists or tuples are a pair of IDs
-   :parameter int offspring_per_pair: Number of offspring to generate from each pair of individuals
-
-   .. py:method:: by_id_pairs(population)
-
-      :parameter population: simuPOP.Population with infoField ``ind_id`` defined.
-
-      .. _example_pairwise_id_chooser:
-
-         **Example** Nested list of prefounder IDs
+   >>> multi_magic.generate_f_one(founders, os_per_pair)
+   Generation: 0
+   Generation: 0
+   Generation: 0
+   Generation: 0
+   Generation: 0
 
 
+.. _example_random_mating:
 
+.. code-block:: python
+   :caption: example of random mating.
 
-.. _second_order_id_chooser:
-
-.. py:class:: SecondOrderPairIDChooser(female_parent_ids, male_parent_ids, offspring_per_parental_pair=1)
-
-   :parameter list female_parent_ids: List of ind_id of individuals chosen as females for mating
-   :parameter list male_parent_ids: List of ind_id of individuals chosen as males.
-   :parameter int offspring_parental_pair: Family size
+   >>> base_population = simuPOP.loadPopulation('prefounders1478.pop')
+   >>> recombination_rates = [0.01] * 1478
+   >>> magic = breed.MAGIC(base_population, recombination_rates)
+   >>> magic.random_mating(3, 2000)
+   Initiating random mating for 3 generations.
+   Generation: 0
+   Generation: 1
+   Generation: 2
 
 .. _multi_random_cross:
 
@@ -173,17 +124,68 @@ of individuals.
       Entries are keyed corresponding to ``rep`` of the replicate the
       IDs are taken from.
 
-      .. _example_determine_random_cross:
+.. _example_determine_random_cross:
 
-      **Example**: Creating arrays of randomly chosen individuals for each replicate.
+.. code-block:: python
+   :caption: Example of determining a random cross
 
-      .. code-block:: python
-
-      >>> mrc = breed.MultiRandomCross(multi_prefounders, 4, 500)
-      >>> mothers, fathers = mrc.determine_random_cross()
-      >>> mothers[0]
-      array([  525.,   482.,   294., ...,  1128.,  1405.,  1297.])
-      >>> fathers[0]
-      array([  904.,   825.,   751., ...,  1582.,  1911.,  1562.])
+   >>> mrc = breed.MultiRandomCross(multi_prefounders, 4, 500)
+   >>> mothers, fathers = mrc.determine_random_cross()
+   >>> mothers[0]
+   array([  525.,   482.,   294., ...,  1128.,  1405.,  1297.])
+   >>> fathers[0]
+   array([  904.,   825.,   751., ...,  1582.,  1911.,  1562.])
 
 
+
+Parent Choosers
+===============
+
+This is a list of the classes which are utilized to implement customized mating
+schemes. A customized mating scheme requires that individuals are passed to the
+``OffspringGenerator`` in a specific order. The classes here handle the choosing
+and ordering of parents.
+
+.. py:class:: PairwiseIDChooser(pairs_of_parents, offspring_per_parental_pair)
+
+   :parameter pairs_of_parents: Nested lists of list, each sub-list contains a single pair of parents.
+   :parameter int offspring_per_parental_pair: Family size
+
+.. py:function:: by_id_pairs(pop)
+
+   :parameter pop: Population to which this parent chooser is applied
+
+.. _second_order_id_chooser:
+
+.. py:class:: SecondOrderPairIDChooser(female_parent_ids, male_parent_ids, offspring_per_parental_pair=1)
+
+   :parameter list female_parent_ids: List of ind_id of individuals chosen as females for mating
+   :parameter list male_parent_ids: List of ind_id of individuals chosen as males.
+   :parameter int offspring_parental_pair: Family size
+
+.. _multi_second_order_id_chooser:
+
+.. py:class:: MultiSecondOrderPairIDChooser(multi_mother_ids, multi_father_ids, offspring_per_parental_pair=1)
+
+   :parameter multi_mother_ids: Dictionary keyed by replicate of lists of individual IDs (selfing allowed)
+   :parameter multi_father_ids: Dictionary keyed by replicate of lists of individual IDs (selfing allowed)
+   :parameter offspring_per_parental_pair: The number of offspring to generate per pair of parents.
+
+.. _enforced_population_structure:
+
+.. py:class:: ForcedPopulationStructureParentChooser(expanded_population_size, mating_probabilities)
+
+   :parameter expanded_population_size: The number of offspring to make from the mating of the individuals
+   :parameter mating_probabilities: Dictionary keyed by individual ID of probability mass functions implemented in scipy.random
+
+.. _half_sib_bulk_balance:
+
+.. py:class:: HalfSibBulkBalanceChooser(inds_per_breeding_subpop, offspring_per_female)
+
+   :parameter inds_per_breeding_subpop: Number of individuals in a selected breeding group
+   :parameter offspring_per_female: Number of times to randomly mate a given female.
+
+   .. py:method:: recursive_pairwise_parent_chooser(pop, subPop)
+
+      :parameter pop: Population to choose parents for
+      :parameter subPop: Sub-population to iterate through making the appropriate number of offspring for each breeding group

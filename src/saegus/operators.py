@@ -147,51 +147,6 @@ class ReplicateMetaPopulation(sim.PyOperator):
         return True
 
 
-class StoreStatistics(sim.PyOperator):
-    """
-    Stores means and variances of the aggregate, non-selected and selected
-    populations during an evolutionary process. Hard coded for my purposes
-    to collect certain data.
-
-
-    Sub-populations encoding:
-    (): aggregate
-    (0): selected
-    (1): non-selected
-    """
-    def __init__(self, *args, **kwargs):
-        sim.PyOperator.__init__(self, func=self.store_statistics, *args, **kwargs)
-
-    def store_statistics(self, pop):
-        pop.dvars().statistics['aggregate']['mean', 'g', pop.dvars().gen] = \
-            pop.dvars().meanOfInfo['g']
-        pop.dvars().statistics['selected']['mean', 'g', pop.dvars().gen] = \
-            pop.dvars(0).meanOfInfo['g']
-        pop.dvars().statistics['non-selected']['mean', 'g', pop.dvars().gen]\
-            = pop.dvars(1).meanOfInfo['g']
-
-        pop.dvars().statistics['aggregate']['var', 'g', pop.dvars().gen] = \
-            pop.dvars().varOfInfo['g']
-        pop.dvars().statistics['selected']['var', 'g', pop.dvars().gen] = \
-            pop.dvars(0).varOfInfo['g']
-        pop.dvars().statistics['non-selected']['var', 'g', pop.dvars().gen]\
-            = pop.dvars(1).varOfInfo['g']
-
-        pop.dvars().statistics['aggregate']['mean', 'p', pop.dvars().gen] = \
-            pop.dvars().meanOfInfo['p']
-        pop.dvars().statistics['selected']['mean', 'p', pop.dvars().gen] = \
-            pop.dvars(0).meanOfInfo['p']
-        pop.dvars().statistics['non-selected']['mean', 'p', pop.dvars().gen]\
-            = pop.dvars(1).meanOfInfo['p']
-
-        pop.dvars().statistics['aggregate']['var', 'p', pop.dvars().gen] = \
-            pop.dvars().varOfInfo['p']
-        pop.dvars().statistics['selected']['var', 'p', pop.dvars().gen] = \
-            pop.dvars(0).varOfInfo['p']
-        pop.dvars().statistics['non-selected']['var', 'p', pop.dvars().gen]\
-            = pop.dvars(1).varOfInfo['p']
-        return True
-
 class SaveMetaPopulations(sim.PyOperator):
     """
     Operator to sample individuals from the current generations to be added to a pre-initialized meta-population.

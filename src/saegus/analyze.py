@@ -766,16 +766,11 @@ class GWAS(object):
         :return:
         :rtype:
         """
-
-
-
         M = np.matrix(allele_count_matrix - 1)
 
         # Second allele in the unselected, un-inbred base population.
         # Refers to major allele in G_0
-
 #        allele_frequencies = np.array([allele_data_hdf_store[rep_id]['minor_frequency'][locus] for locus in self.loci])
-
         P = 2*(allele_frequencies - 0.5)
 
         Z = M - P
@@ -799,16 +794,75 @@ class GWAS(object):
 
         return annotated_G
 
-    def generate_tassel_gwas_configs(self, sample_size,
-                                     hapmap_file_name,
-                                     kinship_file_name,
-                                     phenotype_file_name,
-                                     structure_file_name,
-                                     output_file_prefix,
-                                     config_file_template):
+class GWASConfig(object):
+    """
+    Class to contain all the parameters associated with writing a "configFile"
+    for TASSEL 5.0. A ``configFile`` is an xml document which instructs TASSEL
+    what to do with a set of data.
+    """
+
+    def __init__(self, run_id, tassel_executable_path, tassel_input_path,
+                 tassel_outnput_path, config_file_template, config_file_output):
         """
-        Creates an xml file to run TASSEL using a mixed linear model approach.
-        Assumes use of hapmap, kinship, phenotype and population structure files.
+
+        This class is designed for the purpose of enabling platform independence.
+        The user initalizes a GWASConfigFile object with the locations of where
+        tassel is and where the user stores the input and output data.
+
+        :param str tassel_executable_path: Location of tassel executable ``run_pipeline*``
+        :param str tassel_input_path: Location of where the TASSEL input data is stored
+        :param str tassel_outnput_path: Location of where TASSEL should store the output
+        """
+        self._fun_id = run_id
+        self._tassel_executable_path = tassel_executable_path
+        self._tassel_outnput_path = tassel_outnput_path
+        self._tassel_input_path = tassel_input_path
+        self._config_file_template = config_file_template
+        self._config_file_output_path = config_file_output_path
+
+    def __str__(self):
+        return "GWASConfig: {instance_name}\n" \
+               "Location of TASSEL Executable: {tassel_executable}\n" \
+               "Location of input: {tassel_input}\n" \
+               "Destination of output: {tassel_output}".format(instance_name=self.__name__,
+                         tassel_executable=_tassel_executable_path,
+                         tassel_input=self._tassel_input_path,
+                         tassel_output=self._tassel_output_path)
+
+
+
+    @property
+    def run_id(self):
+        return self._run_id
+
+    @property
+    def tassel_executable_path(self):
+        return self._tassel_executable_path
+
+    @property
+    def tassel_input_path(self):
+        return self._tassel_input_path
+
+    @property
+    def tassel_output_path(self):
+        return self._tassel_outnput_path
+
+    @property
+    def config_file_template(self):
+        return self._config_file_template
+
+    @property
+    def config_file(self):
+        return self.config_file
+
+    def generate_config(self, sample_size, hapmap_file_name, kinship_file_name,
+                            phenotype_file_name, structure_file_name,
+                            output_file_prefix):
+        """
+        Creates an xml file to run TASSEL. The protocol performed by TASSEL
+        is controlled by one of the xml tags. For example <mlm/> would run a
+        moxed linear model using your data.
+
 
         The TASSEL command line interface requires a considerable number of
         options to run GWAS. It is impractical to run the command line manually
@@ -816,38 +870,42 @@ class GWAS(object):
         line interface allows the user to input a .xml file with the same
         information which is used in the terminal.
 
-        :param input_directory: Directory path to send the input files.
         :param run_identifier_prefix: Identifier for single replicate of data
         :param config_file_templae: XML file already setup for running a
         specific kind of GWAS
         :return: XML file to run a single replicate of data using TASSEL
         """
 
+        hapmap_file_path = os.join.path(self.tasel_input_path, hapmap_file_name)
+        phenotype_file_path = os.join.path(self.tassel_input_path, phenotype_file_name)
+        structure_file_path = os.join.path(self.tassel_input_path, structure_file_name)
+        kinship_file_path = os.join.path(self.tassel_input_path, kinship_file_name)
+        output_prefix = os.join.path(self.tassel_output_path, output_file_prefix)
 
-        import xml.etree.ElementTree as ET
-        import lxml.etree as etree
-
-        tree = ET.parse(config_file_template)
+        tree = ET.parse(self._config_file_template)
         root = tree.getroot()
         lxml_tree = etree.fromstring(ET.tostring(root))
         lxml_root = lxml_tree.getroottree()
 
-        lxml_root.find('fork1/h').text = hapmap_file_name
-        lxml_root.find('fork2/t').text = phenotype_file_name
-        lxml_root.find('fork3/q').text = structure_file_name
-        lxml_root.find('fork4/k').text = kinship_file_name
+        lxml_root.find('fork1/h').text = hapmap_file_path
+        lxml_root.find('fork2/t').text = phenotype_file_path
+        lxml_root.find('fork3/q').text = structure_file_path
+        lxml_root.find('fork4/k').text = kinship_file_path
 
         lxml_root.find('combine6/export').text = output_file_prefix
 
 
-        lxml_root.write("C:\\tassel\\bin\\" + self.run_id + '_' + str(sample_size) + "_sim_gwas_pipeline.xml",
+        config_file_output_name = os.join(self._config_file_output_path, run_id, '_', str(sample_size),
+                '_simulated_gwas_pipeline.xml')
+
+        lxml_root.write(config_file_output_name,
                         encoding="UTF-8",
                        method="xml", xml_declaration=True, standalone='',
                         pretty_print=True)
 
 
 
-    def replicate_tassel_gwas_configs(self, rep_id, sample_size,
+def replicate_tassel_gwas_configs(rep_id, sample_size,
                                          hapmap_file_name,
                                          kinship_file_name,
                                          phenotype_file_name,
@@ -855,48 +913,49 @@ class GWAS(object):
                                          output_file_prefix,
                                          config_file_template):
 
-        """
-        Creates an xml file to run TASSEL using a mixed linear model approach.
-        Assumes use of hapmap, kinship, phenotype and population structure files.
+    """
+    Creates an xml file to run TASSEL using a mixed linear model approach.
+    Assumes use of hapmap, kinship, phenotype and population structure files.
 
-        The TASSEL command line interface requires a considerable number of
-        options to run GWAS. It is impractical to run the command line manually
-        for the number of replications in a simulated study. The TASSEL command
-        line interface allows the user to input a .xml file with the same
-        information which is used in the terminal.
+    The TASSEL command line interface requires a considerable number of
+    options to run GWAS. It is impractical to run the command line manually
+    for the number of replications in a simulated study. The TASSEL command
+    line interface allows the user to input a .xml file with the same
+    information which is used in the terminal.
 
-        :param input_directory: Directory path to send the input files.
-        :param run_identifier_prefix: Identifier for single replicate of data
-        :param config_file_templae: XML file already setup for running a
-        specific kind of GWAS
-        :return: XML file to run a single replicate of data using TASSEL
-        """
+    :param input_directory: Directory path to send the input files.
+    :param run_identifier_prefix: Identifier for single replicate of data
+    :param config_file_templae: XML file already setup for running a
+    specific kind of GWAS
+    :return: XML file to run a single replicate of data using TASSEL
+    """
 
-        import xml.etree.ElementTree as ET
-        import lxml.etree as etree
+    import xml.etree.ElementTree as ET
+    import lxml.etree as etree
 
-        tree = ET.parse(config_file_template)
-        root = tree.getroot()
-        lxml_tree = etree.fromstring(ET.tostring(root))
-        lxml_root = lxml_tree.getroottree()
+    tree = ET.parse(config_file_template)
+    root = tree.getroot()
+    lxml_tree = etree.fromstring(ET.tostring(root))
+    lxml_root = lxml_tree.getroottree()
 
-        lxml_root.find('fork1/h').text = hapmap_file_name
-        lxml_root.find('fork2/t').text = phenotype_file_name
-        lxml_root.find('fork3/q').text = structure_file_name
-        lxml_root.find('fork4/k').text = kinship_file_name
+    lxml_root.find('fork1/h').text = hapmap_file_name
+    lxml_root.find('fork2/t').text = phenotype_file_name
+    lxml_root.find('fork3/q').text = structure_file_name
+    lxml_root.find('fork4/k').text = kinship_file_name
 
-        lxml_root.find('combine6/export').text = output_file_prefix
+    lxml_root.find('combine6/export').text = output_file_prefix
 
-        lxml_root.write("C:\\tassel\\bin\\" + 'R' + rep_id + '_' + str(sample_size) + '_' + self.run_id + '_' + "_sim_gwas_pipeline.xml",
-                        encoding="UTF-8",
-                        method="xml", xml_declaration=True, standalone='',
-                        pretty_print=True)
+    lxml_root.write("C:\\tassel\\bin\\" + 'R' + rep_id + '_' + str(sample_size) + '_' + self.run_id + '_' + "_sim_gwas_pipeline.xml",
+                    encoding="UTF-8",
+                    method="xml", xml_declaration=True, standalone='',
+                    pretty_print=True)
 
 
 def modify_gwas_config(rep_id, sample_size, new_run_id,
                                       new_phenotype_file_name,
                                       new_output_file_prefix,
-                                      existing_config_file):
+                                      existing_config_file,
+                       location_of_tassel_binary):
 
 
     """
@@ -929,10 +988,12 @@ def modify_gwas_config(rep_id, sample_size, new_run_id,
 #        lxml_root.find('fork3/q').text = structure_file_name
 #        lxml_root.find('fork4/k').text = kinship_file_name
 
+    absolute_output_file_path = os.path.join(location_of_tassel_binary,
+                 'R'+str(rep_id)+'_'+str(sample_size)+'_'+new_run_id + '_' + '_sim_gwas_pipeline.xml')
+
     lxml_root.find('combine6/export').text = new_output_file_prefix
 
-    lxml_root.write("C:\\tassel\\bin\\" + 'R' + str(rep_id) + '_' + str(
-        sample_size) + '_' + new_run_id + '_' + "_sim_gwas_pipeline.xml",
+    lxml_root.write(absolute_output_file_path,
                     encoding="UTF-8",
                     method="xml", xml_declaration=True, standalone='',
                     pretty_print=True)
@@ -1057,8 +1118,16 @@ class Study(object):
         reloaded_sample_library = {rep: [] for rep in range(number_of_replicates)}
         for rep in range(number_of_replicates):
             for size in sample_sizes:
-                reloaded_sample_library[rep].append(run_id + '_' + sub_run_id + '_' + str(rep) + '_' + str(size) + '.pop')
+                reloaded_sample_library[rep].append(sim.loadPopulation(self.run_id + '_' + str(rep) + '_' + str(size) + '.pop'))
+        return reloaded_sample_library
 
+
+    def load_particular_sample_library(self, replicates_to_load, sample_sizes, sub_run_id=''):
+        particular_loaded_sample_library = {rep: [] for rep in replicates_to_load}
+        for rep in replicates_to_load:
+            for size in sample_sizes:
+                particular_loaded_sample_library[rep].append(sim.loadPopulation(self.run_id+ '_' + str(rep) + '_' + str(size) + '.pop'))
+        return particular_loaded_sample_library
 
 
     def calculate_power_fpr(self, panel_map, sample_sizes, number_of_replicates,
@@ -1433,6 +1502,7 @@ def remap_allele_effect_and_frq_table_loci(
     new_index = list(range(len(segregating_loci)))
     allele_effect_and_frequency_table_subset.index = new_index
     return allele_effect_and_frequency_table_subset
+
 
 def reload_allele_effects_and_frequencies_table(run_id, sub_run_id, rep_id, sample_size):
     store_name = '_'.join([run_id, sub_run_id, 'allele_effects_and_frequencies.h5'])
