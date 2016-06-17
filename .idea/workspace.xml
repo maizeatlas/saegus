@@ -1,20 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="Updates and minor changes to parameters class Genotype">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/magic/1478/segregating_loci_storage.dat" afterPath="$PROJECT_DIR$/devel/magic/1478/segregating_loci_storage.dat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/magic/1478/synthesis_parameters.dat" afterPath="$PROJECT_DIR$/devel/magic/1478/synthesis_parameters.dat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/magic/1478/segregating_loci_storage.bak" afterPath="$PROJECT_DIR$/devel/magic/1478/segregating_loci_storage.bak" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/magic/1478/segregating_loci_storage.dir" afterPath="$PROJECT_DIR$/devel/magic/1478/segregating_loci_storage.dir" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/magic/1478/synthesis_parameters.bak" afterPath="$PROJECT_DIR$/devel/magic/1478/synthesis_parameters.bak" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/magic/1478/synthesis_parameters.dir" afterPath="$PROJECT_DIR$/devel/magic/1478/synthesis_parameters.dir" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/docs/saegus_documentation/operators.rst" afterPath="$PROJECT_DIR$/src/docs/saegus_documentation/operators.rst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/docs/saegus_documentation/parameters.rst" afterPath="$PROJECT_DIR$/src/docs/saegus_documentation/parameters.rst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/docs/saegus_documentation/parse.rst" afterPath="$PROJECT_DIR$/src/docs/saegus_documentation/parse.rst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/saegus/parameters.py" afterPath="$PROJECT_DIR$/src/saegus/parameters.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/saegus/parse.py" afterPath="$PROJECT_DIR$/src/saegus/parse.py" />
-    </list>
+    <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="Updates and minor changes to parameters class Genotype" />
     <ignored path="saegus_project.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -64,7 +51,7 @@
       <file leaf-file-name="analyze.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
+            <state relative-caret-position="1564">
               <caret line="102" column="4" selection-start-line="102" selection-start-column="4" selection-end-line="102" selection-end-column="4" />
               <folding />
             </state>
@@ -176,10 +163,9 @@
     </layout>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="489" />
-    <option name="y" value="190" />
-    <option name="width" value="763" />
-    <option name="height" value="670" />
+    <option name="x" value="800" />
+    <option name="width" value="800" />
+    <option name="height" value="860" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -1162,7 +1148,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="489" y="190" width="763" height="670" extended-state="1" />
+    <frame x="800" y="0" width="800" height="860" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="false" show_stripe_button="true" weight="1.0" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" x="-32000" y="-32000" width="1616" height="876" />
@@ -1172,7 +1158,7 @@
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31182796" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35579938" sideWeight="0.48971722" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="false" show_stripe_button="true" weight="0.2916074" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="681" y="71" width="221" height="387" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23046875" sideWeight="0.28271028" order="4" side_tool="false" content_ui="tabs" x="234" y="323" width="777" height="220" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16809116" sideWeight="0.28271028" order="4" side_tool="false" content_ui="tabs" x="234" y="323" width="777" height="220" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="DB Browser" active="false" anchor="top" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.329904" sideWeight="0.5" order="0" side_tool="true" content_ui="combo" />
@@ -1490,13 +1476,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2244">
           <caret line="278" column="0" selection-start-line="276" selection-start-column="0" selection-end-line="278" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#13#0" expanded="false" />
-            <element signature="e#2689#3648#0" expanded="false" />
-            <element signature="e#5152#6481#0" expanded="false" />
-            <element signature="e#6520#8758#0" expanded="false" />
-            <element signature="e#8810#10080#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1504,7 +1483,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="663">
           <caret line="65" column="0" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1512,7 +1490,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1520,7 +1497,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="6" column="68" selection-start-line="6" selection-start-column="68" selection-end-line="6" selection-end-column="68" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1528,7 +1504,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="319">
           <caret line="73" column="22" selection-start-line="73" selection-start-column="22" selection-end-line="73" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1536,7 +1511,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="114">
           <caret line="167" column="20" selection-start-line="167" selection-start-column="20" selection-end-line="167" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1544,9 +1518,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="280" column="0" selection-start-line="280" selection-start-column="0" selection-end-line="280" selection-end-column="0" />
-          <folding>
-            <element signature="e#1248#2055#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1554,13 +1525,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
+        <state relative-caret-position="1564">
           <caret line="102" column="4" selection-start-line="102" selection-start-column="4" selection-end-line="102" selection-end-column="4" />
           <folding />
         </state>
