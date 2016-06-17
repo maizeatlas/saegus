@@ -1,50 +1,24 @@
-===============
-:mod:`simulate`
-===============
+
+.. _simulate:
+
+===========
+Simulations
+===========
 
 .. module:: simulate
 
 
+.. py:class:: Truncation(generations_of_random_mating=1, generations_of_selection=1, operating_population_size=2000, proportion_of_individuals_saved=0.05, overshoot_as_proportion=0.50, heritability=0.7, meta_pop_sample_sizes=100, number_of_replicates=1, prefounders_file_name='', ae_file_name='')
+
+   :parameter int generations_of_random_mating: Number of generations to perform random mating before selection begins.
+   :parameter int generations_of_selection: Number of generations to perform recurrent selection (occurs after random mating)
+   :parameter int operating_population_size: Size of the population you want to do selection on. Must be divisible by the number of pairs of founders.
+
+``Truncation`` is a class which encapsulates all parameters and
+functions to perform recurrent truncation selection on a quantitative
+trait. The trait is assumed to have a simple additive basis so all
+phenotypes are calculated by adding contribution of :math:`n` loci plus error.
 
 
 
-:class: Truncation
-
-    ``Truncation`` is a class which encapsulates all parameters and
-    functions to perform recurrent truncation selection on a quantitative
-    trait. The trait is assumed to have a simple additive basis so all
-    phenotypes are calculated by adding contribution of ``n`` loci plus error.
-
-
-
-    .. py:function:: generate_f_one(self, pop, recombination_rates, parental_id_pairs)
-
-        Crosses pairs of founders as they are listed in founder indices
-        using breed.PairwiseIDChooser
-
-        .. code-block:: python
-
-           founder_chooser = breed.PairwiseIDChooser(parental_id_pairs)
-           if len(parental_id_pairs) % 2 != 0:
-               parental_id_pairs.append(random.choice(parental_id_pairs))
-           os_size = len(parental_id_pairs)
-
-           logging.info("Creating the F_one population from selected "
-                        "founders.")
-           # while pop.popSize() > 1:
-           pop.evolve(
-               preOps=[
-                   sim.PyEval(r'"Generation: %d\n" % gen',
-                              ),
-               ],
-               matingScheme=sim.HomoMating(
-                   sim.PyParentsChooser(founder_chooser.by_id_pairs),
-                   sim.OffspringGenerator(ops=[
-                       sim.IdTagger(), sim.ParentsTagger(), sim.PedigreeTagger(),
-                       sim.Recombinator(rates=recombination_rates)],
-                       numOffspring=1),
-                   subPopSize=os_size,
-               ),
-               gen=1,
-           )
 

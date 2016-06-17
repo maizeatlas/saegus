@@ -180,7 +180,7 @@ def allele_frq_table(self, pop, number_gens,
 
     for locus, point in breakpoints.items():
         try:
-            diagram[point] = '*'
+                diagram[point] = '*'
         except IndexError:
             pass
 

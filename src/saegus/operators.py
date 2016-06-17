@@ -165,31 +165,6 @@ class SaveMetaPopulations(sim.PyOperator):
         return True
 
 
-class InfoAndGenotypeWriter(sim.PyOperator):
-    """
-    Operator to output values of individual infoFields and genotype matrix to file. Very similar
-    to simuPOP.utils.Exporter; however, allows for greater developmental flexibility.
-    """
-    def __init__(self, output_file_name: str, *args, **kwargs):
-        """
-        output_file_name should not have a file extension.
-        """
-        self.output_file_name = output_file_name
-        sim.PyOperator.__init__(self, func=self.info_and_genotype_writer, *args, **kwargs)
-
-    def info_and_genotype_writer(self, pop):
-        full_file_name = self.output_file_name + "_" + str(pop.dvars().gen) + ".txt"
-        header = ['ind_id', 'mother_id', 'father_id', 'g', 'p']
-        genotype_header = list(range(2*pop.totNumLoci()))
-        header.extend(genotype_header)
-        with open(full_file_name, 'w') as pop_info:
-            info_writer = csv.writer(pop_info, delimiter=',')
-            info_writer.writerow(header)
-            for ind in pop.individuals():
-                info_writer.writerow([ind.ind_id, ind.mother_id,
-                                      ind.father_id, ind.g, ind.p,
-                                      ind.genotype()])
-        return True
 
 
 class RandomlyAssignFemaleFitness(sim.PyOperator):
@@ -279,3 +254,32 @@ def assign_additive_g(pop, qtl, allele_effects):
                  for locus
                  in qtl])
         ind.g = genotypic_contribution
+
+## Not Used Frequently
+
+class InfoAndGenotypeWriter(sim.PyOperator):
+    """
+    Operator to output values of individual infoFields and genotype matrix to file. Very similar
+    to simuPOP.utils.Exporter; however, allows for greater developmental flexibility.
+    """
+    def __init__(self, output_file_name: str, *args, **kwargs):
+        """
+        output_file_name should not have a file extension.
+        """
+        self.output_file_name = output_file_name
+        sim.PyOperator.__init__(self, func=self.info_and_genotype_writer, *args, **kwargs)
+
+    def info_and_genotype_writer(self, pop):
+        full_file_name = self.output_file_name + "_" + str(pop.dvars().gen) + ".txt"
+        header = ['ind_id', 'mother_id', 'father_id', 'g', 'p']
+        genotype_header = list(range(2*pop.totNumLoci()))
+        header.extend(genotype_header)
+        with open(full_file_name, 'w') as pop_info:
+            info_writer = csv.writer(pop_info, delimiter=',')
+            info_writer.writerow(header)
+            for ind in pop.individuals():
+                info_writer.writerow([ind.ind_id, ind.mother_id,
+                                      ind.father_id, ind.g, ind.p,
+                                      ind.genotype()])
+        return True
+

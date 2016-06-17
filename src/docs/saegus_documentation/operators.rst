@@ -1,6 +1,9 @@
-================
-:mod:`operators`
-================
+
+.. _operators:
+
+===================================
+Operators Added By :py:mod:`saegus`
+===================================
 
 All of the classes in this module are derived from the simuPOP.PyOperator
 class. Each class performs some task inside of the evolutionary process.
@@ -8,6 +11,8 @@ simuPOP offers a standard library of operators for common population genetics
 processes. The operators defined in this module perform operations which
 would either be impossible or difficult to implement using standard simuPOP
 operators.
+
+.. _function_forms_of_operators:
 
 .. py:function:: assign_additive_g(pop, qtl, allele_effects)
 
@@ -41,8 +46,6 @@ operators.
 .. warning::
 
    :func:`phenotypic_effect_calculator` assumes that the population has infoField ``p`` defined.
-
-
 
 
 
@@ -84,3 +87,7 @@ values of ``g`` must be assigned to each individual.
 .. py:class:: RandomlyAssignMaleFitness()
 
 .. py:class:: DiscardRandomOffspring()
+
+.. py:class:: SaveMetaPopulations()
+
+.. py:class:: InfoAndGenotypeWriter()

@@ -11,7 +11,7 @@ class Truncation(object):
     ``Truncation`` is a class which encapsulates all parameters and
     functions to perform recurrent truncation selection on a quantitative
     trait. The trait is assumed to have a simple additive basis so all
-    phenotypes are calculated by adding contribution of ``n`` loci plus error.
+    phenotypes are calculated by adding contribution of :math:`n` loci plus error.
     """
 
     def __init__(self, generations_of_selection=1,
