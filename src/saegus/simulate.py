@@ -86,35 +86,6 @@ class Truncation(object):
 
         return trunc_info
 
-    def generate_f_one(self, pop, recombination_rates, parental_id_pairs, offspring_per_pair):
-        """
-        Crosses pairs of founders as they are listed in founder indices.
-        using breed.PairwiseIDChooser
-
-        :note: Data is specified as pairs. Testing for even-number unecessary.
-        """
-
-        founder_chooser = breed.PairwiseIDChooser(parental_id_pairs, offspring_per_pair)
-        if len(parental_id_pairs) % 2 != 0:
-            parental_id_pairs.append(random.choice(parental_id_pairs))
-        number_of_pairs = len(parental_id_pairs)
-        pop.evolve(
-            preOps=[
-                sim.PyEval(r'"Generation: %d\n" % gen',
-                           ),
-            ],
-            matingScheme=sim.HomoMating(
-                sim.PyParentsChooser(founder_chooser.by_id_pairs),
-                sim.OffspringGenerator(ops=[
-                    sim.IdTagger(),
-                    sim.PedigreeTagger(),
-                    sim.Recombinator(rates=recombination_rates)],
-                    numOffspring=1),
-                subPopSize=[offspring_per_pair*number_of_pairs],
-            ),
-            gen=1,
-        )
-
     def recombinatorial_convergence(self, pop, recombination_rates):
         """
         Implements the MAGIC breeding scheme of breeding single individuals
