@@ -40,7 +40,7 @@ def parse_genotype_matrix(genotype_matrix_filename: str, columns_to_drop='popdat
     return genotype_matrix
 
 
-def pedigree_writer(pop, pedigree_filename):
+def pedigree_writer(pop, pedigree_filename, mode='a'):
     """
     Writes ind_id, mother_id, father_id for each individual.
     pedigree_writer will raise an assertion error if the necessary
@@ -55,7 +55,7 @@ def pedigree_writer(pop, pedigree_filename):
     :return: None
     :rtype: None
     """
-    with open(pedigree_filename, 'a') as pedigree:
+    with open(pedigree_filename, mode) as pedigree:
         pedwriter = csv.writer(pedigree, delimiter='\t')
         for ind in pop.individuals():
             ind_lineage = [str(pop.dvars().gen), str(ind.ind_id),

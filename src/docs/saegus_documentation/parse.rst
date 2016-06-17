@@ -7,8 +7,8 @@ Parse
 A small module of miscellaneous code which does not fit in anywhere else.
 Unsure if I am keeping it or merging it with another module.
 
-*Update*
-========
+Update
+======
 
 I have recently found a good use of parse. Aside from containing a very small
 number of functions used to handle raw genotype data I will use it to derive
@@ -42,3 +42,24 @@ data from simulated output i.e. allele frequencies from genotype files.
              ['GG', 'AA', 'AA', ..., 'AA', 'AG', 'AA'],
              ['AA', 'CC', 'CC', ..., 'AC', 'AC', 'CC'],
              ['CT', 'TT', 'TT', ..., 'TT', 'CT', 'TT']], dtype=object)
+
+.. py:function:: genotype_parser(genotype_matrix_filename, columns_to_drop=None, droppable_individuals=None)
+
+   :parameter genotype_matrix_filename:
+
+.. py:function:: parse_genotype_matrix(genotype_matrix_filename, columns_to_drop='popdata', index_of_first_nonfounder=105)
+
+   :parameter genotype_matrix_filename:
+   :parameter columns_to_drop:
+   :parameter index_of_first_nonfounder:
+
+.. py:function:: pedigree_writer(pop, pedigree_filename, mode='a')
+
+   :parameter pop: simuPOP.population with population variable ``generation`` and infoFields ``[ind_id, mother_id, father_id]``
+   :parameter str pedigree_filename: Output file
+   :parameter str mode: File mode default is append 'a'
+
+   .. note::
+
+      :py:function:`pedigree_writer` opens a file in append mode by default.
+

@@ -163,7 +163,7 @@ class AE(object):
                 for_plot_allele_effects[float(idx) + 0.2, nucleotide] = allele_effects[idx + 1, nucleotide]
         return allele_effects, for_plot_allele_effects
 
-class Genotype(object):
+class MissingGenotypeData(object):
     """
     A class to handle all genotype data.
     """

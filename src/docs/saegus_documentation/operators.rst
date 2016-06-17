@@ -46,28 +46,41 @@ operators.
 
 
 
-:class:`GenoAdditive`
+.. py:class:: GenoAdditive()
 
+.. py:class:: PhenotypeCalculator()
 
-:class:`CalculateErrorVariance`
+.. py:class:: CalculateErrorVariance(heritability)
 
 An operator to calculate the variance of the experimental error distribution.
 We assume that there is some degree of error when measuring phenotypes in
 an actual experiment. Measurement error is represented as a random draw
 from a normal distribution with mean zero and variance ``epsilon`` where
 
-   ``epsilon`` = ``genotypic_variance`` * (1/``heritability`` - 1)
+.. math::
+
+   e = V_g * (1/h^2 - 1)
 
 ``epsilon`` is assigned as a population variable. This operator is typically
 called once in the initOps phase of an evolutionary process. At present
 :class:`CalculateErrorVariance` is hard coded to calculate
 ``genotypic_variance`` as the sample variance of the infoField ``g``.
-
-Requires
---------
-
 Population must have infoField ``g``, 0 < heritability < 1.
 :class:`GenoAdditive` must be called before class:`CalculateErrorVariance` or
 values of ``g`` must be assigned to each individual.
 
-:param float heritability: Floating point value greater than zero and less than 1.
+.. py:class:: CullPopulation()
+
+.. py:class:: Sorter()
+
+.. py:class:: MetaPopulation()
+
+.. py:class:: ReplicateMetaPopulation()
+
+.. py:class:: SaveMetaPopulation()
+
+.. py:class:: RandomlyAssignFemaleFitness()
+
+.. py:class:: RandomlyAssignMaleFitness()
+
+.. py:class:: DiscardRandomOffspring()
