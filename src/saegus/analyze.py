@@ -96,57 +96,6 @@ def allele_data(pop, alleles, loci):
 
     return allele_data_structure
 
-
-
-
-def rank_allele_effects(self, pop, loci, alleles,
-                       allele_effects):
-    """
-    Collects information about alleles at quantitative trait loci into a
-    dictionary. Determines favorable/unfavorable allele and corresponding
-    frequency. Keys of quantitative_trait_alleles have similar hierarchy
-    for both the alleles and their frequencies.
-    :param pop:
-    :param loci:
-    :param alleles:
-    :param allele_effects:
-
-
-    """
-    quantitative_trait_alleles = {}
-    quantitative_trait_alleles['effects'] = col.OrderedDict()
-    quantitative_trait_alleles['alleles'] = col.OrderedDict()
-    quantitative_trait_alleles['alleles']['favorable'] = col.OrderedDict()
-    quantitative_trait_alleles['alleles']['unfavorable'] = col.OrderedDict()
-    quantitative_trait_alleles['frequency'] = col.OrderedDict()
-    quantitative_trait_alleles['frequency']['favorable'] = col.OrderedDict()
-    quantitative_trait_alleles['frequency']['unfavorable'] = col.OrderedDict()
-    for locus in loci:
-        temp_effects = []
-        for allele in alleles[locus]:
-            temp_effects.append(allele_effects[locus][allele])
-        quantitative_trait_alleles['effects'][locus] = temp_effects
-
-    for locus in loci:
-        for allele in alleles[locus]:
-            if allele_effects[locus][allele] == max(
-                    quantitative_trait_alleles['effects'][locus]):
-                quantitative_trait_alleles['alleles']['favorable'][locus] =\
-                    allele
-            if allele_effects[locus][allele] == min(
-                    quantitative_trait_alleles['effects'][locus]):
-                quantitative_trait_alleles['alleles']['unfavorable'][locus] =\
-                    allele
-
-    for locus, allele in quantitative_trait_alleles['alleles']['favorable'].items():
-        quantitative_trait_alleles['frequency']['favorable'][locus] = \
-            pop.dvars().alleleFreq[locus][allele]
-    for locus, allele in quantitative_trait_alleles['alleles']['unfavorable'].items():
-        quantitative_trait_alleles['frequency']['unfavorable'][locus] =\
-            pop.dvars().alleleFreq[locus][allele]
-
-    return quantitative_trait_alleles
-
 def allele_frq_table(self, pop, number_gens,
     allele_frq_data, recombination_rates, genetic_map):
     """
@@ -426,101 +375,7 @@ def plot_frequency_vs_effect(pop, haplotype_table, plot_title,
     return effect_frq_by_chromosome
 
 
-class MetaData(object):
-    """
-    The wgs is extensively paramterized. Hence changing one parameter will potentially produce a significantly different
-    result in the final population. Therefore, a set of replications is defined by a particular of parameterization.
-    The parameterization will be described in a metadata document. The class MetaData is responsible for collecting
-    the parameterization information and processing it into a writable file.
-    """
 
-    def __init__(self, prefounders, founders, population_sizes, allele_effect_information,
-                 allele_effects_table, metadata_filename):
-        """
-        An instance of MetaData should have enough information to completely specify a population without using any
-        external information.
-        :param prefounders: Prefounder population of the 26 lines which were used to make the NAM population.
-        :param founders: Subset of prefounders used to make a derived population.
-        :param population_sizes: Size of the population during the F_one, F_two, 'mate-and-merge' phase and finally
-        the selection phase.
-        :param allele_effect_information: Information about the distribution of allele effects and the corresponding
-        parameters, the random number generator package and random seed used to generate the allele effects.
-            Ex: normal(0, 1), numpy.random, seed 1337.
-        :param allele_effects_table: The actual tabular/dictionary representation of the realized allele effect values.
-        """
-        self.prefounders = prefounders
-        self.founders = founders
-        self.population_sizes = population_sizes
-        self.allele_effect_information = allele_effect_information
-        self.allele_effects_table = allele_effects_table
-        self.metadata_filename = metadata_filename
-
-
-        # A master function will use other functions to write the necessary information to file.
-
-    @staticmethod
-    def ascii_chromosome_representation(pop, reduction_factor, metadata_filename):
-        """
-        Writes a ascii representation of chromosomes with uninteresting loci
-        as * and QTL as |. The representation is has scale 1 /
-        reduction_factor to make it viable to put into a .txt document.
-        :param pop:
-        :param reduction_factor:
-        :param metadata_filename:
-        """
-        reduced_chromosomes = [math.floor(chrom/reduction_factor) for chrom in list(pop.numLoci())]
-        reduced_qtl = [math.floor(pop.chromLocusPair(locus)[1]/reduction_factor) for locus in pop.dvars().properQTL]
-        chromosomes_of_qtl = [pop.chromLocusPair(qtl)[0] for qtl in pop.dvars().properQTL]
-        aster_chroms = [['*']*chrom_len for chrom_len in reduced_chromosomes]
-        for red_qtl, chrom_of_qtl in zip(reduced_qtl, chromosomes_of_qtl):
-            aster_chroms[chrom_of_qtl][red_qtl] = '|'
-        with open(metadata_filename, 'a') as chrom_file:
-            chrom_file.write('Scale: 1/%d\n' % reduction_factor)
-            for idx, chrom in enumerate(aster_chroms):
-                idx += 1
-                chrom_file.write('Chromosome: %d\n' % idx)
-                chrom_file.write(''.join(chrom) + '\n')
-
-    @staticmethod
-    def coefficient_of_dispersion(pop):
-        """
-        Mean to variance ratio of pairwise sequential distances of quantitative trait loci.
-        Note that this statistic contributes nothing if there is only one qtl on a chromosome.
-        :param pop:
-        """
-        chrom_loc_pairs = [pop.chromLocusPair(pop.dvars().properQTL[i]) for i in range(len(pop.dvars().properQTL))]
-        chromosomes = [chrom_loc_pairs[i][0] for i in range(len(chrom_loc_pairs))]
-        diffs = []
-        for i in range(len(chrom_loc_pairs)):
-            if chromosomes[i-1] == chromosomes[i]:
-                diffs.append(math.fabs(chrom_loc_pairs[i-1][1] - chrom_loc_pairs[i][1]))
-        diffs = np.array(diffs)
-        mean = np.mean(diffs)
-        var = np.var(diffs)
-        var_to_mean_ratio = var/mean
-        return var_to_mean_ratio
-
-    @staticmethod
-    def genomic_dispersal(pop):
-        """
-        Genomic dispersal is a novel statistics which measures the spread of loci over a genome.z All loci of a chromosome
-        are compared to the center of the genetic map (in cMs) and weighted by the length of that chromosome.
-        :param pop: Population used for recurrent selection
-        :return: Dimensionless constant describing the parameterization
-        """
-        chrom_loc_pairs = [pop.chromLocusPair(pop.dvars().properQTL[i]) for i in range(len(pop.dvars().properQTL))]
-        chromosomes = [chrom_loc_pairs[i][0] for i in range(len(chrom_loc_pairs))]
-        qtl_positions = [(chrom_loc_pairs[i][1]) for i in range(len(chrom_loc_pairs))]
-        chromosome_midpoints = {i: (pop.numLoci()[i]/2) for i in range(len(pop.numLoci()))}
-        diffs = []
-        for pos, chrom, i in zip(qtl_positions, chromosomes, range(len(chrom_loc_pairs))):
-            diffs.append(pos - chromosome_midpoints[chrom])
-        squared_diffs = np.square(np.array(diffs))
-        root_squared_diffs = np.sqrt(squared_diffs)
-        denominator_lengths = np.array(list(pop.numLoci()))
-        pre_genetic_dispersal = np.divide(root_squared_diffs, denominator_lengths)
-        genomic_dispersal = sum(pre_genetic_dispersal)
-        return genomic_dispersal
 
 
 class GWAS(object):
@@ -1615,3 +1470,100 @@ class Synbreed(object):
                             header=False)
 
         return syn_geno_map
+
+
+class MetaData(object):
+    """
+    The wgs is extensively paramterized. Hence changing one parameter will potentially produce a significantly different
+    result in the final population. Therefore, a set of replications is defined by a particular of parameterization.
+    The parameterization will be described in a metadata document. The class MetaData is responsible for collecting
+    the parameterization information and processing it into a writable file.
+    """
+
+    def __init__(self, prefounders, founders, population_sizes, allele_effect_information,
+                 allele_effects_table, metadata_filename):
+        """
+        An instance of MetaData should have enough information to completely specify a population without using any
+        external information.
+        :param prefounders: Prefounder population of the 26 lines which were used to make the NAM population.
+        :param founders: Subset of prefounders used to make a derived population.
+        :param population_sizes: Size of the population during the F_one, F_two, 'mate-and-merge' phase and finally
+        the selection phase.
+        :param allele_effect_information: Information about the distribution of allele effects and the corresponding
+        parameters, the random number generator package and random seed used to generate the allele effects.
+            Ex: normal(0, 1), numpy.random, seed 1337.
+        :param allele_effects_table: The actual tabular/dictionary representation of the realized allele effect values.
+        """
+        self.prefounders = prefounders
+        self.founders = founders
+        self.population_sizes = population_sizes
+        self.allele_effect_information = allele_effect_information
+        self.allele_effects_table = allele_effects_table
+        self.metadata_filename = metadata_filename
+
+
+        # A master function will use other functions to write the necessary information to file.
+
+    @staticmethod
+    def ascii_chromosome_representation(pop, reduction_factor, metadata_filename):
+        """
+        Writes a ascii representation of chromosomes with uninteresting loci
+        as * and QTL as |. The representation is has scale 1 /
+        reduction_factor to make it viable to put into a .txt document.
+        :param pop:
+        :param reduction_factor:
+        :param metadata_filename:
+        """
+        reduced_chromosomes = [math.floor(chrom/reduction_factor) for chrom in list(pop.numLoci())]
+        reduced_qtl = [math.floor(pop.chromLocusPair(locus)[1]/reduction_factor) for locus in pop.dvars().properQTL]
+        chromosomes_of_qtl = [pop.chromLocusPair(qtl)[0] for qtl in pop.dvars().properQTL]
+        aster_chroms = [['*']*chrom_len for chrom_len in reduced_chromosomes]
+        for red_qtl, chrom_of_qtl in zip(reduced_qtl, chromosomes_of_qtl):
+            aster_chroms[chrom_of_qtl][red_qtl] = '|'
+        with open(metadata_filename, 'a') as chrom_file:
+            chrom_file.write('Scale: 1/%d\n' % reduction_factor)
+            for idx, chrom in enumerate(aster_chroms):
+                idx += 1
+                chrom_file.write('Chromosome: %d\n' % idx)
+                chrom_file.write(''.join(chrom) + '\n')
+
+    @staticmethod
+    def coefficient_of_dispersion(pop):
+        """
+        Mean to variance ratio of pairwise sequential distances of quantitative trait loci.
+        Note that this statistic contributes nothing if there is only one qtl on a chromosome.
+        :param pop:
+        """
+        chrom_loc_pairs = [pop.chromLocusPair(pop.dvars().properQTL[i]) for i in range(len(pop.dvars().properQTL))]
+        chromosomes = [chrom_loc_pairs[i][0] for i in range(len(chrom_loc_pairs))]
+        diffs = []
+        for i in range(len(chrom_loc_pairs)):
+            if chromosomes[i-1] == chromosomes[i]:
+                diffs.append(math.fabs(chrom_loc_pairs[i-1][1] - chrom_loc_pairs[i][1]))
+        diffs = np.array(diffs)
+        mean = np.mean(diffs)
+        var = np.var(diffs)
+        var_to_mean_ratio = var/mean
+        return var_to_mean_ratio
+
+    @staticmethod
+    def genomic_dispersal(pop):
+        """
+        Genomic dispersal is a novel statistics which measures the spread of loci over a genome.z All loci of a chromosome
+        are compared to the center of the genetic map (in cMs) and weighted by the length of that chromosome.
+        :param pop: Population used for recurrent selection
+        :return: Dimensionless constant describing the parameterization
+        """
+        chrom_loc_pairs = [pop.chromLocusPair(pop.dvars().properQTL[i]) for i in range(len(pop.dvars().properQTL))]
+        chromosomes = [chrom_loc_pairs[i][0] for i in range(len(chrom_loc_pairs))]
+        qtl_positions = [(chrom_loc_pairs[i][1]) for i in range(len(chrom_loc_pairs))]
+        chromosome_midpoints = {i: (pop.numLoci()[i]/2) for i in range(len(pop.numLoci()))}
+        diffs = []
+        for pos, chrom, i in zip(qtl_positions, chromosomes, range(len(chrom_loc_pairs))):
+            diffs.append(pos - chromosome_midpoints[chrom])
+        squared_diffs = np.square(np.array(diffs))
+        root_squared_diffs = np.sqrt(squared_diffs)
+        denominator_lengths = np.array(list(pop.numLoci()))
+        pre_genetic_dispersal = np.divide(root_squared_diffs, denominator_lengths)
+        genomic_dispersal = sum(pre_genetic_dispersal)
+        return genomic_dispersal
