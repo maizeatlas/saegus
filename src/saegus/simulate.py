@@ -290,22 +290,20 @@ class Truncation(object):
             ],
             gen=self.generations_of_selection)
 
-    def replicate_selection(self, multi_pop, multi_meta_pop, qtl, aes,
+    def replicate_selection(self, multi_pop, meta_sample_library, qtl, allele_effects,
                             recombination_rates):
         """
         Runs recurrent truncation selection on a multi-replicate population.
 
         :param multi_pop: Simulator object of full-sized population
-        :param multi_meta_pop: Simulator object of meta-populations
+        :param meta_sample_library: Simulator object of meta-populations
         :param qtl: Loci whose alleles have effects
-        :param aes: Allele effect container
+        :param allele_effects: Allele effect container
         :param recombination_rates: Probabilities for recombination at each locus
         """
 
         for pop_rep in multi_pop.populations():
             pop_rep.dvars().gen = 0
-        for meta_pop_rep in multi_meta_pop.populations():
-            meta_pop_rep.dvars().gen = 0
 
         sizes = [self.individuals_per_breeding_subpop] \
                 * self.number_of_breeding_subpops + \
@@ -327,11 +325,12 @@ class Truncation(object):
         multi_pop.evolve(
             initOps=[
                 sim.InitInfo(0, infoFields=['generation']),
-                operators.GenoAdditive(qtl, aes),
+                sim.InfoExec('replicate=rep'),
+                operators.GenoAdditive(qtl, allele_effects),
                 operators.CalculateErrorVariance(self.heritability),
                 operators.PhenotypeCalculator(
                     self.proportion_of_individuals_saved),
-                operators.ReplicateMetaPopulation(multi_meta_pop,
+                operators.ReplicateMetaPopulation(meta_sample_library,
                                                   self.meta_pop_sample_sizes),
                 sim.PyEval(r'"Initial: Sampled %d individuals from generation '
                            r'%d Replicate: %d.\n" % (ss, gen_sampled_from, '
@@ -340,25 +339,14 @@ class Truncation(object):
             ],
             preOps=[
                 sim.PyEval(r'"Generation: %d\n" % gen'),
-                operators.GenoAdditive(qtl, aes, begin=1),
+                operators.GenoAdditive(qtl, allele_effects, begin=1),
                 sim.InfoExec('generation=gen'),
+                sim.InfoExec('replicate=rep'),
                 operators.PhenotypeCalculator(
                     self.proportion_of_individuals_saved, begin=1),
-                operators.ReplicateMetaPopulation(multi_meta_pop,
+                operators.ReplicateMetaPopulation(meta_sample_library,
                                                   self.meta_pop_sample_sizes,
                                                   at=sampling_generations),
-                operators.Sorter('p'),
-                sim.SplitSubPops(sizes=[self.number_of_breeding_individuals,
-                                        self.number_of_nonbreeding_individuals],
-                                 randomize=False),
-                sim.Stat(meanOfInfo=['g', 'p'], vars=['meanOfInfo',
-                                                      'meanOfInfo_sp'],
-                         at=sampling_generations),
-                sim.Stat(varOfInfo=['g', 'p'], vars=['varOfInfo',
-                                                     'varOfInfo_sp'],
-                         at=sampling_generations),
-                operators.StoreStatistics(at=sampling_generations),
-                sim.MergeSubPops(),
                 operators.Sorter('p'),
                 sim.SplitSubPops(sizes=sizes, randomize=False),
             ],
@@ -379,25 +367,14 @@ class Truncation(object):
             ],
             finalOps=[
                 sim.InfoExec('generation=gen'),
-                operators.GenoAdditive(qtl, aes),
+                operators.GenoAdditive(qtl, allele_effects),
                 operators.PhenotypeCalculator(
                     self.proportion_of_individuals_saved),
-                operators.ReplicateMetaPopulation(multi_meta_pop,
+                operators.ReplicateMetaPopulation(meta_sample_library,
                                                   self.meta_pop_sample_sizes),
                 sim.PyEval(
                     r'"Final: Sampled %d individuals from generation %d\n" '
                     r'% (ss, gen_sampled_from)'),
-                operators.Sorter('p'),
-                sim.SplitSubPops(sizes=[self.number_of_breeding_individuals,
-                                        self.number_of_nonbreeding_individuals],
-                                 randomize=False),
-                operators.Sorter('p'),
-                sim.Stat(meanOfInfo=['g', 'p'], vars=['meanOfInfo',
-                                                      'meanOfInfo_sp']),
-                sim.Stat(varOfInfo=['g', 'p'], vars=['varOfInfo',
-                                                     'varOfInfo_sp']),
-                operators.StoreStatistics(),
-                sim.MergeSubPops(),
                 operators.Sorter('p'),
             ],
             gen=self.generations_of_selection)

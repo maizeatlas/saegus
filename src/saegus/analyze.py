@@ -32,7 +32,6 @@ def allele_data(pop, alleles, loci):
     :return:
     :rtype:
     """
-    sim.stat(pop, alleleFreq=loci, vars=['alleleFreq'])
 
     reversed_allele_frequencies = {}
     allele_frq = {}
@@ -53,7 +52,7 @@ def allele_data(pop, alleles, loci):
     for locus in loci:
         temp_frq = []
         for allele in alleles[locus]:
-            np.array([pop.dvars().alleleFreq[locus][allele]])
+#            np.array([pop.dvars().alleleFreq[locus][allele]])
             temp_frq.append(pop.dvars().alleleFreq[locus][allele])
 
         allele_frq['frequencies'][locus] = temp_frq

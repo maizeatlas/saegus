@@ -2,345 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/doctrees/environment.pickle" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/doctrees/index.doctree" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/doctrees/logging_devel.doctree" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/font/FontAwesome.otf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/font/fontawesome-webfont.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/font/fontawesome-webfont.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/font/fontawesome-webfont.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/fonts/FontAwesome.otf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/fonts/fontawesome-webfont.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/fonts/fontawesome-webfont.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/fonts/fontawesome-webfont.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/fonts/glyphicons-halflings-regular.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/fonts/glyphicons-halflings-regular.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/fonts/glyphicons-halflings-regular.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/img/flames.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/img/glyphicons-halflings-white.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/img/glyphicons-halflings.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/img/microfab.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/img/progress.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/img/rainbow.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/img/stars.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/objects.inv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/Makefile" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_sources/logging_devel.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/adjust_theme/_common_adjust.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/adjust_theme/bootswatch-amelia.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/adjust_theme/bootswatch-cerulean.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/adjust_theme/bootswatch-cosmo.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/adjust_theme/bootswatch-cyborg.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/adjust_theme/bootswatch-darkly.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/adjust_theme/bootswatch-flatly.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/adjust_theme/bootswatch-journal.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/adjust_theme/bootswatch-lumen.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/adjust_theme/bootswatch-paper.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/adjust_theme/bootswatch-readable.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/adjust_theme/bootswatch-sandstone.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/adjust_theme/bootswatch-simplex.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/adjust_theme/bootswatch-slate.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/adjust_theme/bootswatch-spacelab.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/adjust_theme/bootswatch-spruce.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/adjust_theme/bootswatch-superhero.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/adjust_theme/bootswatch-united.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/adjust_theme/bootswatch-yeti.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/adjust_theme/geo-bootstrap.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/basicstrap-base.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/basicstrap.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap2/bootstrap-responsive.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap2/bootstrap.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap2/bootswatch-amelia.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap2/bootswatch-cerulean.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap2/bootswatch-cosmo.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap2/bootswatch-cyborg.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap2/bootswatch-flatly.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap2/bootswatch-journal.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap2/bootswatch-readable.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap2/bootswatch-simplex.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap2/bootswatch-slate.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap2/bootswatch-spacelab.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap2/bootswatch-spruce.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap2/bootswatch-superhero.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap2/bootswatch-united.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap2/geo-bootstrap.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap3/bootstrap-non-responsive.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap3/bootstrap-theme.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap3/bootstrap.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap3/bootswatch-amelia.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap3/bootswatch-cerulean.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap3/bootswatch-cosmo.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap3/bootswatch-cyborg.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap3/bootswatch-darkly.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap3/bootswatch-flatly.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap3/bootswatch-journal.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap3/bootswatch-lumen.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap3/bootswatch-paper.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap3/bootswatch-readable.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap3/bootswatch-sandstone.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap3/bootswatch-simplex.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap3/bootswatch-slate.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap3/bootswatch-spacelab.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap3/bootswatch-superhero.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap3/bootswatch-united.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/bootstrap3/bootswatch-yeti.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/font-awesome-ie7.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/css/font-awesome.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/custom.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/font/fontawesome-webfont.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/fonts/fontawesome-webfont.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/fonts/glyphicons-halflings-regular.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/js/basicstrap.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/js/bootstrap2.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/js/bootstrap3.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/js/jquery.cookie-1.4.1.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/js/jquery.cookie.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/genindex.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/logging_devel.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/search.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/searchindex.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/conf.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/index.rst" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/logging_devel.rst" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/make.bat" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/.buildinfo" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/.doctrees/analyze.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/.doctrees/analyzing_magic1478_results.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/.doctrees/breed.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/.doctrees/contents.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/.doctrees/creating_data_for_GWAS_with_magic1478.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/.doctrees/environment.pickle" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/.doctrees/gwas_with_tassel.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/.doctrees/introduction.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/.doctrees/magic1478.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/.doctrees/making-a-base-population.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/.doctrees/nam_prefounders.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/.doctrees/operators.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/.doctrees/parameters.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/.doctrees/parse.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/.doctrees/simulate.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/.doctrees/specifying_a_simulation.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/.doctrees/standard_magic.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/.doctrees/terms.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/META-INF/container.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/Makefile" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_images/QQ_plot_magic1478_3loci.tiff" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_images/qqplot.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_images/reformed_graph.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_sources/analyze.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_sources/analyzing_magic1478_results.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_sources/breed.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_sources/contents.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_sources/creating_data_for_GWAS_with_magic1478.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_sources/gwas_with_tassel.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_sources/introduction.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_sources/magic1478.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_sources/making-a-base-population.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_sources/nam_prefounders.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_sources/operators.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_sources/parameters.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_sources/parse.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_sources/simulate.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_sources/specifying_a_simulation.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_sources/standard_magic.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_sources/terms.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_static/doctools.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_static/epub.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_static/nature.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_static/qqplot.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_static/reformed_graph.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_static/searchtools.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_static/websupport.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/analyze.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/analyzing_magic1478_results.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/breed.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/content.opf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/contents.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/creating_data_for_GWAS_with_magic1478.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/doctrees/analyze.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/doctrees/analyzing_magic1478_results.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/doctrees/breed.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/doctrees/contents.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/doctrees/creating_data_for_GWAS_with_magic1478.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/doctrees/environment.pickle" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/doctrees/gwas_with_tassel.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/doctrees/helpers.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/doctrees/introduction.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/doctrees/magic1478.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/doctrees/making-a-base-population.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/doctrees/missing_genotype_data.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/doctrees/nam_prefounders.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/doctrees/operators.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/doctrees/parameterizer.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/doctrees/parameters.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/doctrees/parse.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/doctrees/parser.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/doctrees/raw_genotype_data.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/doctrees/selection.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/doctrees/simulate.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/doctrees/specifying_a_simulation.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/doctrees/standard_magic.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/doctrees/terms.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/doctrees/tutorials/gwas_with_tassel.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/doctrees/tutorials/making-a-base-population.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/doctrees/tutorials/missing_genotype_data.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/doctrees/tutorials/nam_prefounders.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/doctrees/tutorials/raw_genotype_data.doctree" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/fncychap.sty" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/genindex.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/gwas_with_tassel.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_images/reformed_graph.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_images/reformed_graph.tiff" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_images/standard_magic_convergence.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_sources/analyze.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_sources/breed.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_sources/gwas_with_tassel.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_sources/helpers.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_sources/introduction.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_sources/making-a-base-population.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_sources/missing_genotype_data.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_sources/nam_prefounders.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_sources/operators.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_sources/parameterizer.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_sources/parameters.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_sources/parse.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_sources/parser.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_sources/raw_genotype_data.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_sources/selection.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_sources/simulate.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_sources/specifying_a_simulation.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_sources/standard_magic.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_sources/terms.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_sources/tutorials/gwas_with_tassel.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_sources/tutorials/making-a-base-population.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_sources/tutorials/missing_genotype_data.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_sources/tutorials/nam_prefounders.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_sources/tutorials/raw_genotype_data.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_static/ajax-loader.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_static/alert_info_32.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_static/alert_warning_32.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_static/basic.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_static/bg-page.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_static/bullet_orange.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_static/comment-bright.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_static/comment-close.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_static/comment.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_static/down-pressed.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_static/down.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_static/file.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_static/haiku.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_static/jquery-1.11.1.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_static/minus.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_static/nature.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_static/plus.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_static/pygments.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_static/underscore-1.3.1.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_static/underscore.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_static/up-pressed.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_static/up.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/analyze.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/breed.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/contents.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/genindex.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/gwas_with_tassel.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/helpers.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/introduction.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/making-a-base-population.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/missing_genotype_data.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/nam_prefounders.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/objects.inv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/operators.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/parameterizer.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/parameters.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/parse.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/parser.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/py-modindex.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/raw_genotype_data.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/search.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/searchindex.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/selection.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/simulate.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/specifying_a_simulation.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/standard_magic.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/terms.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/tutorials/gwas_with_tassel.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/tutorials/making-a-base-population.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/tutorials/missing_genotype_data.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/tutorials/nam_prefounders.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/tutorials/raw_genotype_data.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/introduction.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/latex/Makefile" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/latex/fncychap.sty" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/latex/python.ist" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/latex/qqplot.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/latex/saegus.aux" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/latex/saegus.idx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/latex/saegus.log" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/latex/saegus.out" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/latex/saegus.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/latex/saegus.synctex.gz" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/latex/saegus.tex" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/latex/saegus.toc" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/latex/sphinx.sty" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/latex/sphinxhowto.cls" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/latex/sphinxmanual.cls" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/latex/tabulary.sty" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/magic1478.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/making-a-base-population.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/mimetype" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/nam_prefounders.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/objects.inv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/operators.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/parameters.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/parse.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/py-modindex.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/python.ist" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/qqplot.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/reformed_graph.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/saegus.epub" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/saegus.tex" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/search.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/searchindex.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/simulate.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/specifying_a_simulation.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/sphinx.sty" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/sphinxhowto.cls" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/sphinxmanual.cls" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/standard_magic.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/tabulary.sty" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/terms.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/toc.ncx" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/docs/analysis_reports/docs_run_demonstration.rst" afterPath="$PROJECT_DIR$/src/docs/analysis_reports/run_demonstration.rst" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_static/ajax-loader.gif" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/ajax-loader.gif" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_static/basic.css" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/basic.css" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_static/comment-bright.png" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/comment-bright.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_static/comment-close.png" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/comment-close.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_static/comment.png" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/comment.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_static/down-pressed.png" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/down-pressed.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_static/down.png" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/down.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_static/file.png" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/file.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_static/jquery-1.11.1.js" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/jquery-1.11.1.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_static/jquery.js" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/jquery.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_static/minus.png" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/minus.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_static/plus.png" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/plus.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_static/pygments.css" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/pygments.css" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_static/underscore-1.3.1.js" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/underscore-1.3.1.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_static/underscore.js" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/underscore.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_static/up-pressed.png" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/up-pressed.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/_static/up.png" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/up.png" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/.buildinfo" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/.buildinfo" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_sources/contents.txt" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_sources/index.txt" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_static/alabaster.css" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/alabaster.css" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_static/doctools.js" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/doctools.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_static/jquery.js" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/js/jquery.min.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_static/searchtools.js" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/searchtools.js" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/docs/saegus_build/html/_static/websupport.js" afterPath="$PROJECT_DIR$/devel/tuson_selection/_build/html/_static/websupport.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/tuson_selection/working_tuson.pop" afterPath="$PROJECT_DIR$/devel/tuson_selection/working_tuson.pop" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/tuson_selection/expanded_tuson_founder_allele_frqs.txt" afterPath="$PROJECT_DIR$/devel/tuson_selection/expanded_tuson_founder_allele_frqs.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/tuson_selection/logging_devel.rst" afterPath="$PROJECT_DIR$/devel/tuson_selection/logging_devel.rst" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/tuson_selection/tuson_pedigree.txt" afterPath="$PROJECT_DIR$/devel/tuson_selection/tuson_pedigree.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/tuson_selection/tuson_with_selection_01.ipynb" afterPath="$PROJECT_DIR$/devel/tuson_selection/tuson_with_selection_01.ipynb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/saegus/parameters.py" afterPath="$PROJECT_DIR$/src/saegus/parameters.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/saegus/parse.py" afterPath="$PROJECT_DIR$/src/saegus/parse.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/saegus/analyze.py" afterPath="$PROJECT_DIR$/src/saegus/analyze.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/saegus/operators.py" afterPath="$PROJECT_DIR$/src/saegus/operators.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/saegus/simulate.py" afterPath="$PROJECT_DIR$/src/saegus/simulate.py" />
     </list>
     <ignored path="saegus_project.iws" />
@@ -398,7 +66,7 @@
                 </provider>
               </entry>
             </file>
-            <file leaf-file-name="logging_devel.rst" pinned="false" current-in-tab="false">
+            <file leaf-file-name="logging_devel.rst" pinned="false" current-in-tab="true">
               <entry file="file://$PROJECT_DIR$/devel/tuson_selection/logging_devel.rst">
                 <provider selected="true" editor-type-id="text-editor">
                   <state relative-caret-position="526">
@@ -408,7 +76,7 @@
                 </provider>
               </entry>
             </file>
-            <file leaf-file-name="parse.rst" pinned="false" current-in-tab="true">
+            <file leaf-file-name="parse.rst" pinned="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/src/docs/saegus_documentation/parse.rst">
                 <provider selected="true" editor-type-id="text-editor">
                   <state relative-caret-position="408">
@@ -429,17 +97,17 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="analyze.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="analyze.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="103" column="7" selection-start-line="103" selection-start-column="7" selection-end-line="103" selection-end-column="7" />
+            <state relative-caret-position="229">
+              <caret line="87" column="121" selection-start-line="87" selection-start-column="121" selection-end-line="87" selection-end-column="121" />
               <folding>
-                <element signature="e#33255#37778#0" expanded="false" />
-                <element signature="e#35669#37778#0" expanded="false" />
-                <element signature="e#38210#39827#0" expanded="false" />
-                <element signature="e#40128#41857#0" expanded="false" />
-                <element signature="e#42115#45071#0" expanded="false" />
+                <element signature="e#33200#37723#0" expanded="false" />
+                <element signature="e#35614#37723#0" expanded="false" />
+                <element signature="e#38155#39772#0" expanded="false" />
+                <element signature="e#40073#41802#0" expanded="false" />
+                <element signature="e#42060#45016#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -455,16 +123,26 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="simulate.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="simulate.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/saegus/simulate.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="326" column="25" selection-start-line="326" selection-start-column="25" selection-end-line="326" selection-end-column="25" />
+            <state relative-caret-position="350">
+              <caret line="336" column="36" selection-start-line="336" selection-start-column="36" selection-end-line="336" selection-end-column="36" />
               <folding>
                 <element signature="e#18#39#0" expanded="true" />
                 <element signature="e#4324#5989#0" expanded="false" />
                 <element signature="e#6058#7229#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="operators.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/saegus/operators.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="35" column="29" selection-start-line="35" selection-start-column="29" selection-end-line="35" selection-end-column="29" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -553,7 +231,6 @@
         <option value="$PROJECT_DIR$/src/docs/analysis_reports/notes_on_MAGIC.rst" />
         <option value="$PROJECT_DIR$/src/docs/saegus_documentation/breed.rst" />
         <option value="$PROJECT_DIR$/src/docs/saegus_documentation/parameters.rst" />
-        <option value="$PROJECT_DIR$/src/saegus/operators.py" />
         <option value="$PROJECT_DIR$/src/docs/saegus_documentation/operators.rst" />
         <option value="$PROJECT_DIR$/src/docs/saegus_documentation/simulate.rst" />
         <option value="$PROJECT_DIR$/src/docs/saegus_documentation/saegus_build/html/_static/alabaster.css" />
@@ -562,13 +239,14 @@
         <option value="$PROJECT_DIR$/devel/tuson_selection/test_tuson_functions.py" />
         <option value="$PROJECT_DIR$/src/docs/analysis_reports/saegus_build/tuson_selection.rst" />
         <option value="$PROJECT_DIR$/src/docs/analysis_reports/tuson_with_selection.rst" />
-        <option value="$PROJECT_DIR$/src/saegus/analyze.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/saegus/parameters.py" />
         <option value="$PROJECT_DIR$/src/saegus/parse.py" />
         <option value="$PROJECT_DIR$/devel/tuson_selection/logging_devel.rst" />
         <option value="$PROJECT_DIR$/src/docs/saegus_documentation/parse.rst" />
+        <option value="$PROJECT_DIR$/src/saegus/operators.py" />
         <option value="$PROJECT_DIR$/src/saegus/simulate.py" />
+        <option value="$PROJECT_DIR$/src/saegus/analyze.py" />
       </list>
     </option>
   </component>
@@ -584,9 +262,10 @@
     </layout>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="2440" />
-    <option name="width" value="840" />
-    <option name="height" value="1050" />
+    <option name="x" value="85" />
+    <option name="y" value="16" />
+    <option name="width" value="1024" />
+    <option name="height" value="828" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -678,7 +357,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="devel" />
+              <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -696,11 +375,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="devel" />
+              <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="tuson_selection" />
+              <option name="myItemId" value="saegus" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1440,17 +1119,17 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="2440" y="0" width="840" height="1050" extended-state="0" />
+    <frame x="85" y="16" width="1024" height="828" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="true" show_stripe_button="true" weight="1.0" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" x="581" y="16" width="943" height="556" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="true" show_stripe_button="true" weight="0.97821575" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" x="573" y="-14" width="959" height="594" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32258064" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25785124" sideWeight="0.64395785" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17866324" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31182796" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35470086" sideWeight="0.48971722" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="false" show_stripe_button="true" weight="0.525641" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="2310" y="16" width="426" height="463" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1748879" sideWeight="0.35604218" order="4" side_tool="false" content_ui="tabs" x="234" y="323" width="777" height="220" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="true" show_stripe_button="true" weight="0.81639004" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="2302" y="0" width="787" height="501" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23134328" sideWeight="0.35604218" order="4" side_tool="false" content_ui="tabs" x="234" y="323" width="777" height="220" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1667,13 +1346,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/saegus/operators.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4624">
-          <caret line="277" column="22" selection-start-line="277" selection-start-column="22" selection-end-line="277" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/docs/saegus_documentation/operators.rst">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="612">
@@ -1801,28 +1473,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/devel/tuson_selection/logging_devel.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="526">
-          <caret line="634" column="0" selection-start-line="634" selection-start-column="0" selection-end-line="634" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="103" column="7" selection-start-line="103" selection-start-column="7" selection-end-line="103" selection-end-column="7" />
-          <folding>
-            <element signature="e#33255#37778#0" expanded="false" />
-            <element signature="e#35669#37778#0" expanded="false" />
-            <element signature="e#38210#39827#0" expanded="false" />
-            <element signature="e#40128#41857#0" expanded="false" />
-            <element signature="e#42115#45071#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/parameters.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="436">
@@ -1831,10 +1481,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/docs/saegus_documentation/parse.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/devel/tuson_selection/logging_devel.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="526">
+          <caret line="634" column="0" selection-start-line="634" selection-start-column="0" selection-end-line="634" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/saegus/operators.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="35" column="29" selection-start-line="35" selection-start-column="29" selection-end-line="35" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/simulate.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="326" column="25" selection-start-line="326" selection-start-column="25" selection-end-line="326" selection-end-column="25" />
+        <state relative-caret-position="350">
+          <caret line="336" column="36" selection-start-line="336" selection-start-column="36" selection-end-line="336" selection-end-column="36" />
           <folding>
             <element signature="e#18#39#0" expanded="true" />
             <element signature="e#4324#5989#0" expanded="false" />
@@ -1843,11 +1517,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/docs/saegus_documentation/parse.rst">
+    <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="229">
+          <caret line="87" column="121" selection-start-line="87" selection-start-column="121" selection-end-line="87" selection-end-column="121" />
+          <folding>
+            <element signature="e#33200#37723#0" expanded="false" />
+            <element signature="e#35614#37723#0" expanded="false" />
+            <element signature="e#38155#39772#0" expanded="false" />
+            <element signature="e#40073#41802#0" expanded="false" />
+            <element signature="e#42060#45016#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

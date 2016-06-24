@@ -29,8 +29,8 @@ class CalculateErrorVariance(sim.PyOperator):
 
 
 class GenoAdditive(sim.PyOperator):
-    def __init__(self, absolute_qtl, allele_effects, *args, **kwargs):
-        self.absolute_qtl = absolute_qtl
+    def __init__(self, qtl, allele_effects, *args, **kwargs):
+        self.qtl = qtl
         self.allele_effects = allele_effects
         sim.PyOperator.__init__(self,
                                 func=self.additive_model,
@@ -41,16 +41,15 @@ class GenoAdditive(sim.PyOperator):
         Calculates genotypic contribution ``g`` by summing the effect of each
         allele at each QTL triplet.
         """
-        rep_id = pop.dvars().rep
         for ind in pop.individuals():
             genotypic_contribution = \
-                sum([self.allele_effects[rep_id][locus][ind.genotype(ploidy=0)[
+                sum([self.allele_effects[locus][ind.genotype(ploidy=0)[
                     locus]] +
-                     self.allele_effects[rep_id][locus][ind.genotype(ploidy=1)[
+                     self.allele_effects[locus][ind.genotype(ploidy=1)[
                          locus]]
                      for
                      locus
-                     in self.absolute_qtl[rep_id]])
+                     in self.qtl])
             ind.g = genotypic_contribution
         return True
 
@@ -133,8 +132,8 @@ class ReplicateMetaPopulation(sim.PyOperator):
     'rep' which is assigned by simuPOP automatically during instantiation of a Simulator object.
     param: Both replicates are assigned as attributes to a wgs.EnhancedPopulation object.
     """
-    def __init__(self, meta_replicates, sample_size, *args, **kwargs):
-        self.meta_replicates = meta_replicates
+    def __init__(self, meta_sample_library, sample_size, *args, **kwargs):
+        self.meta_sample_library = meta_sample_library
         self.sample_size = sample_size
         sim.PyOperator.__init__(self, func=self.add_to_meta_pop, *args, **kwargs)
 
@@ -143,7 +142,7 @@ class ReplicateMetaPopulation(sim.PyOperator):
         sampled = sampling.drawRandomSample(pop, sizes=self.sample_size[pop.dvars().gen])
         pop.dvars().ss = self.sample_size[pop.dvars().gen]
         pop.dvars().gen_sampled_from = pop.dvars().gen
-        self.meta_replicates.population(rep_id).addIndFrom(sampled)
+        self.meta_sample_library[rep_id].append(sampled)
         return True
 
 
