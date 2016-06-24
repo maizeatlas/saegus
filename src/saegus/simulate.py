@@ -201,7 +201,7 @@ class Truncation(object):
         return breeding_array
 
     def recurrent_truncation_selection(self, pop, meta_pop, qtl, aes,
-                                       recombination_rates):
+                                       recombination_rates, sampling_generations):
         """
         Sets up and runs recurrent selection for a number of generations for a
         single replicate population. Samples individuals at specified
@@ -228,9 +228,7 @@ class Truncation(object):
                                                   "the number of offspring " \
                                                   "subpopulations"
 
-        sampling_generations = [i for i in range(2,
-                                                 self.generations_of_selection,
-                                                 2)]
+
 
         pc = breed.HalfSibBulkBalanceChooser(
             self.individuals_per_breeding_subpop, self.offspring_per_female)
@@ -251,11 +249,6 @@ class Truncation(object):
                 sim.SplitSubPops(sizes=[self.number_of_breeding_individuals,
                                         self.number_of_nonbreeding_individuals],
                                  randomize=False),
-                sim.Stat(meanOfInfo=['g', 'p'], vars=['meanOfInfo',
-                                                      'meanOfInfo_sp']),
-                sim.Stat(varOfInfo=['g', 'p'], vars=['varOfInfo',
-                                                     'varOfInfo_sp']),
-                operators.StoreStatistics(),
                 sim.MergeSubPops(),
                 operators.Sorter('p'),
             ],
@@ -268,18 +261,6 @@ class Truncation(object):
                 operators.MetaPopulation(meta_pop,
                                          self.meta_pop_sample_sizes,
                                          at=sampling_generations),
-                operators.Sorter('p'),
-                sim.SplitSubPops(sizes=[self.number_of_breeding_individuals,
-                                        self.number_of_nonbreeding_individuals],
-                                 randomize=False),
-                sim.Stat(meanOfInfo=['g', 'p'], vars=['meanOfInfo',
-                                                      'meanOfInfo_sp'],
-                         at=sampling_generations),
-                sim.Stat(varOfInfo=['g', 'p'], vars=['varOfInfo',
-                                                     'varOfInfo_sp'],
-                         at=sampling_generations),
-                operators.StoreStatistics(at=sampling_generations),
-                sim.MergeSubPops(),
                 operators.Sorter('p'),
                 sim.SplitSubPops(sizes=sizes, randomize=False),
             ],
@@ -294,30 +275,17 @@ class Truncation(object):
                 subPops=list(range(1, self.number_of_breeding_subpops, 1))
             ),
             postOps=[
-                sim.MergeSubPops(),
-                operators.DiscardRandomOffspring(
-                    self.number_of_offspring_discarded),
+            sim.MergeSubPops(),
+                operators.DiscardRandomOffspring(self.number_of_offspring_discarded),
             ],
             finalOps=[
                 sim.InfoExec('generation=gen'),
                 operators.GenoAdditive(qtl, aes),
-                operators.PhenotypeCalculator(
-                    self.proportion_of_individuals_saved),
+                operators.PhenotypeCalculator(self.proportion_of_individuals_saved),
                 operators.MetaPopulation(meta_pop, self.meta_pop_sample_sizes),
                 sim.PyEval(
                     r'"Final: Sampled %d individuals from generation %d\n" '
                     r'% (ss, gen_sampled_from)'),
-                operators.Sorter('p'),
-                sim.SplitSubPops(sizes=[self.number_of_breeding_individuals,
-                                        self.number_of_nonbreeding_individuals],
-                                 randomize=False),
-                operators.Sorter('p'),
-                sim.Stat(meanOfInfo=['g', 'p'], vars=['meanOfInfo',
-                                                      'meanOfInfo_sp']),
-                sim.Stat(varOfInfo=['g', 'p'], vars=['varOfInfo',
-                                                     'varOfInfo_sp']),
-                operators.StoreStatistics(),
-                sim.MergeSubPops(),
                 operators.Sorter('p'),
             ],
             gen=self.generations_of_selection)
@@ -350,8 +318,7 @@ class Truncation(object):
                                                   "the number of offspring " \
                                                   "subpopulations"
 
-        sampling_generations = [i for i in range(2,
-                                                 self.generations_of_selection,
+        sampling_generations = [i for i in range(2, self.generations_of_selection,
                                                  2)]
 
         pc = breed.HalfSibBulkBalanceChooser(
@@ -369,16 +336,6 @@ class Truncation(object):
                 sim.PyEval(r'"Initial: Sampled %d individuals from generation '
                            r'%d Replicate: %d.\n" % (ss, gen_sampled_from, '
                            r'rep)'),
-                operators.Sorter('p'),
-                sim.SplitSubPops(sizes=[self.number_of_breeding_individuals,
-                                        self.number_of_nonbreeding_individuals],
-                                 randomize=False),
-                sim.Stat(meanOfInfo=['g', 'p'], vars=['meanOfInfo',
-                                                      'meanOfInfo_sp']),
-                sim.Stat(varOfInfo=['g', 'p'], vars=['varOfInfo',
-                                                     'varOfInfo_sp']),
-                operators.StoreStatistics(),
-                sim.MergeSubPops(),
                 operators.Sorter('p'),
             ],
             preOps=[

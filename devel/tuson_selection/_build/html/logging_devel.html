@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+
+
+
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    
+    <title>Tuson Revisited: Simulation of Selection &mdash; Tuson Selection 1.0 documentation</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    
+
+<link rel="stylesheet" href="_static/css/basicstrap-base.css" type="text/css" />
+<link rel="stylesheet" id="current-theme" href="_static/css/bootstrap3/bootstrap.min.css" type="text/css" />
+<link rel="stylesheet" id="current-adjust-theme" type="text/css" />
+
+<link rel="stylesheet" href="_static/css/font-awesome.min.css">
+
+<style type="text/css">
+  body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+  }
+</style>
+
+<link rel="stylesheet" href="_static/css/basicstrap.css" type="text/css" />
+<link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+<script type="text/javascript">
+  var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:    './',
+            VERSION:     '1.0',
+            COLLAPSE_INDEX: false,
+            FILE_SUFFIX: '.html',
+            HAS_SOURCE:  true
+  };
+</script>
+    <script type="text/javascript" src="_static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/bootstrap3.min.js"></script>
+<script type="text/javascript" src="_static/js/jquery.cookie.min.js"></script>
+<script type="text/javascript" src="_static/js/basicstrap.js"></script>
+<script type="text/javascript">
+</script>
+    <link rel="top" title="Tuson Selection 1.0 documentation" href="index.html" />
+    <link rel="prev" title="Welcome to Tuson Selection’s documentation!" href="index.html" /> 
+  </head>
+  <body role="document">
+    <div id="navbar-top" class="navbar navbar-fixed-top navbar-default" role="navigation" aria-label="top navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">Tuson Selection 1.0 documentation</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown visible-xs">
+                <a role="button" id="localToc" data-toggle="dropdown" data-target="#" href="#">Table Of Contents <b class="caret"></b></a>
+                <ul class="dropdown-menu localtoc sp-localtoc" role="menu" aria-labelledby="localToc">
+                <ul>
+<li><a class="reference internal" href="#">Tuson Revisited: Simulation of Selection</a><ul>
+<li><a class="reference internal" href="#initial-setup-and-data-collection">Initial Setup and Data Collection</a><ul>
+<li><a class="reference internal" href="#conversion-of-fixed-sites-to-segregating-sites">Conversion of Fixed Sites to Segregating Sites</a></li>
+<li><a class="reference internal" href="#storage-of-founder-data">Storage of Founder Data</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+                </ul>
+              </li>
+
+            
+              <li><a href="index.html" title="Welcome to Tuson Selection’s documentation!" accesskey="P">previous </a></li>
+              <li><a href="genindex.html" title="General Index" accesskey="I">index </a></li>
+            
+            <li class="visible-xs"><a href="_sources/logging_devel.txt" rel="nofollow">Show Source</a></li>
+
+            <li class="visible-xs">
+                <form class="search form-search form-inline navbar-form navbar-right sp-searchbox" action="search.html" method="get">
+                  <div class="input-append input-group">
+                    <input type="text" class="search-query form-control" name="q" placeholder="Search...">
+                    <span class="input-group-btn">
+                    <input type="submit" class="btn" value="Go" />
+                    </span>
+                  </div>
+                  <input type="hidden" name="check_keywords" value="yes" />
+                  <input type="hidden" name="area" value="default" />
+                </form>
+            </li>
+
+            
+
+          </ul>
+
+        </div>
+      </div>
+    </div>
+    
+
+    <!-- container -->
+    <div class="container-fluid">
+
+      <!-- row -->
+      <div class="row">
+         
+<div class="col-md-3 hidden-xs" id="sidebar-wrapper">
+  <div class="sidebar hidden-xs" role="navigation" aria-label="main navigation">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Tuson Revisited: Simulation of Selection</a><ul>
+<li><a class="reference internal" href="#initial-setup-and-data-collection">Initial Setup and Data Collection</a><ul>
+<li><a class="reference internal" href="#conversion-of-fixed-sites-to-segregating-sites">Conversion of Fixed Sites to Segregating Sites</a></li>
+<li><a class="reference internal" href="#storage-of-founder-data">Storage of Founder Data</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to Tuson Selection&#8217;s documentation!</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/logging_devel.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" role="search">
+  <h3>Quick search</h3>
+  <form class="search form-inline" action="search.html" method="get">
+      <div class="input-append input-group">
+        <input type="text" class="search-query form-control" name="q" placeholder="Search...">
+        <span class="input-group-btn">
+        <input type="submit" class="btn" value="Go" />
+        </span>
+      </div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+  </div>
+</div> 
+        
+
+        <div class="col-md-9" id="content-wrapper">
+          <div class="document" role="main">
+            <div class="documentwrapper">
+              <div class="bodywrapper">
+                <div class="body">
+                  
+  <div class="section" id="tuson-revisited-simulation-of-selection">
+<span id="tuson-with-selection"></span><h1>Tuson Revisited: Simulation of Selection<a class="headerlink" href="#tuson-revisited-simulation-of-selection" title="Permalink to this headline">¶</a></h1>
+<p>Many months ago we simulated genetic drift in the Tuson population. For comparison
+we will now simulate truncation selection which mirrors the experimental protocol.
+In other simulations of selection we have randomly assigned QTL and allele effects
+were determined by random draws from some distribution (i.e. exponential). In
+this case we will be using the experimentally estimated allele effects of every
+single locus.</p>
+<div class="section" id="initial-setup-and-data-collection">
+<h2>Initial Setup and Data Collection<a class="headerlink" href="#initial-setup-and-data-collection" title="Permalink to this headline">¶</a></h2>
+<p>We will use G:sub:<cite>0</cite> as founder population. In G:sub:<cite>0</cite> some sites are fixed
+which are segregating in later generations. In other words the G:sub:<cite>0</cite> sample
+failed to capture all of the segregating loci. We assume that this implies the
+sites which are fixed in the sample have low frequency alleles.</p>
+<div class="section" id="conversion-of-fixed-sites-to-segregating-sites">
+<h3>Conversion of Fixed Sites to Segregating Sites<a class="headerlink" href="#conversion-of-fixed-sites-to-segregating-sites" title="Permalink to this headline">¶</a></h3>
+<p>We determine which sites are fixed in the sample and then randomly assign a
+single individual an allele which is <strong>not</strong> present at the fixed locus. This
+converts a fixed site into a segregating site of low frequency.</p>
+<div class="literal-block-wrapper container" id="convert-fixed-sites-to-low-frequency-segregating-sites">
+<div class="code-block-caption"><span class="caption-text">Convert fixed sites to low frequency segregating sites</span><a class="headerlink" href="#convert-fixed-sites-to-low-frequency-segregating-sites" title="Permalink to this code">¶</a></div>
+<div class="highlight-py"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sim</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">tuson</span><span class="p">,</span> <span class="n">numOfSegSites</span><span class="o">=</span><span class="n">sim</span><span class="o">.</span><span class="n">ALL_AVAIL</span><span class="p">,</span> <span class="nb">vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;numOfSegSites&#39;</span><span class="p">,</span> <span class="s1">&#39;segSites&#39;</span><span class="p">,</span> <span class="s1">&#39;numOfFixedSites&#39;</span><span class="p">,</span> <span class="s1">&#39;fixedSites&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parameters</span><span class="o">.</span><span class="n">randomly_convert_fixed_sites</span><span class="p">(</span><span class="n">tuson</span><span class="p">,</span> <span class="n">tuson</span><span class="o">.</span><span class="n">dvars</span><span class="p">()</span><span class="o">.</span><span class="n">fixedSites</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tuson</span><span class="o">.</span><span class="n">dvars</span><span class="p">()</span><span class="o">.</span><span class="n">numOfFixedSites</span>
+<span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tuson</span><span class="o">.</span><span class="n">dvars</span><span class="p">()</span><span class="o">.</span><span class="n">numOfSegSites</span>
+<span class="go">44445</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="storage-of-founder-data">
+<h3>Storage of Founder Data<a class="headerlink" href="#storage-of-founder-data" title="Permalink to this headline">¶</a></h3>
+<p>Since each conversion of fixed sites to low frequency segregating sites is a
+different random outcome I store each realization before carrying the simulation
+forward. We store:</p>
+<ul class="simple">
+<li>Alleles at each locus</li>
+<li>Allele frequencies</li>
+<li>Homozygote frequencies</li>
+<li>Heterozygote frequencies</li>
+</ul>
+<p>Examples of</p>
+</div>
+</div>
+</div>
+
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        
+      </div><!-- /row -->
+
+      <!-- row -->
+      <div class="row footer-relbar">
+<div id="navbar-related" class=" related navbar navbar-default" role="navigation" aria-label="related navigation">
+  <div class="navbar-inner">
+    <ul class="nav navbar-nav ">
+        <li><a href="index.html">Tuson Selection 1.0 documentation</a></li>
+    </ul>
+<ul class="nav navbar-nav pull-right hidden-xs hidden-sm">
+      
+        <li><a href="index.html" title="Welcome to Tuson Selection’s documentation!" >previous</a></li>
+        <li><a href="genindex.html" title="General Index" >index</a></li>
+        <li><a href="#">top</a></li> 
+      
+    </ul>
+  </div>
+</div>
+      </div><!-- /row -->
+
+      <!-- footer -->
+      <footer role="contentinfo">
+          &copy; Copyright 2016, John J. Dougherty III.
+        Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5.
+      </footer>
+      <!-- /footer -->
+
+    </div>
+    <!-- /container -->
+
+  </body>
+</html>
