@@ -630,5 +630,34 @@ I have not performed a selection simulation in quite some time. There are
 many functions and operators which have changed in :py:mod:`saegus` so I
 will have to modify the functions which perform recurrent selection. The first
 and most obvious modification is that outdated or pointless functions have to
-be removed i.e. :py:function:`operators.StoreStatistics`
+be removed i.e. :py:function:`operators.StoreStatistics`. The prior
+version of selection operators created a simuPOP.Population object to store
+the meta-population samples. I decided to change this to a dictionary of lists
+of populations. I still retain all the functionality but the objects are in a
+native Python data structure. As usual the entire selection process is performed
+with a single function.
+
+.. code-block:: py
+   :caption: Recurrent selection on several replicates
+
+   >>> simulate.replicate_selection(multi_son, meta_pop_sample_library, qtl, allele_effects)
+
+Now I am waiting on Randy for the allele effects and heritability.
+
+
+
+
+
+
+
+
+
+Note on :class:`simuPOP.Pedigree`
+=================================
+
+I did not understand the purpose of the :class:`Pedigree` until today. A
+:class:`Pedigree` object can save the genotypes of the population to a file in
+a nice and neat way. The file can be loaded and converted into a population
+object. Provides an easy way for non-simuPOP users to have access to the exact
+populations.
 
