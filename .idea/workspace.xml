@@ -2,41 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/tuson_allele_effects.dat" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/tuson_allele_effects.bak" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/tuson_allele_effects.dir" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/devel/tuson_selection/tuson_with_selection_02.ipynb" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/magic/1478/allele_effects.hdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/magic/1478/caramon_storage.h5" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/magic/1478/daoko_girl_MAC.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/magic/1478/daoko_girl_allele_effects_table.hdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/magic/1478/daoko_girl_analysis_parameters.dir" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/magic/1478/daoko_girl_debug_data.dir" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/magic/1478/daoko_girl_gwas_pipeline.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/magic/1478/daoko_girl_gwas_pipeline.xml_sim_gwas_pipeline.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/magic/1478/daoko_girl_gwas_pipeline.xmldaoko_girl_sim_gwas_pipeline.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/magic/1478/daoko_girl_hapmap.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/magic/1478/daoko_girl_joined_100.hdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/magic/1478/daoko_girl_kinship_matrix.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/magic/1478/daoko_girl_ma_count.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/magic/1478/daoko_girl_phenotype_vector.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/magic/1478/daoko_girl_population_structure.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/magic/1478/daoko_girl_structure.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/magic/1478/daoko_girl_trait_parameters.dir" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/magic/1478/dragonlance_gwas_pipeline.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/magic/1478/heaven_denies_allele_effects.bak" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/magic/1478/heaven_denies_allele_effects.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/magic/1478/heaven_denies_loci_conversions.bak" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/magic/1478/heaven_denies_loci_conversions.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/magic/1478/heaven_denies_sample_library.bak" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/magic/1478/heaven_denies_sample_library.dat" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/magic/1478/run_daoko_girl_analysis.ipynb" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/magic/1478/run_daoko_girl_development.ipynb" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/tuson_selection/working_tuson.pop" afterPath="$PROJECT_DIR$/devel/tuson_selection/working_tuson.pop" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/tuson_selection/expanded_tuson_founder_allele_frqs.txt" afterPath="$PROJECT_DIR$/devel/tuson_selection/expanded_tuson_founder_allele_frqs.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/tuson_selection/logging_devel.rst" afterPath="$PROJECT_DIR$/devel/tuson_selection/logging_devel.rst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/tuson_selection/tuson_with_selection_01.ipynb" afterPath="$PROJECT_DIR$/devel/tuson_selection/tuson_with_selection_01.ipynb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/tuson_selection/tuson_with_selection_02.ipynb" afterPath="$PROJECT_DIR$/devel/tuson_selection/tuson_with_selection_02.ipynb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/saegus/analyze.py" afterPath="$PROJECT_DIR$/src/saegus/analyze.py" />
     </list>
     <ignored path="saegus_project.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -87,14 +58,20 @@
       <file leaf-file-name="analyze.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="427">
-              <caret line="1473" column="0" selection-start-line="1473" selection-start-column="0" selection-end-line="1473" selection-end-column="0" />
+            <state relative-caret-position="353">
+              <caret line="303" column="5" selection-start-line="303" selection-start-column="5" selection-end-line="303" selection-end-column="5" />
               <folding>
-                <element signature="e#25664#30187#0" expanded="false" />
-                <element signature="e#28078#30187#0" expanded="false" />
-                <element signature="e#30619#32236#0" expanded="false" />
-                <element signature="e#32537#34266#0" expanded="false" />
-                <element signature="e#34524#37480#0" expanded="false" />
+                <element signature="e#277#3843#0" expanded="false" />
+                <element signature="e#3950#6205#0" expanded="false" />
+                <element signature="e#6398#7962#0" expanded="false" />
+                <element signature="e#8043#9670#0" expanded="false" />
+                <element signature="e#9733#11293#0" expanded="false" />
+                <element signature="e#11457#14192#0" expanded="false" />
+                <element signature="e#25718#30241#0" expanded="false" />
+                <element signature="e#28132#30241#0" expanded="false" />
+                <element signature="e#30673#32290#0" expanded="false" />
+                <element signature="e#32591#34320#0" expanded="false" />
+                <element signature="e#34578#37534#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -103,8 +80,8 @@
       <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="59" column="31" selection-start-line="59" selection-start-column="31" selection-end-line="59" selection-end-column="31" />
+            <state relative-caret-position="170">
+              <caret line="10" column="23" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -173,7 +150,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/devel/testing_and_detecting/standard_magic_for_GWAS.ipynb" />
         <option value="$PROJECT_DIR$/src/docs/standard_magic.rst" />
         <option value="$PROJECT_DIR$/src/tests/maturing_developer/test_magic1478.py" />
         <option value="$PROJECT_DIR$/src/docs/operators.rst" />
@@ -221,8 +197,9 @@
         <option value="$PROJECT_DIR$/src/docs/saegus_documentation/parse.rst" />
         <option value="$PROJECT_DIR$/src/saegus/operators.py" />
         <option value="$PROJECT_DIR$/src/saegus/simulate.py" />
-        <option value="$PROJECT_DIR$/src/saegus/analyze.py" />
         <option value="$PROJECT_DIR$/devel/tuson_selection/logging_devel.rst" />
+        <option value="$PROJECT_DIR$/src/saegus/analyze.py" />
+        <option value="$PROJECT_DIR$/src/tests/test_most_functions.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
@@ -239,10 +216,8 @@
     </layout>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="200" />
-    <option name="y" value="107" />
-    <option name="width" value="1200" />
-    <option name="height" value="646" />
+    <option name="width" value="800" />
+    <option name="height" value="860" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -336,28 +311,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="saegus_project" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="saegus_project" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="saegus_project" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="saegus" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1097,17 +1050,17 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="200" y="107" width="1200" height="646" extended-state="0" />
+    <frame x="0" y="0" width="800" height="860" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="true" show_stripe_button="true" weight="0.3377193" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" x="2010" y="49" width="385" height="594" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="true" show_stripe_button="true" weight="0.8108108" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" x="100" y="105" width="600" height="628" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32258064" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25785124" sideWeight="0.64395785" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17866324" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31182796" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35470086" sideWeight="0.48971722" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="false" show_stripe_button="true" weight="0.43879667" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="2399" y="57" width="439" height="539" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28629857" sideWeight="0.35604218" order="4" side_tool="false" content_ui="tabs" x="234" y="323" width="777" height="220" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1994302" sideWeight="0.35604218" order="4" side_tool="false" content_ui="tabs" x="234" y="323" width="777" height="220" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1170,9 +1123,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/docs/saegus_build/html/parser.html" />
-    <entry file="file://$PROJECT_DIR$/src/docs/saegus_build/genindex.html" />
-    <entry file="file://$PROJECT_DIR$/src/docs/saegus_build/breed.html" />
     <entry file="file://$PROJECT_DIR$/src/docs/saegus_documentation/saegus_build/html/parameters.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-969">
@@ -1425,14 +1375,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/saegus/operators.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/parameters.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7140">
@@ -1448,24 +1390,67 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/tests/test_most_functions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="25" selection-start-line="15" selection-start-column="25" selection-end-line="15" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#13#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/requirements.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="6" selection-start-line="0" selection-start-column="6" selection-end-line="0" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/saegus/operators.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LICENSE.md">
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="543">
+          <caret line="674" column="0" selection-start-line="674" selection-start-column="0" selection-end-line="674" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="427">
-          <caret line="1473" column="0" selection-start-line="1473" selection-start-column="0" selection-end-line="1473" selection-end-column="0" />
+        <state relative-caret-position="353">
+          <caret line="303" column="5" selection-start-line="303" selection-start-column="5" selection-end-line="303" selection-end-column="5" />
           <folding>
-            <element signature="e#25664#30187#0" expanded="false" />
-            <element signature="e#28078#30187#0" expanded="false" />
-            <element signature="e#30619#32236#0" expanded="false" />
-            <element signature="e#32537#34266#0" expanded="false" />
-            <element signature="e#34524#37480#0" expanded="false" />
+            <element signature="e#277#3843#0" expanded="false" />
+            <element signature="e#3950#6205#0" expanded="false" />
+            <element signature="e#6398#7962#0" expanded="false" />
+            <element signature="e#8043#9670#0" expanded="false" />
+            <element signature="e#9733#11293#0" expanded="false" />
+            <element signature="e#11457#14192#0" expanded="false" />
+            <element signature="e#25718#30241#0" expanded="false" />
+            <element signature="e#28132#30241#0" expanded="false" />
+            <element signature="e#30673#32290#0" expanded="false" />
+            <element signature="e#32591#34320#0" expanded="false" />
+            <element signature="e#34578#37534#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="59" column="31" selection-start-line="59" selection-start-column="31" selection-end-line="59" selection-end-column="31" />
+        <state relative-caret-position="170">
+          <caret line="10" column="23" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
           <folding />
         </state>
       </provider>

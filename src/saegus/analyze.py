@@ -84,9 +84,9 @@ def allele_data(pop, alleles, loci):
     assert major_minor_allele_conflicts == 0, "At least one locus defines the major allele to be the same" \
                                               "as the minor allele.: {}".format(ties)
 
-    minor_alleles = [allele_frq['minor', 'alleles'][locus] for locus in loci]
+    minor_alleles = np.asarray([allele_frq['minor', 'alleles'][locus] for locus in loci], dtype=np.int8)
     minor_frequencies = [pop.dvars().alleleFreq[locus][minor_allele] for locus, minor_allele in enumerate(minor_alleles)]
-    major_alleles = [allele_frq['major', 'alleles'][locus] for locus in loci]
+    major_alleles = np.asarray([allele_frq['major', 'alleles'][locus] for locus in loci], dtype=np.int8)
     major_frequencies = [pop.dvars().alleleFreq[locus][major_allele] for locus, major_allele in enumerate(major_alleles)]
 
     allele_data_structure = \
