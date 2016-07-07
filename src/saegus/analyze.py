@@ -12,6 +12,72 @@ from scipy import linalg
 from . import operators, parameters
 
 
+def collect_allele_frequency_data(meta_population_library, minor_alleles):
+    """
+    Collects minor allele frequency data of a multiple generation
+    population library.
+
+    Example
+    -------
+
+    meta_population_library
+    {
+        0: [<simuPOP.Population, ..., <simuPOP.Population>],
+        1: [<simuPOP.Population, ..., <simuPOP.Population>],
+        ...,
+    }
+
+    Returns
+    -------
+
+    collect_multigeneration_frequency_data(meta_population_library)
+    array([[  0.   ,   0.   ,   0.319, ...,   0.467,   0.262,   0.267],
+           ...,
+           [  4.   ,  10.   ,   0.319, ...,   0.467,   0.262,   0.267]])
+    """
+    minor_allele_frequencies = []
+    for rep_id, sample_list in meta_population_library.items():
+        for sample in enumerate(sample_list):
+            gen_id = int(max(sample.indInfo('generation')))
+            minor_allele_frequencies.append(np.asarray(
+                ([rep_id, gen_id] + list(sample.dvars().alleleFreq[locus][allele]
+                                      for locus, allele in
+                                      enumerate(minor_alleles)))))
+    return np.asarray(datar)
+
+
+def collect_heterozygote_frequency_data(meta_population_library):
+    """
+    Collects minor allele frequency data of a multiple generation
+    population library.
+
+    Example
+    -------
+
+    meta_population_library
+    {
+        0: [<simuPOP.Population, ..., <simuPOP.Population>],
+        1: [<simuPOP.Population, ..., <simuPOP.Population>],
+        ...,
+    }
+
+    Returns
+    -------
+
+    collect_heterozygote_frequency_data(meta_population_library)
+    array([[  0.  ,   0.  ,   0.37, ...,   0.45,   0.3 ,   0.37],
+           ...,
+           [  4.  ,  10.  ,   0.27, ...,   0.49,   0.55,   0.53]])
+
+    """
+    heterozygote_frequencies = []
+    for rep_id, sample_list in meta_population_library.items():
+        for i, sample in enumerate(sample_list):
+            gen_id = int(max(sample.indInfo('generation')))
+            heterozygote_frequencies.append(np.asarray(
+                ([rep_id, gen_id] + list(sample.dvars().heteroFreq.values()))))
+    return np.asarray(heterozygote_frequencies)
+
 def allele_data(pop, alleles, loci):
     """
     Determines the minor alleles, minor allele frequencies, major alleles and
@@ -824,7 +890,7 @@ def modify_gwas_config(rep_id, sample_size, new_run_id,
 
     :param input_directory: Directory path to send the input files.
     :param run_identifier_prefix: Identifier for single replicate of data
-    :param config_file_templae: XML file already setup for running a
+    :param config_file_template: XML file already setup for running a
     specific kind of GWAS
     :return: XML file to run a single replicate of data using TASSEL
     """
