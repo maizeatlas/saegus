@@ -1,4 +1,0 @@
-simuPOP
-numpy
-pandas
-scipy

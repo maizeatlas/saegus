@@ -176,3 +176,79 @@ def plot_means_and_variances(selection_pop, selection_meta, drift_pop, drift_met
 
     f.savefig(figure_filename, dpi=300)
 
+def plot_frequency_vs_effect(pop, haplotype_table, plot_title,
+                                 plot_file_name,
+                                 color_map='Dark2'):
+
+
+    """
+    Uses the haplotype data table to arrange data into a chromosome
+    color coded multiple generation plot which shows the change in
+    haplotype frequency over time. Haplotypes are dots with fixed
+    x-position which shows their effect. Their motion along the y-axis
+    which is frequency shows changes over time.
+    :param plot_title:
+    :param plot_file_name:
+    :param color_map:
+    :param pop:
+    :param haplotype_table:
+    """
+
+    plt.style.use('ggplot')
+
+    distinct_chromosomes = list(set(haplotype_table['chromosome']))
+    number_of_different_colors = len(distinct_chromosomes)
+    generation_labels = ['G_' + '{' + str(i) + '}' for i in
+                         range(0, 2 * (pop.numSubPop()), 2)]
+    generations = ['G_' + str(i) for i in range(0, 2 * (pop.numSubPop()), 2)]
+
+    c_map = plt.get_cmap(color_map)
+
+    colors = c_map(np.linspace(0, 1, number_of_different_colors))
+
+    chromosome_colors = {distinct_chromosomes[i]: colors[i] for i in
+                         range(number_of_different_colors)}
+
+    effect_frq_by_chromosome = {}
+
+    for sp in range(pop.numSubPop()):
+        effect_frq_by_chromosome[sp] = {}
+        for chrom in distinct_chromosomes:
+            haplotype_frequencies = np.array(
+                haplotype_table.loc[
+                    haplotype_table['chromosome'] == chrom][generations[sp]])
+
+            haplotype_effects = np.array(
+                haplotype_table.loc[
+                    haplotype_table['chromosome'] == chrom]['effect'])
+
+            effect_frq_by_chromosome[sp][chrom] = np.array([
+                haplotype_frequencies, haplotype_effects])
+
+    # Figure parameters
+    maximum_haplotype_effect = max(haplotype_table['effect'])
+
+    generations = ['G_' + str(i) for i in range(0, 2 * (pop.numSubPop()) + 1, 2)]
+
+    f, ax = plt.subplots(pop.numSubPop(), 1, figsize=(15, 40))
+    for sp in range(pop.numSubPop()):
+        ax[sp].set_xlim(-0.5, maximum_haplotype_effect + 4)
+        ax[sp].set_ylim(-0.1, 1.1)
+        for chrom in distinct_chromosomes:
+            ax[sp].plot(effect_frq_by_chromosome[sp][chrom][1],
+                        effect_frq_by_chromosome[sp][chrom][0],
+                        markersize=8, linewidth=0.0, marker='*',
+                        color=chromosome_colors[chrom],
+                        label="Chrom {}".format(chrom))
+        # handles, labels = ax[sp].get_legend_handles_labels()
+        ax[sp].set_xlabel("Effect")
+        ax[sp].set_ylabel("Frequency")
+        ax[sp].set_title(r'${gen}$'.format(gen=generation_labels[sp]),
+                         fontsize=12)
+        ax[sp].legend(loc='best')
+    f.suptitle(plot_title,
+               fontsize=24)
+
+    f.savefig(plot_file_name, dpi=300)
+
+    return effect_frq_by_chromosome

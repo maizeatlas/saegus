@@ -2,8 +2,10 @@
   <dictionary name="DoubleDanks">
     <words>
       <w>aeframe</w>
+      <w>afrq</w>
       <w>alelle</w>
       <w>approprate</w>
+      <w>asarray</w>
       <w>centi</w>
       <w>chrom</w>
       <w>covariate</w>
@@ -22,12 +24,15 @@
       <w>haplotype</w>
       <w>haplotypes</w>
       <w>hapmap</w>
+      <w>hetf</w>
       <w>hmap</w>
+      <w>homozygotes</w>
       <w>intmd</w>
       <w>lxml</w>
       <w>metapopulation</w>
       <w>modindex</w>
       <w>parameterize</w>
+      <w>pheno</w>
       <w>phenos</w>
       <w>phenotypic</w>
       <w>pmass</w>

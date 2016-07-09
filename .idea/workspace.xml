@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="">
+    <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="trying to fix error">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/docs/user_guide/tuson_with_selection.rst" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/tuson_selection/tuson_01_allele_frequencies.h5" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/requirements.txt" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/tuson_selection/working_tuson.pop" afterPath="$PROJECT_DIR$/devel/tuson_selection/working_tuson.pop" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dictionaries/DoubleDanks.xml" afterPath="$PROJECT_DIR$/.idea/dictionaries/DoubleDanks.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/tuson_selection/expanded_tuson_founder_allele_frqs.txt" afterPath="$PROJECT_DIR$/devel/tuson_selection/expanded_tuson_founder_allele_frqs.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/tuson_selection/tuson_with_selection_02.ipynb" afterPath="$PROJECT_DIR$/devel/tuson_selection/tuson_with_selection_02.ipynb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/docs/saegus_documentation/analyze.rst" afterPath="$PROJECT_DIR$/src/docs/saegus_documentation/analyze.rst" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/saegus/analyze.py" afterPath="$PROJECT_DIR$/src/saegus/analyze.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/saegus/operators.py" afterPath="$PROJECT_DIR$/src/saegus/operators.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/saegus/visualization.py" afterPath="$PROJECT_DIR$/src/saegus/visualization.py" />
     </list>
     <ignored path="saegus_project.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -53,13 +59,24 @@
       <content type="file-editors">
         <state>
           <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+            <file leaf-file-name="tuson_with_selection.rst" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/src/docs/user_guide/tuson_with_selection.rst">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="12342">
+                    <caret line="726" column="20" selection-start-line="726" selection-start-column="20" selection-end-line="726" selection-end-column="20" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
             <file leaf-file-name="analyze.rst" pinned="false" current-in-tab="true">
               <entry file="file://$PROJECT_DIR$/src/docs/saegus_documentation/analyze.rst">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="0">
-                    <caret line="478" column="0" selection-start-line="478" selection-start-column="0" selection-end-line="478" selection-end-column="0" />
+                  <state relative-caret-position="445">
+                    <caret line="829" column="47" selection-start-line="829" selection-start-column="47" selection-end-line="829" selection-end-column="47" />
                     <folding>
-                      <marker date="1465394294050" expanded="true" signature="2587:2678" ph="..." />
+                      <marker date="1468036073645" expanded="false" signature="2633:2724" ph="..." />
+                      <marker date="1468036073645" expanded="true" signature="25509:25603" ph="..." />
                     </folding>
                   </state>
                 </provider>
@@ -71,17 +88,119 @@
     </window>
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="ExportToHTMLSettings">
+    <option name="OUTPUT_DIRECTORY" value="C:\Users\DoubleDanks\BISB\wisser\code\rjwlab-scripts\saegus_project\exportToHTML" />
+  </component>
   <component name="FavoritesManager">
-    <favorites_list name="saegus_project" />
+    <favorites_list name="TestFav" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="operators.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="operators.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/saegus/operators.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="21" column="30" selection-start-line="21" selection-start-column="30" selection-end-line="21" selection-end-column="30" />
-              <folding />
+            <state relative-caret-position="952">
+              <caret line="154" column="0" selection-start-line="154" selection-start-column="0" selection-end-line="154" selection-end-column="0" />
+              <folding>
+                <element signature="e#24#45#0" expanded="true" />
+                <element signature="e#191#821#0" expanded="false" />
+                <element signature="e#250#405#0" expanded="true" />
+                <element signature="e#460#821#0" expanded="true" />
+                <element signature="e#930#1134#0" expanded="true" />
+                <element signature="e#1179#1602#0" expanded="true" />
+                <element signature="e#1652#1971#1" expanded="true" />
+                <element signature="e#2042#2215#0" expanded="true" />
+                <element signature="e#2274#2513#0" expanded="true" />
+                <element signature="e#2624#2751#0" expanded="true" />
+                <element signature="e#2804#3103#0" expanded="true" />
+                <element signature="e#3140#3211#1" expanded="true" />
+                <element signature="e#3273#3386#0" expanded="true" />
+                <element signature="e#3435#3505#0" expanded="true" />
+                <element signature="e#3549#3603#1" expanded="true" />
+                <element signature="e#3683#3874#0" expanded="true" />
+                <element signature="e#3920#4344#0" expanded="true" />
+                <element signature="e#4398#4826#1" expanded="true" />
+                <element signature="e#4910#5077#0" expanded="true" />
+                <element signature="e#5123#5428#0" expanded="true" />
+                <element signature="e#5478#5906#1" expanded="true" />
+                <element signature="e#5973#6108#0" expanded="true" />
+                <element signature="e#6410#6703#1" expanded="true" />
+                <element signature="e#6782#6947#0" expanded="true" />
+                <element signature="e#7014#7222#0" expanded="true" />
+                <element signature="e#7278#7638#1" expanded="true" />
+                <element signature="e#7715#7869#0" expanded="true" />
+                <element signature="e#7930#8534#0" expanded="true" />
+                <element signature="e#8587#8796#1" expanded="true" />
+                <element signature="e#8864#8985#0" expanded="true" />
+                <element signature="e#9030#9193#0" expanded="true" />
+                <element signature="e#9248#9556#0" expanded="true" />
+                <element signature="e#9601#9800#0" expanded="true" />
+                <element signature="e#9855#10340#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="analyze.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="317">
+              <caret line="175" column="0" selection-start-line="175" selection-start-column="0" selection-end-line="175" selection-end-column="0" />
+              <folding>
+                <element signature="e#24#45#0" expanded="true" />
+                <element signature="e#9692#9827#0" expanded="true" />
+                <element signature="e#18072#29536#0" expanded="false" />
+                <element signature="e#18072#18373#1" expanded="true" />
+                <element signature="e#18425#18716#0" expanded="true" />
+                <element signature="e#18844#20396#0" expanded="true" />
+                <element signature="e#20451#21914#0" expanded="true" />
+                <element signature="e#22011#22813#0" expanded="true" />
+                <element signature="e#22866#23572#0" expanded="true" />
+                <element signature="e#23656#26174#0" expanded="true" />
+                <element signature="e#26239#26932#0" expanded="true" />
+                <element signature="e#27050#27738#0" expanded="true" />
+                <element signature="e#27857#29536#0" expanded="true" />
+                <element signature="e#29569#34092#0" expanded="false" />
+                <element signature="e#29569#29773#1" expanded="true" />
+                <element signature="e#29938#30778#0" expanded="true" />
+                <element signature="e#30811#31266#0" expanded="true" />
+                <element signature="e#30818#31034#0" expanded="true" />
+                <element signature="e#31314#31333#0" expanded="true" />
+                <element signature="e#31395#31430#0" expanded="true" />
+                <element signature="e#31487#31517#0" expanded="true" />
+                <element signature="e#31575#31607#0" expanded="true" />
+                <element signature="e#31667#31700#0" expanded="true" />
+                <element signature="e#31751#31774#0" expanded="true" />
+                <element signature="e#38430#41386#0" expanded="true" />
+                <element signature="e#41204#41346#0" expanded="true" />
+                <element signature="e#41413#41620#1" expanded="true" />
+                <element signature="e#41663#42121#0" expanded="true" />
+                <element signature="e#52727#52873#0" expanded="true" />
+                <element signature="e#64175#65289#0" expanded="false" />
+                <element signature="e#64239#64341#0" expanded="true" />
+                <element signature="e#64417#65289#0" expanded="true" />
+                <element signature="e#65320#70649#0" expanded="false" />
+                <element signature="e#65320#65762#1" expanded="true" />
+                <element signature="e#65922#67216#0" expanded="true" />
+                <element signature="e#67327#68473#0" expanded="true" />
+                <element signature="e#68541#69327#0" expanded="true" />
+                <element signature="e#69387#70649#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="visualization.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/saegus/visualization.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="179" column="0" selection-start-line="179" selection-start-column="0" selection-end-line="179" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+                <element signature="e#138#348#0" expanded="false" />
+                <element signature="e#456#7907#0" expanded="true" />
+                <element signature="e#8080#10837#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -115,8 +234,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/docs/standard_magic.rst" />
-        <option value="$PROJECT_DIR$/src/tests/maturing_developer/test_magic1478.py" />
         <option value="$PROJECT_DIR$/src/docs/operators.rst" />
         <option value="$PROJECT_DIR$/src/docs/magic1478.rst" />
         <option value="$PROJECT_DIR$/src/docs/creating_data_for_GWAS_with_magic1478.rst" />
@@ -159,12 +276,14 @@
         <option value="$PROJECT_DIR$/src/saegus/parameters.py" />
         <option value="$PROJECT_DIR$/src/saegus/parse.py" />
         <option value="$PROJECT_DIR$/src/docs/saegus_documentation/parse.rst" />
-        <option value="$PROJECT_DIR$/src/saegus/operators.py" />
         <option value="$PROJECT_DIR$/src/saegus/simulate.py" />
         <option value="$PROJECT_DIR$/devel/tuson_selection/logging_devel.rst" />
         <option value="$PROJECT_DIR$/src/tests/test_most_functions.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/src/saegus/operators.py" />
+        <option value="$PROJECT_DIR$/src/docs/user_guide/tuson_with_selection.rst" />
         <option value="$PROJECT_DIR$/src/docs/saegus_documentation/analyze.rst" />
+        <option value="$PROJECT_DIR$/src/saegus/visualization.py" />
         <option value="$PROJECT_DIR$/src/saegus/analyze.py" />
       </list>
     </option>
@@ -182,7 +301,7 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="800" />
-    <option name="width" value="801" />
+    <option name="width" value="800" />
     <option name="height" value="860" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -215,7 +334,7 @@
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
+    <navigator proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -228,110 +347,7 @@
       <manualOrder />
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes>
-      <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="saegus_project" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="saegus_project" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="saegus_project" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="saegus_project" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="saegus_project" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="saegus_project" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="saegus_project" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="saegus_project" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="saegus_project" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="saegus_project" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="saegus_project" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="saegus_project" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="docs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="saegus_project" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="saegus_project" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="saegus_project" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="docs" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="saegus_documentation" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scratches" />
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="terminal" />
@@ -339,7 +355,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/src/docs/saegus_documentation/saegus_build/html" />
     <property name="ToolWindowDB Browser.ShowToolbar" value="false" />
-    <property name="nodejs_interpreter_path" value="" />
+    <property name="nodejs_interpreter_path" value="C:/nodejs/node" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$2/Languages" value="Python" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="124" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
@@ -390,7 +406,7 @@
       <recent name="C:\Users\DoubleDanks\BISB\wisser\code\rjwlab-scripts\saegus_project\src\tests\test_data\synbreed_testing" />
     </key>
   </component>
-  <component name="RunManager" selected="Python docs.saegus_reference_html">
+  <component name="RunManager">
     <configuration default="true" type="ChromiumRemoteDebugType" factoryName="Chromium Remote">
       <method />
     </configuration>
@@ -729,155 +745,13 @@
       <option name="USE_KEYWORD" value="true" />
       <method />
     </configuration>
-    <configuration default="false" name="generate_gwas_data" type="PythonConfigurationType" factoryName="Python">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/devel/development_scripts" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="saegus_project" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/devel/development_scripts/generate_gwas_data.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
-    <configuration default="false" name="saegus_reference_html" type="docs" factoryName="Sphinx task">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="C:\Anaconda3\python.exe" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="saegus_project" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="docutils_input_file" value="C:\Users\DoubleDanks\BISB\wisser\code\rjwlab-scripts\saegus_project\src\docs\saegus_documentation" />
-      <option name="docutils_output_file" value="C:\Users\DoubleDanks\BISB\wisser\code\rjwlab-scripts\saegus_project\src\docs\saegus_documentation\saegus_build\html" />
-      <option name="docutils_params" value="" />
-      <option name="docutils_task" value="html" />
-      <option name="docutils_open_in_browser" value="false" />
-      <method />
-    </configuration>
-    <configuration default="false" name="render_standard_directory_structure" type="docs" factoryName="Sphinx task">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="C:\Anaconda3\python.exe" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="saegus_project" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="docutils_input_file" value="C:\Users\DoubleDanks\BISB\wisser\code\rjwlab-scripts\saegus_project\src\docs\standard_directory_structure" />
-      <option name="docutils_output_file" value="C:\Users\DoubleDanks\BISB\wisser\code\rjwlab-scripts\saegus_project\src\docs\standard_directory_structure\rendered_content" />
-      <option name="docutils_params" value="" />
-      <option name="docutils_task" value="html" />
-      <option name="docutils_open_in_browser" value="false" />
-      <method />
-    </configuration>
-    <configuration default="false" name="analysis_report_build" type="docs" factoryName="Sphinx task">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="C:\Anaconda3\python.exe" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="saegus_project" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="docutils_input_file" value="C:\Users\DoubleDanks\BISB\wisser\code\rjwlab-scripts\saegus_project\src\docs\analysis_reports" />
-      <option name="docutils_output_file" value="C:\Users\DoubleDanks\BISB\wisser\code\rjwlab-scripts\saegus_project\src\docs\analysis_reports\rendered_reports" />
-      <option name="docutils_params" value="" />
-      <option name="docutils_task" value="html" />
-      <option name="docutils_open_in_browser" value="false" />
-      <method />
-    </configuration>
-    <configuration default="false" name="sphinx-pdf" type="docs" factoryName="Sphinx task">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/docs" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="saegus_project" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="docutils_input_file" value="$PROJECT_DIR$/src/docs" />
-      <option name="docutils_output_file" value="C:\Users\DoubleDanks\BISB\wisser\code\rjwlab-scripts\saegus_project\src\docs\saegus_build" />
-      <option name="docutils_params" value="" />
-      <option name="docutils_task" value="latexpdf" />
-      <option name="docutils_open_in_browser" value="false" />
-      <method />
-    </configuration>
-    <configuration default="false" name="other" type="docs" factoryName="Sphinx task">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="C:\Anaconda3\python.exe" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="saegus_project" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="docutils_input_file" value="C:\Users\DoubleDanks\BISB\wisser\code\rjwlab-scripts\saegus_project\src\docs" />
-      <option name="docutils_output_file" value="C:\Users\DoubleDanks\BISB\wisser\code\rjwlab-scripts\saegus_project\src\docs\saegus_build" />
-      <option name="docutils_params" value="" />
-      <option name="docutils_task" value="epub" />
-      <option name="docutils_open_in_browser" value="false" />
-      <method />
-    </configuration>
-    <configuration default="false" name="py.test in nam_tests.py" type="tests" factoryName="py.test">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/tests" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="saegus_project" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="" />
-      <option name="CLASS_NAME" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="FOLDER_NAME" value="" />
-      <option name="TEST_TYPE" value="TEST_SCRIPT" />
-      <option name="PATTERN" value="" />
-      <option name="USE_PATTERN" value="false" />
-      <option name="testToRun" value="$PROJECT_DIR$/src/tests/nam_tests.py" />
-      <option name="keywords" value="" />
-      <option name="params" value="" />
-      <option name="USE_PARAM" value="false" />
-      <option name="USE_KEYWORD" value="false" />
-      <method />
-    </configuration>
-    <list size="7">
-      <item index="0" class="java.lang.String" itemvalue="Python.generate_gwas_data" />
-      <item index="1" class="java.lang.String" itemvalue="Python docs.saegus_reference_html" />
-      <item index="2" class="java.lang.String" itemvalue="Python docs.render_standard_directory_structure" />
-      <item index="3" class="java.lang.String" itemvalue="Python docs.analysis_report_build" />
-      <item index="4" class="java.lang.String" itemvalue="Python docs.sphinx-pdf" />
-      <item index="5" class="java.lang.String" itemvalue="Python docs.other" />
-      <item index="6" class="java.lang.String" itemvalue="Python tests.py.test in nam_tests.py" />
-    </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
     <option name="remove_strategy" value="false" />
   </component>
   <component name="StructureViewFactory">
     <option name="AUTOSCROLL_MODE" value="false" />
-    <option name="ACTIVE_ACTIONS" value=",ALPHA_COMPARATOR,SHOW_FIELDS,SHOW_INHERITED" />
+    <option name="ACTIVE_ACTIONS" value=",ALPHA_COMPARATOR,SHOW_INHERITED,SHOW_FIELDS" />
   </component>
   <component name="SvnConfiguration">
     <configuration>C:\Users\DoubleDanks\AppData\Roaming\Subversion</configuration>
@@ -967,7 +841,7 @@
       <option name="project" value="LOCAL" />
       <updated>1466791045806</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <option name="localTasksCounter" value="13" />
     <servers>
       <Generic shared="false" url="http://localhost">
         <commitMessageFormat>{id} {summary}</commitMessageFormat>
@@ -1064,33 +938,33 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="800" y="0" width="801" height="860" extended-state="0" />
-    <editor active="true" />
+    <frame x="800" y="0" width="800" height="860" extended-state="0" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="false" show_stripe_button="true" weight="0.8108108" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" x="100" y="105" width="600" height="628" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32258064" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="false" show_stripe_button="true" weight="0.5608108" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" x="538" y="79" width="415" height="704" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32258064" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25785124" sideWeight="0.64395785" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17866324" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31182796" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.83618236" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35470086" sideWeight="0.48971722" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="false" show_stripe_button="true" weight="0.90675676" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="2399" y="57" width="439" height="539" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1994302" sideWeight="0.35604218" order="4" side_tool="false" content_ui="tabs" x="234" y="323" width="777" height="220" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1528777" sideWeight="0.23544632" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="true" show_stripe_button="true" weight="0.7162162" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="54" y="74" width="530" height="616" />
+      <window_info id="Terminal" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="true" show_stripe_button="true" weight="0.42297298" sideWeight="0.35604218" order="3" side_tool="false" content_ui="tabs" x="234" y="323" width="777" height="220" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972974" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6959459" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="DB Execution Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6959459" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="DB Browser" active="false" anchor="top" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.329904" sideWeight="0.5" order="0" side_tool="true" content_ui="combo" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972136" sideWeight="0.4974055" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972136" sideWeight="0.4974055" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32905984" sideWeight="0.4976744" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1528777" sideWeight="0.23544632" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6989247" sideWeight="0.4974293" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6989247" sideWeight="0.4974293" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Concurrent Activities Diagram" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32744783" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -1132,27 +1006,11 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="12" />
+      <option name="time" value="14" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/docs/saegus_documentation/saegus_build/html/parameters.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-969">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/docs/saegus_documentation/saegus_build/html/breed.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/docs/saegus_build/html/parse.html" />
-    <entry file="file://$PROJECT_DIR$/src/docs/saegus_documentation/saegus_build/.buildinfo" />
     <entry file="file://$PROJECT_DIR$/src/docs/saegus_documentation/saegus_build/_static/basic.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-306">
@@ -1377,22 +1235,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/requirements.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="6" selection-start-line="0" selection-start-column="6" selection-end-line="0" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/LICENSE.md">
-      <provider editor-type-id="MarkdownPreviewEditor">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="543">
           <caret line="674" column="0" selection-start-line="674" selection-start-column="0" selection-end-line="674" selection-end-column="0" />
         </state>
+      </provider>
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
@@ -1409,39 +1259,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/docs/saegus_documentation/analyze.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="478" column="0" selection-start-line="478" selection-start-column="0" selection-end-line="478" selection-end-column="0" />
-          <folding>
-            <marker date="1465394294050" expanded="true" signature="2587:2678" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="471">
-          <caret line="1222" column="48" selection-start-line="1222" selection-start-column="48" selection-end-line="1222" selection-end-column="48" />
-          <folding>
-            <element signature="e#2419#5985#0" expanded="false" />
-            <element signature="e#6092#8347#0" expanded="false" />
-            <element signature="e#8540#10104#0" expanded="false" />
-            <element signature="e#10185#11812#0" expanded="false" />
-            <element signature="e#13599#16334#0" expanded="false" />
-            <element signature="e#16364#27828#0" expanded="false" />
-            <element signature="e#27860#32383#0" expanded="false" />
-            <element signature="e#30274#32383#0" expanded="false" />
-            <element signature="e#32815#34432#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/parameters.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="640">
           <caret line="427" column="31" selection-start-line="427" selection-start-column="31" selection-end-line="427" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1449,19 +1270,144 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="640">
           <caret line="336" column="36" selection-start-line="336" selection-start-column="36" selection-end-line="336" selection-end-column="36" />
-          <folding>
-            <element signature="e#18#39#0" expanded="true" />
-            <element signature="e#4324#5989#0" expanded="false" />
-            <element signature="e#6058#7229#0" expanded="false" />
-          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/requirements.txt" />
+    <entry file="file://$PROJECT_DIR$/src/MANIFEST.in">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/operators.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="21" column="30" selection-start-line="21" selection-start-column="30" selection-end-line="21" selection-end-column="30" />
+        <state relative-caret-position="952">
+          <caret line="154" column="0" selection-start-line="154" selection-start-column="0" selection-end-line="154" selection-end-column="0" />
+          <folding>
+            <element signature="e#24#45#0" expanded="true" />
+            <element signature="e#191#821#0" expanded="false" />
+            <element signature="e#250#405#0" expanded="true" />
+            <element signature="e#460#821#0" expanded="true" />
+            <element signature="e#930#1134#0" expanded="true" />
+            <element signature="e#1179#1602#0" expanded="true" />
+            <element signature="e#1652#1971#1" expanded="true" />
+            <element signature="e#2042#2215#0" expanded="true" />
+            <element signature="e#2274#2513#0" expanded="true" />
+            <element signature="e#2624#2751#0" expanded="true" />
+            <element signature="e#2804#3103#0" expanded="true" />
+            <element signature="e#3140#3211#1" expanded="true" />
+            <element signature="e#3273#3386#0" expanded="true" />
+            <element signature="e#3435#3505#0" expanded="true" />
+            <element signature="e#3549#3603#1" expanded="true" />
+            <element signature="e#3683#3874#0" expanded="true" />
+            <element signature="e#3920#4344#0" expanded="true" />
+            <element signature="e#4398#4826#1" expanded="true" />
+            <element signature="e#4910#5077#0" expanded="true" />
+            <element signature="e#5123#5428#0" expanded="true" />
+            <element signature="e#5478#5906#1" expanded="true" />
+            <element signature="e#5973#6108#0" expanded="true" />
+            <element signature="e#6410#6703#1" expanded="true" />
+            <element signature="e#6782#6947#0" expanded="true" />
+            <element signature="e#7014#7222#0" expanded="true" />
+            <element signature="e#7278#7638#1" expanded="true" />
+            <element signature="e#7715#7869#0" expanded="true" />
+            <element signature="e#7930#8534#0" expanded="true" />
+            <element signature="e#8587#8796#1" expanded="true" />
+            <element signature="e#8864#8985#0" expanded="true" />
+            <element signature="e#9030#9193#0" expanded="true" />
+            <element signature="e#9248#9556#0" expanded="true" />
+            <element signature="e#9601#9800#0" expanded="true" />
+            <element signature="e#9855#10340#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/tuson_with_selection.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="12342">
+          <caret line="726" column="20" selection-start-line="726" selection-start-column="20" selection-end-line="726" selection-end-column="20" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/saegus/visualization.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="179" column="0" selection-start-line="179" selection-start-column="0" selection-end-line="179" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#138#348#0" expanded="false" />
+            <element signature="e#456#7907#0" expanded="true" />
+            <element signature="e#8080#10837#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm2016.1/idea.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/docs/saegus_documentation/analyze.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="445">
+          <caret line="829" column="47" selection-start-line="829" selection-start-column="47" selection-end-line="829" selection-end-column="47" />
+          <folding>
+            <marker date="1468036073645" expanded="false" signature="2633:2724" ph="..." />
+            <marker date="1468036073645" expanded="true" signature="25509:25603" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="317">
+          <caret line="175" column="0" selection-start-line="175" selection-start-column="0" selection-end-line="175" selection-end-column="0" />
+          <folding>
+            <element signature="e#24#45#0" expanded="true" />
+            <element signature="e#9692#9827#0" expanded="true" />
+            <element signature="e#18072#29536#0" expanded="false" />
+            <element signature="e#18072#18373#1" expanded="true" />
+            <element signature="e#18425#18716#0" expanded="true" />
+            <element signature="e#18844#20396#0" expanded="true" />
+            <element signature="e#20451#21914#0" expanded="true" />
+            <element signature="e#22011#22813#0" expanded="true" />
+            <element signature="e#22866#23572#0" expanded="true" />
+            <element signature="e#23656#26174#0" expanded="true" />
+            <element signature="e#26239#26932#0" expanded="true" />
+            <element signature="e#27050#27738#0" expanded="true" />
+            <element signature="e#27857#29536#0" expanded="true" />
+            <element signature="e#29569#34092#0" expanded="false" />
+            <element signature="e#29569#29773#1" expanded="true" />
+            <element signature="e#29938#30778#0" expanded="true" />
+            <element signature="e#30811#31266#0" expanded="true" />
+            <element signature="e#30818#31034#0" expanded="true" />
+            <element signature="e#31314#31333#0" expanded="true" />
+            <element signature="e#31395#31430#0" expanded="true" />
+            <element signature="e#31487#31517#0" expanded="true" />
+            <element signature="e#31575#31607#0" expanded="true" />
+            <element signature="e#31667#31700#0" expanded="true" />
+            <element signature="e#31751#31774#0" expanded="true" />
+            <element signature="e#38430#41386#0" expanded="true" />
+            <element signature="e#41204#41346#0" expanded="true" />
+            <element signature="e#41413#41620#1" expanded="true" />
+            <element signature="e#41663#42121#0" expanded="true" />
+            <element signature="e#52727#52873#0" expanded="true" />
+            <element signature="e#64175#65289#0" expanded="false" />
+            <element signature="e#64239#64341#0" expanded="true" />
+            <element signature="e#64417#65289#0" expanded="true" />
+            <element signature="e#65320#70649#0" expanded="false" />
+            <element signature="e#65320#65762#1" expanded="true" />
+            <element signature="e#65922#67216#0" expanded="true" />
+            <element signature="e#67327#68473#0" expanded="true" />
+            <element signature="e#68541#69327#0" expanded="true" />
+            <element signature="e#69387#70649#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

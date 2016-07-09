@@ -8,6 +8,7 @@ import os
 import copy
 import random
 import shelve
+import h5py
 from scipy import linalg
 from . import operators, parameters
 
@@ -15,25 +16,13 @@ from . import operators, parameters
 def collect_allele_frequency_data(meta_population_library, minor_alleles):
     """
     Collects minor allele frequency data of a multiple generation
-    population library.
+    population library. Columns of the resulting array are:
 
-    Example
-    -------
-
-    meta_population_library
-    {
-        0: [<simuPOP.Population, ..., <simuPOP.Population>],
-        1: [<simuPOP.Population, ..., <simuPOP.Population>],
-        ...,
-    }
-
-    Returns
-    -------
-
-    collect_multigeneration_frequency_data(meta_population_library)
-    array([[  0.   ,   0.   ,   0.319, ...,   0.467,   0.262,   0.267],
-           ...,
-           [  4.   ,  10.   ,   0.319, ...,   0.467,   0.262,   0.267]])
+    + replicate
+    + generation
+    + locus1
+    + locus2
+    + so on and so forth
     """
     minor_allele_frequencies = []
     for rep_id, sample_list in meta_population_library.items():
@@ -43,32 +32,31 @@ def collect_allele_frequency_data(meta_population_library, minor_alleles):
                 ([rep_id, gen_id] + list(sample.dvars().alleleFreq[locus][allele]
                                       for locus, allele in
                                       enumerate(minor_alleles)))))
-    return np.asarray(datar)
+    return np.asarray(minor_allele_frequencies)
+
+
+def collect_genotype_phenotype_data(meta_population_library):
+    """
+    Collects the genotype and phenotype data of a multiple replicate
+    multiple sample population dictionary. The resulting data is
+    a single array. Each row has ind_id, replicate, generation, g and p.
+    """
+    genotype_phenotype_data = []
+    for rep_id, sample_list in meta_population_library.items():
+        for sample in sample_list:
+            sample.setIndInfo(rep_id, 'replicate')
+            genotype_phenotype_data.extend(np.asarray((sample.indInfo('ind_id'),
+                                sample.indInfo('replicate'),
+                                sample.indInfo('generation'),
+                                sample.indInfo('g'),
+                                sample.indInfo('p'))).T)
+    return np.asarray(genotype_phenotype_data)
 
 
 def collect_heterozygote_frequency_data(meta_population_library):
     """
     Collects minor allele frequency data of a multiple generation
     population library.
-
-    Example
-    -------
-
-    meta_population_library
-    {
-        0: [<simuPOP.Population, ..., <simuPOP.Population>],
-        1: [<simuPOP.Population, ..., <simuPOP.Population>],
-        ...,
-    }
-
-    Returns
-    -------
-
-    collect_heterozygote_frequency_data(meta_population_library)
-    array([[  0.  ,   0.  ,   0.37, ...,   0.45,   0.3 ,   0.37],
-           ...,
-           [  4.  ,  10.  ,   0.27, ...,   0.49,   0.55,   0.53]])
-
     """
     heterozygote_frequencies = []
     for rep_id, sample_list in meta_population_library.items():
@@ -77,6 +65,115 @@ def collect_heterozygote_frequency_data(meta_population_library):
             heterozygote_frequencies.append(np.asarray(
                 ([rep_id, gen_id] + list(sample.dvars().heteroFreq.values()))))
     return np.asarray(heterozygote_frequencies)
+
+
+def collect_genotype_frequency_data(meta_population_library, minor_alleles):
+    """
+    Collects the frequency of the minor allele homozygote data
+    of a multiple replicate multiple sample population dictionary. The minor
+    allele homozygote genotypes are constructed from the ``minor_alleles``
+    parameter. Results are returned as a single array with columns
+
+    + replicate
+    + generation
+    + locus1
+    + locus2
+    + so on and so forth
+
+    """
+
+    minor_allele_homozygotes = tuple(zip(minor_alleles, minor_alleles))
+    minor_allele_homozygote_frequencies = []
+    for rep_id, sample_list in meta_population_library.items():
+        for sample in sample_list:
+            gen_id = int(max(sample.indInfo('generation')))
+            minor_allele_homozygote_frequencies.append(np.asarray(([rep_id,
+                                                                    gen_id] + list(
+                sample.dvars().genoFreq[locus][genotype]
+                for locus, genotype in enumerate(minor_allele_homozygotes)))))
+    return np.asarray(minor_allele_homozygote_frequencies)
+
+
+def store_allele_frequency_data(meta_population_library, minor_alleles,
+                                hdf_file_name):
+    """
+    Collects minor allele frequency data of a multiple generation
+    population library. Stores the allele frequency data in an
+    HDF5 file.
+
+        af/replicate_id/generation_id
+
+    """
+    with h5py.File(hdf_file_name) as hdf_file:
+        for rep_id, sample_list in meta_population_library.items():
+            for sample in sample_list:
+                gen_id = int(max(sample.indInfo('generation')))
+                hdf_file.create_dataset('af/' + str(rep_id) + '/' + str(gen_id),
+                    data=np.asarray(list(sample.dvars().alleleFreq[locus][allele]
+                         for locus, allele in enumerate(minor_alleles))))
+
+
+
+def store_genotype_phenotype_data(meta_population_library, hdf_file_name):
+    """
+    Collects the genotype and phenotype data of a multiple replicate
+    multiple sample population dictionary. Stores the results in
+    an HDF5 file.
+
+    Stored by
+    geno_pheno/replicate_id/generation_id
+    """
+    with h5py.File(hdf_file_name) as hdf_file:
+        for rep_id, sample_list in meta_population_library.items():
+            for sample in sample_list:
+                gen_id = int(max(sample.indInfo('generation')))
+                sample.setIndInfo(rep_id, 'replicate')
+                g_and_p = np.asarray((sample.indInfo('ind_id'),
+                                      sample.indInfo('replicate'),
+                                      sample.indInfo('generation'),
+                                      sample.indInfo('g'),
+                                      sample.indInfo('p'))).T
+                hdf_file.create_dataset('geno_pheno/'+str(rep_id)+'/'+str(gen_id),
+                                        data=g_and_p)
+
+
+def store_heterozygote_frequency_data(meta_population_library, hdf_file_name):
+    """
+    Collects minor allele frequency data of a multiple generation
+    population library.Stores the allele frequency data in an
+    HDF5 file.
+
+    hetf replicate_id/generation_id
+    """
+    with h5py.File(hdf_file_name) as hdf_file:
+        for rep_id, sample_list in meta_population_library.items():
+            for sample in sample_list:
+                gen_id = int(max(sample.indInfo('generation')))
+                hdf_file.create_dataset(
+                    'hetf/'+str(rep_id)+'/'+str(gen_id),
+                    data=np.asarray(list(sample.dvars().heteroFreq.values())))
+
+
+def store_genotype_frequency_data(meta_population_library, minor_alleles, hdf_file_name):
+    """
+    Collects the frequency of the minor allele homozygote data
+    of a multiple replicate multiple sample population dictionary. The minor
+    allele genotypes are created using the ``minor_alleles`` parameter.
+    Stores the results in an HDF5 file.
+
+    Keyed by
+
+        homf/replicate_id/generation_id
+    """
+    minor_homozygote_genotypes = tuple(zip(minor_alleles, minor_alleles))
+    with h5py.File(hdf_file_name) as hdf_file:
+        for rep_id, sample_list in meta_population_library.items():
+            for sample in sample_list:
+                gen_id = int(max(sample.indInfo('generation')))
+                hdf_file.create_dataset('homf/'+str(rep_id)+'/'+str(gen_id), data=np.asarray(
+                tuple(sample.dvars().genoFreq[locus][genotype]
+                     for locus, genotype in enumerate(minor_homozygote_genotypes))))
+
 
 def allele_data(pop, alleles, loci):
     """
@@ -162,7 +259,8 @@ def allele_data(pop, alleles, loci):
 
     return allele_data_structure
 
-def allele_frq_table(self, pop, number_gens,
+
+def allele_frq_table(pop, number_gens,
     allele_frq_data, recombination_rates, genetic_map):
     """
     Generates a large table which centralizes all allele frequency data.
@@ -230,6 +328,7 @@ def allele_frq_table(self, pop, number_gens,
     return af_table
 
 
+
 def generate_allele_effects_table(qtl, alleles, allele_effects,
                                   saegus_to_tassel_conversions,
                                   output_file_name=None):
@@ -272,6 +371,7 @@ def generate_allele_effects_table(qtl, alleles, allele_effects,
                                    index=False, float_format='%.3f')
 
     return allele_effect_table
+
 
 
 def collect_haplotype_data(pop, allele_effects, quantitative_trait_loci):
@@ -325,6 +425,7 @@ def collect_haplotype_data(pop, allele_effects, quantitative_trait_loci):
     return haplotypes
 
 
+
 def generate_haplotype_data_table(pop, haplotype_data):
     """
     Generates a table for easy analysis and visualization of haplotypes,
@@ -363,85 +464,6 @@ def generate_haplotype_data_table(pop, haplotype_data):
                   generational_frequencies
             haplotype_table.append(row)
     return pd.DataFrame(haplotype_table, columns=data_columns)
-
-
-def plot_frequency_vs_effect(pop, haplotype_table, plot_title,
-                             plot_file_name,
-                             color_map='Dark2'):
-    """
-    Uses the haplotype data table to arrange data into a chromosome
-    color coded multiple generation plot which shows the change in
-    haplotype frequency over time. Haplotypes are dots with fixed
-    x-position which shows their effect. Their motion along the y-axis
-    which is frequency shows changes over time.
-    :param plot_title:
-    :param plot_file_name:
-    :param color_map:
-    :param pop:
-    :param haplotype_table:
-    """
-
-    plt.style.use('ggplot')
-
-    distinct_chromosomes = list(set(haplotype_table['chromosome']))
-    number_of_different_colors = len(distinct_chromosomes)
-    generation_labels = ['G_' + '{' + str(i) + '}' for i in
-                          range(0, 2*(pop.numSubPop()), 2)]
-    generations = ['G_' + str(i) for i in range(0, 2*(pop.numSubPop()), 2)]
-
-    c_map = plt.get_cmap(color_map)
-
-    colors = c_map(np.linspace(0, 1, number_of_different_colors))
-
-    chromosome_colors = {distinct_chromosomes[i]: colors[i] for i in
-                         range(number_of_different_colors)}
-
-    effect_frq_by_chromosome = {}
-
-    for sp in range(pop.numSubPop()):
-        effect_frq_by_chromosome[sp] = {}
-        for chrom in distinct_chromosomes:
-            haplotype_frequencies = np.array(
-                haplotype_table.loc[
-                    haplotype_table['chromosome'] == chrom][generations[sp]])
-
-            haplotype_effects = np.array(
-                haplotype_table.loc[
-                    haplotype_table['chromosome'] == chrom]['effect'])
-
-            effect_frq_by_chromosome[sp][chrom] = np.array([
-                haplotype_frequencies, haplotype_effects])
-
-    # Figure parameters
-    maximum_haplotype_effect = max(haplotype_table['effect'])
-
-    generations = ['G_'+str(i) for i in range(0, 2*(pop.numSubPop()) + 1, 2)]
-
-    f, ax = plt.subplots(pop.numSubPop(), 1, figsize=(15, 40))
-    for sp in range(pop.numSubPop()):
-        ax[sp].set_xlim(-0.5, maximum_haplotype_effect+4)
-        ax[sp].set_ylim(-0.1, 1.1)
-        for chrom in distinct_chromosomes:
-            ax[sp].plot(effect_frq_by_chromosome[sp][chrom][1],
-                    effect_frq_by_chromosome[sp][chrom][0],
-                    markersize=8, linewidth=0.0, marker='*',
-                    color=chromosome_colors[chrom],
-                        label="Chrom {}".format(chrom))
-        #handles, labels = ax[sp].get_legend_handles_labels()
-        ax[sp].set_xlabel("Effect")
-        ax[sp].set_ylabel("Frequency")
-        ax[sp].set_title(r'${gen}$'.format(gen=generation_labels[sp]),
-                         fontsize=12)
-        ax[sp].legend(loc='best')
-    f.suptitle(plot_title,
-               fontsize=24)
-
-    f.savefig(plot_file_name, dpi=300)
-
-    return effect_frq_by_chromosome
-
-
-
 
 
 class GWAS(object):
@@ -713,6 +735,7 @@ class GWAS(object):
                                       float_format='%.3f')
 
         return annotated_G
+
 
 class GWASConfig(object):
     """
