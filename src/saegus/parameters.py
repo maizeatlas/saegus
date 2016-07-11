@@ -411,7 +411,7 @@ def count_segregating_site_concordance(array_of_seg_loci):
         segregating_loci_concordance_counts[tuple(row)] += 1
     return segregating_loci_concordance_counts
 
-def test_segregatng_loci_concordance(seg_loci_agreement_counts):
+def test_segregating_loci_concordance(seg_loci_agreement_counts):
     seg_loci_agreement = True
     if len(seg_loci_agreement_counts) > 2:
         seg_loci_agreement = False
