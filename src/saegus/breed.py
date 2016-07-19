@@ -21,14 +21,8 @@ class MAGIC(object):
         self.pop = pop
         self.founders = founders
         self.recombination_rates = recombination_rates
-        self._merging_progress = len(founders)
         self._convergence = False
 
-
-    def __str__(self):
-        return "Population Name: {popname}\n" \
-               "Population Size: {popsize}".\
-            format(popname=self.pop.subPopName(0), popsize=self.pop.popSize())
 
     def generate_f_one(self, parental_id_pairs, offspring_per_pair):
         """
@@ -55,6 +49,42 @@ class MAGIC(object):
             ),
             gen=1,
         )
+
+    def recombinatorial_convergence(self, multi_replicate_populations,
+                                    number_sub_populations,
+                                    offspring_per_pair):
+        """
+        Breeds individuals from different sub-populations together until a
+        single hybrid sub-population is created.
+        :note:`number_sub_populations*offspring_per_pair should equal operating_population_size.`
+        :note:`For the time being only works with powers of 2.`
+
+
+        :param sim.Simulator multi_replicate_populations:
+        :param int number_sub_populations:
+        :param int offspring_per_pair:
+        :return:
+        """
+        print("Start of recombinatorial convergence.")
+        while number_sub_populations > 1:
+            mrc = MultiRandomCross(multi_replicate_populations,
+                                   number_sub_populations, offspring_per_pair)
+            mothers, fathers = mrc.determine_random_cross()
+            multi_snd_order_chooser = MultiSecondOrderPairIDChooser(mothers, fathers)
+            print("Prior to convergence: {}".format(number_sub_populations))
+            multi_replicate_populations.evolve(
+                matingScheme=sim.HomoMating(
+                    sim.PyParentsChooser(multi_snd_order_chooser.snd_ord_id_pairs),
+                    sim.OffspringGenerator(ops=[sim.IdTagger(), sim.PedigreeTagger(), sim.Recombinator(rates=self.recombination_rates)],
+                                           numOffspring=1),
+                                           subPopSize=[int(number_sub_populations*offspring_per_pair)]
+                                           ),
+                gen=1,
+            )
+            number_sub_populations = int(number_sub_populations/2)
+            offspring_per_pair = int(2*offspring_per_pair)
+        self._convergence = True
+
 
     def random_mating(self, generations_of_random_mating, pop_size):
         """
@@ -173,8 +203,8 @@ class MultiRandomCross(object):
     requires predictable mating among sub-populations of each replicate.
     """
 
-    def __init__(self, multiple_replicate_population, number_sub_pops,
-                 sub_pop_size):
+    def __init__(self, multiple_replicate_population,
+                 number_sub_pops, sub_pop_size):
         """
         :parameter multiple_replicate_population: simuPOP.Simulator object
         :parameter int number_sub_pops: Determines number of sub-populations of each replicate
@@ -186,7 +216,7 @@ class MultiRandomCross(object):
 
     def __str__(self):
         return "Number of Sub-Populations: {nbr_sps}\n" \
-               "Sub-Population Size: {sp_size}"\
+               "Sub-Population Size: {sp_size}\n"\
             .format(nbr_sps=self.number_sub_pops, sp_size=self.sub_pop_size)
 
     def determine_random_cross(self):

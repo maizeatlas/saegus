@@ -2,6 +2,7 @@
 import simuPOP as sim
 import math
 import numpy as np
+from numpy.core import defchararray
 import pandas as pd
 import collections as col
 import os
@@ -15,11 +16,10 @@ from . import operators, parameters
 
 class MultiGeneration(object):
 
-    def __init__(self):
-        pass
+    def __init__(self, run_id):
+        self.run_id = run_id
 
-    @staticmethod
-    def collect_allele_frequency_data(meta_population_library, minor_alleles):
+    def collect_allele_frequency_data(self, meta_population_library, minor_alleles):
         """
         Collects minor allele frequency data of a multiple generation
         population library. Columns of the resulting array are:
@@ -32,7 +32,7 @@ class MultiGeneration(object):
         """
         minor_allele_frequencies = []
         for rep_id, sample_list in meta_population_library.items():
-            for sample in enumerate(sample_list):
+            for sample in sample_list:
                 gen_id = int(max(sample.indInfo('generation')))
                 minor_allele_frequencies.append(np.asarray(
                     ([rep_id, gen_id] + list(sample.dvars().alleleFreq[locus][allele]
@@ -40,8 +40,7 @@ class MultiGeneration(object):
                                           enumerate(minor_alleles)))))
         return np.asarray(minor_allele_frequencies)
 
-    @staticmethod
-    def collect_genotype_phenotype_data(meta_population_library):
+    def collect_genotype_phenotype_data(self, meta_population_library):
         """
         Collects the genotype and phenotype data of a multiple replicate
         multiple sample population dictionary. The resulting data is
@@ -58,22 +57,20 @@ class MultiGeneration(object):
                                     sample.indInfo('p'))).T)
         return np.asarray(genotype_phenotype_data)
 
-    @staticmethod
-    def collect_heterozygote_frequency_data(meta_population_library):
+    def collect_heterozygote_frequency_data(self, meta_population_library):
         """
         Collects minor allele frequency data of a multiple generation
         population library.
         """
         heterozygote_frequencies = []
         for rep_id, sample_list in meta_population_library.items():
-            for i, sample in enumerate(sample_list):
+            for sample in sample_list:
                 gen_id = int(max(sample.indInfo('generation')))
                 heterozygote_frequencies.append(np.asarray(
                     ([rep_id, gen_id] + list(sample.dvars().heteroFreq.values()))))
         return np.asarray(heterozygote_frequencies)
 
-    @staticmethod
-    def collect_genotype_frequency_data(meta_population_library, minor_alleles):
+    def collect_genotype_frequency_data(self, meta_population_library, minor_alleles):
         """
         Collects the frequency of the minor allele homozygote data
         of a multiple replicate multiple sample population dictionary. The minor
@@ -180,6 +177,52 @@ class MultiGeneration(object):
                     tuple(sample.dvars().genoFreq[locus][genotype]
                          for locus, genotype in enumerate(minor_homozygote_genotypes))))
 
+    def multiple_sample_analyzer(self, meta_population_library, qtl, allele_effects,
+                                 minor_alleles, loci):
+
+        int_to_snp_map = {0: 'A', 1: 'C', 2: 'G', 3: 'T', 4: 'D', 5: 'I'}
+        indir = "C:\\tassel\\input\\"
+        minor_allele_frequency_file = h5py.File('bia_allele_frequencies.hdf5')
+        run_id = 'bia'
+
+        for rep_id, sample_list in meta_population_library.items():
+            for sample in sample_list:
+
+                gen_id_name = str(int(max(sample.indInfo('generation'))))
+                rep_id_name = str(rep_id)
+
+                operators.assign_additive_g(sample, qtl,
+                                    allele_effects)
+                operators.calculate_error_variance(sample, 0.7)
+                operators.phenotypic_effect_calculator(sample)
+
+                name = run_id+'_'+rep_id_name+'_'+gen_id_name
+
+                af_access_name = '/'.join(['af', rep_id_name, gen_id_name])
+                minor_allele_frequencies = minor_allele_frequency_file[af_access_name][list(loci)]
+
+                gwas = GWAS(sample, loci, run_id)
+
+                ccm = gwas.calculate_count_matrix(minor_alleles, loci)
+                ps_svd = gwas.pop_struct_svd(ccm)
+                gwas.population_structure_formatter(ps_svd, indir + name + '_structure_matrix.txt')
+                gwas.hapmap_formatter(int_to_snp_map, indir + name + '_simulated_hapmap.txt')
+                gwas.trait_formatter(indir + name + '_phenotype_vector.txt')
+                gwas.calc_kinship_matrix(ccm, minor_allele_frequencies,
+                                 indir + name + '_kinship_matrix.txt')
+
+                gwas.replicate_tassel_gwas_configs(rep_id_name,
+                                                   gen_id_name,
+                                                   indir + name + '_simulated_hapmap.txt',
+                                                   indir + name + '_kinship_matrix.txt',
+                                                   indir + name + '_phenotype_vector.txt',
+                                                   indir + name + '_structure_matrix.txt',
+                                                   "C:\\tassel\\output\\" + name + '_out_',
+                                                   "C:\\Users\DoubleDanks\\BISB\\wisser\\code\\rjwlab-scripts\\"
+                                                   "saegus_project\\devel\\magic\\1478\\gwas_pipeline.xml")
+
+        minor_allele_frequency_file.close()
+
 
 class SingleGeneration(object):
     def __init__(self):
@@ -199,7 +242,7 @@ class SingleGeneration(object):
         """
         minor_allele_frequencies = []
         for rep_id, sample_list in meta_population_library.items():
-            for sample in enumerate(sample_list):
+            for sample in sample_list:
                 #gen_id = int(max(sample.indInfo('generation')))
                 minor_allele_frequencies.append(np.asarray(
                     ([rep_id, sample.popSize()] + list(
@@ -667,7 +710,7 @@ class GWAS(object):
         self.pos_names = list(range(len(loci)))
 
     # noinspection PyArgumentList
-    def calculate_count_matrix(self, allele_subset, count_matrix_file_name = None):
+    def calculate_count_matrix(self, allele_subset, seg_loci, count_matrix_file_name = None):
         """
         A function to calculate the copy numbers of either the minor or
         major allele for each individual at each locus.
@@ -677,16 +720,13 @@ class GWAS(object):
         :param allele_subset: Allows user to choose a custom set of alleles to use i.e. minor vs major.
         :param count_matrix_filename: Output file name. If defined will write a file. Otherwise returns the count_matrix
         """
-        comparison_array = np.array([allele_subset[locus]
-                                     for locus in self.loci], dtype=np.int8)
+        comparison_array = np.asarray(allele_subset, dtype=np.int8)
         count_matrix = np.zeros((self.pop.popSize(), len(self.loci)))
         for i, ind in enumerate(self.pop.individuals()):
-            alpha_genotype = np.array([ind.genotype(ploidy=0)[locus]
-                              for locus in self.loci])
+            alpha_genotype = np.asarray(ind.genotype(ploidy=0))[list(seg_loci)]
             alpha_comparisons = np.equal(comparison_array, alpha_genotype,
                                          dtype=np.int8)
-            beta_genotype = [ind.genotype(ploidy=1)[locus]
-                             for locus in self.loci]
+            beta_genotype = np.asarray(ind.genotype(ploidy=1))[list(seg_loci)]
             beta_comparisons = np.equal(comparison_array, beta_genotype,
                                          dtype=np.int8)
             counts = np.add(alpha_comparisons, beta_comparisons, dtype=np.int8)
@@ -781,6 +821,8 @@ class GWAS(object):
         :return:
         :rtype:
         """
+        genolookups = np.array(
+            [['A', 'C', 'G', 'T', 'D', 'I'] for i in range(1478)])
         hapmap_data = {}
         hapmap_data['rs'] = self.locus_names
         hapmap_data['alleles'] = ['NA']*len(self.loci)
@@ -802,12 +844,8 @@ class GWAS(object):
 
 
         for i, ind in enumerate(self.pop.individuals()):
-            alpha_genotype = np.array([ind.genotype(ploidy=0)[locus]
-                                       for locus in self.loci])
-
-            beta_genotype = [ind.genotype(ploidy=1)[locus]
-                             for locus in self.loci]
-
+            alpha_genotype = np.asarray(ind.genotype(ploidy=0))[list(self.loci)]
+            beta_genotype = np.asarray(ind.genotype(ploidy=1))[list(self.loci)]
             hapmap_data[self.individual_names[i]] = [
                 ''.join(sorted(int_to_snp_conversions[a]
                                + int_to_snp_conversions[b]))
@@ -849,28 +887,6 @@ class GWAS(object):
 
         return trait_vector
 
-    def replacement_trait_formatter(self, existing_trait_file_name, new_trait_file_name, new_trait_values):
-        """
-        Reads an existing phenotype vector and replaces the values for each individual
-        with new values specified by new_trait_values. The new file is written
-        to new_trait_file_name in the TASSEL_in format.
-
-        :param existing_trait_file_name:
-        :param new_trait_file_name:
-        :param new_trait_values:
-        :return:
-        """
-
-        pd.read_csv(existing_trait_file_name, sep='\t')
-
-        if trait_file_name is not None:
-            header = "<Trait>\tsim\n"
-            with open(trait_file_name, 'w') as f:
-                f.write(header)
-                trait_vector.to_csv(f, sep='\t', index=False, header=False)
-
-        return trait_vector
-
     def calc_kinship_matrix(self, allele_count_matrix, allele_frequencies, kinship_matrix_file_name = None):
         """
         Calculates the kinship matrix according to VanRaden 2008:
@@ -891,14 +907,8 @@ class GWAS(object):
         :rtype:
         """
         M = np.matrix(allele_count_matrix - 1)
-
-        # Second allele in the unselected, un-inbred base population.
-        # Refers to major allele in G_0
-#        allele_frequencies = np.array([allele_data_hdf_store[rep_id]['minor_frequency'][locus] for locus in self.loci])
         P = 2*(allele_frequencies - 0.5)
-
         Z = M - P
-
         scaling_terms = np.zeros((len(self.loci)))
         for idx, probability in enumerate(allele_frequencies):
             scaling_terms[idx] = 2*probability*(1 - probability)
@@ -974,7 +984,7 @@ class GWASConfig(object):
     """
 
     def __init__(self, run_id, tassel_executable_path, tassel_input_path,
-                 tassel_outnput_path, config_file_template, config_file_output):
+                 tassel_output_path, config_file_template, config_file_output):
         """
 
         This class is designed for the purpose of enabling platform independence.
@@ -987,7 +997,7 @@ class GWASConfig(object):
         """
         self._fun_id = run_id
         self._tassel_executable_path = tassel_executable_path
-        self._tassel_outnput_path = tassel_outnput_path
+        self._tassel_output_path = tassel_output_path
         self._tassel_input_path = tassel_input_path
         self._config_file_template = config_file_template
         self._config_file_output_path = config_file_output_path
@@ -1077,54 +1087,6 @@ class GWASConfig(object):
 
 
 
-
-
-def modify_gwas_config(rep_id, sample_size, new_run_id,
-                                      new_phenotype_file_name,
-                                      new_output_file_prefix,
-                                      existing_config_file,
-                       location_of_tassel_binary):
-
-
-    """
-    Creates an xml file to run TASSEL using a mixed linear model approach.
-    Assumes use of hapmap, kinship, phenotype and population structure files.
-
-    The TASSEL command line interface requires a considerable number of
-    options to run GWAS. It is impractical to run the command line manually
-    for the number of replications in a simulated study. The TASSEL command
-    line interface allows the user to input a .xml file with the same
-    information which is used in the terminal.
-
-    :param input_directory: Directory path to send the input files.
-    :param run_identifier_prefix: Identifier for single replicate of data
-    :param config_file_template: XML file already setup for running a
-    specific kind of GWAS
-    :return: XML file to run a single replicate of data using TASSEL
-    """
-
-    import xml.etree.ElementTree as ET
-    import lxml.etree as etree
-
-    tree = ET.parse(existing_config_file)
-    root = tree.getroot()
-    lxml_tree = etree.fromstring(ET.tostring(root))
-    lxml_root = lxml_tree.getroottree()
-
-#        lxml_root.find('fork1/h').text = hapmap_file_name
-    lxml_root.find('fork2/t').text = new_phenotype_file_name
-#        lxml_root.find('fork3/q').text = structure_file_name
-#        lxml_root.find('fork4/k').text = kinship_file_name
-
-    absolute_output_file_path = os.path.join(location_of_tassel_binary,
-                 'R'+str(rep_id)+'_'+str(sample_size)+'_'+new_run_id + '_' + '_sim_gwas_pipeline.xml')
-
-    lxml_root.find('combine6/export').text = new_output_file_prefix
-
-    lxml_root.write(absolute_output_file_path,
-                    encoding="UTF-8",
-                    method="xml", xml_declaration=True, standalone='',
-                    pretty_print=True)
 
 
 def single_sample_analyzer(full_population, sample_size,
@@ -1241,7 +1203,6 @@ class Study(object):
                 sample.save(os.path.join(os.getcwd(), name))
 
 
-
     def load_sample_library(self, number_of_replicates, sample_sizes, sub_run_id=''):
         reloaded_sample_library = {rep: [] for rep in range(number_of_replicates)}
         for rep in range(number_of_replicates):
@@ -1249,14 +1210,12 @@ class Study(object):
                 reloaded_sample_library[rep].append(sim.loadPopulation(self.run_id + '_' + str(rep) + '_' + str(size) + '.pop'))
         return reloaded_sample_library
 
-
     def load_particular_sample_library(self, replicates_to_load, sample_sizes, sub_run_id=''):
         particular_loaded_sample_library = {rep: [] for rep in replicates_to_load}
         for rep in replicates_to_load:
             for size in sample_sizes:
                 particular_loaded_sample_library[rep].append(sim.loadPopulation(self.run_id+ '_' + str(rep) + '_' + str(size) + '.pop'))
         return particular_loaded_sample_library
-
 
     def calculate_power_fpr(self, panel_map, sample_sizes, number_of_replicates,
                                 number_of_qtl):
@@ -1312,7 +1271,6 @@ class Study(object):
         return power_fpr_results, true_positive_detected_loci, \
                false_positive_detected_loci
 
-
     def probability_of_detection(self, allele_effects_table, sample_sizes,
                                      number_of_replicates,
                                      true_positives_detected):
@@ -1351,7 +1309,6 @@ class Study(object):
 
         return prob_detection_table
 
-
     def seg_loci_among_samples(self, sample_library):
         """
         Examines the segregating loci of all samples and counts how many
@@ -1369,6 +1326,7 @@ class Study(object):
                           sample_library.values() for sample in rep)
         segregating_loci_counts = col.Counter(seg_of_samples)
         return segregating_loci_counts
+
 
     def store_allele_frequencies(self, library_of_samples, alleles):
 

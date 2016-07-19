@@ -131,38 +131,6 @@ class PopulationStructure(object):
             self.pop.dvars().assigned_structure, self.pop.dvars().mating_probabilities,
         )
 
-class AE(object):
-    """
-    Allele effects of the simulator are assigned as random draws of a statistical distribution. The user specifies the
-    type of distribution as a string when creating an instance of the class. The types of distributions are:
-    exponential, normal, poisson
-    """
-
-    def exponential(self, pop, parameter_of_exponential):
-        """
-
-        :param pop:
-        :param parameter_of_exponential:
-        :return:
-        Draws allele effects an exponential distribution.
-        Creates a copy of the AE map convienient for plotting.
-        """
-        allele_effects = col.OrderedDict()
-        for_plot_allele_effects = col.OrderedDict()
-        for idx in pop.dvars().properQTL:
-            idxtwo = idx + pop.totNumLoci()
-            for nucleotide in range(6):
-                allele_effects[idx - 1, nucleotide] = random.expovariate(parameter_of_exponential)
-                allele_effects[idx, nucleotide] = random.expovariate(parameter_of_exponential)
-                allele_effects[idx + 1, nucleotide] = random.expovariate(parameter_of_exponential)
-                allele_effects[idxtwo - 1, nucleotide] = allele_effects[idx - 1, nucleotide]
-                allele_effects[idxtwo, nucleotide] = allele_effects[idx, nucleotide]
-                allele_effects[idxtwo + 1, nucleotide] = allele_effects[idx + 1, nucleotide]
-                for_plot_allele_effects[float(idx) - 0.2, nucleotide] = allele_effects[idx - 1, nucleotide]
-                for_plot_allele_effects[float(idx), nucleotide] = allele_effects[idx, nucleotide]
-                for_plot_allele_effects[float(idx) + 0.2, nucleotide] = allele_effects[idx + 1, nucleotide]
-        return allele_effects, for_plot_allele_effects
-
 class MissingGenotypeData(object):
     """
     A class to handle all genotype data.
@@ -365,6 +333,22 @@ class Trait(object):
                     sum([distribution_function(*distribution_function_parameters)
                          for i in range(multiplicity)])
         return allele_effects
+
+    def convert_allele_effects_into_array(self, total_number_loci,
+                                          total_number_alleles, allele_effects):
+        """
+        Convenience function to turn an allele effect dictionary to an array
+        where the row is the locus and column corresponds to allele state.
+        Locate effect by allele_effect_array[locus, allele_at_locus].
+        """
+        allele_effects_array = np.zeros(
+            (total_number_loci, total_number_alleles))
+        for locus, qt_alleles in allele_effects.items():
+            for allele, effect in qt_alleles.items():
+                allele_effects_array[locus, allele] = effect
+
+        return allele_effects_array
+
 
     def assign_geometric_series(self, allele_effects, base, power):
         """

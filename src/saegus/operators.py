@@ -45,6 +45,27 @@ class GenoAdditive(sim.PyOperator):
                  for locus in self.qtl))
         return True
 
+class GenoAdditiveArray(sim.PyOperator):
+    def __init__(self, qtl, allele_effects, *args, **kwargs):
+        self.qtl = qtl
+        self.allele_effects = allele_effects
+        sim.PyOperator.__init__(self,
+                                func=self.additive_model,
+                                *args, **kwargs)
+
+    def additive_model(self, pop):
+        """
+        Calculates genotypic contribution ``g`` by summing the effect of each
+        allele at each locus
+        """
+        for ind in pop.individuals():
+            alpha_genotype, beta_genotype = np.asarray(ind.genotype(ploidy=0)), \
+                                            np.asarray(ind.genotype(ploidy=1))
+            ind.g = sum(self.allele_effects[range(44445), alpha_genotype]) +\
+                    sum(self.allele_effects[range(44445), beta_genotype])
+        return True
+
+
 
 class PhenotypeCalculator(sim.PyOperator):
     """
