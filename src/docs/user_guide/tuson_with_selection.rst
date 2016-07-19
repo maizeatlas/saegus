@@ -734,3 +734,6 @@ in a single array. The functions prefixed by store\_ put the data into an HDF5
 file with as many groups as there are replicates. Each *group* within the HDF5
 file is broken up by generations. See :file:`analyze.rst` for some examples on
 how to access the data and turn it into a single array.
+
+
+T

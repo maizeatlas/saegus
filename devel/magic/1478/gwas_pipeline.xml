@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<TasselPipeline>
+    <fork1>
+        <h>daoko_girl_hapmap.txt</h>
+    </fork1>
+    <fork2>
+        <t>daoko_girl_trait_vector.txt</t>
+    </fork2>
+    <fork3>
+        <q>daoko_girl_structure.txt</q>
+    </fork3>
+    <fork4>
+        <k>daoko_girl_kinship_matrix.txt</k>
+    </fork4>
+    <combine5>
+        <input1/>
+        <input2/>
+        <input3/>
+        <intersect/>
+    </combine5>
+    <combine6>
+        <input5/>
+        <input4/>
+        <mlm/>
+        <mlmCompressionLevel>
+            None
+        </mlmCompressionLevel>
+        <export>gwas_out_</export>
+    </combine6>
+    <runfork1/>
+    <runfork2/>
+    <runfork3/>
+    <runfork4/>
+</TasselPipeline>

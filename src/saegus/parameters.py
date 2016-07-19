@@ -342,13 +342,12 @@ def test_segregating_loci_concordance(seg_loci_agreement_counts):
     return seg_loci_agreement
 
 
-def randomly_convert_fixed_sites(pop, fixed_sites):
+def randomly_convert_fixed_sites(pop, fixed_sites, alleles=(0, 1, 2, 3)):
 
     """
     Randomly converts fixed sites in pop to
     nonfixed_sites by changing the allele state at that site.
     """
-    alleles = [0, 1, 2, 3]
     random.shuffle(fixed_sites)
     for site in fixed_sites:
         random_id = random.choice(pop.indInfo('ind_id'))
