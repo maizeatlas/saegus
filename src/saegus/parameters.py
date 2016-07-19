@@ -14,122 +14,62 @@ from scipy import stats
 
 class PopulationStructure(object):
 
-    def __init__(self, pop, population_structure_matrix_filename, threshold, error):
+    def __init__(self, pop):
         self.pop = pop
-        self.population_structure_matrix_filename = population_structure_matrix_filename
-        self.threshold = threshold
-        self.error = error
 
-    def generate_population_structure(self):
+    def parse_and_remap_population_structure(self, population_struct_matrix_file_name):
         """
-        Parses a population structure matrix from a file and converts it into a native Python dictionary.
-        Extra steps needed because the population structure file is not in the same order as the genotype file.
+        :parameter str population_structure_matrix_file_name: Pop strct filename
+
+        Parses a population structure matrix from a file and converts it into
+        Python dictionary. The :file:`population_structure_matrix.xlsx` file is
+        not in the same order as :file:`genotype_matrix.txt`. This function
+        remaps the inheritance proportions to it matches the genotype
+        matrix of the population.
+
         """
-        popst = pd.read_excel(self.population_structure_matrix_filename)
+        popst = pd.read_excel(population_struct_matrix_file_name)
         indid_to_sampleid = {popst.index[i]: popst['sample_id'][i] for i in range(len(popst))}
         popst_proportions = {popst['sample_id'][i]: list(popst.ix[i, 1:7]) for i in range(len(popst))}
         structure = {indid_to_sampleid[i]: popst_proportions[indid_to_sampleid[i]] for i in range(len(popst))}
         return structure
 
-    def population_structure_filter(self, population_structure: dict):
+    def generate_mating_pmfs(self, population_structure_dict):
         """
-        In populations with population structure spread over several subpopulations takes individuals whose genomes are
-        derived from at most 2 subpopulations plus/minus error. This function also removes the invalid individuals
-        referenced by absolute index. Resulting population is initial pop size - len(invalids.keys())
-        """
-        invalids = col.defaultdict()
-        for k, v in population_structure.items():
-            primary = max(v)
-            secondary = sorted(v)[-2]
-            if len(set(v)) > 3:
-                if (sum(v) - primary - secondary) > (self.threshold + self.error):
-                    invalids[k] = v
-                else:
-                    pass
-        self.pop.removeIndividuals(indexes=list(invalids.keys()))
-        return list(invalids.keys())
+        Converts a dictionary of lists of probabilities into scipy.rv_discrete
+        customized probability mass functions.
 
-    def assign_population_structure(self, population_structure):
+        :param population_structure_dict: Dict of lists of probabilities
+        :return: Dictionary of scipy probability mass functions
         """
-        Assigns every individual a primary and secondary subpopulation according to the population structure matrix.
-        :param population_structure_dict:
-        :param number_of_individuals:
-        :return:
-        """
-        assigned_structure = col.OrderedDict()
-        for ind in list(self.pop.indInfo('ind_id')):
-            assigned_structure[int(ind)] = col.OrderedDict()
-            for i, prop in enumerate(population_structure[int(ind)]):
-                if max(population_structure[int(ind)]) == prop:
-                    assigned_structure[int(ind)][0] = i
-                elif population_structure[int(ind)][i] == sorted(population_structure[int(ind)])[-2]:
-                    assigned_structure[int(ind)][1] = i
-                else:
-                    pass
-            if min(population_structure[int(ind)]) == 0.000000:
-                assigned_structure[int(ind)][1] = assigned_structure[int(ind)][0]
-        return assigned_structure
+        mating_pmfs = {}
+        for ind, probabilities in population_structure_dict.items():
+            for i, prob in enumerate(probabilities):
+                values = []
+                probabilites = []
+                for i, prob in enumerate(population_structure_dict[ind]):
+                    values.append(i)
+                    probabilites.append(prob)
+                pmf_values = (values, probabilites)
+                mating_pmfs[ind] = stats.rv_discrete(values=pmf_values)
+        return mating_pmfs
 
-    def assign_structured_mating_probabilities(self, population_structure, assigned_primary_secondary_structure):
+    def assign_primary_subpopulations(self, struct_mating_probabilities):
         """
-        Sums the proportions which are non-primary and non-secondary and adds half of the sum to the primary and secondary.
-        The primary and secondary probabilities is the probability of mating with an individual from that primary
-        subpopulation (or selfing).
-        :param population_structure_dict:
-        :param assigned_structure_dict:
-        :return:
-        """
-        mating_probabilities = col.OrderedDict()
-        for ind in self.pop.indInfo('ind_id'):
-            ind = int(ind)
-            mating_probabilities[ind] = col.OrderedDict()
-            primary_proportion = population_structure[ind][assigned_primary_secondary_structure[ind][0]]
-            secondary_proportion = population_structure[ind][assigned_primary_secondary_structure[ind][1]]
-            remainder = (1 - primary_proportion - secondary_proportion)/2
-            mating_probabilities[ind][0] = primary_proportion + remainder
-            mating_probabilities[ind][1] = secondary_proportion + remainder
-        return mating_probabilities
 
-    def generate_mating_probability_mass_functions(self, assigned_primary_secondary_structure: dict,
-                                                   assigned_mating_probabilities: dict):
-        """
-        Assigns mating probabilities as dictionary values keyed by individual ids.
-        :param pop:
-        :param population_structure:
-        :param assigned_structure:
-        :return:
-        """
-        mating_probability_mass_functions = col.OrderedDict()
-        for ind in list(self.pop.indInfo('ind_id')):
-            ind_id = int(ind)
-            if assigned_primary_secondary_structure[ind_id][0] == assigned_primary_secondary_structure[ind_id][1]:
-                single_subpopulation = (assigned_primary_secondary_structure[ind_id][0])
-                mating_probability = 1.0
-                mating_probability_mass_functions[ind_id] = \
-                    stats.rv_discrete(values=(single_subpopulation,
-                                              mating_probability))
-            else:
-                primary_and_secondary_subpopulations = (assigned_primary_secondary_structure[ind_id][0],
-                                                        assigned_primary_secondary_structure[ind_id][1])
-                mating_probabilities = (float(assigned_mating_probabilities[ind_id][0]),
-                                        float(assigned_mating_probabilities[ind_id][1]))
-                mating_probability_mass_functions[ind_id] = stats.rv_discrete(
-                    values=(primary_and_secondary_subpopulations, mating_probabilities))
-        return mating_probability_mass_functions
+        :param struct_mating_probabilities: Dict of lists of probabilities
 
-    def setup_mating_structure(self):
+        Assigns the primary subpopulation to each individual according to
+        ``ind_id``. Primary subpopulation is the population from which the
+        individual derives most of its genome.
+
         """
-        Function which applies all the functions necessary to create the mating_pmfs. The mating_pmfs are
-        assigned to self.pop's local namespace where they can be accessed by a parent_chooser function.
-        """
-        pop_structure = self.generate_population_structure()
-        self.pop.dvars().invalids = self.population_structure_filter(pop_structure)
-        self.pop.dvars().assigned_structure = self.assign_population_structure(pop_structure)
-        self.pop.dvars().mating_probabilities = self.assign_structured_mating_probabilities(pop_structure,
-                                                                                            self.pop.dvars().assigned_structure)
-        self.pop.dvars().mating_pmfs = self.generate_mating_probability_mass_functions(
-            self.pop.dvars().assigned_structure, self.pop.dvars().mating_probabilities,
-        )
+        primary_subpop = {}
+        for ind_id, inheritance_proportions in struct_mating_probabilities.items():
+            primary_subpop[ind_id] = float(np.argmax(inheritance_proportions))
+        for ind in self.pop.individuals():
+            ind.primary = primary_subpop[ind.ind_id]
+
 
 class MissingGenotypeData(object):
     """

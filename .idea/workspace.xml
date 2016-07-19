@@ -2,22 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="trying to fix error">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/docs/user_guide/drift_random_mating_selection_comparison.rst" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/docs/user_guide/optimization_notes.rst" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/docs/user_guide/tuson_artemis_run.rst" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/devel/magic/1478/infinite_gwas_pipeline.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/magic/1478/segregating_loci_storage.dat" afterPath="$PROJECT_DIR$/devel/magic/1478/segregating_loci_storage.dat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/magic/1478/synthesis_parameters.dat" afterPath="$PROJECT_DIR$/devel/magic/1478/synthesis_parameters.dat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dictionaries/DoubleDanks.xml" afterPath="$PROJECT_DIR$/.idea/dictionaries/DoubleDanks.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/magic/1478/segregating_loci_storage.bak" afterPath="$PROJECT_DIR$/devel/magic/1478/segregating_loci_storage.bak" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/magic/1478/segregating_loci_storage.dir" afterPath="$PROJECT_DIR$/devel/magic/1478/segregating_loci_storage.dir" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/docs/user_guide/tuson_with_selection.rst" afterPath="$PROJECT_DIR$/src/docs/user_guide/tuson_with_selection.rst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/saegus/analyze.py" afterPath="$PROJECT_DIR$/src/saegus/analyze.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/saegus/breed.py" afterPath="$PROJECT_DIR$/src/saegus/breed.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/saegus/operators.py" afterPath="$PROJECT_DIR$/src/saegus/operators.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/docs/saegus_documentation/parameters.rst" afterPath="$PROJECT_DIR$/src/docs/saegus_documentation/parameters.rst" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/saegus/parameters.py" afterPath="$PROJECT_DIR$/src/saegus/parameters.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/saegus/simulate.py" afterPath="$PROJECT_DIR$/src/saegus/simulate.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/saegus/parse.py" afterPath="$PROJECT_DIR$/src/saegus/parse.py" />
     </list>
     <ignored path="saegus_project.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -89,21 +76,21 @@
                 </provider>
               </entry>
             </file>
-            <file leaf-file-name="tuson_artemis_run.rst" pinned="false" current-in-tab="false">
-              <entry file="file://$PROJECT_DIR$/src/docs/user_guide/tuson_artemis_run.rst">
+            <file leaf-file-name="tuson_with_selection.rst" pinned="false" current-in-tab="false">
+              <entry file="file://$PROJECT_DIR$/src/docs/user_guide/tuson_with_selection.rst">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="0">
-                    <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                  <state relative-caret-position="396">
+                    <caret line="736" column="0" selection-start-line="736" selection-start-column="0" selection-end-line="736" selection-end-column="0" />
                     <folding />
                   </state>
                 </provider>
               </entry>
             </file>
-            <file leaf-file-name="tuson_with_selection.rst" pinned="false" current-in-tab="true">
-              <entry file="file://$PROJECT_DIR$/src/docs/user_guide/tuson_with_selection.rst">
+            <file leaf-file-name="parameters.rst" pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/src/docs/saegus_documentation/parameters.rst">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="396">
-                    <caret line="736" column="0" selection-start-line="736" selection-start-column="0" selection-end-line="736" selection-end-column="0" />
+                  <state relative-caret-position="34">
+                    <caret line="66" column="7" selection-start-line="66" selection-start-column="7" selection-end-line="66" selection-end-column="7" />
                     <folding />
                   </state>
                 </provider>
@@ -123,190 +110,36 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="operators.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/saegus/operators.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="31" column="37" selection-start-line="31" selection-start-column="37" selection-end-line="31" selection-end-column="37" />
-              <folding>
-                <element signature="e#24#45#0" expanded="true" />
-                <element signature="e#191#821#0" expanded="false" />
-                <element signature="e#250#405#0" expanded="true" />
-                <element signature="e#460#821#0" expanded="true" />
-                <element signature="e#1179#1602#0" expanded="true" />
-                <element signature="e#1715#1919#0" expanded="true" />
-                <element signature="e#1964#2457#0" expanded="true" />
-                <element signature="e#2508#2827#1" expanded="true" />
-                <element signature="e#2898#3071#0" expanded="true" />
-                <element signature="e#3130#3369#0" expanded="true" />
-                <element signature="e#3480#3607#0" expanded="true" />
-                <element signature="e#3660#3959#0" expanded="true" />
-                <element signature="e#3996#4067#1" expanded="true" />
-                <element signature="e#4129#4242#0" expanded="true" />
-                <element signature="e#4291#4361#0" expanded="true" />
-                <element signature="e#4405#4459#1" expanded="true" />
-                <element signature="e#4539#4730#0" expanded="true" />
-                <element signature="e#4776#5200#0" expanded="true" />
-                <element signature="e#5254#5682#1" expanded="true" />
-                <element signature="e#5766#5933#0" expanded="true" />
-                <element signature="e#5979#6284#0" expanded="true" />
-                <element signature="e#6334#6762#1" expanded="true" />
-                <element signature="e#6829#6964#0" expanded="true" />
-                <element signature="e#7025#7206#0" expanded="true" />
-                <element signature="e#7266#7559#1" expanded="true" />
-                <element signature="e#7638#7803#0" expanded="true" />
-                <element signature="e#7870#8078#0" expanded="true" />
-                <element signature="e#8134#8494#1" expanded="true" />
-                <element signature="e#8571#8725#0" expanded="true" />
-                <element signature="e#8786#9390#0" expanded="true" />
-                <element signature="e#9443#9652#1" expanded="true" />
-                <element signature="e#9720#9841#0" expanded="true" />
-                <element signature="e#9886#10049#0" expanded="true" />
-                <element signature="e#10104#10412#0" expanded="true" />
-                <element signature="e#10457#10656#0" expanded="true" />
-                <element signature="e#10711#11196#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="analyze.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="50" column="21" selection-start-line="50" selection-start-column="21" selection-end-line="50" selection-end-column="21" />
-              <folding>
-                <element signature="e#24#45#0" expanded="true" />
-                <element signature="e#356#376#0" expanded="true" />
-                <element signature="e#471#1266#0" expanded="true" />
-                <element signature="e#2252#2770#0" expanded="true" />
-                <element signature="e#2867#3958#0" expanded="true" />
-                <element signature="e#4114#4812#0" expanded="true" />
-                <element signature="e#4920#5942#0" expanded="true" />
-                <element signature="e#6053#6687#0" expanded="true" />
-                <element signature="e#6809#7721#0" expanded="true" />
-                <element signature="e#7872#10214#0" expanded="true" />
-                <element signature="e#10000#10168#0" expanded="true" />
-                <element signature="e#10392#11187#0" expanded="true" />
-                <element signature="e#11281#12172#0" expanded="true" />
-                <element signature="e#12270#12759#0" expanded="true" />
-                <element signature="e#12868#13874#0" expanded="true" />
-                <element signature="e#14030#14761#0" expanded="true" />
-                <element signature="e#14868#15906#0" expanded="true" />
-                <element signature="e#16059#16670#0" expanded="true" />
-                <element signature="e#16830#17790#0" expanded="true" />
-                <element signature="e#20495#20630#0" expanded="true" />
-                <element signature="e#21502#23757#0" expanded="true" />
-                <element signature="e#23951#25515#0" expanded="true" />
-                <element signature="e#28875#29176#1" expanded="true" />
-                <element signature="e#29228#29519#0" expanded="true" />
-                <element signature="e#29657#31065#0" expanded="true" />
-                <element signature="e#31120#32583#0" expanded="true" />
-                <element signature="e#32680#33482#0" expanded="true" />
-                <element signature="e#33535#34241#0" expanded="true" />
-                <element signature="e#34325#36856#0" expanded="true" />
-                <element signature="e#36921#37614#0" expanded="true" />
-                <element signature="e#37733#39178#0" expanded="true" />
-                <element signature="e#39629#41371#0" expanded="true" />
-                <element signature="e#41404#41608#1" expanded="true" />
-                <element signature="e#41772#42610#0" expanded="true" />
-                <element signature="e#42643#43098#0" expanded="true" />
-                <element signature="e#42650#42866#0" expanded="true" />
-                <element signature="e#43146#43165#0" expanded="true" />
-                <element signature="e#43227#43262#0" expanded="true" />
-                <element signature="e#43319#43349#0" expanded="true" />
-                <element signature="e#43407#43439#0" expanded="true" />
-                <element signature="e#43499#43532#0" expanded="true" />
-                <element signature="e#43583#43606#0" expanded="true" />
-                <element signature="e#43815#45924#0" expanded="true" />
-                <element signature="e#48959#49101#0" expanded="true" />
-                <element signature="e#49168#49375#1" expanded="true" />
-                <element signature="e#49418#49876#0" expanded="true" />
-                <element signature="e#50773#51046#0" expanded="true" />
-                <element signature="e#51576#51912#0" expanded="true" />
-                <element signature="e#52051#54724#0" expanded="true" />
-                <element signature="e#56796#57548#0" expanded="true" />
-                <element signature="e#57629#58060#0" expanded="true" />
-                <element signature="e#58391#60655#0" expanded="true" />
-                <element signature="e#60451#60597#0" expanded="true" />
-                <element signature="e#60873#62342#0" expanded="true" />
-                <element signature="e#64989#65591#0" expanded="true" />
-                <element signature="e#66118#66534#0" expanded="true" />
-                <element signature="e#66663#67280#0" expanded="true" />
-                <element signature="e#70909#72023#0" expanded="false" />
-                <element signature="e#70973#71075#0" expanded="true" />
-                <element signature="e#71151#72023#0" expanded="true" />
-                <element signature="e#72054#77383#0" expanded="false" />
-                <element signature="e#72054#72496#1" expanded="true" />
-                <element signature="e#72656#73950#0" expanded="true" />
-                <element signature="e#74061#75207#0" expanded="true" />
-                <element signature="e#75275#76061#0" expanded="true" />
-                <element signature="e#76121#77383#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="simulate.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/saegus/simulate.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1989">
-              <caret line="903" column="0" selection-start-line="903" selection-start-column="0" selection-end-line="903" selection-end-column="0" />
-              <folding>
-                <element signature="e#3318#3873#0" expanded="true" />
-                <element signature="e#13138#16597#0" expanded="true" />
-                <element signature="e#14961#15125#0" expanded="true" />
-                <element signature="e#16425#16529#0" expanded="true" />
-                <element signature="e#29569#33759#0" expanded="true" />
-                <element signature="e#30427#30677#0" expanded="true" />
-                <element signature="e#31513#31677#0" expanded="true" />
-                <element signature="e#33552#33656#0" expanded="true" />
-                <element signature="e#33787#33947#1" expanded="true" />
-                <element signature="e#34328#36700#0" expanded="true" />
-                <element signature="e#41409#41635#0" expanded="true" />
-                <element signature="e#42459#42623#0" expanded="true" />
-                <element signature="e#44445#44549#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="breed.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/saegus/breed.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="77" column="51" selection-start-line="77" selection-start-column="51" selection-end-line="77" selection-end-column="51" />
-              <folding>
-                <element signature="e#461#786#0" expanded="true" />
-                <element signature="e#866#1779#0" expanded="true" />
-                <element signature="e#3699#4255#0" expanded="true" />
-                <element signature="e#8117#8279#1" expanded="true" />
-                <element signature="e#8392#8809#0" expanded="true" />
-                <element signature="e#8842#9019#0" expanded="true" />
-                <element signature="e#8849#8941#0" expanded="true" />
-                <element signature="e#9067#10357#0" expanded="true" />
-                <element signature="e#12991#13174#1" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="parameters.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/saegus/parameters.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="133" column="0" selection-start-line="133" selection-start-column="0" selection-end-line="133" selection-end-column="0" />
+            <state relative-caret-position="408">
+              <caret line="56" column="43" selection-start-line="56" selection-start-column="43" selection-end-line="56" selection-end-column="43" />
               <folding>
-                <element signature="e#218#6811#0" expanded="false" />
-                <element signature="e#1248#2055#0" expanded="true" />
-                <element signature="e#2130#3095#0" expanded="true" />
-                <element signature="e#3219#4260#0" expanded="true" />
-                <element signature="e#4460#5877#0" expanded="true" />
-                <element signature="e#12766#16297#0" expanded="false" />
-                <element signature="e#14429#14773#0" expanded="true" />
-                <element signature="e#14931#15473#0" expanded="true" />
-                <element signature="e#15552#16297#0" expanded="true" />
-                <element signature="e#17422#18055#0" expanded="true" />
+                <element signature="e#251#265#0" expanded="true" />
+                <element signature="e#363#1199#0" expanded="true" />
+                <element signature="e#1272#2068#0" expanded="true" />
+                <element signature="e#2152#2728#0" expanded="true" />
+                <element signature="e#8684#12215#0" expanded="false" />
+                <element signature="e#10347#10691#0" expanded="true" />
+                <element signature="e#10849#11391#0" expanded="true" />
+                <element signature="e#11470#12215#0" expanded="true" />
+                <element signature="e#13340#13973#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="parse.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/saegus/parse.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="167">
+              <caret line="34" column="52" selection-start-line="34" selection-start-column="52" selection-end-line="34" selection-end-column="52" />
+              <folding>
+                <element signature="e#278#1192#0" expanded="true" />
+                <element signature="e#1739#1811#1" expanded="true" />
+                <element signature="e#1845#1849#0" expanded="true" />
+                <element signature="e#1922#2801#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -368,7 +201,6 @@
         <option value="$PROJECT_DIR$/src/docs/analysis_reports/index.rst" />
         <option value="$PROJECT_DIR$/src/docs/analysis_reports/notes_on_MAGIC.rst" />
         <option value="$PROJECT_DIR$/src/docs/saegus_documentation/breed.rst" />
-        <option value="$PROJECT_DIR$/src/docs/saegus_documentation/parameters.rst" />
         <option value="$PROJECT_DIR$/src/docs/saegus_documentation/operators.rst" />
         <option value="$PROJECT_DIR$/src/docs/saegus_documentation/simulate.rst" />
         <option value="$PROJECT_DIR$/src/docs/saegus_documentation/saegus_build/html/_static/alabaster.css" />
@@ -376,7 +208,6 @@
         <option value="$PROJECT_DIR$/devel/tuson_selection/test_tuson_functions.py" />
         <option value="$PROJECT_DIR$/src/docs/analysis_reports/saegus_build/tuson_selection.rst" />
         <option value="$PROJECT_DIR$/src/docs/analysis_reports/tuson_with_selection.rst" />
-        <option value="$PROJECT_DIR$/src/saegus/parse.py" />
         <option value="$PROJECT_DIR$/src/docs/saegus_documentation/parse.rst" />
         <option value="$PROJECT_DIR$/devel/tuson_selection/logging_devel.rst" />
         <option value="$PROJECT_DIR$/src/tests/test_most_functions.py" />
@@ -391,7 +222,9 @@
         <option value="$PROJECT_DIR$/src/saegus/simulate.py" />
         <option value="$PROJECT_DIR$/src/saegus/operators.py" />
         <option value="$PROJECT_DIR$/src/saegus/analyze.py" />
+        <option value="$PROJECT_DIR$/src/saegus/parse.py" />
         <option value="$PROJECT_DIR$/src/saegus/parameters.py" />
+        <option value="$PROJECT_DIR$/src/docs/saegus_documentation/parameters.rst" />
       </list>
     </option>
   </component>
@@ -407,8 +240,8 @@
     </layout>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="2440" />
-    <option name="width" value="840" />
+    <option name="x" value="1600" />
+    <option name="width" value="1201" />
     <option name="height" value="1050" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -548,10 +381,6 @@
               <option name="myItemId" value="docs" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="user_guide" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -572,6 +401,10 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="docs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="saegus_documentation" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1171,16 +1004,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="2440" y="0" width="840" height="1050" extended-state="0" />
+    <frame x="1600" y="0" width="1201" height="1050" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="true" show_stripe_button="true" weight="0.40641025" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" x="43" y="8" width="317" height="418" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="true" show_stripe_button="true" weight="0.27782646" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" x="43" y="8" width="317" height="418" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31476322" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25705793" sideWeight="0.64395785" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17866324" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.83618236" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6737892" sideWeight="0.48971722" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="true" show_stripe_button="true" weight="0.38589743" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="1836" y="309" width="301" height="364" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="true" show_stripe_button="true" weight="0.2638037" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="1836" y="309" width="301" height="364" />
       <window_info id="Terminal" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="false" show_stripe_button="true" weight="0.48783785" sideWeight="0.35604218" order="3" side_tool="false" content_ui="tabs" x="211" y="200" width="377" height="372" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972974" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -1239,7 +1072,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="20" />
+      <option name="time" value="21" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1284,13 +1117,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/docs/standard_directory_structure/project_structure.rst" />
-    <entry file="file://$PROJECT_DIR$/src/docs/saegus_documentation/parameters.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/docs/saegus_documentation/operators.rst">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="612">
@@ -1486,14 +1312,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/saegus/parse.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/docs/user_guide/optimization_notes.rst">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5559">
@@ -1507,33 +1325,172 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/saegus/simulate.py">
+    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/tuson_with_selection.rst">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1989">
-          <caret line="903" column="0" selection-start-line="903" selection-start-column="0" selection-end-line="903" selection-end-column="0" />
+        <state relative-caret-position="396">
+          <caret line="736" column="0" selection-start-line="736" selection-start-column="0" selection-end-line="736" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/saegus/operators.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="35" column="34" selection-start-line="35" selection-start-column="34" selection-end-line="35" selection-end-column="34" />
           <folding>
-            <element signature="e#3318#3873#0" expanded="true" />
-            <element signature="e#13138#16597#0" expanded="true" />
-            <element signature="e#14961#15125#0" expanded="true" />
-            <element signature="e#16425#16529#0" expanded="true" />
-            <element signature="e#29569#33759#0" expanded="true" />
-            <element signature="e#30427#30677#0" expanded="true" />
-            <element signature="e#31513#31677#0" expanded="true" />
-            <element signature="e#33552#33656#0" expanded="true" />
-            <element signature="e#33787#33947#1" expanded="true" />
-            <element signature="e#34328#36700#0" expanded="true" />
-            <element signature="e#41409#41635#0" expanded="true" />
-            <element signature="e#42459#42623#0" expanded="true" />
-            <element signature="e#44445#44549#0" expanded="true" />
+            <element signature="e#24#45#0" expanded="false" />
+            <element signature="e#191#821#0" expanded="false" />
+            <element signature="e#250#405#0" expanded="false" />
+            <element signature="e#460#821#0" expanded="false" />
+            <element signature="e#930#1134#0" expanded="false" />
+            <element signature="e#1179#1602#0" expanded="false" />
+            <element signature="e#1715#1919#0" expanded="false" />
+            <element signature="e#1964#2457#0" expanded="false" />
+            <element signature="e#2508#2827#1" expanded="false" />
+            <element signature="e#2898#3071#0" expanded="false" />
+            <element signature="e#3130#3369#0" expanded="false" />
+            <element signature="e#3480#3607#0" expanded="false" />
+            <element signature="e#3660#3959#0" expanded="false" />
+            <element signature="e#3996#4067#1" expanded="false" />
+            <element signature="e#4129#4242#0" expanded="false" />
+            <element signature="e#4291#4361#0" expanded="false" />
+            <element signature="e#4405#4459#1" expanded="false" />
+            <element signature="e#4539#4730#0" expanded="false" />
+            <element signature="e#4776#5200#0" expanded="false" />
+            <element signature="e#5254#5682#1" expanded="false" />
+            <element signature="e#5766#5933#0" expanded="false" />
+            <element signature="e#5979#6284#0" expanded="false" />
+            <element signature="e#6334#6762#1" expanded="false" />
+            <element signature="e#6829#6964#0" expanded="false" />
+            <element signature="e#7025#7206#0" expanded="false" />
+            <element signature="e#7266#7559#1" expanded="false" />
+            <element signature="e#7638#7803#0" expanded="false" />
+            <element signature="e#7870#8078#0" expanded="false" />
+            <element signature="e#8134#8494#1" expanded="false" />
+            <element signature="e#8571#8725#0" expanded="false" />
+            <element signature="e#8786#9390#0" expanded="false" />
+            <element signature="e#9443#9652#1" expanded="false" />
+            <element signature="e#9720#9841#0" expanded="false" />
+            <element signature="e#9886#10049#0" expanded="false" />
+            <element signature="e#10104#10412#0" expanded="false" />
+            <element signature="e#10457#10656#0" expanded="false" />
+            <element signature="e#10711#11196#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/drift_random_mating_selection_comparison.rst">
+    <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="50" column="21" selection-start-line="50" selection-start-column="21" selection-end-line="50" selection-end-column="21" />
+          <folding>
+            <element signature="e#24#45#0" expanded="false" />
+            <element signature="e#356#376#0" expanded="false" />
+            <element signature="e#471#1266#0" expanded="false" />
+            <element signature="e#2252#2770#0" expanded="false" />
+            <element signature="e#2867#3958#0" expanded="false" />
+            <element signature="e#4114#4812#0" expanded="false" />
+            <element signature="e#4920#5942#0" expanded="false" />
+            <element signature="e#6053#6687#0" expanded="false" />
+            <element signature="e#6809#7721#0" expanded="false" />
+            <element signature="e#7872#10214#0" expanded="false" />
+            <element signature="e#10000#10168#0" expanded="false" />
+            <element signature="e#10392#11187#0" expanded="false" />
+            <element signature="e#11281#12172#0" expanded="false" />
+            <element signature="e#12270#12759#0" expanded="false" />
+            <element signature="e#12868#13874#0" expanded="false" />
+            <element signature="e#14030#14761#0" expanded="false" />
+            <element signature="e#14868#15906#0" expanded="false" />
+            <element signature="e#16059#16670#0" expanded="false" />
+            <element signature="e#16830#17790#0" expanded="false" />
+            <element signature="e#20495#20630#0" expanded="false" />
+            <element signature="e#21502#23757#0" expanded="false" />
+            <element signature="e#23951#25515#0" expanded="false" />
+            <element signature="e#28875#29176#1" expanded="false" />
+            <element signature="e#29228#29519#0" expanded="false" />
+            <element signature="e#29657#31065#0" expanded="false" />
+            <element signature="e#31120#32583#0" expanded="false" />
+            <element signature="e#32680#33482#0" expanded="false" />
+            <element signature="e#33535#34241#0" expanded="false" />
+            <element signature="e#34325#36856#0" expanded="false" />
+            <element signature="e#36921#37614#0" expanded="false" />
+            <element signature="e#37733#39178#0" expanded="false" />
+            <element signature="e#39629#41371#0" expanded="false" />
+            <element signature="e#41404#41608#1" expanded="false" />
+            <element signature="e#41772#42610#0" expanded="false" />
+            <element signature="e#42643#43098#0" expanded="false" />
+            <element signature="e#42650#42866#0" expanded="false" />
+            <element signature="e#43146#43165#0" expanded="false" />
+            <element signature="e#43227#43262#0" expanded="false" />
+            <element signature="e#43319#43349#0" expanded="false" />
+            <element signature="e#43407#43439#0" expanded="false" />
+            <element signature="e#43499#43532#0" expanded="false" />
+            <element signature="e#43583#43606#0" expanded="false" />
+            <element signature="e#43815#45924#0" expanded="false" />
+            <element signature="e#48959#49101#0" expanded="false" />
+            <element signature="e#49168#49375#1" expanded="false" />
+            <element signature="e#49418#49876#0" expanded="false" />
+            <element signature="e#50773#51046#0" expanded="false" />
+            <element signature="e#51576#51912#0" expanded="false" />
+            <element signature="e#52051#54724#0" expanded="false" />
+            <element signature="e#56796#57548#0" expanded="false" />
+            <element signature="e#57629#58060#0" expanded="false" />
+            <element signature="e#58391#60655#0" expanded="false" />
+            <element signature="e#60451#60597#0" expanded="false" />
+            <element signature="e#60873#62342#0" expanded="false" />
+            <element signature="e#64989#65591#0" expanded="false" />
+            <element signature="e#66118#66534#0" expanded="false" />
+            <element signature="e#66663#67280#0" expanded="false" />
+            <element signature="e#70909#72023#0" expanded="false" />
+            <element signature="e#70973#71075#0" expanded="false" />
+            <element signature="e#71151#72023#0" expanded="false" />
+            <element signature="e#72054#77383#0" expanded="false" />
+            <element signature="e#72054#72496#1" expanded="false" />
+            <element signature="e#72656#73950#0" expanded="false" />
+            <element signature="e#74061#75207#0" expanded="false" />
+            <element signature="e#75275#76061#0" expanded="false" />
+            <element signature="e#76121#77383#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/saegus/simulate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="903" column="0" selection-start-line="903" selection-start-column="0" selection-end-line="903" selection-end-column="0" />
+          <folding>
+            <element signature="e#3318#3873#0" expanded="false" />
+            <element signature="e#13138#16597#0" expanded="false" />
+            <element signature="e#14961#15125#0" expanded="false" />
+            <element signature="e#16425#16529#0" expanded="false" />
+            <element signature="e#29569#33759#0" expanded="false" />
+            <element signature="e#30427#30677#0" expanded="false" />
+            <element signature="e#31513#31677#0" expanded="false" />
+            <element signature="e#33552#33656#0" expanded="false" />
+            <element signature="e#33787#33947#1" expanded="false" />
+            <element signature="e#34328#36700#0" expanded="false" />
+            <element signature="e#41409#41635#0" expanded="false" />
+            <element signature="e#42459#42623#0" expanded="false" />
+            <element signature="e#44445#44549#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/saegus/breed.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding />
+          <caret line="77" column="51" selection-start-line="77" selection-start-column="51" selection-end-line="77" selection-end-column="51" />
+          <folding>
+            <element signature="e#461#786#0" expanded="false" />
+            <element signature="e#866#1779#0" expanded="false" />
+            <element signature="e#3699#4255#0" expanded="false" />
+            <element signature="e#8117#8279#1" expanded="false" />
+            <element signature="e#8392#8809#0" expanded="false" />
+            <element signature="e#8842#9019#0" expanded="false" />
+            <element signature="e#8849#8941#0" expanded="false" />
+            <element signature="e#9067#10357#0" expanded="false" />
+            <element signature="e#12991#13174#1" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1545,168 +1502,50 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/tuson_with_selection.rst">
+    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/drift_random_mating_selection_comparison.rst">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="736" column="0" selection-start-line="736" selection-start-column="0" selection-end-line="736" selection-end-column="0" />
+        <state relative-caret-position="289">
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/saegus/operators.py">
+    <entry file="file://$PROJECT_DIR$/src/saegus/parse.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="31" column="37" selection-start-line="31" selection-start-column="37" selection-end-line="31" selection-end-column="37" />
+        <state relative-caret-position="167">
+          <caret line="34" column="52" selection-start-line="34" selection-start-column="52" selection-end-line="34" selection-end-column="52" />
           <folding>
-            <element signature="e#24#45#0" expanded="true" />
-            <element signature="e#191#821#0" expanded="false" />
-            <element signature="e#250#405#0" expanded="true" />
-            <element signature="e#460#821#0" expanded="true" />
-            <element signature="e#1179#1602#0" expanded="true" />
-            <element signature="e#1715#1919#0" expanded="true" />
-            <element signature="e#1964#2457#0" expanded="true" />
-            <element signature="e#2508#2827#1" expanded="true" />
-            <element signature="e#2898#3071#0" expanded="true" />
-            <element signature="e#3130#3369#0" expanded="true" />
-            <element signature="e#3480#3607#0" expanded="true" />
-            <element signature="e#3660#3959#0" expanded="true" />
-            <element signature="e#3996#4067#1" expanded="true" />
-            <element signature="e#4129#4242#0" expanded="true" />
-            <element signature="e#4291#4361#0" expanded="true" />
-            <element signature="e#4405#4459#1" expanded="true" />
-            <element signature="e#4539#4730#0" expanded="true" />
-            <element signature="e#4776#5200#0" expanded="true" />
-            <element signature="e#5254#5682#1" expanded="true" />
-            <element signature="e#5766#5933#0" expanded="true" />
-            <element signature="e#5979#6284#0" expanded="true" />
-            <element signature="e#6334#6762#1" expanded="true" />
-            <element signature="e#6829#6964#0" expanded="true" />
-            <element signature="e#7025#7206#0" expanded="true" />
-            <element signature="e#7266#7559#1" expanded="true" />
-            <element signature="e#7638#7803#0" expanded="true" />
-            <element signature="e#7870#8078#0" expanded="true" />
-            <element signature="e#8134#8494#1" expanded="true" />
-            <element signature="e#8571#8725#0" expanded="true" />
-            <element signature="e#8786#9390#0" expanded="true" />
-            <element signature="e#9443#9652#1" expanded="true" />
-            <element signature="e#9720#9841#0" expanded="true" />
-            <element signature="e#9886#10049#0" expanded="true" />
-            <element signature="e#10104#10412#0" expanded="true" />
-            <element signature="e#10457#10656#0" expanded="true" />
-            <element signature="e#10711#11196#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/saegus/breed.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="77" column="51" selection-start-line="77" selection-start-column="51" selection-end-line="77" selection-end-column="51" />
-          <folding>
-            <element signature="e#461#786#0" expanded="true" />
-            <element signature="e#866#1779#0" expanded="true" />
-            <element signature="e#3699#4255#0" expanded="true" />
-            <element signature="e#8117#8279#1" expanded="true" />
-            <element signature="e#8392#8809#0" expanded="true" />
-            <element signature="e#8842#9019#0" expanded="true" />
-            <element signature="e#8849#8941#0" expanded="true" />
-            <element signature="e#9067#10357#0" expanded="true" />
-            <element signature="e#12991#13174#1" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="50" column="21" selection-start-line="50" selection-start-column="21" selection-end-line="50" selection-end-column="21" />
-          <folding>
-            <element signature="e#24#45#0" expanded="true" />
-            <element signature="e#356#376#0" expanded="true" />
-            <element signature="e#471#1266#0" expanded="true" />
-            <element signature="e#2252#2770#0" expanded="true" />
-            <element signature="e#2867#3958#0" expanded="true" />
-            <element signature="e#4114#4812#0" expanded="true" />
-            <element signature="e#4920#5942#0" expanded="true" />
-            <element signature="e#6053#6687#0" expanded="true" />
-            <element signature="e#6809#7721#0" expanded="true" />
-            <element signature="e#7872#10214#0" expanded="true" />
-            <element signature="e#10000#10168#0" expanded="true" />
-            <element signature="e#10392#11187#0" expanded="true" />
-            <element signature="e#11281#12172#0" expanded="true" />
-            <element signature="e#12270#12759#0" expanded="true" />
-            <element signature="e#12868#13874#0" expanded="true" />
-            <element signature="e#14030#14761#0" expanded="true" />
-            <element signature="e#14868#15906#0" expanded="true" />
-            <element signature="e#16059#16670#0" expanded="true" />
-            <element signature="e#16830#17790#0" expanded="true" />
-            <element signature="e#20495#20630#0" expanded="true" />
-            <element signature="e#21502#23757#0" expanded="true" />
-            <element signature="e#23951#25515#0" expanded="true" />
-            <element signature="e#28875#29176#1" expanded="true" />
-            <element signature="e#29228#29519#0" expanded="true" />
-            <element signature="e#29657#31065#0" expanded="true" />
-            <element signature="e#31120#32583#0" expanded="true" />
-            <element signature="e#32680#33482#0" expanded="true" />
-            <element signature="e#33535#34241#0" expanded="true" />
-            <element signature="e#34325#36856#0" expanded="true" />
-            <element signature="e#36921#37614#0" expanded="true" />
-            <element signature="e#37733#39178#0" expanded="true" />
-            <element signature="e#39629#41371#0" expanded="true" />
-            <element signature="e#41404#41608#1" expanded="true" />
-            <element signature="e#41772#42610#0" expanded="true" />
-            <element signature="e#42643#43098#0" expanded="true" />
-            <element signature="e#42650#42866#0" expanded="true" />
-            <element signature="e#43146#43165#0" expanded="true" />
-            <element signature="e#43227#43262#0" expanded="true" />
-            <element signature="e#43319#43349#0" expanded="true" />
-            <element signature="e#43407#43439#0" expanded="true" />
-            <element signature="e#43499#43532#0" expanded="true" />
-            <element signature="e#43583#43606#0" expanded="true" />
-            <element signature="e#43815#45924#0" expanded="true" />
-            <element signature="e#48959#49101#0" expanded="true" />
-            <element signature="e#49168#49375#1" expanded="true" />
-            <element signature="e#49418#49876#0" expanded="true" />
-            <element signature="e#50773#51046#0" expanded="true" />
-            <element signature="e#51576#51912#0" expanded="true" />
-            <element signature="e#52051#54724#0" expanded="true" />
-            <element signature="e#56796#57548#0" expanded="true" />
-            <element signature="e#57629#58060#0" expanded="true" />
-            <element signature="e#58391#60655#0" expanded="true" />
-            <element signature="e#60451#60597#0" expanded="true" />
-            <element signature="e#60873#62342#0" expanded="true" />
-            <element signature="e#64989#65591#0" expanded="true" />
-            <element signature="e#66118#66534#0" expanded="true" />
-            <element signature="e#66663#67280#0" expanded="true" />
-            <element signature="e#70909#72023#0" expanded="false" />
-            <element signature="e#70973#71075#0" expanded="true" />
-            <element signature="e#71151#72023#0" expanded="true" />
-            <element signature="e#72054#77383#0" expanded="false" />
-            <element signature="e#72054#72496#1" expanded="true" />
-            <element signature="e#72656#73950#0" expanded="true" />
-            <element signature="e#74061#75207#0" expanded="true" />
-            <element signature="e#75275#76061#0" expanded="true" />
-            <element signature="e#76121#77383#0" expanded="true" />
+            <element signature="e#278#1192#0" expanded="true" />
+            <element signature="e#1739#1811#1" expanded="true" />
+            <element signature="e#1845#1849#0" expanded="true" />
+            <element signature="e#1922#2801#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/parameters.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="133" column="0" selection-start-line="133" selection-start-column="0" selection-end-line="133" selection-end-column="0" />
+        <state relative-caret-position="408">
+          <caret line="56" column="43" selection-start-line="56" selection-start-column="43" selection-end-line="56" selection-end-column="43" />
           <folding>
-            <element signature="e#218#6811#0" expanded="false" />
-            <element signature="e#1248#2055#0" expanded="true" />
-            <element signature="e#2130#3095#0" expanded="true" />
-            <element signature="e#3219#4260#0" expanded="true" />
-            <element signature="e#4460#5877#0" expanded="true" />
-            <element signature="e#12766#16297#0" expanded="false" />
-            <element signature="e#14429#14773#0" expanded="true" />
-            <element signature="e#14931#15473#0" expanded="true" />
-            <element signature="e#15552#16297#0" expanded="true" />
-            <element signature="e#17422#18055#0" expanded="true" />
+            <element signature="e#251#265#0" expanded="true" />
+            <element signature="e#363#1199#0" expanded="true" />
+            <element signature="e#1272#2068#0" expanded="true" />
+            <element signature="e#2152#2728#0" expanded="true" />
+            <element signature="e#8684#12215#0" expanded="false" />
+            <element signature="e#10347#10691#0" expanded="true" />
+            <element signature="e#10849#11391#0" expanded="true" />
+            <element signature="e#11470#12215#0" expanded="true" />
+            <element signature="e#13340#13973#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/docs/saegus_documentation/parameters.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="66" column="7" selection-start-line="66" selection-start-column="7" selection-end-line="66" selection-end-column="7" />
+          <folding />
         </state>
       </provider>
     </entry>

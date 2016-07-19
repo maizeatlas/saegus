@@ -38,3 +38,32 @@ def parse_genotype_matrix(genotype_matrix_filename: str, columns_to_drop='popdat
     if columns_to_drop is not None:
         genotype_matrix = genotype_matrix.drop(columns_to_drop, axis=1)
     return genotype_matrix
+
+
+class TusonFounders(object):
+    """
+    Collection of Tuson specific raw data parser functions.
+
+    """
+
+    def __init__(self):
+        pass
+
+    def parse_recombination_rates(self, genetic_map_filename):
+        """
+        Returns a list of crossover probabilities from a genetic map measured in centimorgans.
+        """
+        genetic_map = pd.read_csv(genetic_map_filename, sep='\t',
+                                  index_col=None)
+        genetic_map.drop(['locus', 'agpv2', 'namZmPRDA', 'namZmPRDS'], axis=1,
+                         inplace=True)
+        genetic_map = np.array(genetic_map)
+        recombination_rates = col.OrderedDict()
+        for i in range(1, len(genetic_map), 1):
+            if genetic_map[i - 1][0] == genetic_map[i][0]:
+                recombination_rates[i] = np.divide(
+                    np.abs(genetic_map[i][1] - genetic_map[i - 1][1]), 100)
+            elif genetic_map[i - 1][0] != genetic_map[i][0]:
+                recombination_rates[i] = 0.0
+        recombination_rates[len(genetic_map)] = 0.0
+        return list(recombination_rates.values())

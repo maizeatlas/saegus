@@ -8,46 +8,78 @@ Parameters
 
 .. _population_structure:
 
-.. warning::
-
-   Many of the classes and their methods were written when I was very inexperienced
-   with coding. In particular the :py:class:`PopulationStructure` is a mine field
-   of hard-coded nonsense.
-
-
-.. py:class:: PopulationStructure(pop, population_structure_matrix_filename, threshold, error)
+.. py:class:: PopulationStructure(pop)
 
    :parameter pop: simuPOP.Population
-   :parameter str population_structure_matrix_filename:
-   :parameter threshold:
-   :parameter error:
 
-   .. py:method:: generate_population_structure()
+   This class was developed using the Tuson population and its corresponding raw
+   data. The Tuson prefounder population structure was estimated from Tuson
+   G\:sub:`0` sample of 105 individuals. To recapitulate that population structure
+   in the simulated populations we use the estimated proportions of inheritance
+   for each individual. For example:
 
-      Reads an excel file for the population structure matrix and assumes a six subpopulation
-      architecture.
 
-   .. py:method:: population_structure_filter(population_structure)
+   sample_id |    1      |    2     |    3    |    4    |    5   |   6
+   1         |    0.0    |   0.96   |  0.0    |    0.0  |  0.04  |   0.0
+   2    	    |    0.0110 |   0.0015 |  0.0004 | 0.1047  |  0.0   |  0.8824
 
-   .. py:method:: assign_population_structure(population_structure)
+   Individual 1 derives 96 percent of its genome from prefounder population 2 and
+   4 percent of its genome from prefouner population 5. Individual 2 derives
+   1 percent of its genome from prefounder population 1, 0.15 percent from population
+   2, 0.04 percent from 3, 10 percent from 4 and 88 percent from 6. Individual 1's
+   primary population is 2 and individual 2's primary population is 6. This is
+   assigned to the ``primary`` infoField. Hence if individual 1 is picked to
+   for a mating event the probability it will mate with an individual from
+   prefounder population 2 is 0.96. The propability it will mate with an
+   individual from population 5 is 0.04. So on and so forth for individual 2.
 
-      :parameter population_structure:
+   .. py:method:: parse_and_remap_population_structure(population_structure_matrix_file_name)
 
-   .. py:method:: generate_mating_probability_mass_functions(assigned_primary_secondary_structure, assigned_mating_probabilities)
+      :parameter str population_structure_matrix_file_name: Input pop strct file
 
-      :parameter assigned_primary_secondary_structure:
-      :parameter assigned_mating_probabilities:
+      Parses a population structure matrix from a file and converts it into
+      Python dictionary. The :file:`population_structure_matrix.xlsx` file is
+      not in the same order as :file:`genotype_matrix.txt`. This function
+      remaps the inheritance proportions to match the genotype matrix of the
+      population.
 
-   .. py:method:: assign_structureed_mating_probabilities(population_structure, assigned_primary_secondary_structure)
+   .. py:method:: generate_mating_pmfs(population_structure_dict)
 
-      :parameter population_structure:
-      :parameter assigned_primary_secondary_structure:
+      :parameter population_structure_dict: Dictionary of lists keyed by integer corresponding to ``ind_id`` infoField
 
-   .. py:method:: setup_mating_structure()
+      Converts a dictionary of lists of probabilities into scipy.stats.rv_discrete
+      customized probability mass functions.
 
-      A function to apply all of the methods in this class in the appropriate order.
-      Parses files, does filtering and then assigns the dictionary of mating
-      probability mass functions as a population variable.
+   .. py:method:: assign_primary_subpopulation(pop, struct_mating_probabilities)
+
+      :param struct_mating_probabilities: Dict of lists of probabilities
+
+      Assigns the primary subpopulation to each individual according to
+      ``ind_id``. Primary subpopulation is the population from which the
+      individual derives most of its genome.
+
+   .. code-block:: py
+      :caption: Example use-case of :py:class:`PopulationStructure`
+
+      >>> tuson = sim.loadPopulation('artemis_tuson.pop')
+      >>> artemis_popst = parameters.PopulationStructure(tuson)
+      >>> struct_mating_probs = artemis_popst.parse_and_remap('population_structure_matrix.xlsx')
+      {
+      1: [0.0, 0.99960000000000004, 0.0, 0.00040000000000000002, 0.0, 0.0],
+      2: [0.010999999999999999, 0.0015, 0.00040000000000000002, 0.1047, 0.0,
+         0.88239999999999996],
+      3: [0.0, 0.38319999999999999, 0.0, 0.61680000000000001, 0.0, 0.0],
+      ...,
+      }
+      >>> mating_pmfs = artemis_popst.generate_mating_pmfs(struct_mating_probs)
+      >>> mating_pmfs
+      {
+      1: <scipy.stats._distn_infrastructure.rv_discrete at 0xf5a1358>,
+      2: <scipy.stats._distn_infrastructure.rv_discrete at 0xf64da58>,
+      3: <scipy.stats._distn_infrastructure.rv_discrete at 0xf595c88>,
+      ...,
+      }
+      >>> artemis_popst.assign_primary_subpopulations(struct_mating_probabilities)
 
 
 .. _missing_genotype_data:
