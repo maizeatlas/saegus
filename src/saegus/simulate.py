@@ -23,7 +23,6 @@ class RandomMating(object):
                  individuals_per_breeding_subpop=5,
                  heritability=0.7,
                  meta_pop_sample_sizes=100,
-                 number_of_replicates=1,
                  ):
         self.generations_of_random_mating = generations_of_random_mating
         self.operating_population_size = operating_population_size
@@ -32,7 +31,6 @@ class RandomMating(object):
         self.individuals_per_breeding_subpop = individuals_per_breeding_subpop
         self.heritability = heritability
         self.meta_pop_sample_sizes = meta_pop_sample_sizes
-        self.number_of_replicates = number_of_replicates
 
         self.breeding_parameters = col.OrderedDict()
         self.number_of_breeding_individuals = int(
@@ -75,8 +73,7 @@ class RandomMating(object):
                     'Operating Population Size: {}\n'.format(
                         self.operating_population_size) +\
                     'Proportion of Individuals Saved: {}\n'.format(
-                        self.proportion_of_individuals_saved) +\
-                    'Number of Replicates: {}\n'.format(self.number_of_replicates)
+                        self.proportion_of_individuals_saved)
 
         return rdm_info
 
@@ -372,7 +369,6 @@ class Truncation(object):
                  individuals_per_breeding_subpop=5,
                  heritability=0.7,
                  meta_pop_sample_sizes=100,
-                 number_of_replicates=1,
                  ):
         self.generations_of_selection = generations_of_selection
         self.operating_population_size = operating_population_size
@@ -381,7 +377,6 @@ class Truncation(object):
         self.individuals_per_breeding_subpop = individuals_per_breeding_subpop
         self.heritability = heritability
         self.meta_pop_sample_sizes = meta_pop_sample_sizes
-        self.number_of_replicates = number_of_replicates
 
         self.breeding_parameters = col.OrderedDict()
         self.number_of_breeding_individuals = int(
@@ -424,8 +419,7 @@ class Truncation(object):
                     'Operating Population Size: {}\n'.format(
                         self.operating_population_size) +\
                     'Proportion of Individuals Saved: {}\n'.format(
-                        self.proportion_of_individuals_saved) +\
-                    'Number of Replicates: {}\n'.format(self.number_of_replicates)
+                        self.proportion_of_individuals_saved)
 
         return trunc_info
 
@@ -735,8 +729,7 @@ class Drift(object):
                  overshoot_as_proportion=0.50,
                  individuals_per_breeding_subpop=5,
                  heritability=0.7,
-                 meta_pop_sample_sizes=100,
-                 number_of_replicates=1):
+                 meta_pop_sample_sizes=100):
         self.generations_of_drift = generations_of_drift
         self.operating_population_size = operating_population_size
         self.proportion_of_individuals_saved = proportion_of_individuals_saved
@@ -744,7 +737,6 @@ class Drift(object):
         self.individuals_per_breeding_subpop = individuals_per_breeding_subpop
         self.heritability = heritability
         self.meta_pop_sample_sizes = meta_pop_sample_sizes
-        self.number_of_replicates = number_of_replicates
 
         self.breeding_parameters = col.OrderedDict()
         self.number_of_breeding_individuals = int(

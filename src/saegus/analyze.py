@@ -96,8 +96,7 @@ class MultiGeneration(object):
                     for locus, genotype in enumerate(minor_allele_homozygotes)))))
         return np.asarray(minor_allele_homozygote_frequencies)
 
-    @staticmethod
-    def store_allele_frequency_data(meta_population_library, minor_alleles,
+    def store_allele_frequency_data(self, meta_population_library, minor_alleles,
                                     hdf_file_name):
         """
         Collects minor allele frequency data of a multiple generation
@@ -116,8 +115,7 @@ class MultiGeneration(object):
                              for locus, allele in enumerate(minor_alleles))))
 
 
-    @staticmethod
-    def store_genotype_phenotype_data(meta_population_library, hdf_file_name):
+    def store_genotype_phenotype_data(self, meta_population_library, hdf_file_name):
         """
         Collects the genotype and phenotype data of a multiple replicate
         multiple sample population dictionary. Stores the results in
@@ -139,8 +137,7 @@ class MultiGeneration(object):
                     hdf_file.create_dataset('geno_pheno/'+str(rep_id)+'/'+str(gen_id),
                                             data=g_and_p)
 
-    @staticmethod
-    def store_heterozygote_frequency_data(meta_population_library, hdf_file_name):
+    def store_heterozygote_frequency_data(self, meta_population_library, hdf_file_name):
         """
         Collects minor allele frequency data of a multiple generation
         population library.Stores the allele frequency data in an
@@ -156,8 +153,8 @@ class MultiGeneration(object):
                         'hetf/'+str(rep_id)+'/'+str(gen_id),
                         data=np.asarray(list(sample.dvars().heteroFreq.values())))
 
-    @staticmethod
-    def store_genotype_frequency_data(meta_population_library, minor_alleles, hdf_file_name):
+    def store_genotype_frequency_data(self, meta_population_library,
+                                      minor_alleles, hdf_file_name):
         """
         Collects the frequency of the minor allele homozygote data
         of a multiple replicate multiple sample population dictionary. The minor
@@ -182,8 +179,8 @@ class MultiGeneration(object):
 
         int_to_snp_map = {0: 'A', 1: 'C', 2: 'G', 3: 'T', 4: 'D', 5: 'I'}
         indir = "C:\\tassel\\input\\"
-        minor_allele_frequency_file = h5py.File('bia_allele_frequencies.hdf5')
-        run_id = 'bia'
+        minor_allele_frequency_file = h5py.File(hdf_file_name)
+        run_id = self.run_id
 
         for rep_id, sample_list in meta_population_library.items():
             for sample in sample_list:
@@ -205,23 +202,65 @@ class MultiGeneration(object):
 
                 ccm = gwas.calculate_count_matrix(minor_alleles, loci)
                 ps_svd = gwas.pop_struct_svd(ccm)
-                gwas.population_structure_formatter(ps_svd, indir + name + '_structure_matrix.txt')
-                gwas.hapmap_formatter(int_to_snp_map, indir + name + '_simulated_hapmap.txt')
+                gwas.population_structure_formatter(ps_svd,
+                                        indir + name + '_structure_matrix.txt')
+                gwas.hapmap_formatter(int_to_snp_map,
+                                      indir + name + '_simulated_hapmap.txt')
                 gwas.trait_formatter(indir + name + '_phenotype_vector.txt')
                 gwas.calc_kinship_matrix(ccm, minor_allele_frequencies,
                                  indir + name + '_kinship_matrix.txt')
 
                 gwas.replicate_tassel_gwas_configs(rep_id_name,
                                                    gen_id_name,
-                                                   indir + name + '_simulated_hapmap.txt',
-                                                   indir + name + '_kinship_matrix.txt',
-                                                   indir + name + '_phenotype_vector.txt',
-                                                   indir + name + '_structure_matrix.txt',
-                                                   "C:\\tassel\\output\\" + name + '_out_',
+                                       indir + name + '_simulated_hapmap.txt',
+                                       indir + name + '_kinship_matrix.txt',
+                                       indir + name + '_phenotype_vector.txt',
+                                       indir + name + '_structure_matrix.txt',
+                                       "C:\\tassel\\output\\" + name + '_out_',
                                                    "C:\\Users\DoubleDanks\\BISB\\wisser\\code\\rjwlab-scripts\\"
                                                    "saegus_project\\devel\\magic\\1478\\gwas_pipeline.xml")
 
         minor_allele_frequency_file.close()
+
+
+    def calculate_additive_genetic_variance(self, qtl, founder_allele_data,
+                                            minor_allele_frequency_data,
+                                            allele_effect_array):
+        """
+        Calculates additive genetic variance according to the formula:
+
+            V_a = p * (1 - p) * (a^2)
+            where a is the average effect (major + minor)/2
+
+        :param qtl: numpy array of integers of qtl
+        :param founder_allele_data: pandas DataFrame with columns \
+                                        minor_allele, major_allele
+        :param minor_allele_frequency_data: numpy array with columns rep, gen, \
+                                                    locus1, locus2, ...
+        :param allele_effect_array: Array of allele effects
+        """
+        quant_minor_alleles = np.asarray(founder_allele_data.minor_allele)[qtl]
+        quant_major_alleles = np.asarray(founder_allele_data.major_allele)[qtl]
+        minor_allele_effects = allele_effect_array[qtl, quant_minor_alleles]
+        major_allele_effects = allele_effect_array[qtl, quant_major_alleles]
+        quant_minor_allele_frequencies = minor_allele_frequency_data[:, qtl+2]
+        reps = max(minor_allele_frequency_data[:, 0]) + 1
+        gens = (max(minor_allele_frequency_data[:, 1]))/2 + 1
+
+
+        average_effects = (1/2)*(minor_allele_effects + major_allele_effects)
+        additive_variance = np.zeros((int(reps*gens), qtl.shape[0]))
+        additive_variance[:, ...] = quant_minor_allele_frequencies*\
+                                    (1 - quant_minor_allele_frequencies)\
+                                    *(average_effects**2)
+        additive_variance = np.hstack((minor_allele_frequency_data[:, :2],
+                                       additive_variance))
+        additive_variance = pd.DataFrame(additive_variance,
+                                 columns=['rep', 'gen']+list(map(str, qtl)))
+        additive_variance.rep = np.asarray(additive_variance.rep, dtype=np.int64)
+        additive_variance.gen = np.asarray(additive_variance.gen, dtype=np.int64)
+
+        return additive_variance
 
 
 class SingleGeneration(object):

@@ -51,7 +51,8 @@ class TusonFounders(object):
 
     def parse_recombination_rates(self, genetic_map_filename):
         """
-        Returns a list of crossover probabilities from a genetic map measured in centimorgans.
+        Returns a list of crossover probabilities from a genetic map measured
+        in centimorgans.
         """
         genetic_map = pd.read_csv(genetic_map_filename, sep='\t',
                                   index_col=None)

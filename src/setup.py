@@ -3,7 +3,7 @@
 from distutils.core import setup
 
 setup(name='saegus',
-    version='0.1.2',
+    version='0.1.3',
     description='Simulation and Analysis of Artificial Selection experiments.',
     author='John J. Dougherty III',
     author_email='jjdoc@udel.edu',

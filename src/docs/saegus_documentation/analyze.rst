@@ -4,6 +4,25 @@
 Analyze Module
 ==============
 
+
+
+
+
+
+
+
+.. _single_generation:
+
+SingleGeneration
+================
+
+.. py:class:: SingleGeneration
+
+
+
+
+
+
 .. _gwas:
 
 GWAS
@@ -541,299 +560,306 @@ Study
     </div>
 
 
+.. _multi_generation:
+
+MultiGeneration
+===============
+
+.. py:class:: MultiGeneration(run_id)
+
 
 .. _collect_allele_frequency_data:
 
-.. py:function:: collect_allele_frequency_data(meta_population_library, minor_alleles)
-
-   :parameter dict meta_population_library: Dictionary of lists of simuPOP.Populations
-   :parameter minor_alleles: A tuple, list or array of the minor alleles at each locus
+   .. py:method:: collect_allele_frequency_data(meta_population_library, minor_alleles)
+
+      :parameter dict meta_population_library: Dictionary of lists of simuPOP.Populations
+      :parameter minor_alleles: A tuple, list or array of the minor alleles at each locus
 
-   Generates an array of the minor allele frequencies of each replicate at each
-   generation. This is the *old* way of doing things. But it is still useful because
-   it is designed to be written to a text file.
+      Generates an array of the minor allele frequencies of each replicate at each
+      generation. This is the *old* way of doing things. But it is still useful because
+      it is designed to be written to a text file.
 
-   Columns are: replicate, generation, locus1, locus2, ..., locusN
+      Columns are: replicate, generation, locus1, locus2, ..., locusN
 
-   .. code-block:: py
-      :caption: Collecting allele frequency data for a writable text file
+      .. code-block:: py
+         :caption: Collecting allele frequency data for a writable text file
 
-      >>> mafs = collect_allele_frequency_data(meta_populations, minor_alleles)
-      >>> print(mafs)
-      [[  0.   ,   0.   ,   0.325, ...,   0.435,   0.27 ,   0.255],
-       ...,
-       [  4.   ,  10.   ,   0.165, ...,   0.465,   0.035,   0.035]]
+         >>> mafs = collect_allele_frequency_data(meta_populations, minor_alleles)
+         >>> print(mafs)
+         [[  0.   ,   0.   ,   0.325, ...,   0.435,   0.27 ,   0.255],
+          ...,
+          [  4.   ,  10.   ,   0.165, ...,   0.465,   0.035,   0.035]]
 
-.. _store_allele_frequency_data:
+   .. _store_allele_frequency_data:
 
-.. py:function:: store_allele_frequency_data(meta_population_library, hdf_file_name)
+   .. py:method:: store_allele_frequency_data(meta_population_library, hdf_file_name)
 
-   :parameter meta_population_library: Dict of lists of simuPOP.Populations
-   :parameter str hdf_file_name: File name to write output
+      :parameter meta_population_library: Dict of lists of simuPOP.Populations
+      :parameter str hdf_file_name: File name to write output
 
-    Collects minor allele frequency data of a multiple generation
-    population library. Stores the allele frequency data in an
-    HDF5 file.
+       Collects minor allele frequency data of a multiple generation
+       population library. Stores the allele frequency data in an
+       HDF5 file.
 
-    af/replicate_id/generation_id
+       af/replicate_id/generation_id
 
-   .. code-block:: py
-      :caption: Storing and accessing alelle frequency data in an HDF5 file
+      .. code-block:: py
+         :caption: Storing and accessing alelle frequency data in an HDF5 file
 
-      >>> minor_af_data = h5py.File("example_af_data.hdf5")
-      >>> minor_af_data
-      <HDF5 file "example_af_data.hdf5" (mode r+)>
-      >>> list(minor_af_data.keys())
-      ['af']
-      >>> minor_af_data['af']['0'] # replicate 0
-      <HDF5 group "/af/0" (6 members)>
+         >>> minor_af_data = h5py.File("example_af_data.hdf5")
+         >>> minor_af_data
+         <HDF5 file "example_af_data.hdf5" (mode r+)>
+         >>> list(minor_af_data.keys())
+         ['af']
+         >>> minor_af_data['af']['0'] # replicate 0
+         <HDF5 group "/af/0" (6 members)>
 
-   If we wanted to make an array out of all the generations within a replicate
-   we can use a generator expression, list comprehension or a loop to make a
-   list of lists. For example if we wanted to put the generational data into
-   a :py:class:`np.array`.
+      If we wanted to make an array out of all the generations within a replicate
+      we can use a generator expression, list comprehension or a loop to make a
+      list of lists. For example if we wanted to put the generational data into
+      a :py:class:`np.array`.
 
-   .. warning::
+      .. warning::
 
-      HDF5 files do not store data in the same order it was inserted.
-      If we want to have the generations in order we need to do an
-      extra step.
+         HDF5 files do not store data in the same order it was inserted.
+         If we want to have the generations in order we need to do an
+         extra step.
 
-   .. code-block:: py
-      :caption: Extract allele frequencies into a numpy array
+      .. code-block:: py
+         :caption: Extract allele frequencies into a numpy array
 
-      >>> generations = tuple(map(str, range(0, 11, 2)))
-      >>> generations
-      ('0', '2', '4', '6', '8', '10')
-      >>> minor_allele_frequencies = np.asarray((tuple(np.asarray(minor_af_data['af']['0']) for gen in generations)))
-      >>> minor_allele_frequencies # the rows are generations columns are loci
-      array([[ 0.325,  0.18 ,  0.05 , ...,  0.435,  0.27 ,  0.255],
-       [ 0.275,  0.255,  0.07 , ...,  0.36 ,  0.095,  0.08 ],
-       [ 0.315,  0.175,  0.105, ...,  0.34 ,  0.125,  0.09 ],
-       [ 0.32 ,  0.13 ,  0.115, ...,  0.275,  0.02 ,  0.015],
-       [ 0.34 ,  0.185,  0.215, ...,  0.35 ,  0.025,  0.   ],
-       [ 0.375,  0.075,  0.26 , ...,  0.315,  0.   ,  0.   ]])
+         >>> generations = tuple(map(str, range(0, 11, 2)))
+         >>> generations
+         ('0', '2', '4', '6', '8', '10')
+         >>> minor_allele_frequencies = np.asarray((tuple(np.asarray(minor_af_data['af']['0']) for gen in generations)))
+         >>> minor_allele_frequencies # the rows are generations columns are loci
+         array([[ 0.325,  0.18 ,  0.05 , ...,  0.435,  0.27 ,  0.255],
+          [ 0.275,  0.255,  0.07 , ...,  0.36 ,  0.095,  0.08 ],
+          [ 0.315,  0.175,  0.105, ...,  0.34 ,  0.125,  0.09 ],
+          [ 0.32 ,  0.13 ,  0.115, ...,  0.275,  0.02 ,  0.015],
+          [ 0.34 ,  0.185,  0.215, ...,  0.35 ,  0.025,  0.   ],
+          [ 0.375,  0.075,  0.26 , ...,  0.315,  0.   ,  0.   ]])
 
-.. _collect_heterozygote_frequency_data:
+   .. _collect_heterozygote_frequency_data:
 
-.. py:function:: collect_heterozygote_frequency_data(meta_population_library)
+   .. py:method:: collect_heterozygote_frequency_data(meta_population_library)
 
-   :parameter meta_population_library: Dictionary of lists of simuPOP.Populations
+      :parameter meta_population_library: Dictionary of lists of simuPOP.Populations
 
-   Collects heterozygote frequency data from the
-   populations in ``meta_population_library``. The data is collected
-   into a :class:`np.array` which is suitable for writing to a text file. The
-   columns of the array are:
+      Collects heterozygote frequency data from the
+      populations in ``meta_population_library``. The data is collected
+      into a :class:`np.array` which is suitable for writing to a text file. The
+      columns of the array are:
 
-   + replicate
-   + generation
-   + locus1
-   + locus2
-   + so on and so forth
+      + replicate
+      + generation
+      + locus1
+      + locus2
+      + so on and so forth
 
-   .. code-block:: py
-      :caption: Collecting heterozygote data from samples
+      .. code-block:: py
+         :caption: Collecting heterozygote data from samples
 
-      >>> hetf = collect_heterozygote_frequency_data(meta_population_library)
-      >>> print(hetf)
-      [[  0.     0.     0.45 ...,   0.39   0.26   0.31]
-      [  0.     2.     0.35 ...,   0.46   0.19   0.16]
-      [  0.     4.     0.51 ...,   0.44   0.21   0.14]
-      ...,
-      [  4.     6.     0.26 ...,   0.5    0.09   0.09]
-      [  4.     8.     0.39 ...,   0.46   0.14   0.14]
-      [  4.    10.     0.31 ...,   0.51   0.07   0.07]]
+         >>> hetf = collect_heterozygote_frequency_data(meta_population_library)
+         >>> print(hetf)
+         [[  0.     0.     0.45 ...,   0.39   0.26   0.31]
+         [  0.     2.     0.35 ...,   0.46   0.19   0.16]
+         [  0.     4.     0.51 ...,   0.44   0.21   0.14]
+         ...,
+         [  4.     6.     0.26 ...,   0.5    0.09   0.09]
+         [  4.     8.     0.39 ...,   0.46   0.14   0.14]
+         [  4.    10.     0.31 ...,   0.51   0.07   0.07]]
 
-.. _store_heterozygote_frequency_data:
+   .. _store_heterozygote_frequency_data:
 
-.. py:function:: store_heterozygote_frequency_data(meta_population_library, hdf_file_name)
+   .. py:method:: store_heterozygote_frequency_data(meta_population_library, hdf_file_name)
 
-   :parameter meta_population_library: Dict of lists of simuPOP.Populations
-   :parameter str hdf_file_name: Output file name
+      :parameter meta_population_library: Dict of lists of simuPOP.Populations
+      :parameter str hdf_file_name: Output file name
 
-   Stores heterozygote frequency data in and HDF5 file. The data are stored
-   keyed as
+      Stores heterozygote frequency data in and HDF5 file. The data are stored
+      keyed as
 
-      hetf/replicate/generation
+         hetf/replicate/generation
 
 
-   :parameter meta_population_library: Dict of lists of simuPOP.Populations
-   :parameter str hdf_file_name: File name to write output
+      :parameter meta_population_library: Dict of lists of simuPOP.Populations
+      :parameter str hdf_file_name: File name to write output
 
-    Collects minor allele frequency data of a multiple generation
-    population library. Stores the allele frequency data in an
-    HDF5 file.
+       Collects minor allele frequency data of a multiple generation
+       population library. Stores the allele frequency data in an
+       HDF5 file.
 
-    hetf/replicate_id/generation_id
+       hetf/replicate_id/generation_id
 
-   .. code-block:: py
-      :caption: Storing and accessing heterozygote frequency data in an HDF5 file
+      .. code-block:: py
+         :caption: Storing and accessing heterozygote frequency data in an HDF5 file
 
-      >>> store_heterozygote_frequency_data(meta_population_library, "example_hetf_data.hdf5")
-      >>> hetf_data = h5py.File("example_hetf_data.hdf5")
-      >>> hetf_data
-      <HDF5 file "example_hetf_data.hdf5" (mode r+)>
-      >>> list(hetf_data.keys())
-      ['hetf']
-      >>> hetf_data['hetf']['0'] # replicate 0
-      <HDF5 group "/hetf/0" (6 members)>
+         >>> store_heterozygote_frequency_data(meta_population_library, "example_hetf_data.hdf5")
+         >>> hetf_data = h5py.File("example_hetf_data.hdf5")
+         >>> hetf_data
+         <HDF5 file "example_hetf_data.hdf5" (mode r+)>
+         >>> list(hetf_data.keys())
+         ['hetf']
+         >>> hetf_data['hetf']['0'] # replicate 0
+         <HDF5 group "/hetf/0" (6 members)>
 
-   If we wanted to make an array out of all the generations within a replicate
-   we can use a generator expression, list comprehension or a loop to make a
-   list of lists. For example if we wanted to put the generational data into
-   a :py:class:`np.array`.
+      If we wanted to make an array out of all the generations within a replicate
+      we can use a generator expression, list comprehension or a loop to make a
+      list of lists. For example if we wanted to put the generational data into
+      a :py:class:`np.array`.
 
-   .. warning::
+      .. warning::
 
-      HDF5 files do not store data in the same order it was inserted.
-      If we want to have the generations in order we need to do an
-      extra step.
+         HDF5 files do not store data in the same order it was inserted.
+         If we want to have the generations in order we need to do an
+         extra step.
 
-   .. code-block:: py
-      :caption: Extract heterozygote frequencies into a numpy array
+      .. code-block:: py
+         :caption: Extract heterozygote frequencies into a numpy array
 
-      >>> hetf_data = h5py.File("example_hetf_data.hdf5")
-      >>> generations = tuple(map(str, range(0, 11, 2)))
-      >>> generations
-      ('0', '2', '4', '6', '8', '10')
-      >>> het_frequencies = np.asarray((tuple(np.asarray(hetf_data['af']['0']) for gen in generations)))
-      >>> het_frequencies # the rows are generations columns are loci
-      array([[ 0.325,  0.18 ,  0.05 , ...,  0.435,  0.27 ,  0.255],
-       [ 0.275,  0.255,  0.07 , ...,  0.36 ,  0.095,  0.08 ],
-       [ 0.315,  0.175,  0.105, ...,  0.34 ,  0.125,  0.09 ],
-       [ 0.32 ,  0.13 ,  0.115, ...,  0.275,  0.02 ,  0.015],
-       [ 0.34 ,  0.185,  0.215, ...,  0.35 ,  0.025,  0.   ],
-       [ 0.375,  0.075,  0.26 , ...,  0.315,  0.   ,  0.   ]])
-      >>> hetf_data.close()
+         >>> hetf_data = h5py.File("example_hetf_data.hdf5")
+         >>> generations = tuple(map(str, range(0, 11, 2)))
+         >>> generations
+         ('0', '2', '4', '6', '8', '10')
+         >>> het_frequencies = np.asarray((tuple(np.asarray(hetf_data['af']['0']) for gen in generations)))
+         >>> het_frequencies # the rows are generations columns are loci
+         array([[ 0.325,  0.18 ,  0.05 , ...,  0.435,  0.27 ,  0.255],
+          [ 0.275,  0.255,  0.07 , ...,  0.36 ,  0.095,  0.08 ],
+          [ 0.315,  0.175,  0.105, ...,  0.34 ,  0.125,  0.09 ],
+          [ 0.32 ,  0.13 ,  0.115, ...,  0.275,  0.02 ,  0.015],
+          [ 0.34 ,  0.185,  0.215, ...,  0.35 ,  0.025,  0.   ],
+          [ 0.375,  0.075,  0.26 , ...,  0.315,  0.   ,  0.   ]])
+         >>> hetf_data.close()
 
 
-.. py:function:: collect_genotype_phenotype_data(meta_population_library)
+   .. py:method:: collect_genotype_phenotype_data(meta_population_library)
 
-   :parameter meta_population_library: Dict of lists of simuPOP.Populations
+      :parameter meta_population_library: Dict of lists of simuPOP.Populations
 
-   Collects the genotype and phenotype data of a multiple replicate
-   multiple sample population dictionary. The resulting data is
-   a single array. Each row has ind_id, replicate, generation, g and p.
+      Collects the genotype and phenotype data of a multiple replicate
+      multiple sample population dictionary. The resulting data is
+      a single array. Each row has ind_id, replicate, generation, g and p.
 
-   .. note::
+      .. note::
 
-      Assumes that the population has infoFields ``g`` and ``p`` defined.
+         Assumes that the population has infoFields ``g`` and ``p`` defined.
 
-   .. code-block:: py
-      :caption: Example of input and output
+      .. code-block:: py
+         :caption: Example of input and output
 
-      >>> meta_population_library
-      {0: [<simuPOP.Population>, ..., <simuPOP.Population>],
-      ...,
-      1: [<simuPOP.Population>, ..., <simuPOP.Population>]}
-      >>> geno_pheno_data = collect_genotype_phenotype_data(meta_population_library)
-      >>> print(geno_pheno_data)
-      [[   117.         0.         0.        90.311     62.455]
-       [   122.         0.         0.        90.889    101.073]
-       [   126.         0.         0.        90.194     77.146]
-       ...,
-       [ 80084.         4.        10.       124.4      148.832]
-       [ 80096.         4.        10.       129.004    100.359]
-       [ 80100.         4.        10.       123.914    133.201]]
+         >>> meta_population_library
+         {0: [<simuPOP.Population>, ..., <simuPOP.Population>],
+         ...,
+         1: [<simuPOP.Population>, ..., <simuPOP.Population>]}
+         >>> geno_pheno_data = collect_genotype_phenotype_data(meta_population_library)
+         >>> print(geno_pheno_data)
+         [[   117.         0.         0.        90.311     62.455]
+          [   122.         0.         0.        90.889    101.073]
+          [   126.         0.         0.        90.194     77.146]
+          ...,
+          [ 80084.         4.        10.       124.4      148.832]
+          [ 80096.         4.        10.       129.004    100.359]
+          [ 80100.         4.        10.       123.914    133.201]]
 
-.. _store_genotype_phenotype_data:
+   .. _store_genotype_phenotype_data:
 
-.. py:function:: store_genotype_phenotype_data(meta_population_library, hdf5_file_name)
+   .. py:method:: store_genotype_phenotype_data(meta_population_library, hdf5_file_name)
 
-   :parameter meta_population_library: Dict of lists of simuPOP.Populations
-   :parameter str hdf5_file_name: Output file name
+      :parameter meta_population_library: Dict of lists of simuPOP.Populations
+      :parameter str hdf5_file_name: Output file name
 
-   Collects the genotype and phenotype data of a multiple replicate
-   multiple sample population dictionary. Stores the results in
-   an HDF5 file.
+      Collects the genotype and phenotype data of a multiple replicate
+      multiple sample population dictionary. Stores the results in
+      an HDF5 file.
 
-   Keyed as
+      Keyed as
 
-      geno_pheno/replicate_id/generation_id
+         geno_pheno/replicate_id/generation_id
 
-   .. code-block:: py
-      :caption: Storing and accessing geno pheno data in an HDF5 file
+      .. code-block:: py
+         :caption: Storing and accessing geno pheno data in an HDF5 file
 
-      >>> store_genotype_phenotype_data(meta_population_library, "example_geno_pheno_data.hdf5")
-      >>> gp_data = h5py.File("example_geno_pheno_data.hdf5")
-      >>> gp_data
-      <HDF5 file "example_geno_pheno_data.hdf5" (mode r+)>
-      >>> list(gp_data.keys())
-      ['geno_pheno']
-      >>> gp_data['hetf']['0'] # replicate 0
-      <HDF5 group "/geno_pheno/0" (6 members)>
+         >>> store_genotype_phenotype_data(meta_population_library, "example_geno_pheno_data.hdf5")
+         >>> gp_data = h5py.File("example_geno_pheno_data.hdf5")
+         >>> gp_data
+         <HDF5 file "example_geno_pheno_data.hdf5" (mode r+)>
+         >>> list(gp_data.keys())
+         ['geno_pheno']
+         >>> gp_data['hetf']['0'] # replicate 0
+         <HDF5 group "/geno_pheno/0" (6 members)>
 
-   If we wanted to make an array out of all the generations within a replicate
-   we can use a generator expression, list comprehension or a loop to make a
-   list of lists. For example if we wanted to put the generational data into
-   a :py:class:`np.array`. The resulting array has dimensions
+      If we wanted to make an array out of all the generations within a replicate
+      we can use a generator expression, list comprehension or a loop to make a
+      list of lists. For example if we wanted to put the generational data into
+      a :py:class:`np.array`. The resulting array has dimensions
 
-      generations x sample_size x data_columns
+         generations x sample_size x data_columns
 
-   .. warning::
+      .. warning::
 
-      HDF5 files do not store data in the same order it was inserted.
-      If we want to have the generations in order we need to do an
-      extra step.
+         HDF5 files do not store data in the same order it was inserted.
+         If we want to have the generations in order we need to do an
+         extra step.
 
-   .. code-block:: py
-      :caption: Extract genotype/phenotype data into a numpy array
+      .. code-block:: py
+         :caption: Extract genotype/phenotype data into a numpy array
 
-      >>> gp_data = h5py.File("example_geno_pheno_data.hdf5")
-      >>> generations = tuple(map(str, range(0, 11, 2)))
-      >>> generations
-      ('0', '2', '4', '6', '8', '10')
-      >>> gp_zero = np.asarray((tuple(np.asarray(gp_data['geno_pheno']['0'])
-      ...                          for gen in generations)))
-      >>> print(gp_zero)
-      [[[   117.         0.         0.        90.311     62.455]
-        ...,
-        [  1102.         0.         0.        83.207     98.937]]
+         >>> gp_data = h5py.File("example_geno_pheno_data.hdf5")
+         >>> generations = tuple(map(str, range(0, 11, 2)))
+         >>> generations
+         ('0', '2', '4', '6', '8', '10')
+         >>> gp_zero = np.asarray((tuple(np.asarray(gp_data['geno_pheno']['0'])
+         ...                          for gen in generations)))
+         >>> print(gp_zero)
+         [[[   117.         0.         0.        90.311     62.455]
+           ...,
+           [  1102.         0.         0.        83.207     98.937]]
 
-       [[ 12631.         0.         2.       116.315    102.098]
-        ...,
-        [ 14084.         0.         2.        96.314     96.24 ]]
+          [[ 12631.         0.         2.       116.315    102.098]
+           ...,
+           [ 14084.         0.         2.        96.314     96.24 ]]
 
-       [[ 27620.         0.         4.       117.47     133.751]
-        ...,
-        [ 29098.         0.         4.       114.059    109.896]]
+          [[ 27620.         0.         4.       117.47     133.751]
+           ...,
+           [ 29098.         0.         4.       114.059    109.896]]
 
-       [[ 42609.         0.         6.       122.617    117.903]
-        ...,
-        [ 44077.         0.         6.       120.406    120.769]]
+          [[ 42609.         0.         6.       122.617    117.903]
+           ...,
+           [ 44077.         0.         6.       120.406    120.769]]
 
-       [[ 57615.         0.         8.       123.669    163.46 ]
-        ...,
-        [ 59084.         0.         8.       124.701    123.834]]
+          [[ 57615.         0.         8.       123.669    163.46 ]
+           ...,
+           [ 59084.         0.         8.       124.701    123.834]]
 
-       [[ 72622.         0.        10.       122.074    135.145]
-        ...,
-        [ 74059.         0.        10.       122.845    118.8  ]]]
-      >>> gp_data.close()
+          [[ 72622.         0.        10.       122.074    135.145]
+           ...,
+           [ 74059.         0.        10.       122.845    118.8  ]]]
+         >>> gp_data.close()
 
-   We can use the ``with`` key word so we don't have to worry about closing the
-   file after we are done with it.
+      We can use the ``with`` key word so we don't have to worry about closing the
+      file after we are done with it.
 
-   .. code-block:: py
-      :caption: Accessing data using the context manger: ``with``
+      .. code-block:: py
+         :caption: Accessing data using the context manger: ``with``
 
-      >>> with h5py.File('example_geno_pheno_data.hdf5') as exgp_file:
-      ...   gp_zero = np.asarray(tuple(exgp_file['geno_pheno']['0'][gen] for gen in generations))
+         >>> with h5py.File('example_geno_pheno_data.hdf5') as exgp_file:
+         ...   gp_zero = np.asarray(tuple(exgp_file['geno_pheno']['0'][gen] for gen in generations))
 
-.. py:function:: collect_genotype_frequency_data(meta_population_library, minor_alleles, hdf_file_name)
+   .. py:method:: store_genotype_frequency_data(meta_population_library, minor_alleles, hdf_file_name)
 
-   :parameter meta_population_library: Dict of lists of simuPOP.Populations
-   :parameter minor_alleles: A list of the minor alleles at each locus.
-   :parameter str hdf_file_name: Output file name
+      :parameter meta_population_library: Dict of lists of simuPOP.Populations
+      :parameter minor_alleles: A list of the minor alleles at each locus.
+      :parameter str hdf_file_name: Output file name
 
-   Collects the frequency of the minor allele homozygote data
-   of a multiple replicate multiple sample population dictionary. The minor
-   allele genotypes are created using the ``minor_alleles`` parameter.
-   Stores the results in an HDF5 file.
+      Collects the frequency of the minor allele homozygote data
+      of a multiple replicate multiple sample population dictionary. The minor
+      allele genotypes are created using the ``minor_alleles`` parameter.
+      Stores the results in an HDF5 file.
 
-   Keyed by
+      Keyed by
 
-     homf/replicate_id/generation_id
+        homf/replicate_id/generation_id
 
    .. code-block:: py
       :caption: Example of storing genotype frequency data
