@@ -61,8 +61,10 @@ class GenoAdditiveArray(sim.PyOperator):
         for ind in pop.individuals():
             alpha_genotype, beta_genotype = np.asarray(ind.genotype(ploidy=0)), \
                                             np.asarray(ind.genotype(ploidy=1))
-            ind.g = sum(self.allele_effects[range(44445), alpha_genotype]) +\
-                    sum(self.allele_effects[range(44445), beta_genotype])
+            ind.g = sum(self.allele_effects[range(pop.totNumLoci()),
+                                            alpha_genotype]) +\
+                    sum(self.allele_effects[range(pop.totNumLoci()),
+                                            beta_genotype])
         return True
 
 

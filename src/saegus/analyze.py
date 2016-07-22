@@ -741,15 +741,12 @@ class GWAS(object):
         self.pop = pop
         self.loci = loci
         self.run_id = run_id
-
-        self.individual_names = ['I' + str(ind.ind_id)[:-2]
-                                 for ind in pop.individuals()]
-
-        self.locus_names = list(range(len(loci)))
-        self.pos_names = list(range(len(loci)))
+        self.int_to_snp_conversions = {0: 'A', 1: 'C',
+                                       2: 'G', 3: 'T', 4: 'D', 5: 'I'}
 
     # noinspection PyArgumentList
-    def calculate_count_matrix(self, allele_subset, seg_loci, count_matrix_file_name = None):
+    def calculate_count_matrix(self, allele_subset, seg_loci,
+                               count_matrix_file_name = None):
         """
         A function to calculate the copy numbers of either the minor or
         major allele for each individual at each locus.
@@ -759,7 +756,7 @@ class GWAS(object):
         :param allele_subset: Allows user to choose a custom set of alleles to use i.e. minor vs major.
         :param count_matrix_filename: Output file name. If defined will write a file. Otherwise returns the count_matrix
         """
-        comparison_array = np.asarray(allele_subset, dtype=np.int8)
+        comparison_array = np.asarray(allele_subset, dtype=np.int_)
         count_matrix = np.zeros((self.pop.popSize(), len(self.loci)))
         for i, ind in enumerate(self.pop.individuals()):
             alpha_genotype = np.asarray(ind.genotype(ploidy=0))[list(seg_loci)]
@@ -848,62 +845,43 @@ class GWAS(object):
         test_statistic = (lowercase_l - mu_hat) / sigma_hat
         return test_statistic
 
-    def hapmap_formatter(self, int_to_snp_conversions, hapmap_file_name):
-        """
-        Converts genotype data from sim.Population object to HapMap file format
-        in expectation to be used in TASSEL for GWAS. At present the column
-        names will be hardcoded as will some of the values.
-        ``hapmap_matrix_filename`` is the name of the file the formatted
-        matrix will be written to.
-        :param int_to_snp_conversions:
-        :param hapmap_matrix_filename:
-        :return:
-        :rtype:
-        """
-        genolookups = np.array(
-            [['A', 'C', 'G', 'T', 'D', 'I'] for i in range(1478)])
-        hapmap_data = {}
-        hapmap_data['rs'] = self.locus_names
-        hapmap_data['alleles'] = ['NA']*len(self.loci)
-        hapmap_data['chrom'] = [self.pop.chromLocusPair(locus)[0]+1 for
-                                locus in self.loci]
-        hapmap_data['pos'] = self.pos_names
-
-        # Several columns which are set to 'NA'.
-        extraneous_columns = ['strand', 'assembly', 'center', 'protLSID',
-                              'assayLSID', 'panelLSID', 'QCcode']
-        for column in extraneous_columns:
-            hapmap_data[column] = ['NA']*len(self.loci)
-
-        # Each individual has a column. Simulated individuals will have names
-        # reflecting some information about them. 'RS' recurrent selection,
-        # 'R' rep, 'G' generation and 'I' ind_id
-
-        # Finally each individual's genotype must be converted to HapMap format
+    def hapmap_formatter(self, pop,
+                             alleles_column,
+                             locus_names,
+                             corresponding_chromosomes,
+                             pos_column,
+                             hapmap_file_name=None):
 
 
-        for i, ind in enumerate(self.pop.individuals()):
-            alpha_genotype = np.asarray(ind.genotype(ploidy=0))[list(self.loci)]
-            beta_genotype = np.asarray(ind.genotype(ploidy=1))[list(self.loci)]
-            hapmap_data[self.individual_names[i]] = [
-                ''.join(sorted(int_to_snp_conversions[a]
-                               + int_to_snp_conversions[b]))
-                                 for a, b in zip(alpha_genotype, beta_genotype)]
-
+        individual_names = np.core.defchararray.add('I',
+                    defchararray.array(np.asarray(self.pop.indInfo('ind_id'),
+                        dtype=np.int_), copy=False, unicode=np.unicode_))
 
         # Need to guarantee that the column names are in same order as the
         # genoype data. Iterate over individuals in population to build up a
         #  list of names will guarantee that col names are in same order as
         # the hapmap_data
 
-        hapmap_ordered_columns = ['rs', 'alleles', 'chrom', 'pos'] + extraneous_columns + self.individual_names
+        hapmap_ordered_columns = ['rs', 'alleles', 'chrom', 'pos'] + list(
+            individual_names)
 
         hapmap_matrix = pd.DataFrame(columns=hapmap_ordered_columns)
-        for k, v in hapmap_data.items():
-            hapmap_matrix[k] = v
+        hapmap_matrix.rs = locus_names
+        hapmap_matrix.alleles = alleles_column
+        hapmap_matrix.chrom = corresponding_chromosomes
+        hapmap_matrix.pos = pos_column
 
-        hapmap_matrix.to_csv(hapmap_file_name, sep='\t',
-                             index=False)
+        for i, ind in enumerate(self.pop.individuals()):
+            hapmap_matrix.ix[:, individual_names[i]] = [
+                ''.join(sorted(self.int_to_snp_conversions[a]
+                               + self.int_to_snp_conversions[b]))
+                for a, b in zip(ind.genotype(ploidy=0), ind.genotype(ploidy=1))]
+
+            # for k, v in hapmap_data.items():
+            #   hapmap_matrix[k] = v
+
+        if hapmap_file_name is not None:
+            hapmap_matrix.to_csv(hapmap_file_name, sep='\t', index=False)
 
         return hapmap_matrix
 
