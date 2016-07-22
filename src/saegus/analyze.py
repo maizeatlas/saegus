@@ -742,7 +742,11 @@ class GWAS(object):
         self.loci = loci
         self.run_id = run_id
         self.int_to_snp_conversions = {0: 'A', 1: 'C',
-                                       2: 'G', 3: 'T', 4: 'D', 5: 'I'}
+                                       2: 'G', 3: 'T', 4: '-', 5: '+'}
+
+        self.individual_names = np.core.defchararray.add('I',
+                    defchararray.array(np.asarray(self.pop.indInfo('ind_id'),
+                        dtype=np.int_), copy=False, unicode=np.unicode_))
 
     # noinspection PyArgumentList
     def calculate_count_matrix(self, allele_subset, seg_loci,
@@ -845,40 +849,37 @@ class GWAS(object):
         test_statistic = (lowercase_l - mu_hat) / sigma_hat
         return test_statistic
 
-    def hapmap_formatter(self, pop,
-                             alleles_column,
+    def hapmap_formatter(self,
+                         alleles_column,
                              locus_names,
                              corresponding_chromosomes,
                              pos_column,
                              hapmap_file_name=None):
-
-
-        individual_names = np.core.defchararray.add('I',
-                    defchararray.array(np.asarray(self.pop.indInfo('ind_id'),
-                        dtype=np.int_), copy=False, unicode=np.unicode_))
 
         # Need to guarantee that the column names are in same order as the
         # genoype data. Iterate over individuals in population to build up a
         #  list of names will guarantee that col names are in same order as
         # the hapmap_data
 
-        hapmap_ordered_columns = ['rs', 'alleles', 'chrom', 'pos'] + list(
-            individual_names)
+
+        hapmap_ordered_columns = ['rs', 'alleles',
+                      'chrom', 'pos', 'strand', 'assembly',
+                      'center', 'protLSID', 'assayLSID', 'panelLSID',
+                                  'QCode'] + list(
+            self.individual_names)
 
         hapmap_matrix = pd.DataFrame(columns=hapmap_ordered_columns)
         hapmap_matrix.rs = locus_names
         hapmap_matrix.alleles = alleles_column
         hapmap_matrix.chrom = corresponding_chromosomes
         hapmap_matrix.pos = pos_column
+        hapmap_matrix.ix[:, 'strand':'QCode'] = np.core.defchararray.array([['NA']*1478]*7).T
 
         for i, ind in enumerate(self.pop.individuals()):
-            hapmap_matrix.ix[:, individual_names[i]] = [
+            hapmap_matrix.ix[:, self.individual_names[i]] = [
                 ''.join(sorted(self.int_to_snp_conversions[a]
                                + self.int_to_snp_conversions[b]))
                 for a, b in zip(ind.genotype(ploidy=0), ind.genotype(ploidy=1))]
-
-            # for k, v in hapmap_data.items():
-            #   hapmap_matrix[k] = v
 
         if hapmap_file_name is not None:
             hapmap_matrix.to_csv(hapmap_file_name, sep='\t', index=False)
@@ -904,7 +905,9 @@ class GWAS(object):
 
         return trait_vector
 
-    def calc_kinship_matrix(self, allele_count_matrix, allele_frequencies, kinship_matrix_file_name = None):
+    def calc_kinship_matrix(self, allele_count_matrix,
+                            allele_frequencies,
+                            kinship_matrix_file_name = None):
         """
         Calculates the kinship matrix according to VanRaden 2008:
         Efficient Methods to Compute Genomic Predictions and writes it to a
