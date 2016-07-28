@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="1003423572">
+  <component name="DataSourceManagerImpl" format="xml" hash="1007574594">
     <data-source source="LOCAL" name="gwas_input_data" uuid="351a4bc9-f930-40ec-a5f6-8beddfc62633">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
