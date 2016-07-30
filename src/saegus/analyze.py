@@ -14,6 +14,58 @@ from scipy import linalg
 from . import operators, parameters
 
 
+def generate_allele_effects_table(population_allele_frequencies, allele_array,
+                                  allele_effect_array):
+    """
+    Creates a pandas DataFrame with the columns:
+    + alpha allele
+    + alpha allele effect
+    + alpha allele frequency
+    + beta allele
+    + beta allele effect
+    + beta allele frequency
+
+    :warning:`Assumes di-allelic case`
+    """
+    column_labels = ['alpha', 'alpha_effect', 'alpha_frequency',
+                     'beta', 'beta_effect', 'beta_frequency']
+    number_of_loci = len(population_allele_frequencies)
+    alpha_alleles, beta_alleles = allele_array[:, 0], allele_array[:, 1]
+    alpha_effects, beta_effects = allele_effect_array[
+                                      range(number_of_loci), alpha_alleles], \
+                                  allele_effect_array[
+                                      range(number_of_loci), beta_alleles]
+    alpha_frequencies = np.asarray([population_allele_frequencies[locus][allele]
+                                    for locus, allele in
+                                    enumerate(alpha_alleles)])
+    beta_frequencies = np.asarray([population_allele_frequencies[locus][allele]
+                                   for locus, allele in
+                                   enumerate(beta_alleles)])
+    allele_effects_table = pd.DataFrame(
+        np.asarray([alpha_alleles, alpha_effects, alpha_frequencies,
+                    beta_alleles, beta_effects, beta_frequencies]).T,
+        columns=column_labels)
+    return allele_effects_table
+
+def minor_allele_frequencies_table(population_allele_frequencies, minor_alleles):
+    """
+    Creates a pd.DataFrame of minor allele frequencies with columns for the
+    minor allele and its frequency.
+
+    :param population_allele_frequencies:
+    :param minor_alleles:
+    :return:
+    """
+    column_labels = ['minor_allele', 'minor_frequency']
+    minor_allele_frequencies = np.array([population_allele_frequencies[locus][allele]
+                                for locus, allele in enumerate(minor_alleles)])
+    return pd.DataFrame(np.array([minor_alleles, minor_allele_frequencies]).T,
+                        columns=column_labels)
+
+
+
+
+
 class MultiGeneration(object):
 
     def __init__(self, run_id):
@@ -177,8 +229,9 @@ class MultiGeneration(object):
     def multiple_sample_analyzer(self, meta_population_library, qtl, allele_effects,
                                  minor_alleles, loci):
 
-        int_to_snp_map = {0: 'A', 1: 'C', 2: 'G', 3: 'T', 4: 'D', 5: 'I'}
-        indir = "C:\\tassel\\input\\"
+
+        int_to_snp_map = {0: 'A', 1: 'C', 2: 'G', 3: 'T', 4: '-', 5: '+'}
+        indir = "/home/vakanas/tassel-5-standalone/"
         minor_allele_frequency_file = h5py.File(hdf_file_name)
         run_id = self.run_id
 
@@ -849,7 +902,7 @@ class GWAS(object):
         test_statistic = (lowercase_l - mu_hat) / sigma_hat
         return test_statistic
 
-    def hapmap_formatter(self,
+    def hapmap_formatter(self, segregating_loci,
                          alleles_column,
                              locus_names,
                              corresponding_chromosomes,
@@ -873,13 +926,13 @@ class GWAS(object):
         hapmap_matrix.alleles = alleles_column
         hapmap_matrix.chrom = corresponding_chromosomes
         hapmap_matrix.pos = pos_column
-        hapmap_matrix.ix[:, 'strand':'QCode'] = np.core.defchararray.array([['NA']*1478]*7).T
+        hapmap_matrix.ix[:, 'strand':'QCode'] = np.core.defchararray.array([['NA']*len(locus_names)]*7).T
 
         for i, ind in enumerate(self.pop.individuals()):
             hapmap_matrix.ix[:, self.individual_names[i]] = [
                 ''.join(sorted(self.int_to_snp_conversions[a]
                                + self.int_to_snp_conversions[b]))
-                for a, b in zip(ind.genotype(ploidy=0), ind.genotype(ploidy=1))]
+                for a, b in zip(np.asarray(ind.genotype(ploidy=0))[list(segregating_loci)], np.asarray(ind.genotype(ploidy=1))[list(segregating_loci)])]
 
         if hapmap_file_name is not None:
             hapmap_matrix.to_csv(hapmap_file_name, sep='\t', index=False)

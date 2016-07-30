@@ -568,7 +568,7 @@ MultiGeneration
 .. py:class:: MultiGeneration(run_id)
 
 
-.. _collect_allele_frequency_data:
+   .. _multi_generation_collect_allele_frequency_data:
 
    .. py:method:: collect_allele_frequency_data(meta_population_library, minor_alleles)
 
@@ -590,7 +590,7 @@ MultiGeneration
           ...,
           [  4.   ,  10.   ,   0.165, ...,   0.465,   0.035,   0.035]]
 
-   .. _store_allele_frequency_data:
+   .. _multi_generation_store_allele_frequency_data:
 
    .. py:method:: store_allele_frequency_data(meta_population_library, hdf_file_name)
 
@@ -732,6 +732,7 @@ MultiGeneration
           [ 0.375,  0.075,  0.26 , ...,  0.315,  0.   ,  0.   ]])
          >>> hetf_data.close()
 
+.. _definition_collect_genotype_phenotype_data:
 
    .. py:method:: collect_genotype_phenotype_data(meta_population_library)
 
@@ -762,7 +763,7 @@ MultiGeneration
           [ 80096.         4.        10.       129.004    100.359]
           [ 80100.         4.        10.       123.914    133.201]]
 
-   .. _store_genotype_phenotype_data:
+   .. _definition_store_genotype_phenotype_data:
 
    .. py:method:: store_genotype_phenotype_data(meta_population_library, hdf5_file_name)
 
@@ -846,6 +847,8 @@ MultiGeneration
          >>> with h5py.File('example_geno_pheno_data.hdf5') as exgp_file:
          ...   gp_zero = np.asarray(tuple(exgp_file['geno_pheno']['0'][gen] for gen in generations))
 
+.. _definition_store_genotype_frequency_data:
+
    .. py:method:: store_genotype_frequency_data(meta_population_library, minor_alleles, hdf_file_name)
 
       :parameter meta_population_library: Dict of lists of simuPOP.Populations
@@ -863,4 +866,668 @@ MultiGeneration
 
    .. code-block:: py
       :caption: Example of storing genotype frequency data
+
+
+.. _definition_generate_allele_effects_table:
+
+.. py:function:: generate_allele_effects_table(population_allele_frequencies, allele_array, allele_effect_array):
+
+   :parameter dict population_allele_frequencies: Allele frequencies keyed by locus
+   :parameter np.array allele_array: Array where rows are loci and columns are alleles
+   :parameter np.array allele_effect_array: Array where rows are loci and the columns are effects.
+
+   Creates a pandas DataFrame with the columns:
+   + alpha allele
+   + alpha allele effect
+   + alpha allele frequency
+   + beta allele
+   + beta allele effect
+   + beta allele frequency
+
+   .. warning::
+
+      Assumes di-allelic case
+
+
+   .. code-block:: py
+      :caption: Examples of input parameters
+
+      >>> population_allele_frequencies
+      {0: defdict({1: 0.9807692307692307, 2: 0.019230769230769232}),
+      1: defdict({1: 0.8461538461538461, 3: 0.15384615384615385}),
+      2: defdict({1: 0.07692307692307693, 3: 0.9230769230769231}),
+      3: defdict({0: 0.9230769230769231, 2: 0.07692307692307693}),
+      4: defdict({0: 0.019230769230769232, 2: 0.9807692307692307}),
+      5: defdict({0: 0.9230769230769231, 2: 0.07692307692307693}),
+      6: defdict({0: 0.75, 2: 0.25}),
+      ...,
+      }
+      >>> print(allele_array)
+      [[1 2]
+       [1 3]
+       [3 1]
+       ...,
+       [1 0]
+       [3 0]
+       [3 1]]
+      >>> qtl = sorted(tuple(random(sample(range(1478), 10)))
+      >>> print(allele_effect_array[qtl])
+      [[ 1.892  0.179  0.     0.     0.     0.   ]
+       [ 0.92   1.     0.     0.     0.     0.   ]
+       [ 0.079  0.     0.     1.653  0.     0.   ]
+       [ 0.118  1.263  0.     0.     0.     0.   ]
+       [ 3.731  0.     2.626  0.     0.     0.   ]
+       [ 0.     0.673  0.     0.417  0.     0.   ]
+       [ 0.418  0.     0.     1.94   0.     0.   ]
+       [ 0.     0.6    0.     0.175  0.     0.   ]
+      ...,
+      ]
+
+   .. code-block:: py
+      :caption: Example usage
+
+      >>> generate_allele_effects_table(population_allele_frequencies, allele_array, allele_effect_array)
+
+   .. raw:: html
+
+      <table border="1" class="dataframe">
+        <thead>
+          <tr style="text-align: right;">
+            <th></th>
+            <th>alpha</th>
+            <th>alpha_effect</th>
+            <th>alpha_frequency</th>
+            <th>beta</th>
+            <th>beta_effect</th>
+            <th>beta_frequency</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>0</th>
+            <td>1</td>
+            <td>0.000000</td>
+            <td>0.980769</td>
+            <td>2</td>
+            <td>0.000000</td>
+            <td>0.019231</td>
+          </tr>
+          <tr>
+            <th>1</th>
+            <td>1</td>
+            <td>0.000000</td>
+            <td>0.846154</td>
+            <td>3</td>
+            <td>0.000000</td>
+            <td>0.153846</td>
+          </tr>
+          <tr>
+            <th>2</th>
+            <td>3</td>
+            <td>0.000000</td>
+            <td>0.923077</td>
+            <td>1</td>
+            <td>0.000000</td>
+            <td>0.076923</td>
+          </tr>
+          <tr>
+            <th>3</th>
+            <td>0</td>
+            <td>0.000000</td>
+            <td>0.923077</td>
+            <td>2</td>
+            <td>0.000000</td>
+            <td>0.076923</td>
+          </tr>
+          <tr>
+            <th>4</th>
+            <td>2</td>
+            <td>0.000000</td>
+            <td>0.980769</td>
+            <td>0</td>
+            <td>0.000000</td>
+            <td>0.019231</td>
+          </tr>
+          <tr>
+            <th>5</th>
+            <td>0</td>
+            <td>0.000000</td>
+            <td>0.923077</td>
+            <td>2</td>
+            <td>0.000000</td>
+            <td>0.076923</td>
+          </tr>
+          <tr>
+            <th>6</th>
+            <td>0</td>
+            <td>0.000000</td>
+            <td>0.750000</td>
+            <td>2</td>
+            <td>0.000000</td>
+            <td>0.250000</td>
+          </tr>
+          <tr>
+            <th>7</th>
+            <td>3</td>
+            <td>0.000000</td>
+            <td>0.961538</td>
+            <td>1</td>
+            <td>0.000000</td>
+            <td>0.038462</td>
+          </tr>
+          <tr>
+            <th>8</th>
+            <td>0</td>
+            <td>0.000000</td>
+            <td>0.846154</td>
+            <td>2</td>
+            <td>0.000000</td>
+            <td>0.153846</td>
+          </tr>
+          <tr>
+            <th>9</th>
+            <td>1</td>
+            <td>0.000000</td>
+            <td>0.961538</td>
+            <td>3</td>
+            <td>0.000000</td>
+            <td>0.038462</td>
+          </tr>
+          <tr>
+            <th>10</th>
+            <td>1</td>
+            <td>0.000000</td>
+            <td>0.730769</td>
+            <td>3</td>
+            <td>0.000000</td>
+            <td>0.269231</td>
+          </tr>
+          <tr>
+            <th>11</th>
+            <td>1</td>
+            <td>0.000000</td>
+            <td>0.923077</td>
+            <td>3</td>
+            <td>0.000000</td>
+            <td>0.076923</td>
+          </tr>
+          <tr>
+            <th>12</th>
+            <td>3</td>
+            <td>0.000000</td>
+            <td>0.788462</td>
+            <td>1</td>
+            <td>0.000000</td>
+            <td>0.211538</td>
+          </tr>
+          <tr>
+            <th>13</th>
+            <td>2</td>
+            <td>0.000000</td>
+            <td>0.961538</td>
+            <td>0</td>
+            <td>0.000000</td>
+            <td>0.038462</td>
+          </tr>
+          <tr>
+            <th>14</th>
+            <td>3</td>
+            <td>0.000000</td>
+            <td>0.961538</td>
+            <td>0</td>
+            <td>0.000000</td>
+            <td>0.038462</td>
+          </tr>
+          <tr>
+            <th>15</th>
+            <td>3</td>
+            <td>0.000000</td>
+            <td>0.538462</td>
+            <td>1</td>
+            <td>0.000000</td>
+            <td>0.461538</td>
+          </tr>
+          <tr>
+            <th>16</th>
+            <td>2</td>
+            <td>0.000000</td>
+            <td>0.923077</td>
+            <td>3</td>
+            <td>0.000000</td>
+            <td>0.076923</td>
+          </tr>
+          <tr>
+            <th>17</th>
+            <td>2</td>
+            <td>0.000000</td>
+            <td>0.961538</td>
+            <td>3</td>
+            <td>0.000000</td>
+            <td>0.038462</td>
+          </tr>
+          <tr>
+            <th>18</th>
+            <td>2</td>
+            <td>0.000000</td>
+            <td>0.961538</td>
+            <td>0</td>
+            <td>0.000000</td>
+            <td>0.038462</td>
+          </tr>
+          <tr>
+            <th>19</th>
+            <td>5</td>
+            <td>0.000000</td>
+            <td>0.961538</td>
+            <td>4</td>
+            <td>0.000000</td>
+            <td>0.038462</td>
+          </tr>
+          <tr>
+            <th>20</th>
+            <td>3</td>
+            <td>0.000000</td>
+            <td>0.538462</td>
+            <td>0</td>
+            <td>0.000000</td>
+            <td>0.461538</td>
+          </tr>
+          <tr>
+            <th>21</th>
+            <td>2</td>
+            <td>0.000000</td>
+            <td>0.769231</td>
+            <td>1</td>
+            <td>0.000000</td>
+            <td>0.230769</td>
+          </tr>
+          <tr>
+            <th>22</th>
+            <td>2</td>
+            <td>0.000000</td>
+            <td>0.980769</td>
+            <td>3</td>
+            <td>0.000000</td>
+            <td>0.019231</td>
+          </tr>
+          <tr>
+            <th>23</th>
+            <td>5</td>
+            <td>0.000000</td>
+            <td>0.519231</td>
+            <td>4</td>
+            <td>0.000000</td>
+            <td>0.480769</td>
+          </tr>
+          <tr>
+            <th>24</th>
+            <td>1</td>
+            <td>0.000000</td>
+            <td>0.961538</td>
+            <td>3</td>
+            <td>0.000000</td>
+            <td>0.038462</td>
+          </tr>
+          <tr>
+            <th>25</th>
+            <td>2</td>
+            <td>0.000000</td>
+            <td>0.692308</td>
+            <td>0</td>
+            <td>0.000000</td>
+            <td>0.307692</td>
+          </tr>
+          <tr>
+            <th>26</th>
+            <td>3</td>
+            <td>0.000000</td>
+            <td>0.980769</td>
+            <td>0</td>
+            <td>0.000000</td>
+            <td>0.019231</td>
+          </tr>
+          <tr>
+            <th>27</th>
+            <td>0</td>
+            <td>1.891549</td>
+            <td>0.980769</td>
+            <td>1</td>
+            <td>0.179440</td>
+            <td>0.019231</td>
+          </tr>
+          <tr>
+            <th>28</th>
+            <td>2</td>
+            <td>0.000000</td>
+            <td>0.884615</td>
+            <td>1</td>
+            <td>0.000000</td>
+            <td>0.115385</td>
+          </tr>
+          <tr>
+            <th>29</th>
+            <td>2</td>
+            <td>0.000000</td>
+            <td>0.653846</td>
+            <td>0</td>
+            <td>0.000000</td>
+            <td>0.346154</td>
+          </tr>
+          <tr>
+            <th>...</th>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+            <td>...</td>
+          </tr>
+          <tr>
+            <th>1448</th>
+            <td>3</td>
+            <td>0.000000</td>
+            <td>0.923077</td>
+            <td>0</td>
+            <td>0.000000</td>
+            <td>0.076923</td>
+          </tr>
+          <tr>
+            <th>1449</th>
+            <td>0</td>
+            <td>0.415928</td>
+            <td>0.653846</td>
+            <td>3</td>
+            <td>0.921988</td>
+            <td>0.346154</td>
+          </tr>
+          <tr>
+            <th>1450</th>
+            <td>0</td>
+            <td>0.000000</td>
+            <td>0.730769</td>
+            <td>2</td>
+            <td>0.000000</td>
+            <td>0.269231</td>
+          </tr>
+          <tr>
+            <th>1451</th>
+            <td>1</td>
+            <td>0.000000</td>
+            <td>0.730769</td>
+            <td>3</td>
+            <td>0.000000</td>
+            <td>0.269231</td>
+          </tr>
+          <tr>
+            <th>1452</th>
+            <td>4</td>
+            <td>0.000000</td>
+            <td>0.980769</td>
+            <td>5</td>
+            <td>0.000000</td>
+            <td>0.019231</td>
+          </tr>
+          <tr>
+            <th>1453</th>
+            <td>1</td>
+            <td>0.000000</td>
+            <td>0.961538</td>
+            <td>3</td>
+            <td>0.000000</td>
+            <td>0.038462</td>
+          </tr>
+          <tr>
+            <th>1454</th>
+            <td>3</td>
+            <td>0.000000</td>
+            <td>0.923077</td>
+            <td>1</td>
+            <td>0.000000</td>
+            <td>0.076923</td>
+          </tr>
+          <tr>
+            <th>1455</th>
+            <td>3</td>
+            <td>0.000000</td>
+            <td>0.538462</td>
+            <td>2</td>
+            <td>0.000000</td>
+            <td>0.461538</td>
+          </tr>
+          <tr>
+            <th>1456</th>
+            <td>0</td>
+            <td>0.000000</td>
+            <td>0.942308</td>
+            <td>2</td>
+            <td>0.000000</td>
+            <td>0.057692</td>
+          </tr>
+          <tr>
+            <th>1457</th>
+            <td>2</td>
+            <td>0.000000</td>
+            <td>0.942308</td>
+            <td>0</td>
+            <td>0.000000</td>
+            <td>0.057692</td>
+          </tr>
+          <tr>
+            <th>1458</th>
+            <td>0</td>
+            <td>0.000000</td>
+            <td>0.769231</td>
+            <td>1</td>
+            <td>0.000000</td>
+            <td>0.230769</td>
+          </tr>
+          <tr>
+            <th>1459</th>
+            <td>4</td>
+            <td>0.000000</td>
+            <td>0.942308</td>
+            <td>5</td>
+            <td>0.000000</td>
+            <td>0.057692</td>
+          </tr>
+          <tr>
+            <th>1460</th>
+            <td>3</td>
+            <td>0.000000</td>
+            <td>0.807692</td>
+            <td>0</td>
+            <td>0.000000</td>
+            <td>0.192308</td>
+          </tr>
+          <tr>
+            <th>1461</th>
+            <td>2</td>
+            <td>0.000000</td>
+            <td>0.980769</td>
+            <td>1</td>
+            <td>0.000000</td>
+            <td>0.019231</td>
+          </tr>
+          <tr>
+            <th>1462</th>
+            <td>1</td>
+            <td>0.000000</td>
+            <td>0.961538</td>
+            <td>3</td>
+            <td>0.000000</td>
+            <td>0.038462</td>
+          </tr>
+          <tr>
+            <th>1463</th>
+            <td>1</td>
+            <td>0.000000</td>
+            <td>0.538462</td>
+            <td>3</td>
+            <td>0.000000</td>
+            <td>0.461538</td>
+          </tr>
+          <tr>
+            <th>1464</th>
+            <td>3</td>
+            <td>0.000000</td>
+            <td>0.961538</td>
+            <td>1</td>
+            <td>0.000000</td>
+            <td>0.038462</td>
+          </tr>
+          <tr>
+            <th>1465</th>
+            <td>2</td>
+            <td>0.000000</td>
+            <td>0.961538</td>
+            <td>0</td>
+            <td>0.000000</td>
+            <td>0.038462</td>
+          </tr>
+          <tr>
+            <th>1466</th>
+            <td>1</td>
+            <td>1.176202</td>
+            <td>0.923077</td>
+            <td>3</td>
+            <td>0.260720</td>
+            <td>0.076923</td>
+          </tr>
+          <tr>
+            <th>1467</th>
+            <td>2</td>
+            <td>0.000000</td>
+            <td>0.884615</td>
+            <td>0</td>
+            <td>0.000000</td>
+            <td>0.115385</td>
+          </tr>
+          <tr>
+            <th>1468</th>
+            <td>2</td>
+            <td>0.000000</td>
+            <td>0.634615</td>
+            <td>0</td>
+            <td>0.000000</td>
+            <td>0.365385</td>
+          </tr>
+          <tr>
+            <th>1469</th>
+            <td>1</td>
+            <td>0.000000</td>
+            <td>0.961538</td>
+            <td>2</td>
+            <td>0.000000</td>
+            <td>0.038462</td>
+          </tr>
+          <tr>
+            <th>1470</th>
+            <td>2</td>
+            <td>0.000000</td>
+            <td>0.692308</td>
+            <td>0</td>
+            <td>0.000000</td>
+            <td>0.307692</td>
+          </tr>
+          <tr>
+            <th>1471</th>
+            <td>0</td>
+            <td>0.000000</td>
+            <td>0.923077</td>
+            <td>3</td>
+            <td>0.000000</td>
+            <td>0.076923</td>
+          </tr>
+          <tr>
+            <th>1472</th>
+            <td>1</td>
+            <td>0.000000</td>
+            <td>0.961538</td>
+            <td>0</td>
+            <td>0.000000</td>
+            <td>0.038462</td>
+          </tr>
+          <tr>
+            <th>1473</th>
+            <td>0</td>
+            <td>0.000000</td>
+            <td>0.865385</td>
+            <td>1</td>
+            <td>0.000000</td>
+            <td>0.134615</td>
+          </tr>
+          <tr>
+            <th>1474</th>
+            <td>0</td>
+            <td>0.000000</td>
+            <td>0.807692</td>
+            <td>2</td>
+            <td>0.000000</td>
+            <td>0.192308</td>
+          </tr>
+          <tr>
+            <th>1475</th>
+            <td>1</td>
+            <td>0.000000</td>
+            <td>0.884615</td>
+            <td>0</td>
+            <td>0.000000</td>
+            <td>0.115385</td>
+          </tr>
+          <tr>
+            <th>1476</th>
+            <td>3</td>
+            <td>0.000000</td>
+            <td>0.961538</td>
+            <td>0</td>
+            <td>0.000000</td>
+            <td>0.038462</td>
+          </tr>
+          <tr>
+            <th>1477</th>
+            <td>3</td>
+            <td>0.000000</td>
+            <td>0.961538</td>
+            <td>1</td>
+            <td>0.000000</td>
+            <td>0.038462</td>
+          </tr>
+        </tbody>
+      </table>
+
+
+.. _definition_minor_allele_frequencies_table:
+
+.. py:method:: minor_allele_frequencies_table(population_allele_frequencies, minor_alleles)
+
+   :parameter dict population_allele_frequencies: Allele frequencies by locus
+   :parameter minor_alleles: Array or list of minor alleles
+
+   Returns a pandas DataFrame of the minor alleles and their frequencies.
+   Expects a set of allele frequencies from simuPOP's Stat class.
+
+   .. code-block:: py
+      :caption: Example usage
+
+      >>> sim.stat(pop, alleleFreq=sim.ALL_AVAIL)
+      >>> population_allele_frequencies = pop.dvars().alleleFreq
+      >>> population_allele_frequencies
+      {0: defdict({1: 0.9807692307692307, 2: 0.019230769230769232}),
+       1: defdict({1: 0.8461538461538461, 3: 0.15384615384615385}),
+       2: defdict({1: 0.07692307692307693, 3: 0.9230769230769231}),
+       3: defdict({0: 0.9230769230769231, 2: 0.07692307692307693}),
+      ...,
+      }
+      >>> mafrqs = minor_allele_frequencies_table(population_allele_frequencies, minor_alleles)
+      >>> print(mafrq)
+            minor_allele  minor_frequency
+      0                2         0.019231
+      1                3         0.153846
+      2                1         0.076923
+      3                2         0.076923
+      4                0         0.019231
+      5                2         0.076923
+      ...
+
+      [1478 columns x 2 rows]
 
