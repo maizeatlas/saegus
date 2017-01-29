@@ -197,6 +197,70 @@ class SecondOrderPairIDChooser(object):
             yield pop.indByID(male_id), pop.indByID(female_id)
 
 
+class RandomCross(object):
+    """
+    A class intended for use with simulations using a single replicate. This
+    class contains functions to pre-determine mating partners. The
+    pre-determined pairs are stored in arrays and used as parameters for
+    ParentChooser functions.
+    """
+
+    def __init__(self, single_replicate_population,
+                 number_sub_pops, sub_pop_size):
+        """
+        :parameter single_replicate_population: simuPOP.Population object
+        :parameter int number_sub_pops: Determines number of sub-populations of each replicate
+        :parameter int sub_pop_size: Uniform size of sub-populations
+        """
+        self.multiple_replicate_population = single_replicate_population
+        self.number_sub_pops = number_sub_pops
+        self.sub_pop_size = sub_pop_size
+
+    def __str__(self):
+        return "Number of Sub-Populations: {nbr_sps}\n" \
+               "Sub-Population Size: {sp_size}\n"\
+            .format(nbr_sps=self.number_sub_pops, sp_size=self.sub_pop_size)
+
+    def determine_random_cross(self):
+        """
+        Creates separate dictionaries for IDs of mothers and fathers respectively.
+        Entries are keyed corresponding to ``rep`` of the replicate the
+        IDs are taken from.
+        """
+
+#        multi_mothers = {}
+#        multi_fathers = {}
+
+#        for rep in self.multiple_replicate_population.populations():
+#            rep.splitSubPop(0, sizes=[self.sub_pop_size] * self.number_sub_pops)
+
+        self.single_replicate_population.splitSubPop(0,
+             sizes=[self.sub_pop_size]*self.number_sub_pops
+                                                     )
+
+        cross_choices = np.zeros((self.number_sub_pops,
+                                  2 * self.sub_pop_size))
+
+        for sp in range(self.single_replicate_population.numSubPop()):
+            cross_choices[sp] = [random.choice(rep.indInfo('ind_id', sp))
+                                     for k in range(2*self.sub_pop_size)]
+
+            mother_idxs = list(range(self.number_sub_pops))[::2]
+            father_idxs = list(range(self.number_sub_pops))[1::2]
+
+            mothers = np.concatenate([cross_choices[m_idx]
+                                      for m_idx in mother_idxs])
+            fathers = np.concatenate([cross_choices[f_idx]
+                                      for f_idx in father_idxs])
+            multi_mothers[rep.dvars().rep] = mothers
+            multi_fathers[rep.dvars().rep] = fathers
+
+        self.single_replicate_population.mergeSubPops()
+
+        return mother_ids, father_ids
+
+
+
 class MultiRandomCross(object):
     """
     A class intended for use with simulations using multiple replicates which

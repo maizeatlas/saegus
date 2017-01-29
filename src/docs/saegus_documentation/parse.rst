@@ -63,3 +63,5 @@ data from simulated output i.e. allele frequencies from genotype files.
 
       :py:function:`pedigree_writer` opens a file in append mode by default.
 
+
+

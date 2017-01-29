@@ -11,7 +11,36 @@ import random
 import shelve
 import h5py
 from scipy import linalg
+from functools import singledispatch
+import xml.etree.ElementTree as ET
+import lxml.etree as etree
 from . import operators, parameters
+
+
+
+
+
+def tassel_results_tables(gwas_file_name, q_values_file_name,
+                          minor_allele_frequency_table,
+                          quantitative_allele_table):
+    raw_gwas_results = pd.read_csv(gwas_file_name, sep='\t')
+    raw_gwas_results.drop(0, axis=0, inplace=True)
+    raw_gwas_results.drop('Trait', axis=1, inplace=True)
+    raw_gwas_results.index = np.array(list(map(int, raw_gwas_results.Marker)))
+    q_values = pd.read_csv(q_values_file_name, sep='\t')
+    q_values.index = np.array(list(map(int, raw_gwas_results.Marker)))
+    raw_gwas_results = raw_gwas_results.join(q_values)
+
+    assert minor_allele_frequency_table.index.dtype == raw_gwas_results.index.dtype, "Indexes of these tables are different"
+
+    raw_gwas_results = raw_gwas_results.join(
+        minor_allele_frequency_table.ix[raw_gwas_results.index, :])
+
+    assert quantitative_allele_table.index.dtype == raw_gwas_results.index.dtype, "Indexes of these tables are different"
+
+    raw_gwas_results = raw_gwas_results.join(
+        quantitative_allele_table.ix[raw_gwas_results.index, :])
+    return raw_gwas_results
 
 
 def generate_allele_effects_table(population_allele_frequencies, allele_array,
@@ -24,11 +53,12 @@ def generate_allele_effects_table(population_allele_frequencies, allele_array,
     + beta allele
     + beta allele effect
     + beta allele frequency
+    + difference
 
     :warning:`Assumes di-allelic case`
     """
     column_labels = ['alpha', 'alpha_effect', 'alpha_frequency',
-                     'beta', 'beta_effect', 'beta_frequency']
+                     'beta', 'beta_effect', 'beta_frequency', 'difference']
     number_of_loci = len(population_allele_frequencies)
     alpha_alleles, beta_alleles = allele_array[:, 0], allele_array[:, 1]
     alpha_effects, beta_effects = allele_effect_array[
@@ -41,11 +71,15 @@ def generate_allele_effects_table(population_allele_frequencies, allele_array,
     beta_frequencies = np.asarray([population_allele_frequencies[locus][allele]
                                    for locus, allele in
                                    enumerate(beta_alleles)])
+    differences = np.abs(alpha_effects - beta_effects)
     allele_effects_table = pd.DataFrame(
         np.asarray([alpha_alleles, alpha_effects, alpha_frequencies,
-                    beta_alleles, beta_effects, beta_frequencies]).T,
+                    beta_alleles, beta_effects, beta_frequencies,
+                    differences]).T,
         columns=column_labels)
+
     return allele_effects_table
+
 
 def minor_allele_frequencies_table(population_allele_frequencies, minor_alleles):
     """
@@ -61,6 +95,214 @@ def minor_allele_frequencies_table(population_allele_frequencies, minor_alleles)
                                 for locus, allele in enumerate(minor_alleles)])
     return pd.DataFrame(np.array([minor_alleles, minor_allele_frequencies]).T,
                         columns=column_labels)
+
+
+@singledispatch
+def combine_population_samples(population_sample_list):
+    """
+    Given a list of separate simuPOP.Populations this function will add all
+    the individuals to the first population of the list. Order of the
+    individuals is preserved.
+    :param population_sample_list: List of simuPOP.Populations
+    :return:
+    """
+    for sample in population_sample_list[1:]:
+        population_sample_list[0].addIndFrom(sample)
+    return population_sample_list[0]
+
+@combine_population_samples.register(list)
+def list_of_populations(population_sample_list):
+    """
+    Given a list of separate simuPOP.Populations this function will add all
+    the individuals to the first population of the list. Order of the
+    individuals is preserved.
+    :param population_sample_list: List of simuPOP.Populations
+    :return:
+    """
+    for sample in population_sample_list[1:]:
+        population_sample_list[0].addIndFrom(sample)
+    return population_sample_list[0]
+
+
+@combine_population_samples.register(dict)
+def dictionary_of_populations(population_sample_library):
+    for sample_list in population_sample_library.values():
+        for sample in sample_list[1:]:
+            sample_list[0].addIndFrom(sample)
+
+
+
+
+class MetaGeneration(object):
+    """
+    A collection of functions to handle the special case of meta-populations.
+    A meta-population is a population of individuals from different generations.
+    The functions attached to this class will store individual generations
+    then combine the individual samples into a meta-population. The output
+    will be stored in an HDF5 file using the h5py package.
+    """
+
+    def __init__(self, hdf5):
+        """
+        hdf5 is a string of an HDF5 file name. Results of any of the methods
+        are stored in this file. Methods for each type of data will be stored
+        in sub-groups of the same HDF5 file.
+
+        :param str hdf5: HDF5 file name
+        """
+        self.hdf5 = hdf5
+
+
+    def extract_genotype_matrix(self, population):
+        """
+        Converts the genotype of the population into a numpy array for ease
+        of use with other modules. Assumes that each locus has less than ~100
+        alleles.
+
+        :param population: simuPOP.Population
+        """
+        genotype_matrix = np.zeros((population.popSize(),
+                                    population.genoSize()), dtype=np.int8)
+        for row, ind in enumerate(population):
+            genotype_matrix[row, ...] = ind.genotype()
+
+        return genotype_matrix
+
+
+    def store_allele_frequency_data(self, meta_population_library, minor_alleles,
+                                    hdf_file_name):
+        """
+        Collects minor allele frequency data of a multiple generation
+        population library. Stores the allele frequency data in an
+        HDF5 file.
+
+            af/replicate_id/generation_id
+
+        """
+        with h5py.File(hdf_file_name) as hdf_file:
+            for rep_id, sample_list in meta_population_library.items():
+                for sample in sample_list:
+                    gen_id = int(max(sample.indInfo('generation')))
+                    hdf_file.create_dataset('af/' + str(rep_id) + '/' + str(gen_id),
+                                            data=np.asarray(list(
+                                                sample.dvars().alleleFreq[locus][
+                                                    allele]
+                                                for locus, allele in
+                                                enumerate(minor_alleles))))
+
+
+    def store_genotype_phenotype_data(self, meta_population_library, hdf_file_name):
+        """
+        Collects the genotype and phenotype data of a multiple replicate
+        multiple sample population dictionary. Stores the results in
+        an HDF5 file.
+
+        Stored by
+        geno_pheno/replicate_id/generation_id
+        """
+        with h5py.File(hdf_file_name) as hdf_file:
+            for rep_id, sample_list in meta_population_library.items():
+                for sample in sample_list:
+                    gen_id = int(max(sample.indInfo('generation')))
+                    sample.setIndInfo(rep_id, 'replicate')
+                    g_and_p = np.asarray((sample.indInfo('ind_id'),
+                                          sample.indInfo('replicate'),
+                                          sample.indInfo('generation'),
+                                          sample.indInfo('g'),
+                                          sample.indInfo('p'))).T
+                    hdf_file.create_dataset(
+                        'geno_pheno/' + str(rep_id) + '/' + str(gen_id),
+                        data=g_and_p)
+
+
+    def store_heterozygote_frequency_data(self, meta_population_library,
+                                          hdf_file_name):
+        """
+        Collects minor allele frequency data of a multiple generation
+        population library.Stores the allele frequency data in an
+        HDF5 file.
+
+        hetf replicate_id/generation_id
+        """
+        with h5py.File(hdf_file_name) as hdf_file:
+            for rep_id, sample_list in meta_population_library.items():
+                for sample in sample_list:
+                    gen_id = int(max(sample.indInfo('generation')))
+                    hdf_file.create_dataset(
+                        'hetf/' + str(rep_id) + '/' + str(gen_id),
+                        data=np.asarray(list(sample.dvars().heteroFreq.values())))
+
+
+    def store_genotype_frequency_data(self, meta_population_library,
+                                      minor_alleles, hdf_file_name):
+        """
+        Collects the frequency of the minor allele homozygote data
+        of a multiple replicate multiple sample population dictionary. The minor
+        allele genotypes are created using the ``minor_alleles`` parameter.
+        Stores the results in an HDF5 file.
+
+        Keyed by
+
+            homf/replicate_id/generation_id
+        """
+        minor_homozygote_genotypes = tuple(zip(minor_alleles, minor_alleles))
+        with h5py.File(hdf_file_name) as hdf_file:
+            for rep_id, sample_list in meta_population_library.items():
+                for sample in sample_list:
+                    gen_id = int(max(sample.indInfo('generation')))
+                    hdf_file.create_dataset(
+                        'homf/' + str(rep_id) + '/' + str(gen_id), data=np.asarray(
+                            tuple(sample.dvars().genoFreq[locus][genotype]
+                                  for locus, genotype in
+                                  enumerate(minor_homozygote_genotypes))))
+
+
+    def multiple_sample_analyzer(self, meta_population_library, qtl, allele_effects,
+                                 minor_alleles, loci):
+        int_to_snp_map = {0: 'A', 1: 'C', 2: 'G', 3: 'T', 4: '-', 5: '+'}
+        indir = "/home/vakanas/tassel-5-standalone/"
+        minor_allele_frequency_file = h5py.File(hdf_file_name)
+        run_id = self.run_id
+
+        for rep_id, sample_list in meta_population_library.items():
+            for sample in sample_list:
+                gen_id_name = str(int(max(sample.indInfo('generation'))))
+                rep_id_name = str(rep_id)
+
+                operators.assign_additive_g(sample, qtl,
+                                            allele_effects)
+                operators.calculate_error_variance(sample, 0.7)
+                operators.phenotypic_effect_calculator(sample)
+
+                name = run_id + '_' + rep_id_name + '_' + gen_id_name
+
+                af_access_name = '/'.join(['af', rep_id_name, gen_id_name])
+                minor_allele_frequencies = \
+                minor_allele_frequency_file[af_access_name][list(loci)]
+
+                gwas = GWAS(sample, loci, run_id)
+
+                ccm = gwas.calculate_count_matrix(minor_alleles, loci)
+                ps_svd = gwas.pop_struct_svd(ccm)
+                gwas.population_structure_formatter(ps_svd,
+                                                    indir + name + '_structure_matrix.txt')
+                gwas.hapmap_formatter(int_to_snp_map,
+                                      indir + name + '_simulated_hapmap.txt')
+                gwas.trait_formatter(indir + name + '_phenotype_vector.txt')
+                gwas.calc_kinship_matrix(ccm, minor_allele_frequencies,
+                                         indir + name + '_kinship_matrix.txt')
+
+                gwas.replicate_tassel_gwas_configs(rep_id_name,
+                                                   gen_id_name,
+                                                   indir + name + '_simulated_hapmap.txt',
+                                                   indir + name + '_kinship_matrix.txt',
+                                                   indir + name + '_phenotype_vector.txt',
+                                                   indir + name + '_structure_matrix.txt',
+                                                   "C:\\tassel\\output\\" + name + '_out_',
+                                                   "C:\\Users\DoubleDanks\\BISB\\wisser\\code\\rjwlab-scripts\\"
+                                                   "saegus_project\\devel\\magic\\1478\\gwas_pipeline.xml")
+
+        minor_allele_frequency_file.close()
 
 
 
@@ -320,8 +562,7 @@ class SingleGeneration(object):
     def __init__(self):
         pass
 
-    @staticmethod
-    def collect_allele_frequency_data(meta_population_library, minor_alleles):
+    def collect_allele_frequency_data(self, meta_population_library, minor_alleles):
         """
         Collects minor allele frequency data of a multiple generation
         population library. Columns of the resulting array are:
@@ -343,8 +584,7 @@ class SingleGeneration(object):
                         enumerate(minor_alleles)))))
         return np.asarray(minor_allele_frequencies)
 
-    @staticmethod
-    def collect_genotype_phenotype_data(meta_population_library):
+    def collect_genotype_phenotype_data(self, meta_population_library):
         """
         Collects the genotype and phenotype data of a multiple replicate
         multiple sample population dictionary. The resulting data is
@@ -363,8 +603,7 @@ class SingleGeneration(object):
                                 sample.indInfo('p'))).T)
         return np.asarray(genotype_phenotype_data)
 
-    @staticmethod
-    def collect_heterozygote_frequency_data(meta_population_library):
+    def collect_heterozygote_frequency_data(self, meta_population_library):
         """
         Collects minor allele frequency data of a multiple generation
         population library.
@@ -377,8 +616,7 @@ class SingleGeneration(object):
                         sample.dvars().heteroFreq.values()))))
         return np.asarray(heterozygote_frequencies)
 
-    @staticmethod
-    def collect_genotype_frequency_data(meta_population_library, minor_alleles):
+    def collect_genotype_frequency_data(self, meta_population_library, minor_alleles):
         """
         Collects the frequency of the minor allele homozygote data
         of a multiple replicate multiple sample population dictionary. The minor
@@ -404,8 +642,7 @@ class SingleGeneration(object):
                     enumerate(minor_allele_homozygotes)))))
         return np.asarray(minor_allele_homozygote_frequencies)
 
-    @staticmethod
-    def store_allele_frequency_data(meta_population_library, minor_alleles,
+    def store_allele_frequency_data(self, meta_population_library, minor_alleles,
                                     hdf_file_name):
         """
         Collects minor allele frequency data of a multiple generation
@@ -425,8 +662,7 @@ class SingleGeneration(object):
                                  for locus, allele in
                                  enumerate(minor_alleles))))
 
-    @staticmethod
-    def store_genotype_phenotype_data(meta_population_library, hdf_file_name):
+    def store_genotype_phenotype_data(self, meta_population_library, hdf_file_name):
         """
         Collects the genotype and phenotype data of a multiple replicate
         multiple sample population dictionary. Stores the results in
@@ -449,8 +685,7 @@ class SingleGeneration(object):
                         'geno_pheno/' + str(rep_id) + '/' + str(gen_id),
                         data=g_and_p)
 
-    @staticmethod
-    def store_heterozygote_frequency_data(meta_population_library,
+    def store_heterozygote_frequency_data(self, meta_population_library,
                                           hdf_file_name):
         """
         Collects minor allele frequency data of a multiple generation
@@ -467,8 +702,7 @@ class SingleGeneration(object):
                         data=np.asarray(
                             list(sample.dvars().heteroFreq.values())))
 
-    @staticmethod
-    def store_genotype_frequency_data(meta_population_library, minor_alleles,
+    def store_genotype_frequency_data(self, meta_population_library, minor_alleles,
                                       hdf_file_name):
         """
         Collects the frequency of the minor allele homozygote data
@@ -643,52 +877,6 @@ def allele_frq_table(pop, number_gens,
     data['aggregate'] = [allele_frq_data['minor', 'frequency'][locus] for locus in range(pop.totNumLoci())]
     af_table = pd.DataFrame(data, columns=data_columns)
     return af_table
-
-
-
-def generate_allele_effects_table(qtl, alleles, allele_effects,
-                                  saegus_to_tassel_conversions,
-                                  output_file_name=None):
-    """
-    Creates a simple pd.DataFrame for allele effects. Hard-coded
-    for bi-allelic case.
-
-    :parameter list qtl: List of loci declared as QTL
-    :parameter np.array alleles: Array of alleles at each locus
-    :parameter dict allele_effects: Mapping of effects for alleles at each QTLocus
-    """
-    ae_table = {
-        'locus': [],
-        'tassel_locus': [],
-        'alpha_allele': [],
-        'alpha_effect': [],
-        'beta_allele': [],
-        'beta_effect': [],
-        'difference': []
-    }
-
-    for locus in qtl:
-        ae_table['locus'].append(locus)
-        ae_table['tassel_locus'].append(saegus_to_tassel_conversions[locus])
-        alpha_allele, beta_allele = alleles[locus]
-        ae_table['alpha_allele'].append(alpha_allele)
-        ae_table['beta_allele'].append(beta_allele)
-        alpha_effect = allele_effects[locus][alpha_allele]
-        ae_table['alpha_effect'].append(alpha_effect)
-        beta_effect = allele_effects[locus][beta_allele]
-        ae_table['beta_effect'].append(beta_effect)
-        difference = math.fabs(alpha_effect - beta_effect)
-        ae_table['difference'].append(difference)
-    order_of_columns = ['locus', 'tassel_locus', 'alpha_allele', 'alpha_effect',
-                        'beta_allele', 'beta_effect', 'difference']
-    allele_effect_table = pd.DataFrame(ae_table, columns=order_of_columns)
-
-    if output_file_name is not None:
-        allele_effect_table.to_csv(output_file_name, sep='\t',
-                                   index=False, float_format='%.3f')
-
-    return allele_effect_table
-
 
 
 def collect_haplotype_data(pop, allele_effects, quantitative_trait_loci):

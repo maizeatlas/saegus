@@ -1,0 +1,45 @@
+
+R version 3.3.1 (2016-06-21) -- "Bug in Your Hair"
+Copyright (C) 2016 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> #! /usr/lib/R/bin/R
+> 
+> library(qvalue)
+> library(ggplot2)
+> library(gap)
+gap version 1.1-16
+> 
+> setwd("/home/vakanas/tassel-5-standalone/output")
+> 
+> input_file_name = "epsilon_0_out_2.txt"
+> output_file_name = "epsilon_0_qvalues.txt"
+> 
+> results_header = scan(input_file_name, what="character", nlines=1, sep="\t")
+Read 18 items
+> gwas_results = read.table(input_file_name, header=F, row.names = NULL, skip=2)
+> colnames(gwas_results) = results_header
+> pvalues = gwas_results$p
+> qobj = qvalue(p = pvalues)
+> qvalues = data.frame(qobj$qvalues)
+> colnames(qvalues) = "q"
+> write.table(qvalues, output_file_name, sep="\t")
+> 
+> 
+> proc.time()
+   user  system elapsed 
+  0.352   0.015   0.360 
