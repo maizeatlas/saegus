@@ -212,7 +212,8 @@ class RandomCross(object):
         :parameter int number_sub_pops: Determines number of sub-populations of each replicate
         :parameter int sub_pop_size: Uniform size of sub-populations
         """
-        self.multiple_replicate_population = single_replicate_population
+
+        self.single_replicate_population = single_replicate_population
         self.number_sub_pops = number_sub_pops
         self.sub_pop_size = sub_pop_size
 
@@ -223,37 +224,29 @@ class RandomCross(object):
 
     def determine_random_cross(self):
         """
-        Creates separate dictionaries for IDs of mothers and fathers respectively.
-        Entries are keyed corresponding to ``rep`` of the replicate the
-        IDs are taken from.
+        Creates a pair of arrays which contain the IDs of mating pairs. The
+        order of the IDs in each array determines the mate of the `mother`
+        or `father`.
         """
 
-#        multi_mothers = {}
-#        multi_fathers = {}
-
-#        for rep in self.multiple_replicate_population.populations():
-#            rep.splitSubPop(0, sizes=[self.sub_pop_size] * self.number_sub_pops)
-
         self.single_replicate_population.splitSubPop(0,
-             sizes=[self.sub_pop_size]*self.number_sub_pops
-                                                     )
+             sizes=[self.sub_pop_size]*self.number_sub_pops)
 
         cross_choices = np.zeros((self.number_sub_pops,
                                   2 * self.sub_pop_size))
 
         for sp in range(self.single_replicate_population.numSubPop()):
-            cross_choices[sp] = [random.choice(rep.indInfo('ind_id', sp))
+            cross_choices[sp] = [random.choice(
+                self.single_replicate_population.indInfo('ind_id', sp))
                                      for k in range(2*self.sub_pop_size)]
 
             mother_idxs = list(range(self.number_sub_pops))[::2]
             father_idxs = list(range(self.number_sub_pops))[1::2]
 
-            mothers = np.concatenate([cross_choices[m_idx]
+            mother_ids = np.concatenate([cross_choices[m_idx]
                                       for m_idx in mother_idxs])
-            fathers = np.concatenate([cross_choices[f_idx]
+            father_ids = np.concatenate([cross_choices[f_idx]
                                       for f_idx in father_idxs])
-            multi_mothers[rep.dvars().rep] = mothers
-            multi_fathers[rep.dvars().rep] = fathers
 
         self.single_replicate_population.mergeSubPops()
 
