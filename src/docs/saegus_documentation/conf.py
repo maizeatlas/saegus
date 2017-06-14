@@ -278,7 +278,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
   (master_doc, 'saegus', 'saegus Documentation',
-   author, 'saegus', 'One line description of project.',
+   author, 'saegus', 'Simulation and analysis package for evolve and resequence experiments.',
    'Miscellaneous'),
 ]
 
