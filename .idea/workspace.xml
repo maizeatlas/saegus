@@ -2,22 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="trying to fix error">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/docs/user_guide/additive_trait_example.rst" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/docs/user_guide/conf.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/docs/user_guide/index.rst" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/docs/user_guide/population_from_raw_data.rst" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/docs/user_guide/optimization_notes.rst" afterPath="$PROJECT_DIR$/src/docs/analysis_reports/optimization_notes.rst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dictionaries/vakanas.xml" afterPath="$PROJECT_DIR$/.idea/dictionaries/vakanas.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/saegus_project.iml" afterPath="$PROJECT_DIR$/.idea/saegus_project.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/jupyternbs/TASSEL_GWAS.ipynb" afterPath="$PROJECT_DIR$/devel/jupyternbs/TASSEL_GWAS.ipynb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/magic/1478/creating_magic1478.ipynb" afterPath="$PROJECT_DIR$/devel/magic/1478/creating_magic1478.ipynb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/magic/1478/demonstration_run_epsilon.ipynb" afterPath="$PROJECT_DIR$/devel/magic/1478/demonstration_run_epsilon.ipynb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/tuson_selection/conf.py" afterPath="$PROJECT_DIR$/devel/tuson_selection/conf.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/devel/tuson_selection/tuson_with_selection_01.ipynb" afterPath="$PROJECT_DIR$/devel/tuson_selection/tuson_with_selection_01.ipynb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/docs/analysis_reports/conf.py" afterPath="$PROJECT_DIR$/src/docs/analysis_reports/conf.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/docs/saegus_documentation/conf.py" afterPath="$PROJECT_DIR$/src/docs/saegus_documentation/conf.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/docs/user_guide/additive_trait_example.rst" afterPath="$PROJECT_DIR$/src/docs/user_guide/additive_trait_example.rst" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/docs/user_guide/population_from_raw_data.rst" afterPath="$PROJECT_DIR$/src/docs/user_guide/population_from_raw_data.rst" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/saegus/parameters.py" afterPath="$PROJECT_DIR$/src/saegus/parameters.py" />
     </list>
     <ignored path="saegus_project.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -67,74 +55,52 @@
     <favorites_list name="TestFav" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.6521155">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="population_from_raw_data.rst" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/docs/user_guide/population_from_raw_data.rst">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="0">
-                  <caret line="0" column="3" lean-forward="false" selection-start-line="0" selection-start-column="3" selection-end-line="3" selection-end-column="5" />
-                  <folding>
-                    <marker date="1497400643597" expanded="false" signature="975:35654" ph="..." />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="index.rst" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/docs/user_guide/index.rst">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="105">
-                  <caret line="7" column="29" lean-forward="false" selection-start-line="7" selection-start-column="29" selection-end-line="7" selection-end-column="29" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="additive_trait_example.rst" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/docs/user_guide/additive_trait_example.rst">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="15">
-                  <caret line="140" column="4" lean-forward="true" selection-start-line="140" selection-start-column="4" selection-end-line="140" selection-end-column="4" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="parameters.py" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/saegus/parameters.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="478">
-                  <caret line="275" column="0" lean-forward="true" selection-start-line="275" selection-start-column="0" selection-end-line="275" selection-end-column="0" />
-                  <folding>
-                    <element signature="e#8983#9797#0" expanded="true" />
-                    <element signature="e#10347#10691#0" expanded="true" />
-                    <element signature="e#10849#11391#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file leaf-file-name="run_demonstration.rst" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/docs/analysis_reports/run_demonstration.rst">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="261">
-                  <caret line="134" column="14" lean-forward="false" selection-start-line="134" selection-start-column="8" selection-end-line="134" selection-end-column="14" />
-                  <folding>
-                    <marker date="1469650248010" expanded="false" signature="5644:14910" ph="..." />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="population_from_raw_data.rst" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/docs/user_guide/population_from_raw_data.rst">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="30" column="16" lean-forward="true" selection-start-line="30" selection-start-column="16" selection-end-line="30" selection-end-column="16" />
+              <folding>
+                <marker date="1497419272266" expanded="false" signature="954:35633" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.rst" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/docs/user_guide/index.rst">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="7" column="29" lean-forward="false" selection-start-line="7" selection-start-column="29" selection-end-line="7" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="additive_trait_example.rst" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/docs/user_guide/additive_trait_example.rst">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="parameters.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/saegus/parameters.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="15">
+              <caret line="238" column="16" lean-forward="true" selection-start-line="238" selection-start-column="16" selection-end-line="238" selection-end-column="16" />
+              <folding>
+                <element signature="e#10740#11282#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -153,6 +119,7 @@
       <find>alleles</find>
       <find>allele</find>
       <find>minor</find>
+      <find>code</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -219,10 +186,10 @@
         <option value="$APPLICATION_HOME_DIR$/bin/pycharm64.vmoptions" />
         <option value="$APPLICATION_HOME_DIR$/bin/pycharm.vmoptions" />
         <option value="$PROJECT_DIR$/src/docs/user_guide/index.rst" />
-        <option value="$PROJECT_DIR$/src/docs/user_guide/population_from_raw_data.rst" />
         <option value="$PROJECT_DIR$/devel/tuson_selection/conf.py" />
-        <option value="$PROJECT_DIR$/src/saegus/parameters.py" />
         <option value="$PROJECT_DIR$/src/docs/user_guide/additive_trait_example.rst" />
+        <option value="$PROJECT_DIR$/src/docs/user_guide/population_from_raw_data.rst" />
+        <option value="$PROJECT_DIR$/src/saegus/parameters.py" />
       </list>
     </option>
   </component>
@@ -244,9 +211,9 @@
     </layout>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="184" />
-    <option name="y" value="87" />
-    <option name="width" value="1148" />
+    <option name="x" value="321" />
+    <option name="y" value="82" />
+    <option name="width" value="1267" />
     <option name="height" value="763" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -286,8 +253,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -396,12 +361,14 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/population_from_raw_data_notebook.rst" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="ToolWindowDB Browser.ShowToolbar" value="false" />
     <property name="nodejs_interpreter_path" value="C:/nodejs/node" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$2/Languages" value="Python" />
@@ -468,17 +435,6 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="BashConfigurationType" factoryName="Bash">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="INTERPRETER_PATH" value="/bin/bash" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SCRIPT_NAME" value="" />
-      <option name="PARAMETERS" value="" />
-      <module name="" />
-      <envs />
-      <method />
-    </configuration>
     <configuration default="true" type="ChromiumRemoteDebugType" factoryName="Chromium Remote">
       <method />
     </configuration>
@@ -644,14 +600,6 @@
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
-      <method />
-    </configuration>
-    <configuration default="true" type="TheRRunConfigurationType" factoryName="R">
-      <option name="SCRIPT_PATH" value="" />
-      <option name="SCRIPT_ARGS" value="" />
-      <option name="WORKING_DIRECTORY_PATH" value="" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <envs />
       <method />
     </configuration>
     <configuration default="true" type="Tox" factoryName="Tox">
@@ -1032,23 +980,20 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="184" y="87" width="1148" height="763" extended-state="0" />
+    <frame x="321" y="82" width="1267" height="763" extended-state="0" />
     <editor active="true" />
     <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="true" show_stripe_button="true" weight="0.7192747" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" x="895" y="332" width="676" height="407" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31362468" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25357142" sideWeight="0.64395785" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17864339" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1528777" sideWeight="0.23544632" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6735219" sideWeight="0.48971722" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.83547556" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1528777" sideWeight="0.23544632" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="true" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.86760926" sideWeight="0.35604218" order="15" side_tool="false" content_ui="tabs" x="589" y="537" width="907" height="372" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="true" show_stripe_button="true" weight="0.7192747" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" x="895" y="332" width="676" height="407" />
-      <window_info id="The R Graphics" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32975152" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Packages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32940108" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17864339" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6964286" sideWeight="0.4974293" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="true" show_stripe_button="true" weight="1.0" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="651" y="435" width="402" height="262" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32907993" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="WINDOWED" visible="false" show_stripe_button="true" weight="1.0" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="651" y="435" width="402" height="262" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="true" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.8681319" sideWeight="0.35604218" order="15" side_tool="false" content_ui="tabs" x="589" y="537" width="907" height="372" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6959459" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32907993" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32940108" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1057,11 +1002,14 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Mongo Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="combo" />
+      <window_info id="Packages" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32940108" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="DB Browser" active="false" anchor="top" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.329904" sideWeight="0.5" order="0" side_tool="true" content_ui="combo" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972136" sideWeight="0.4974055" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32905984" sideWeight="0.4976744" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="The R Graphics" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32975152" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6964286" sideWeight="0.4974293" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Concurrent Activities Diagram" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32744783" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -1274,7 +1222,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1296,7 +1243,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1304,7 +1250,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1312,7 +1257,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="4" column="4" lean-forward="true" selection-start-line="4" selection-start-column="4" selection-end-line="4" selection-end-column="4" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1320,7 +1264,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-8640">
           <caret line="21" column="46" lean-forward="true" selection-start-line="21" selection-start-column="46" selection-end-line="21" selection-end-column="46" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1328,7 +1271,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2417">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1336,7 +1278,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-6975">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1344,7 +1285,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-767">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1352,7 +1292,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
           <caret line="19" column="32" lean-forward="true" selection-start-line="19" selection-start-column="32" selection-end-line="19" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1367,7 +1306,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-41">
           <caret line="410" column="10" lean-forward="true" selection-start-line="410" selection-start-column="10" selection-end-line="410" selection-end-column="10" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1375,7 +1313,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-737">
           <caret line="56" column="0" lean-forward="true" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1383,12 +1320,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="553">
           <caret line="799" column="0" lean-forward="true" selection-start-line="799" selection-start-column="0" selection-end-line="799" selection-end-column="0" />
-          <folding>
-            <element signature="e#10252#11362#0" expanded="false" />
-            <element signature="e#11472#11862#0" expanded="false" />
-            <element signature="e#12457#12868#0" expanded="false" />
-            <element signature="e#36718#37804#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1396,13 +1327,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
           <caret line="129" column="9" lean-forward="true" selection-start-line="129" selection-start-column="9" selection-end-line="129" selection-end-column="9" />
-          <folding>
-            <element signature="e#13987#14335#0" expanded="false" />
-            <element signature="e#14434#15189#0" expanded="false" />
-            <element signature="e#15274#16232#0" expanded="false" />
-            <element signature="e#16310#16869#0" expanded="false" />
-            <element signature="e#16975#18000#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1410,11 +1334,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="493">
           <caret line="96" column="0" lean-forward="true" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
-          <folding>
-            <element signature="e#428#1342#0" expanded="false" />
-            <element signature="e#2667#3408#0" expanded="false" />
-            <element signature="e#3531#3920#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1422,7 +1341,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1470">
           <caret line="98" column="0" lean-forward="true" selection-start-line="98" selection-start-column="0" selection-end-line="98" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1430,7 +1348,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="13" column="21" lean-forward="false" selection-start-line="13" selection-start-column="21" selection-end-line="13" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1438,11 +1355,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-30">
           <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding>
-            <element signature="e#79#97#0" expanded="false" />
-            <element signature="e#1314#1703#0" expanded="false" />
-            <element signature="e#1922#2809#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1450,7 +1362,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="479">
           <caret line="132" column="0" lean-forward="true" selection-start-line="132" selection-start-column="0" selection-end-line="132" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1458,7 +1369,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="132" column="0" lean-forward="true" selection-start-line="132" selection-start-column="0" selection-end-line="132" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1466,7 +1376,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="634">
           <caret line="70" column="35" lean-forward="true" selection-start-line="70" selection-start-column="35" selection-end-line="70" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1474,7 +1383,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-300">
           <caret line="1555" column="10" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="1555" selection-end-column="10" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1482,7 +1390,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="6" lean-forward="false" selection-start-line="0" selection-start-column="6" selection-end-line="0" selection-end-column="6" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1490,7 +1397,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="25" column="32" lean-forward="false" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1502,31 +1408,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/population_from_raw_data.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="3" lean-forward="false" selection-start-line="0" selection-start-column="3" selection-end-line="3" selection-end-column="5" />
-          <folding>
-            <marker date="1497400643597" expanded="false" signature="975:35654" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/docs/saegus_documentation/analyze.rst">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
           <caret line="18" column="16" lean-forward="true" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/docs/analysis_reports/run_demonstration.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
-          <caret line="134" column="14" lean-forward="false" selection-start-line="134" selection-start-column="8" selection-end-line="134" selection-end-column="14" />
-          <folding>
-            <marker date="1469650248010" expanded="false" signature="5644:14910" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1534,7 +1419,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="625">
           <caret line="133" column="15" lean-forward="true" selection-start-line="133" selection-start-column="15" selection-end-line="133" selection-end-column="15" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1542,27 +1426,44 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="694">
           <caret line="2033" column="32" lean-forward="false" selection-start-line="2033" selection-start-column="32" selection-end-line="2033" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/saegus/parameters.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="478">
-          <caret line="275" column="0" lean-forward="true" selection-start-line="275" selection-start-column="0" selection-end-line="275" selection-end-column="0" />
-          <folding>
-            <element signature="e#8983#9797#0" expanded="true" />
-            <element signature="e#10347#10691#0" expanded="true" />
-            <element signature="e#10849#11391#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/docs/user_guide/additive_trait_example.rst">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="140" column="4" lean-forward="true" selection-start-line="140" selection-start-column="4" selection-end-line="140" selection-end-column="4" />
+        <state relative-caret-position="75">
+          <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/docs/analysis_reports/run_demonstration.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-769">
+          <caret line="134" column="14" lean-forward="false" selection-start-line="134" selection-start-column="8" selection-end-line="134" selection-end-column="14" />
+          <folding>
+            <marker date="1469650248010" expanded="false" signature="5644:14910" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/population_from_raw_data.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="30" column="16" lean-forward="true" selection-start-line="30" selection-start-column="16" selection-end-line="30" selection-end-column="16" />
+          <folding>
+            <marker date="1497419272266" expanded="false" signature="954:35633" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/saegus/parameters.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="238" column="16" lean-forward="true" selection-start-line="238" selection-start-column="16" selection-end-line="238" selection-end-column="16" />
+          <folding>
+            <element signature="e#10740#11282#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

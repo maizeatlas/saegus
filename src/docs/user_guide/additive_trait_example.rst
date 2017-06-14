@@ -4,9 +4,7 @@
 Example of Additive Trait Parameterization
 ##########################################
 
-.. _module_imports:
-
-   .. code:: python
+.. code-block:: python
    :caption: Modules we will need for this example
 
    >>> import simuOpt
@@ -48,7 +46,7 @@ Load Population
 We will use the population we created in the last step instead of creating
 a new population.
 
-.. code:: python
+.. code-block:::: python
    :caption: Loading our example population from a file
 
    >>> sim.loadPopulation('example_pop.pop')
@@ -64,7 +62,7 @@ Each individual is only a genotype. By default ``simuPOP`` uses ``ind_id``,
 useful ``IdTagger`` functions. We can save some hassle by using these for
 identifying individuals.
 
-.. code:: python
+.. code-block:: python
    :caption: Add the ``infoFields`` ``ind_id``, ``g`` and ``p``
 
    >>> example_pop.infoFields()
@@ -76,7 +74,7 @@ identifying individuals.
 By default information fields are set to ``0.0``. We can initialize the
 ``ind_id`` field using a ``simuPOP`` function.
 
-.. code:: python
+.. code-block:: python
    :caption: Initialize individual identifiers
 
    >>> sim.tagID(example_pop)
@@ -101,7 +99,7 @@ Determine Segregating Loci
 For simplicity we will loci which have more than one allele i.e. segregating.
 It will be useful to extract the alleles from each locus for later use.
 
-.. code:: python
+.. code-block:: python
    :caption: Using ``simuPOP`` to find segregating loci
 
    >>> sim.stat(example_pop, numOfSegSites=sim.ALL_AVAIL,
@@ -117,7 +115,7 @@ It will be useful to extract the alleles from each locus for later use.
 There are 42,837 segregating loci in this population. Next we will gather the
 alleles which are present at each segregating locus.
 
-.. code:: python
+.. code-block:: python
    :caption: Gather the alleles at each segregating site
 
    >>> sim.stat(example_pop, alleleFreq=sim.ALL_AVAIL)
@@ -132,7 +130,7 @@ We have the alleles at each segregating site in two separate Python lists
 i.e. ``alpha_alleles`` and ``beta_alleles``. Let's check to make sure that all
 entries in ``alpha_alleles`` are different from ``beta_alleles``.
 
-.. code:: python
+.. code-block:: python
    :caption: A quick check to see if our code is semantically correct
 
    >>> alpha_allele_array = np.array(alpha_alleles)
@@ -152,7 +150,7 @@ For this example we will pick 20 loci to designate as quantitative trait loci.
 The alleles at each chosen QTL will be assigned a non-zero effect via a draw
 from an exponential distribution.
 
-.. code:: python
+.. code-block:: python
    :caption: Choosing QTL and assigning allele effects
 
    >>> qtl = sorted(random.sample(segregating_loci, 20))

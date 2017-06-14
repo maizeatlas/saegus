@@ -262,16 +262,14 @@ class Trait(object):
         return alleles
 
     def assign_allele_effects(self, alleles, qtl, distribution_function,
-                                  *distribution_function_parameters,
-                                  multiplicity):
+                                  *distribution_function_parameters):
 
         allele_effects = {}
         for locus in qtl:
             allele_effects[locus] = {}
             for allele in alleles[locus]:
                 allele_effects[locus][allele] = \
-                    sum([distribution_function(*distribution_function_parameters)
-                         for i in range(multiplicity)])
+                    distribution_function(*distribution_function_parameters)
         return allele_effects
 
     def convert_allele_effects_into_array(self, total_number_loci,

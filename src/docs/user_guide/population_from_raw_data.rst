@@ -13,8 +13,6 @@ determined genotype data. This tutorial shows how to convert raw data into a
 Parsing Raw Data
 ================
 
-.. _module_imports:
-
 We will use ``pandas`` and ``numpy`` to make to read and manipulate the raw
 data. Then we will convert the raw genotype data into a ``simuPOP.Population``
 object.
@@ -1725,7 +1723,7 @@ We create an "empty" ``Population`` object and set the genotypes. We can save
 the ``Population`` object in native simuPOP format so we do not have to re-do
 this step every single time we want to work with the same population.
 
-.. code:: python
+.. code-block:: python
    :caption: Creating a ``Population`` from genotypes
 
    >>> example_pop = sim.Population(size=105, ploidy=2, loci=44445)
