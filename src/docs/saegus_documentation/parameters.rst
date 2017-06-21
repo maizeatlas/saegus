@@ -8,6 +8,10 @@ Parameters
 
 .. _population_structure:
 
+Population Structure
+====================
+
+
 .. py:class:: PopulationStructure(pop)
 
    :parameter pop: simuPOP.Population
@@ -109,8 +113,21 @@ Parameters
    .. py:method:: replace_missing_genotypes()
 
 
+.. _trait:
+
+Trait
+-----
 
 .. py:class:: Trait
+
+
+   .. py:method:: construct_allele_effects_table(pop, qtl, distribution_function, *distribution_function_parameters)
+
+
+
+
+
+
 
 
    .. _load_alleles:

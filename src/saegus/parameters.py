@@ -223,10 +223,62 @@ class Trait(object):
     This class carries functions responsible for assigning and handling
     trait models: Decision making process simulator uses to assign phenotypes.
 
+    For the time being we assume certain things about the integers representing
+    allele states and the ploidy of the organism.
+    Ploidy = 2 and allele states coded to integers 1, 2, 3, 4
+
+    6/20/2017 JJD
+
     """
 
     def __init__(self):
         pass
+
+    # todo Create documentation for construct_allele_effects_table
+
+    def construct_allele_effects_table(self, pop: sim.Population, qtl: list,
+                                       distribution_function,
+                                       *distribution_function_parameters):
+
+        allele_effects_table = np.zeros((pop.totNumLoci(), 5))
+        alpha_alleles = []
+        beta_alleles = []
+
+        sim.stat(pop, alleleFreq=sim.ALL_AVAIL)
+
+        for locus in range(pop.totNumLoci()):
+            alpha_alleles.append(list(pop.dvars().alleleFreq[locus])[0])
+            beta_alleles.append(list(pop.dvars().alleleFreq[locus])[-1])
+            if alpha_alleles[locus] == beta_alleles[locus]:
+                beta_alleles[locus] = 0
+
+        allele_effects_table[:, 0] = list(range(pop.totNumLoci()))
+        allele_effects_table[:, 1] = alpha_alleles
+        allele_effects_table[:, 3] = beta_alleles
+
+        for locus in qtl:
+            allele_effects_table[locus, 2] = \
+                distribution_function(*distribution_function_parameters)
+            allele_effects_table[locus, 4] = \
+                distribution_function(*distribution_function_parameters)
+
+        return allele_effects_table
+
+    # todo Create documentation with example for construct_ae_array
+
+    def construct_ae_array(self, allele_effects_table, qtl):
+        """
+        Conversion of allele effects table into an array made expressly for
+        the purpose of computing ``g`` and ``p`` values. Each column of the
+        array corresponds to the allele at that locus. It makes computation
+        of genotypic value and phenotypic value very fast.
+        """
+        allele_effects_array = np.zeros(allele_effects_table.shape)
+        for row in allele_effects_table[qtl]:
+            allele_effects_array[int(row[0]), int(row[1])] = row[2]
+            allele_effects_array[int(row[0]), int(row[3])] = row[4]
+
+        return allele_effects_array
 
     def seg_qtl_chooser(self, pop: sim.Population, loci_subset: list, number_qtl: int):
         """
@@ -327,7 +379,7 @@ def test_qtl_concordance(agreement_counts, qtl):
             print("Disagrement of QTL at sample {}".format(k))
     return qtl_concordance
 
-def count_segregating_site_concordance(array_of_seg_loci):
+def async (array_of_seg_loci):
     segregating_loci_concordance_counts = col.defaultdict(int, default=0)
     for row in array_of_seg_loci:
         segregating_loci_concordance_counts[tuple(row)] += 1

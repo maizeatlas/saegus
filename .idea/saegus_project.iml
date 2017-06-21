@@ -10,7 +10,7 @@
       <excludeFolder url="file://$MODULE_DIR$/devel/data_dump" />
     </content>
     <content url="file://$MODULE_DIR$/../tuson_simulation" />
-    <orderEntry type="jdk" jdkName="Python 3.6.1 (~/anaconda43/bin/python)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="$USER_HOME$/anaconda43/bin/python" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="PackageRequirementsSettings">

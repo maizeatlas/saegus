@@ -255,6 +255,21 @@ def phenotypic_effect_calculator(pop):
     for ind in pop.individuals():
         ind.p = ind.g + random.normalvariate(0, pop.dvars().epsilon)
 
+# todo Create documentation entry for calculate_g. Replaces assign_additive_g
+
+def calculate_g(example_pop, allele_effects_array):
+    """
+    Convenience function to calculate ``g`` of the population using an array
+    of allele effects designed expressly for the purpose of calcualtion.
+
+    :param example_pop:
+    :param allele_effects_array:
+    :return:
+    """
+    for ind in example_pop.individuals():
+        ind.g = sum(allele_effects_array[range(example_pop.totNumLoci()), np.asarray(ind.genotype(ploidy=0))]
+       + allele_effects_array[range(example_pop.totNumLoci()), np.asarray(ind.genotype(ploidy=1))])
+
 def assign_additive_g(pop, qtl, allele_effects):
     """
     Calculates genotypic contribution ``g`` by summing the effect of each

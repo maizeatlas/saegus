@@ -13,7 +13,7 @@ Example of Additive Trait Parameterization
    >>> import pandas as pd
    >>> import numpy as np
    >>> import random
-   >>> from saegus import breed, operators, simulate, analyze, parse, parameters
+   >>> from saegus import operators, parameters
    >>> np.set_printoptions(suppress=True, precision=5)
 
 
@@ -36,7 +36,7 @@ Steps:
    + Determine Segregating Loci
    + Choose QTL
    + Assign Allele Effects
-   + Calculate G and P
+   + Calculate G
 
 .. _load_population:
 
@@ -112,8 +112,12 @@ It will be useful to extract the alleles from each locus for later use.
    23813, 24837, 25882, 26910, 27923, 28955, 30026, 31057, 32103, 33142,
    34173, 35185, 36207, 37223, 38243, 39351, 40419, 41477, 42537, 43578]
 
-There are 42,837 segregating loci in this population. Next we will gather the
-alleles which are present at each segregating locus.
+There are 42,837 segregating loci in this population. ``saegus`` has a function
+to put the alleles into an array and assign the alleles at ``qtl`` an effect as
+a draw from a specified distribution.
+
+
+
 
 .. code-block:: python
    :caption: Gather the alleles at each segregating site
@@ -143,35 +147,146 @@ different from ``beta_alleles``.
 
 .. _choose_QTL:
 
-Choosing QTL
-~~~~~~~~~~~~
+Choosing QTL and Assign Effects
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 For this example we will pick 20 loci to designate as quantitative trait loci.
 The alleles at each chosen QTL will be assigned a non-zero effect via a draw
-from an exponential distribution.
+from an exponential distribution. We are choosing QTL from only
+segregating loci.
 
 .. code-block:: python
    :caption: Choosing QTL and assigning allele effects
 
    >>> qtl = sorted(random.sample(segregating_loci, 20))
    >>> qtl
-   [5027,
-    7313,
-    11571,
-    13436,
-    15145,
-    15615,
-    17727,
-    17946,
-    18912,
-    22551,
-    23076,
-    26364,
-    30497,
-    31261,
-    34355,
-    34668,
-    37124,
-    37753,
-    37920,
-    40366]
+   [1812,
+    1905,
+    4802,
+    6092,
+    7776,
+    9225,
+    11426,
+    17994,
+    18169,
+    19480,
+    21206,
+    22754,
+    27998,
+    28313,
+    29297,
+    31358,
+    36316,
+    36354,
+    40565,
+    44143]
+
+Every allele is assigned an effect of ``0``. Only the alleles at QTL have
+non-zero effects.
+
+.. code-block:: python
+   :caption: Assign allele effects as an exponential distribution
+
+   >>> trait = parameters.Trait()
+   >>> ae_table = trait.construct_allele_effects_table(example_pop, qtl, random.expovariate, 1)
+   >>> ae_table[qtl]
+   array([[  1812.   ,      1.   ,      2.559,      3.   ,      1.962],
+          [  1905.   ,      1.   ,      0.169,      3.   ,      0.199],
+          [  4802.   ,      1.   ,      0.533,      3.   ,      0.523],
+          [  6092.   ,      1.   ,      0.5  ,      2.   ,      4.702],
+          [  7776.   ,      1.   ,      1.825,      3.   ,      0.156],
+          [  9225.   ,      1.   ,      0.793,      2.   ,      1.657],
+          [ 11426.   ,      1.   ,      1.064,      3.   ,      0.228],
+          [ 17994.   ,      1.   ,      0.221,      2.   ,      0.015],
+          [ 18169.   ,      1.   ,      1.011,      3.   ,      1.45 ],
+          [ 19480.   ,      1.   ,      1.443,      3.   ,      0.046],
+          [ 21206.   ,      1.   ,      0.554,      2.   ,      1.086],
+          [ 22754.   ,      1.   ,      0.904,      3.   ,      0.628],
+          [ 27998.   ,      1.   ,      0.361,      2.   ,      0.023],
+          [ 28313.   ,      1.   ,      1.953,      3.   ,      0.033],
+          [ 29297.   ,      1.   ,      2.737,      3.   ,      3.567],
+          [ 31358.   ,      1.   ,      0.778,      3.   ,      1.601],
+          [ 36316.   ,      1.   ,      6.54 ,      3.   ,      2.131],
+          [ 36354.   ,      1.   ,      0.573,      2.   ,      1.766],
+          [ 40565.   ,      1.   ,      0.137,      3.   ,      0.351],
+          [ 44143.   ,      1.   ,      0.338,      3.   ,      0.719]])
+
+For speed of computation we construct an array of allele effects where the row
+of the array corresponds to the locus and the column corresponds to the integer
+representing the allele state.
+
+.. code-block:: python
+   :caption: Putting the allele effects in an array for speed of computation
+
+   >>> ae_array = trait.construct_ae_array(ae_table, qtl)
+   >>> ae_array[qtl]
+   array([[ 0.   ,  2.559,  0.   ,  1.962,  0.   ],
+       [ 0.   ,  0.169,  0.   ,  0.199,  0.   ],
+       [ 0.   ,  0.533,  0.   ,  0.523,  0.   ],
+       [ 0.   ,  0.5  ,  4.702,  0.   ,  0.   ],
+       [ 0.   ,  1.825,  0.   ,  0.156,  0.   ],
+       [ 0.   ,  0.793,  1.657,  0.   ,  0.   ],
+       [ 0.   ,  1.064,  0.   ,  0.228,  0.   ],
+       [ 0.   ,  0.221,  0.015,  0.   ,  0.   ],
+       [ 0.   ,  1.011,  0.   ,  1.45 ,  0.   ],
+       [ 0.   ,  1.443,  0.   ,  0.046,  0.   ],
+       [ 0.   ,  0.554,  1.086,  0.   ,  0.   ],
+       [ 0.   ,  0.904,  0.   ,  0.628,  0.   ],
+       [ 0.   ,  0.361,  0.023,  0.   ,  0.   ],
+       [ 0.   ,  1.953,  0.   ,  0.033,  0.   ],
+       [ 0.   ,  2.737,  0.   ,  3.567,  0.   ],
+       [ 0.   ,  0.778,  0.   ,  1.601,  0.   ],
+       [ 0.   ,  6.54 ,  0.   ,  2.131,  0.   ],
+       [ 0.   ,  0.573,  1.766,  0.   ,  0.   ],
+       [ 0.   ,  0.137,  0.   ,  0.351,  0.   ],
+       [ 0.   ,  0.338,  0.   ,  0.719,  0.   ]])
+
+Then we calculate ``g``: the value corresponding to the alleles of an individual
+without any noise or error.
+
+.. code-block:: python
+   :caption: Calculating g values
+
+   >>> operators.calculate_g(example_pop)
+   >>> np.array(example_pop.indInfo('g'))
+   array([ 40.5  ,  57.516,  42.954,  44.655,  58.748,  45.196,  44.301,
+        37.803,  42.125,  48.263,  59.79 ,  46.791,  44.018,  40.228,
+        46.464,  54.358,  50.271,  48.995,  49.538,  34.851,  43.836,
+        47.706,  54.652,  40.614,  47.126,  48.786,  42.837,  42.593,
+        54.974,  45.717,  44.98 ,  41.022,  47.093,  42.612,  47.278,
+        46.156,  49.569,  45.891,  43.185,  46.977,  40.895,  39.624,
+        46.451,  40.221,  41.131,  44.719,  46.342,  49.455,  42.355,
+        49.107,  37.983,  46.371,  45.825,  49.369,  40.751,  42.464,
+        48.045,  49.075,  47.905,  49.164,  46.342,  41.702,  41.419,
+        45.088,  47.784,  48.206,  42.946,  46.279,  41.376,  48.122,
+        40.604,  53.401,  43.177,  42.734,  40.98 ,  44.888,  46.668,
+        43.456,  55.55 ,  43.821,  45.745,  40.688,  46.057,  44.673,
+        49.514,  38.059,  40.034,  42.149,  40.867,  42.66 ,  49.946,
+        44.809,  39.963,  46.583,  43.055,  49.495,  41.973,  46.353,
+        43.615,  46.172,  39.211,  44.044,  44.618,  42.06 ,  43.291])
+
+.. _validating_the_calculate_g_function:
+
+Validating the ``calculate_g`` Function
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Let's make sure that our function is correctly matching allele to its effect and
+summing the effects correctly. We will look at the alleles individual ``1`` of
+``example_pop`` at the QTL. Then we will sum the effects and compare the result
+with our function ``calculate_g``.
+
+.. code-block:: python
+   :caption: Validating the calculation of ``g``
+
+   >>> example_ind = example_pop.individual(0)
+   >>> alpha_qtl_alleles = np.array(example_ind.genotype(ploidy=0))[qtl]
+   >>> omega_qtl_alleles = np.array(example_ind.genotype(ploidy=1))[qtl]
+   >>> example_g = [[], []]
+   >>> for locus, alpha, omega in zip(qtl, alpha_qtl_alleles, omega_qtl_alleles):
+   ...  print(locus, alpha, ae_array[locus, alpha], omega, ae_array[locus, omega])
+   ...  example_g[0].append(ae_array[locus, alpha])
+   ...  example_g[1].append(ae_array[locus, omega])
+   >>> sum(example_g[0]) + sum(example_g[1])
+   40.500306681374511
+   >>> example_pop.indByID(1).g
+   40.500306681374504
