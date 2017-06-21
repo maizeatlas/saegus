@@ -20,7 +20,8 @@ Example of Additive Trait Parameterization
 .. _overview_of_additive_trait_example:
 
 Overview
-========
+########
+
 
 Our goal is to show how to parameterize an additive trait in ``saegus`` code.
 We will make use of ``simuPOP`` ``infoFields`` to store the information about
@@ -41,7 +42,7 @@ Steps:
 .. _load_population:
 
 Load Population
-^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~
 
 We will use the population we created in the last step instead of creating
 a new population.
@@ -49,7 +50,8 @@ a new population.
 .. code-block:::: python
    :caption: Loading our example population from a file
 
-   >>> sim.loadPopulation('example_pop.pop')
+   >>> example_pop = sim.loadPopulation('example_pop.pop')
+
 
 .. _add_information_fields:
 
@@ -96,8 +98,8 @@ By default information fields are set to ``0.0``. We can initialize the
 Determine Segregating Loci
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-For simplicity we will loci which have more than one allele i.e. segregating.
-It will be useful to extract the alleles from each locus for later use.
+For simplicity we will use loci which have more than one allele i.e.
+segregating.
 
 .. code-block:: python
    :caption: Using ``simuPOP`` to find segregating loci
@@ -152,12 +154,12 @@ Choosing QTL and Assign Effects
 
 For this example we will pick 20 loci to designate as quantitative trait loci.
 The alleles at each chosen QTL will be assigned a non-zero effect via a draw
-from an exponential distribution. We are choosing QTL from only
-segregating loci.
+from an exponential distribution.
 
 .. code-block:: python
    :caption: Choosing QTL and assigning allele effects
 
+   >>> segregating_loci = example_pop.dvars().segSites
    >>> qtl = sorted(random.sample(segregating_loci, 20))
    >>> qtl
    [1812,
@@ -185,7 +187,7 @@ Every allele is assigned an effect of ``0``. Only the alleles at QTL have
 non-zero effects.
 
 .. code-block:: python
-   :caption: Assign allele effects as an exponential distribution
+   :caption: Assign allele effects using an exponential distribution
 
    >>> trait = parameters.Trait()
    >>> ae_table = trait.construct_allele_effects_table(example_pop, qtl, random.expovariate, 1)
@@ -290,3 +292,60 @@ with our function ``calculate_g``.
    40.500306681374511
    >>> example_pop.indByID(1).g
    40.500306681374504
+
+Using a Normal Distribution Instead of Exponential
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Suppose we wanted to use a normal distribution for allele effects instead of
+an exponential. All we need to do is change the parameter in the
+``construct_allele_effects_table`` function.
+
+.. code-block:: python
+   :caption: Allele effects drawn from a normal distribution
+
+   >>> normal_ae_table = trait.construct_allele_effects_table(example_pop, qtl, random.normalvariate, 0, 1)
+   >>> print(normal_ae_table[qtl])
+   [[  1812.         1.        -1.081      3.         0.317]
+    [  1905.         1.         0.675      3.        -1.652]
+    [  4802.         1.         0.307      3.        -1.259]
+    [  6092.         1.         0.695      2.        -0.429]
+    [  7776.         1.        -0.141      3.        -1.2  ]
+    [  9225.         1.        -0.754      2.        -0.253]
+    [ 11426.         1.        -0.499      3.        -1.067]
+    [ 17994.         1.         0.804      2.         2.749]
+    [ 18169.         1.        -0.354      3.         0.079]
+    [ 19480.         1.         0.112      3.        -0.726]
+    [ 21206.         1.        -0.812      2.         0.74 ]
+    [ 22754.         1.        -0.125      3.         0.314]
+    [ 27998.         1.        -1.239      2.         0.172]
+    [ 28313.         1.         0.49       3.         1.02 ]
+    [ 29297.         1.         1.022      3.         0.763]
+    [ 31358.         1.         0.525      3.         0.563]
+    [ 36316.         1.        -0.803      3.         0.73 ]
+    [ 36354.         1.         0.266      2.        -2.607]
+    [ 40565.         1.        -1.582      3.        -0.679]
+    [ 44143.         1.         0.046      3.         1.264]]
+
+Recomputing Using Normal Values
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code-block:: python
+   :caption: Recalculate ``g``
+
+   >>> normal_ae_array = trait.construct_ae_array(normal_ae_table, qtl)
+   >>> operators.calculate_g(example_pop, normal_ae_array)
+   >>> print(np.array(example_pop.indInfo('g')))
+   [ -3.553  -9.525  -4.702  -4.797  -8.954   0.677  -0.047  -4.165  -6.304
+     -1.938  -4.17    0.239  -5.376  -0.775  -3.369  -3.671  -4.242  -0.578
+     -6.075  -6.511   0.25   -2.213  -2.302  -7.594  -3.914  -6.419  -3.559
+      0.92  -10.755  -4.719   1.3    -1.734  -2.431  -4.007  -8.386   0.575
+      0.719  -5.358  -3.105  -4.266  -5.877  -1.723  -3.222   2.485  -6.532
+     -3.478  -5.369   1.964  -1.525  -0.737  -3.519  -8.021  -1.33   -2.929
+     -0.985  -7.34   -4.304  -2.914  -1.826  -2.955  -2.134  -2.592  -7.036
+     -4.123   0.51   -3.507   0.668   0.327  -2.461  -0.584   1.26   -6.559
+     -7.789  -2.213  -6.319  -0.808  -4.924   0.751 -11.156  -5.651   0.903
+      1.676  -1.173  -4.805  -0.773   4.606  -7.018   1.822  -0.15   -3.242
+     -2.086  -1.359  -5.043   2.78   -2.491  -4.629  -3.859   2.17   -1.853
+      1.854  -3.509  -3.715  -2.368   0.242   4.075]
+
+End of doc
