@@ -119,34 +119,6 @@ to put the alleles into an array and assign the alleles at ``qtl`` an effect as
 a draw from a specified distribution.
 
 
-
-
-.. code-block:: python
-   :caption: Gather the alleles at each segregating site
-
-   >>> sim.stat(example_pop, alleleFreq=sim.ALL_AVAIL)
-   >>> segregating_loci = example_pop.dvars().segSites
-   >>> alpha_alleles = []
-   >>> beta_alleles = []
-   >>> for locus in segregating_loci:
-   ...      alpha_alleles.append(list(example_pop.dvars().alleleFreq[locus])[0])
-   ...      beta_alleles.append(list(example_pop.dvars().alleleFreq[locus])[1])
-
-We have the alleles at each segregating site in two separate Python lists
-i.e. ``alpha_alleles`` and ``beta_alleles``. Let's check to make sure that all
-entries in ``alpha_alleles`` are different from ``beta_alleles``.
-
-.. code-block:: python
-   :caption: A quick check to see if our code is semantically correct
-
-   >>> alpha_allele_array = np.array(alpha_alleles)
-   >>> beta_allele_array = np.array(beta_alleles)
-   >>> sum(alpha_allele_array == beta_allele_array)
-   0
-
-Because the result is ``0`` that means that every entry of ``alpha_alleles`` is
-different from ``beta_alleles``.
-
 .. _choose_QTL:
 
 Choosing QTL and Assign Effects
@@ -348,4 +320,3 @@ Recomputing Using Normal Values
      -2.086  -1.359  -5.043   2.78   -2.491  -4.629  -3.859   2.17   -1.853
       1.854  -3.509  -3.715  -2.368   0.242   4.075]
 
-End of doc

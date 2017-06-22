@@ -69,7 +69,7 @@ called once in the initOps phase of an evolutionary process. At present
 :class:`CalculateErrorVariance` is hard coded to calculate
 ``genotypic_variance`` as the sample variance of the infoField ``g``.
 Population must have infoField ``g``, 0 < heritability < 1.
-:class:`GenoAdditive` must be called before class:`CalculateErrorVariance` or
+:class:`GenoAdditive` must be called before :class:`CalculateErrorVariance` or
 values of ``g`` must be assigned to each individual.
 
 .. py:class:: CullPopulation()
