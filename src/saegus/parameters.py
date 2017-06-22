@@ -70,9 +70,9 @@ class PopulationStructure(object):
         for ind in self.pop.individuals():
             ind.primary = primary_subpop[ind.ind_id]
 
-    # todo Documentation for adjust_structure_proportions
+    # todo Documentation for correct_rounding_error
 
-    def adjust_structure_proportions(self, structure_array):
+    def correct_rounding_error(self, structure_array):
         """
         Rows of ``structure_array`` may not sum to 1 due to rounding error or
         error propagation. Examines the rows which do not sum to 1 and adds
