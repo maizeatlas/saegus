@@ -5,19 +5,17 @@ Expanding A Population According to Structure Matrix
 ####################################################
 
 This example uses ``simuPOP``'s capability to perform non-random mating schemes
-We have inferred the population structure of ``example_pop``. The genome of
-each individual in ``example_pop`` derives from a single sub-population or a
-combination of sub-populations.
+We have inferred the population structure of ``example_pop``. The goal of this
+example is to use the population structure to re-create the original population.
+The genome of each individual in ``example_pop`` derives from a single
+sub-population or a combination of sub-populations.
 
 ``population_structure_matrix.txt`` defines the proportion of the genome
 inherited by an individual from each sub-population. For our example: each
 individual is assigned a ``primary`` sub-population. The primary sub-population
 is the sub-population from which the individual inherited the largest
-proportion of their genome.
-
-An individual is randomly chosen.
-The proportions of inheritance are interpreted as probabilities for determining
-which sub-population the mate will derive from.
+proportion of their genome. The proportions of inheritance are interpreted as
+probabilities for determining which sub-population the mate will derive from.
 
 .. code-block:: python
    :caption: Module imports
@@ -34,7 +32,7 @@ We will continue to use the same population as the rest of our examples.
 .. code-block:: python
    :caption: Load the population from ``example_pop.pop``
 
-   >>> example_pop = sim.LoadPopulation('example_pop.pop')
+   >>> example_pop = sim.loadPopulation('example_pop.pop')
 
 We will add information fields to the population so that we can track the
 pedigree. If we wanted to analyze the pedigree we could look at the mother

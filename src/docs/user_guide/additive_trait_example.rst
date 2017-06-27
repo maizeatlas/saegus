@@ -19,10 +19,6 @@ Example of Additive Trait Parameterization
 
 .. _overview_of_additive_trait_example:
 
-Overview
-########
-
-
 Our goal is to show how to parameterize an additive trait in ``saegus`` code.
 We will make use of ``simuPOP`` ``infoFields`` to store the information about
 the additive trait for each individual. Also we will add a unique identifier
