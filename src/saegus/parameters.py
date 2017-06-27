@@ -84,12 +84,12 @@ class PopulationStructure(object):
         for i in range(structure_array.shape[0]):
             if sum(structure_array[i]) < 1:
                 greatest_probability_index = np.argmax(structure_array[i])
-                difference = 1 - sum(greatest_probability_index[i])
+                difference = 1 - sum(structure_array[i])
                 structure_array[i, greatest_probability_index] = \
                     structure_array[i, greatest_probability_index] + difference
             if sum(structure_array[i]) > 1:
                 greatest_probability_index = np.argmax(structure_array[i])
-                difference = sum(greatest_probability_index[i]) - 1
+                difference = sum(structure_array[i]) - 1
                 structure_array[i, greatest_probability_index] = \
                     structure_array[i, greatest_probability_index] - difference
 

@@ -392,6 +392,9 @@ class ForcedPopulationStructureParentChooser(object):
         self.expanded_population_size = expanded_population_size
         self.mating_probabilities = mating_probabilities
 
+    def __str__(self):
+        return "Expanded Population Size: {}".format(self.expanded_population_size)
+
     def forced_structure_parent_chooser(self, pop):
 
         for i in range(self.expanded_population_size):
@@ -401,8 +404,8 @@ class ForcedPopulationStructureParentChooser(object):
                 self.mating_probabilities[first_random_id].rvs()
 
             second_random_id = random.choice(list(
-                pop.indInfo(
-                    'ind_id', subPop=[0, compatible_mating_subpopulation])))
+                pop.indInfo('ind_id',
+                            subPop=[0, compatible_mating_subpopulation])))
             second_parent = pop.indByID(second_random_id)
 
             if first_parent.sex() == second_parent.sex():
