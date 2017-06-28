@@ -29,7 +29,7 @@ class MAGIC(object):
         Crosses pairs of founders as they are listed in founder indices.
         using breed.PairwiseIDChooser
 
-        :note: Data is specified as pairs. Testing for even-number unecessary.
+        :note: Data is specified as pairs. Testing for even-number unnecessary.
         """
 
         founder_chooser = PairwiseIDChooser(parental_id_pairs, offspring_per_pair)
@@ -99,6 +99,7 @@ class MAGIC(object):
                      sim.Recombinator(rates=self.recombination_rates)]),
             gen=generations_of_random_mating,
         )
+
 
 class SelfCross(object):
     """
@@ -178,6 +179,18 @@ class SecondOrderPairIDChooser(object):
 
         >>> female_parent_ids = [1, 3, 5, 7]
         >>> male_parent_ids = [2, 4, 6, 8]
+        >>> snd_order_chooser = breed.SecondOrderPaidIDChooser(female_parent_ids, male_parent_ids)
+        >>> example_population.evolve(
+        ...     matingScheme=sim.HomoMating(
+        ...     sim.PyParentsChooser(snd_order_chooser.snd_ord_id_pairs),
+        ...     sim.OffspringGenerator(ops=[
+        ...         sim.IdTagger(),
+        ...         sim.PedigreeTagger(),
+        ...         sim.Recombinator(rates=0.01)],
+        ...         numOffspring=1),
+        ...     subPopSize=2000),
+        ...     gen=1,
+        ...     )
 
         :parameter female_parent_ids: List of individual IDs (selfing allowed)
         :parameter male_parent_ids: List of individual IDS (selfing allowed)
@@ -222,7 +235,7 @@ class RandomCross(object):
                "Sub-Population Size: {sp_size}\n"\
             .format(nbr_sps=self.number_sub_pops, sp_size=self.sub_pop_size)
 
-    def determine_random_cross(self):
+    def converging_random_cross(self):
         """
         Creates a pair of arrays which contain the IDs of mating pairs. The
         order of the IDs in each array determines the mate of the `mother`
