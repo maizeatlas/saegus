@@ -8,5 +8,6 @@ User Guide
    additive_trait_example.rst
    structured_population_expansion.rst
    multi_parental_populations.rst
-   multiple_replicate_populations.rst
+   collecting_and_storing_data.rst
+
 

@@ -268,19 +268,19 @@ class Trait(object):
 
         allele_effects_table = np.zeros((pop.totNumLoci(), 5))
         alpha_alleles = []
-        beta_alleles = []
+        omega_alleles = []
 
         sim.stat(pop, alleleFreq=sim.ALL_AVAIL)
 
         for locus in range(pop.totNumLoci()):
             alpha_alleles.append(list(pop.dvars().alleleFreq[locus])[0])
-            beta_alleles.append(list(pop.dvars().alleleFreq[locus])[-1])
-            if alpha_alleles[locus] == beta_alleles[locus]:
-                beta_alleles[locus] = 0
+            omega_alleles.append(list(pop.dvars().alleleFreq[locus])[-1])
+            if alpha_alleles[locus] == omega_alleles[locus]:
+                omega_alleles[locus] = 0
 
         allele_effects_table[:, 0] = list(range(pop.totNumLoci()))
         allele_effects_table[:, 1] = alpha_alleles
-        allele_effects_table[:, 3] = beta_alleles
+        allele_effects_table[:, 3] = omega_alleles
 
         for locus in qtl:
             allele_effects_table[locus, 2] = \

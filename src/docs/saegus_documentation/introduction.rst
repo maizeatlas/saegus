@@ -2,6 +2,13 @@
 Introduction
 ============
 
+
+A huge number of functions in this module are obsolete. Their existence reflects
+the successive iterations of improvement. Many functions exist simply because I
+was too sick to write proper documentation as I developed the code.
+
+.. attention:: JJD 6/30/2017
+
 Welcome to the `saegus` documentation! This page serves as an introduction for
 some fairly basic information
 

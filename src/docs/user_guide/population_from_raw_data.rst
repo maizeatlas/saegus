@@ -17,7 +17,8 @@ We will use ``pandas`` and ``numpy`` to make to read and manipulate the raw
 data. Then we will convert the raw genotype data into a ``simuPOP.Population``
 object.
 
-.. code:: python
+.. code-block:: python
+   :caption: Module imports
 
    >>> import pandas as pd
    >>> import numpy as np
@@ -28,7 +29,8 @@ object.
 The genotype data is in a file called ``genotype_matrix.txt``. There are 44445
 loci and 105 individuals.
 
-.. code:: python
+.. code-block:: python
+   :caption: Read the file with the genotype matrix using ``pandas``
 
    >>> genotype_matrix = pd.read_csv('genotype_matrix.txt', sep='\t', index_col=0)
    >>> genotype_matrix
@@ -1573,46 +1575,39 @@ loci and 105 individuals.
 We will convert the ``pandas.DataFrame`` into a ``numpy.array`` for quicker
 iteration.
 
-.. code:: python
+.. code-block:: python
+   :caption: Example of an ``Individual.genotype``
 
    >>> genotypes = np.array(genotype_matrix)
    >>> small_example_genotype = [int(genotypes[0, :][i][0]) for in range(10)]
    >>> small_example_genotype
-
-.. parsed-literal::
-
    [2, 3, 2, 3, 1, 1, 3, 3, 3, 2]
 
-.. code:: python
+.. code-block:: python
 
    >>> first_individual = [int(genotypes[0, :][i][0]) for i in range(genotypes.shape[1])] +\
                         [int(genotypes[0, :][i][-1]) for i in range(genotypes.shape[1])]
 
-The lenth of an individuals genotype array should be twice the number of columns
+The length of an individuals genotype array should be twice the number of columns
 in the genotype file.
 
-.. code:: python
+.. code-block:: python
 
    >>> len(first_individual)
-
-.. parsed-literal::
-
    88890
 
 We can do some other quick tests to make sure we are on track but for the time
 being let's just assume our code is correct. Now we generalize to iterate over
 all 105 individuals in the file.
 
-.. code:: python
+.. code-block:: python
+   :caption: Checking that all individuals have the correct genotype size.
 
    >>> parsed_genotypes = [
    ...  [int(genotypes[ind, :][i][0]) for i in range(genotypes.shape[1])] +
    ...   [int(genotypes[ind, :][i][-1]) for i in range(genotypes.shape[1])] for ind in range(105)
    ... ]
    >>> [len(parsed_genotypes[i]) for i in range(105)]
-
-.. parsed-literal::
-
    [88890,
     88890,
     88890,
@@ -1620,108 +1615,12 @@ all 105 individuals in the file.
     88890,
     88890,
     88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
-    88890,
+    ...
     88890]
 
 We create an "empty" ``Population`` object and set the genotypes. We can save
-the ``Population`` object in native simuPOP format so we do not have to re-do
-this step every single time we want to work with the same population.
+the ``Population`` object in native ``simuPOP`` format so we do not have to
+re-do this step every single time we want to work with the same population.
 
 .. code-block:: python
    :caption: Creating a ``Population`` from genotypes

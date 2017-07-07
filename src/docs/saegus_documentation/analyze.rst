@@ -7,10 +7,123 @@ Analyze Module
 
 
 
+.. _gather_allele_data:
 
+.. py:function:: gather_allele_data(pop)
 
+   :param sim.Population pop: diploid ``simuPOP.population``
+   :return: Array labeling alpha, omega, minor and major alleles
 
+   .. warning:: Assumes alleles states are 1, 2, 3, 4
 
+   Constructs a numpy.array with columns:
+   locus   alpha   omega   minor   major
+
+   Loci at 0.5 frequency have the minor allele set as the alpha allele and the
+   major allele set as the omega allele. At present this function assumes that
+   the population is diploid and each locus is bi-allelic. In the situation
+   that a locus has a single allele an imaginary allele of ``0`` is assigned to
+   the locus to make the rest of the data structures consistent.
+
+   .. code-block:: python
+
+      >>> allele_data = gather_allele_data(pop)
+      >>> print(allele_data)
+      [[     0.      1.      2.      1.      2.]
+       [     1.      2.      3.      2.      3.]
+       [     2.      2.      3.      3.      2.]
+       ...,
+       [ 44442.      1.      2.      2.      1.]
+       [ 44443.      1.      3.      3.      1.]
+       [ 44444.      1.      3.      1.      3.]]
+
+.. _gather_allele_frequencies:
+
+.. py:function:: gather_allele_frequencies(pop)
+
+   :param sim.Population pop: diploid ``simuPOP.Population``
+   :return: Array of allele frequencies of alpha, omega, minor and major
+
+   .. warning:: Assumes allele states are 1, 2, 3, 4
+
+   Constructs a ``np.array`` with columns:
+   locus alpha_frequency   omega_frequency   minor_frequency   major_frequency
+
+   Loci at 0.5 frequency have the minor allele set as the alpha allele and the
+   major allele set as the omega allele. At present this function assumes that
+   the population is diploid and each locus is bi-allelic. In the situation
+   that a locus has a single allele an imaginary allele of ``0`` is assigned to
+   the locus to make the rest of the data structures consistent.
+
+.. code-block:: python
+
+   >>> allele_data = gather_allele_data(pop)
+   >>> allele_frequencies = gather_allele_frequencies(pop, allele_data)
+   >>> print(allele_frequencies)
+   [[     0.         0.319      0.681      0.319      0.681]
+    [     1.         0.219      0.781      0.219      0.781]
+    [     2.         0.938      0.062      0.062      0.938]
+    ...,
+    [ 44442.         0.533      0.467      0.467      0.533]
+    [ 44443.         0.738      0.262      0.262      0.738]
+    [ 44444.         0.267      0.733      0.267      0.733]]
+
+.. _gather_genotype_frequencies:
+
+.. py:function:: gather_genotype_frequencies(pop)
+
+   :param sim.Population pop: diploid ``simuPOP.Population``
+   :return: ``np.ndarray`` of genotype frequencies by locus
+
+   Genotype data is stored in a different way than allele data. Genotype
+   frequencies are stored in a 3-dimensional array with axes:
+
+      locus x alpha x omega
+
+   Where the frequency of genotype ``(1, 1)`` at locus ``0`` is ``(0, 1, 1)``. The
+   frequency data is stored in a ``numpy.ndarray``. We can collect the genotype
+   frequency array by using a ``saegus`` function.
+
+.. code-block:: python
+
+   >>> genotype_frequencies = analyze.gather_genotype_frequencies(example_pop)
+   >>> print(genotype_frequencies)
+   [[[ 0.     0.     0.     0.     0.   ]
+     [ 0.     0.133  0.     0.     0.   ]
+     [ 0.     0.371  0.495  0.     0.   ]
+     [ 0.     0.     0.     0.     0.   ]
+     [ 0.     0.     0.     0.     0.   ]]
+
+    [[ 0.     0.     0.     0.     0.   ]
+     [ 0.     0.     0.     0.     0.   ]
+     [ 0.     0.     0.086  0.     0.   ]
+     [ 0.     0.     0.267  0.648  0.   ]
+     [ 0.     0.     0.     0.     0.   ]]
+
+    [[ 0.     0.     0.     0.     0.   ]
+     [ 0.     0.     0.     0.     0.   ]
+     [ 0.     0.     0.886  0.105  0.   ]
+     [ 0.     0.     0.     0.01   0.   ]
+     [ 0.     0.     0.     0.     0.   ]]
+
+    ...,
+    [[ 0.     0.     0.     0.     0.   ]
+     [ 0.     0.305  0.457  0.     0.   ]
+     [ 0.     0.     0.238  0.     0.   ]
+     [ 0.     0.     0.     0.     0.   ]
+     [ 0.     0.     0.     0.     0.   ]]
+
+    [[ 0.     0.     0.     0.     0.   ]
+     [ 0.     0.562  0.     0.352  0.   ]
+     [ 0.     0.     0.     0.     0.   ]
+     [ 0.     0.     0.     0.086  0.   ]
+     [ 0.     0.     0.     0.     0.   ]]
+
+    [[ 0.     0.     0.     0.     0.   ]
+     [ 0.     0.143  0.     0.     0.   ]
+     [ 0.     0.     0.     0.     0.   ]
+     [ 0.     0.248  0.     0.61   0.   ]
+     [ 0.     0.     0.     0.     0.   ]]]
 
 
 
