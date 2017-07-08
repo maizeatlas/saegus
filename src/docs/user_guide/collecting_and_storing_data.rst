@@ -4,7 +4,7 @@
 Collect and Store Data
 ######################
 
-This is probably the most under-developed aspect of ``saegus``. I have written
+This is probably the most under-developed aspect of :mod:`saegus`. I have written
 up the data model (the way the data is stored) in a Google Doc. For the time
 being we will design the functions to store and access the data around this
 data model. I hope to move to a more permanent solution such as SciDB_ sooner
@@ -67,8 +67,9 @@ with columns. Tied loci (loci with both alleles at 0.5 frequency) have the
 alpha allele set at the minor allele and the omega allele set as the major
 allele.
 
-   locus | alpha | omega | minor | major
-   =====================================
+
++   locus | alpha | omega | minor | major
+
 
 .. code-block:: python
    :caption: Allele data
@@ -84,9 +85,6 @@ allele.
     [ 44444.      1.      3.      1.      3.]]
 
 The array for allele frequencies has the same ordering of columns:
-
-   locus | alpha | omega | minor | major
-   =====================================
 
 .. code-block:: python
    :caption: Allele frequencies
@@ -268,27 +266,54 @@ into HDF5 files as if you were working with a ``dict``.
     [ 44443.      1.      3.      3.      1.]
     [ 44444.      1.      3.      1.      3.]]
 
+It is best to think of an HDF5 file as its very own directory. So we can use
+an absolute path to get to data or we can use the relative path. A "relative"
+path means using the ``allele_group`` object versus using the ``example_data``
+object.
+
+.. code-block:: python
+   :caption: Absolute versus relative paths in HDF5
+
+   >>> print(example_data['allele/states']) # absolute path to dataset
+   <HDF5 dataset "states": shape (44445, 5), type "<f8">
+   >>> print(allele_group['states']) # relative path to dataset
+   <HDF5 dataset "states": shape (44445, 5), type "<f8">
+
 
 .. _groups_and_datasets:
 
-Groups and Datasets
-===================
+Groups, Datasets and Metadata
+=============================
 
-HDF5 files are partitioned into any number of ``groups`` and ``datasets``.
-Each ``group``` can have its own metadata stored as ``attributes``. A ``group``
-can also contain any number of ``datasets``. But ``datasets`` cannot store
-metadata as ``attributes``. We will store the column names associated with
-the allele data array as an ``attribute``
+A ``group`` is a sub-directory and a ``dataset`` is an array of data. A
+sub-directory has metadata: size measured in bytes and access permissions.
+An HDF5 ``group`` in HDF5 can have metadata as well; however, a ``dataset``
+can also have metadata.
 
 .. code-block:: python
-   :caption: HDF5 ``groups`` and attributes
+   :caption: HDF5 ``groups`` versus  ``datasets``
 
-   >>> allele_group = example_data.create_group('allele')
-   >>> genotype_group = example_data.create_group('genotype')
-   >>> allele_group.attrs['columns'] = list(map(np.string_, ['locus', 'alpha',
-   ...                                           'omega', 'minor', 'major' ]))
-   >>> print([name.decode('UTF-8') for name in allele_group.attrs['states']])
+   >>> print(example_data)
+   <HDF5 file "example_data.hdf5" (mode r+)>
+   >>> print(allele_group)
+   <HDF5 group "/allele" (1 members)>
+   >>> print(type(allele_group))
+   <class 'h5py._hl.group.Group'>
+   >>> allele_group['states'].attrs['columns'] = list(map(np.string_, ['locus',  # metadata attached to dataset
+   ...                        'alpha', 'omega', 'minor', 'major' ]))
+   >>> print([name.decode('UTF-8') for name in allele_group['states'].attrs['columns']])
    ['locus', 'alpha', 'omega', 'minor', 'major']
+   >>> allele_group.attrs['info'] = list(map(np.string_, # metadata attached to group
+   ...                  ['Declaration of alpha, omega, minor and major alleles']))
+   >>> print(allele_group.attrs['info'])
+   [b'Declaration of alpha, omega, minor and major alleles']
+   >>> allele_group.attrs['info'][0].decode('UTF-8')
+   Declaration of alpha, omega, minor and major alleles
+
+.. _storing_frequency_data:
+
+Storing Frequency Data
+----------------------
 
 We can store the allele frequency data and genotype frequency data in their
 own groups.
@@ -342,4 +367,195 @@ own groups.
 Data from Multiple Generations
 ==============================
 
-We can easily store multiple generations of data
+We will demonstrate how easy it is to generate and store multiple generations
+of data. We will store the allele frequencies and genotype frequencies from
+five generations of random mating. The initial population size of ``105`` will
+be increased to ``1000``.
+
+.. _generation_1:
+
+Generation 1
+------------
+
+.. code-block:: python
+   :caption: Generation ``1``
+
+   >>> example_pop.popSize() # pre-random mating
+   105
+   >>> example_pop.evolve(
+   ...    matingScheme=sim.RandomMating(
+   ...         ops=[
+   ...          sim.IdTagger(),
+   ...          sim.PedigreeTagger(),
+   ...          sim.Recombinator(rates=recom_map)
+   ...         ], subPopSize=1000
+   ...          ),
+   ...      gen=1
+   ...  )
+   1
+   >>> example_pop.popSize() # post random mating
+   1000
+   >>> allele_group['generation/1'] = analyze.gather_allele_frequencies(example_pop, allele_data)
+   >>> genotype_group['generation/1'] = analyze.gather_genotype_frequencies(example_pop)
+
+.. _generation_2:
+
+Generation 2
+------------
+
+.. code-block:: python
+   :caption: Generation ``2``
+
+   >>> example_pop.evolve(
+   ...    matingScheme=sim.RandomMating(
+   ...         ops=[
+   ...          sim.IdTagger(),
+   ...          sim.PedigreeTagger(),
+   ...          sim.Recombinator(rates=recom_map)
+   ...         ], subPopSize=1000
+   ...          ),
+   ...      gen=1
+   ...  )
+   1
+   >>> allele_group['generation/2'] = analyze.gather_allele_frequencies(example_pop, allele_data)
+   >>> genotype_group['generation/2'] = analyze.gather_genotype_frequencies(example_pop)
+
+.. _generation_3:
+
+Generation 3
+------------
+
+.. code-block:: python
+   :caption: Generation ``3``
+
+   >>> example_pop.evolve(
+   ...    matingScheme=sim.RandomMating(
+   ...         ops=[
+   ...          sim.IdTagger(),
+   ...          sim.PedigreeTagger(),
+   ...          sim.Recombinator(rates=recom_map)
+   ...         ], subPopSize=1000
+   ...          ),
+   ...      gen=1
+   ...  )
+   1
+   >>> allele_group['generation/3'] = analyze.gather_allele_frequencies(example_pop, allele_data)
+   >>> genotype_group['generation/3'] = analyze.gather_genotype_frequencies(example_pop)
+
+.. _generation_4:
+
+Generation 4
+------------
+
+.. code-block:: python
+   :caption: Generation ``4``
+
+   >>> example_pop.evolve(
+   ...    matingScheme=sim.RandomMating(
+   ...         ops=[
+   ...          sim.IdTagger(),
+   ...          sim.PedigreeTagger(),
+   ...          sim.Recombinator(rates=recom_map)
+   ...         ], subPopSize=1000
+   ...          ),
+   ...      gen=1
+   ...  )
+   1
+   >>> allele_group['generation/4'] = analyze.gather_allele_frequencies(example_pop, allele_data)
+   >>> genotype_group['generation/4'] = analyze.gather_genotype_frequencies(example_pop)
+
+
+.. _generation_5:
+
+Generation 5
+------------
+
+.. code-block:: python
+   :caption: Generation ``5``
+
+   >>> example_pop.evolve(
+   ...    matingScheme=sim.RandomMating(
+   ...         ops=[
+   ...          sim.IdTagger(),
+   ...          sim.PedigreeTagger(),
+   ...          sim.Recombinator(rates=recom_map)
+   ...         ], subPopSize=1000
+   ...          ),
+   ...      gen=1
+   ...  )
+   1
+   >>> allele_group['generation/5'] = analyze.gather_allele_frequencies(example_pop, allele_data)
+   >>> genotype_group['generation/5'] = analyze.gather_genotype_frequencies(example_pop)
+
+After the final generation close the HDF5 file.
+
+.. code-block:: python
+   :caption: Close the HDF5 file
+
+   >>> example_data.close()
+
+
+.. _using_R_for_hdf5:
+
+Very Brief Example HDF5 in R
+############################
+
+``R`` is a very popular language for statistical computing in the biological
+sciences. This example shows how to use the ``h5`` package to extract the
+data that we have just created. Examining the file object reveals our two
+``groups``: ``allele`` and ``genotype``.
+
+.. code-block:: r
+   :caption: Using ``h5`` to explore the file
+
+   > library(h5)
+   > r_example_data = h5file('example_data.hdf5')
+   > r_example_data
+   H5File 'example_data.hdf5' (mode 'a')
+   + allele
+   + genotype
+
+We can look at the contents of each ``group`` the exact same way as we would
+in ``Python``. The metadata that we stored as ``attributes`` is prefixed by
+``A`` and a single ``dataset`` is prefixed by ``D``. The ``+`` indicates that
+``generation`` contains multiple objects.
+
+.. code-block:: R
+   :caption: Walking through the ``group``
+
+   > r_example_data['allele']
+   H5Group '/allele'
+   + generation
+   D states
+   A columns
+   A info
+
+.. code-block:: R
+   :caption: Looking at ``allele/generation``
+
+   > r_example_data['allele/generation']
+   H5Group '/allele/generation'
+   D 1
+   D 2
+   D 3
+   D 4
+   D 5
+
+Finally let's look at the actual data.
+
+.. code-block:: R
+   :caption: Examining a dataset
+
+   > r_example_data['allele/generation/1']
+   DataSet '1' (44445 x 5)
+   type: numeric
+   chunksize: NA
+   maxdim: 44445 x 5
+   > r_example_data['allele/generation/1'][]
+   0	0.319047619	0.68095238	0.319047619	0.6809524
+   1	0.219047619	0.78095238	0.219047619	0.7809524
+   2	0.938095238	0.06190476	0.061904762	0.9380952
+   3	0.061904762	0.93809524	0.061904762	0.9380952
+   ⋮	⋮	⋮	⋮	⋮
+   44443	0.73809524	0.26190476	0.26190476	0.7380952
+   44444	0.26666667	0.73333333	0.26666667	0.7333333

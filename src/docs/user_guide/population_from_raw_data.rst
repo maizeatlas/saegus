@@ -11,7 +11,7 @@ determined genotype data. This tutorial shows how to convert raw data into a
 .. _parsing_raw_data:
 
 Parsing Raw Data
-================
+################
 
 We will use ``pandas`` and ``numpy`` to make to read and manipulate the raw
 data. Then we will convert the raw genotype data into a ``simuPOP.Population``
@@ -1583,22 +1583,9 @@ iteration.
    >>> small_example_genotype
    [2, 3, 2, 3, 1, 1, 3, 3, 3, 2]
 
-.. code-block:: python
-
-   >>> first_individual = [int(genotypes[0, :][i][0]) for i in range(genotypes.shape[1])] +\
-                        [int(genotypes[0, :][i][-1]) for i in range(genotypes.shape[1])]
-
-The length of an individuals genotype array should be twice the number of columns
-in the genotype file.
-
-.. code-block:: python
-
-   >>> len(first_individual)
-   88890
-
 We can do some other quick tests to make sure we are on track but for the time
-being let's just assume our code is correct. Now we generalize to iterate over
-all 105 individuals in the file.
+being let's just assume our code is correct. Let's check to see if all
+individuals have the correct length for their genotypes.
 
 .. code-block:: python
    :caption: Checking that all individuals have the correct genotype size.

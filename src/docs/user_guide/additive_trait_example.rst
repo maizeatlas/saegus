@@ -1,8 +1,8 @@
-.. _example_of_additive_quantitative_trait:
+.. _additive_quantitative_trait:
 
-##########################################
-Example of Additive Trait Parameterization
-##########################################
+###############################
+Additive Trait Parameterization
+###############################
 
 .. code-block:: python
    :caption: Modules we will need for this example
@@ -39,7 +39,7 @@ Steps:
 
 Load Population
 ~~~~~~~~~~~~~~~
-
+   
 We will use the population we created in the last step instead of creating
 a new population.
 

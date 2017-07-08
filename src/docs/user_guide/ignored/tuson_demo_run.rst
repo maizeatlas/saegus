@@ -1,4 +1,11 @@
 
+.. _tuson_demo_run:
+
+##############
+Tuson Demo Run
+##############
+
+
 .. code:: python
 
     import simuOpt
@@ -18,7 +25,7 @@
     artemis = analyze.Study('demo')
 
 Fixed Sites Converted Into Segregating Sites
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+============================================
 
 .. code:: python
 
@@ -388,19 +395,16 @@ Fixed Sites Converted Into Segregating Sites
 
 
 
-.. code:: python
+.. code-block:: python
 
     af = analyze.allele_data(tuson, alleles, range(tuson.totNumLoci()))
     af.minor_allele = np.asarray(af.minor_allele, dtype=np.int8)
     af.major_allele = np.asarray(af.major_allele, dtype=np.int8)
     af.to_csv('demo_artemis_founder_allele_frequencies.txt', sep='\t', float_format='%.4f')
 
-.. code:: python
+.. code-block:: python
 
     af
-
-
-
 
 .. raw:: html
 
@@ -851,26 +855,16 @@ Fixed Sites Converted Into Segregating Sites
 
 
 Running the Simulation
-----------------------
+######################
 
 The Tuson Genetic Map
-^^^^^^^^^^^^^^^^^^^^^
+---------------------
 
-.. code:: python
+.. code-block:: python
 
-    tuson_parser = parse.TusonFounders()
-
-.. code:: python
-
-    recom_rates = tuson_parser.parse_recombination_rates('raw_genetic_map.txt')
-
-.. code:: python
-
-    recom_rates
-
-
-
-
+    >>> tuson_parser = parse.TusonFounders()
+    >>> recom_rates = tuson_parser.parse_recombination_rates('raw_genetic_map.txt')
+    >>> recom_rates
 .. parsed-literal::
 
     [0.0020926625899999962,
