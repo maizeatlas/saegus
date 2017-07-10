@@ -17,6 +17,8 @@ import lxml.etree as etree
 from . import operators, parameters
 
 
+# todo Update documentation of gather_allele_data to reflect that allele frequencies must be computed
+
 def gather_allele_data(pop):
     """
     Constructs a numpy.array with columns:
@@ -32,8 +34,6 @@ def gather_allele_data(pop):
     allele_table = np.zeros((pop.totNumLoci(), 5))
     alpha_alleles = []
     omega_alleles = []
-
-    sim.stat(pop, alleleFreq=sim.ALL_AVAIL)
 
     for locus in range(pop.totNumLoci()):
         alpha_alleles.append(list(pop.dvars().alleleFreq[locus])[0])

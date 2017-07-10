@@ -7,6 +7,8 @@ import csv
 import random
 
 
+# todo Create operators to store the HDF5 data during an evolutionary scenario
+
 class CalculateErrorVariance(sim.PyOperator):
     def __init__(self, heritability, *args, **kwargs):
         self.heritability = heritability

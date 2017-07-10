@@ -130,6 +130,7 @@ probability mass functions. We will use an example individual who is quite
 diverse in its lineage.
 
 .. code-block:: python
+   :caption: Comparing empirical results versus pmf
 
    >>> corrected_proportions[5]
    array([0.2195, 0.0198, 0.021, 0.2371, 0.1295, 0.3731], dtype=object)

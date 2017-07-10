@@ -1,9 +1,9 @@
 
-.. _operators:
+.. _operators_of_saegus:
 
-===================================
-Operators Added By :py:mod:`saegus`
-===================================
+#############################
+Operators Of :py:mod:`saegus`
+#############################
 
 All of the classes in this module are derived from the simuPOP.PyOperator
 class. Each class performs some task inside of the evolutionary process.
@@ -14,6 +14,14 @@ operators.
 
 .. _function_forms_of_operators:
 
+Function Forms of Operators
+###########################
+
+.. _assign_additive_g_function:
+
+Assign Additive G Function
+--------------------------
+
 .. py:function:: assign_additive_g(pop, qtl, allele_effects)
 
    :parameter pop: simuPOP.Population
@@ -23,6 +31,11 @@ operators.
 .. warning::
 
    :func:`assign_additive_g` assumes that the population has infoField ``g`` defined.
+
+.. _calculate_error_variance_function:
+
+:py:function:`assign_additive_g`
+--------------------------------
 
 
 .. py:function:: calculate_error_variance(pop, heritability)
@@ -48,17 +61,35 @@ operators.
    :func:`phenotypic_effect_calculator` assumes that the population has infoField ``p`` defined.
 
 
+.. _operators:
+
+Operators
+#########
 
 .. py:class:: GenoAdditive()
 
+
+.. _geno_additive_array:
+
+Geno Additive Array
+-------------------
+
+.. py:class:: GenoAdditiveArray()
+
 .. py:class:: PhenotypeCalculator()
+
+
+.. _calculate_error_variance:
+
+Calculate Error Variance
+------------------------
 
 .. py:class:: CalculateErrorVariance(heritability)
 
-An operator to calculate the variance of the experimental error distribution.
-We assume that there is some degree of error when measuring phenotypes in
-an actual experiment. Measurement error is represented as a random draw
-from a normal distribution with mean zero and variance ``epsilon`` where
+   An operator to calculate the variance of the experimental error distribution.
+   We assume that there is some degree of error when measuring phenotypes in
+   an actual experiment. Measurement error is represented as a random draw
+   from a normal distribution with mean zero and variance ``epsilon`` where
 
 .. math::
 
@@ -91,3 +122,5 @@ values of ``g`` must be assigned to each individual.
 .. py:class:: SaveMetaPopulations()
 
 .. py:class:: InfoAndGenotypeWriter()
+
+.. todo:: Create operators for storing HDF5 data during the evolutionary process.
