@@ -1,20 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="trying to fix error">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/docs/user_guide/multiple_replicate_populations.rst" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/docs/user_guide/drift_random_mating_selection_comparison.rst" afterPath="$PROJECT_DIR$/src/docs/user_guide/ignored/drift_random_mating_selection_comparison.rst" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/docs/user_guide/tuson_demo_run.rst" afterPath="$PROJECT_DIR$/src/docs/user_guide/ignored/tuson_demo_run.rst" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/docs/user_guide/tuson_with_selection.rst" afterPath="$PROJECT_DIR$/src/docs/user_guide/ignored/tuson_with_selection.rst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dictionaries/vakanas.xml" afterPath="$PROJECT_DIR$/.idea/dictionaries/vakanas.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/docs/user_guide/additive_trait_example.rst" afterPath="$PROJECT_DIR$/src/docs/user_guide/additive_trait_example.rst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/docs/user_guide/additive_trait_example_notebook.ipynb" afterPath="$PROJECT_DIR$/src/docs/user_guide/additive_trait_example_notebook.ipynb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/docs/user_guide/collecting_and_storing_data.rst" afterPath="$PROJECT_DIR$/src/docs/user_guide/collecting_and_storing_data.rst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/docs/user_guide/conf.py" afterPath="$PROJECT_DIR$/src/docs/user_guide/conf.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/docs/user_guide/index.rst" afterPath="$PROJECT_DIR$/src/docs/user_guide/index.rst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/docs/user_guide/population_from_raw_data.rst" afterPath="$PROJECT_DIR$/src/docs/user_guide/population_from_raw_data.rst" />
-    </list>
+    <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="trying to fix error" />
     <ignored path="saegus_project.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -63,62 +50,7 @@
     <favorites_list name="TestFav" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.rst" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/docs/user_guide/index.rst">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="15" lean-forward="false" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="additive_trait_example.rst" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/docs/user_guide/additive_trait_example.rst">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="615">
-              <caret line="41" column="3" lean-forward="false" selection-start-line="41" selection-start-column="3" selection-end-line="41" selection-end-column="3" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="conf.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/docs/user_guide/conf.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="217">
-              <caret line="120" column="20" lean-forward="false" selection-start-line="120" selection-start-column="20" selection-end-line="120" selection-end-column="20" />
-              <folding>
-                <element signature="e#442#452#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="collecting_and_storing_data.rst" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/docs/user_guide/collecting_and_storing_data.rst">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="292">
-              <caret line="313" column="0" lean-forward="false" selection-start-line="313" selection-start-column="0" selection-end-line="313" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="population_from_raw_data.rst" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/docs/user_guide/population_from_raw_data.rst">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="682">
-              <caret line="1619" column="0" lean-forward="false" selection-start-line="1619" selection-start-column="0" selection-end-line="1619" selection-end-column="0" />
-              <folding>
-                <marker date="1499473498555" expanded="false" signature="1064:35742" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -232,10 +164,10 @@
     </layout>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="65" />
-    <option name="y" value="-4" />
-    <option name="width" value="1535" />
-    <option name="height" value="904" />
+    <option name="x" value="377" />
+    <option name="y" value="157" />
+    <option name="width" value="964" />
+    <option name="height" value="669" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -275,7 +207,6 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -418,6 +349,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1035,10 +967,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="-4" width="1535" height="904" extended-state="6" />
-    <editor active="true" />
+    <frame x="377" y="157" width="964" height="669" extended-state="0" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24647415" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" x="895" y="332" width="676" height="407" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.40958604" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" x="895" y="332" width="676" height="407" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31303117" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25357142" sideWeight="0.64395785" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17864339" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1341,7 +1272,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2061">
           <caret line="270" column="74" lean-forward="false" selection-start-line="270" selection-start-column="74" selection-end-line="270" selection-end-column="74" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1364,10 +1294,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="870" column="0" lean-forward="false" selection-start-line="870" selection-start-column="0" selection-end-line="870" selection-end-column="0" />
-          <folding>
-            <marker date="1499471024081" expanded="false" signature="1713:7631" ph="..." />
-            <marker date="1499471024081" expanded="false" signature="8052:17417" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1375,7 +1301,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="697">
           <caret line="89" column="34" lean-forward="false" selection-start-line="89" selection-start-column="34" selection-end-line="89" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1383,9 +1308,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
           <caret line="143" column="0" lean-forward="false" selection-start-line="143" selection-start-column="0" selection-end-line="143" selection-end-column="0" />
-          <folding>
-            <element signature="e#416#2594#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1393,7 +1315,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
           <caret line="8" column="7706" lean-forward="false" selection-start-line="8" selection-start-column="7706" selection-end-line="8" selection-end-column="7706" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1401,7 +1322,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="232">
           <caret line="60" column="0" lean-forward="false" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1409,7 +1329,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="12" lean-forward="false" selection-start-line="0" selection-start-column="12" selection-end-line="0" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1417,77 +1336,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="697">
           <caret line="509" column="0" lean-forward="false" selection-start-line="509" selection-start-column="0" selection-end-line="509" selection-end-column="0" />
-          <folding>
-            <marker date="1499473582640" expanded="true" signature="4964:5050" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="5066:5136" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="5235:5303" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="5323:5349" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="5369:5394" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="5415:5471" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="5493:5542" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="5641:5690" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="5829:5957" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="5996:6025" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="6030:6079" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="6096:6154" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="6174:6202" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="6297:6339" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="6362:6385" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="6624:6653" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="6670:6711" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="6727:6745" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="6839:6867" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="6883:6915" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="6931:6963" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="6979:7011" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="7027:7059" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="7099:7123" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="7174:7246" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="7272:7306" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="7323:7371" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="7383:7408" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="7421:7447" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="7511:7587" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="7607:7638" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="7652:7720" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="7746:7814" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="7842:7874" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="7889:7924" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="7938:7966" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="7982:8034" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="8122:8216" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="8227:8323" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="8340:8432" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="8455:8482" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="8508:8541" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="8566:8613" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="8643:8681" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="8801:8854" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="8897:8900" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="9031:9114" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="9135:9173" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="9193:9254" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="9309:9347" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="9364:9385" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="9402:9452" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="9480:9528" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="9621:9652" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="9713:9734" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="9759:9817" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="9847:9875" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="9972:10199" ph="{...}" />
-            <marker date="1499473582640" expanded="true" signature="10037:10095" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/conf.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="120" column="20" lean-forward="false" selection-start-line="120" selection-start-column="20" selection-end-line="120" selection-end-column="20" />
-          <folding>
-            <element signature="e#442#452#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1498,24 +1346,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/collecting_and_storing_data.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="292">
-          <caret line="313" column="0" lean-forward="false" selection-start-line="313" selection-start-column="0" selection-end-line="313" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/population_from_raw_data.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="682">
-          <caret line="1619" column="0" lean-forward="false" selection-start-line="1619" selection-start-column="0" selection-end-line="1619" selection-end-column="0" />
-          <folding>
-            <marker date="1499473498555" expanded="false" signature="1064:35742" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/docs/user_guide/additive_trait_example_notebook.ipynb">
       <provider selected="true" editor-type-id="ipnb-editor">
         <state>
@@ -1523,19 +1353,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/index.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="15" lean-forward="false" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/docs/user_guide/additive_trait_example.rst">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="615">
           <caret line="41" column="3" lean-forward="false" selection-start-line="41" selection-start-column="3" selection-end-line="41" selection-end-column="3" />
-          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/index.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="15" lean-forward="false" selection-start-line="10" selection-start-column="15" selection-end-line="10" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/collecting_and_storing_data.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="292">
+          <caret line="313" column="0" lean-forward="false" selection-start-line="313" selection-start-column="0" selection-end-line="313" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/population_from_raw_data.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="682">
+          <caret line="1619" column="0" lean-forward="false" selection-start-line="1619" selection-start-column="0" selection-end-line="1619" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/conf.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="217">
+          <caret line="120" column="20" lean-forward="false" selection-start-line="120" selection-start-column="20" selection-end-line="120" selection-end-column="20" />
         </state>
       </provider>
     </entry>
