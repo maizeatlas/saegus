@@ -380,7 +380,7 @@ class MetaGeneration(object):
                 operators.assign_additive_g(sample, qtl,
                                             allele_effects)
                 operators.calculate_error_variance(sample, 0.7)
-                operators.phenotypic_effect_calculator(sample)
+                operators.calculate_p(sample)
 
                 name = run_id + '_' + rep_id_name + '_' + gen_id_name
 
@@ -594,7 +594,7 @@ class MultiGeneration(object):
                 operators.assign_additive_g(sample, qtl,
                                     allele_effects)
                 operators.calculate_error_variance(sample, 0.7)
-                operators.phenotypic_effect_calculator(sample)
+                operators.calculate_p(sample)
 
                 name = run_id+'_'+rep_id_name+'_'+gen_id_name
 
@@ -1491,7 +1491,7 @@ def single_sample_analyzer(full_population, sample_size,
     segregating_loci = sample_population.dvars().segSites
     operators.assign_additive_g(full_population, quantitative_trait_loci, allele_effects)
     operators.calculate_error_variance(sample_population, heritability)
-    operators.phenotypic_effect_calculator(sample_population)
+    operators.calculate_p(sample_population)
     af = allele_data(sample_population, alleles,
                              range(sample_population.totNumLoci()))
 
@@ -1731,7 +1731,7 @@ def write_multiple_sample_analyzer(library_of_samples, sample_size_list,
             operators.assign_additive_g(sample_population, quantitative_trait_loci,
                                         allele_effects)
             operators.calculate_error_variance(sample_population, heritability)
-            operators.phenotypic_effect_calculator(sample_population)
+            operators.calculate_p(sample_population)
 
             name = run_id + sub_run_id + '_' + str(rep_id) + '_' + str(sample_population.popSize())
             afrq_name = run_id + '/' + str(rep_id) + '/' + str(sample_population.popSize())

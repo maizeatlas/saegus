@@ -1,4 +1,4 @@
-.. _additive_quantitative_trait:
+.. _additive_trait_parameterization:
 
 ###############################
 Additive Trait Parameterization
@@ -19,8 +19,8 @@ Additive Trait Parameterization
 
 .. _overview_of_additive_trait_example:
 
-Our goal is to show how to parameterize an additive trait in ``saegus`` code.
-We will make use of ``simuPOP`` ``infoFields`` to store the information about
+Our goal is to show how to parameterize an additive trait in :mod`saegus` code.
+We will make use of :mod:`simuPOP` ``infoFields`` to store the information about
 the additive trait for each individual. Also we will add a unique identifier
 for each individual which will help us verify that the trait is being calculated
 correctly. In this example we will randomly choose quantitative trait loci from
@@ -34,16 +34,26 @@ Steps:
    + Choose QTL
    + Assign Allele Effects
    + Calculate G
+   + Calculate error
+   + Calculate P
 
-.. _load_population:
+.. _preparing_the_population:
 
-Load Population
-~~~~~~~~~~~~~~~
+Preparing the Population
+########################
+
+We will re-load the population and add information fields.
+``example_pop`` needs the information fields ``ind_id``, ``g`` and ``p``.
+
+.. _load_the_population:
+
+Load the Population
+===================
 
 We will use the population we created in the last step instead of creating
 a new population.
 
-.. code-block:::: python
+.. code-block:: python
    :caption: Loading our example population from a file
 
    >>> example_pop = sim.loadPopulation('example_pop.pop')
@@ -52,13 +62,15 @@ a new population.
 .. _add_information_fields:
 
 Add Information Fields
-~~~~~~~~~~~~~~~~~~~~~~
+======================
 
 At present our population has no special information assigned to its members.
-Each individual is only a genotype. By default ``simuPOP`` uses ``ind_id``,
+Each individual is only a genotype. By default :mod:`simuPOP` uses ``ind_id``,
 ``father_id``, ``mother_id``, ``father_idx`` and ``mother_idx`` for its very
-useful ``IdTagger`` functions. We can save some hassle by using these for
+useful _Tagger functions. We can save some hassle by using these for
 identifying individuals.
+
+.. _Tagger: http://simupop.sourceforge.net/manual_svn/build/refManual_ch3_sec10.html
 
 .. code-block:: python
    :caption: Add the ``infoFields`` ``ind_id``, ``g`` and ``p``
@@ -70,11 +82,18 @@ identifying individuals.
    ('ind_id', 'g', 'p')
 
 By default information fields are set to ``0.0``. We can initialize the
-``ind_id`` field using a ``simuPOP`` function.
+``ind_id`` field using a :mod:`simuPOP` function.
 
 .. code-block:: python
    :caption: Initialize individual identifiers
 
+   >>> print(np.array(example_pop.indInfo('example_pop')))
+   [ 0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
+     0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
+     0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
+     0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
+     0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
+     0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.]
    >>> sim.tagID(example_pop)
    >>> print(np.array(example_pop.dvars().ind_id))
    [   1.    2.    3.    4.    5.    6.    7.    8.    9.   10.   11.   12.
@@ -87,18 +106,20 @@ By default information fields are set to ``0.0``. We can initialize the
       85.   86.   87.   88.   89.   90.   91.   92.   93.   94.   95.   96.
       97.   98.   99.  100.  101.  102.  103.  104.  105.]
 
-.. note:: In this step we converted the output into a np.array for aesthetics
+.. note::
+   ::
+   In this step we converted the output into a np.array for aesthetics
 
 .. _determine_segregating_loci:
 
 Determine Segregating Loci
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+==========================
 
 For simplicity we will use loci which have more than one allele i.e.
 segregating.
 
 .. code-block:: python
-   :caption: Using ``simuPOP`` to find segregating loci
+   :caption: Using :mod:`simuPOP` to find segregating loci
 
    >>> sim.stat(example_pop, numOfSegSites=sim.ALL_AVAIL,
    ...              vars=['numOfSegSites', 'segSites', 'fixedSites'])
@@ -114,11 +135,19 @@ There are 42,837 segregating loci in this population. ``saegus`` has a function
 to put the alleles into an array and assign the alleles at ``qtl`` an effect as
 a draw from a specified distribution.
 
+.. _additive_trait:
+
+Additive Trait
+##############
+
+We have all the information we need from the previous steps. We will randomly
+choose ``20`` QTL from the segregating loci. Both alleles at each QTL are
+assigned an effect as a random draw with an exponential distribution.
 
 .. _choose_QTL:
 
 Choosing QTL and Assign Effects
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===============================
 
 For this example we will pick 20 loci to designate as quantitative trait loci.
 The alleles at each chosen QTL will be assigned a non-zero effect via a draw
@@ -160,26 +189,35 @@ non-zero effects.
    >>> trait = parameters.Trait()
    >>> ae_table = trait.construct_allele_effects_table(example_pop, qtl, random.expovariate, 1)
    >>> ae_table[qtl]
-   array([[  1812.   ,      1.   ,      2.559,      3.   ,      1.962],
-          [  1905.   ,      1.   ,      0.169,      3.   ,      0.199],
-          [  4802.   ,      1.   ,      0.533,      3.   ,      0.523],
-          [  6092.   ,      1.   ,      0.5  ,      2.   ,      4.702],
-          [  7776.   ,      1.   ,      1.825,      3.   ,      0.156],
-          [  9225.   ,      1.   ,      0.793,      2.   ,      1.657],
-          [ 11426.   ,      1.   ,      1.064,      3.   ,      0.228],
-          [ 17994.   ,      1.   ,      0.221,      2.   ,      0.015],
-          [ 18169.   ,      1.   ,      1.011,      3.   ,      1.45 ],
-          [ 19480.   ,      1.   ,      1.443,      3.   ,      0.046],
-          [ 21206.   ,      1.   ,      0.554,      2.   ,      1.086],
-          [ 22754.   ,      1.   ,      0.904,      3.   ,      0.628],
-          [ 27998.   ,      1.   ,      0.361,      2.   ,      0.023],
-          [ 28313.   ,      1.   ,      1.953,      3.   ,      0.033],
-          [ 29297.   ,      1.   ,      2.737,      3.   ,      3.567],
-          [ 31358.   ,      1.   ,      0.778,      3.   ,      1.601],
-          [ 36316.   ,      1.   ,      6.54 ,      3.   ,      2.131],
-          [ 36354.   ,      1.   ,      0.573,      2.   ,      1.766],
-          [ 40565.   ,      1.   ,      0.137,      3.   ,      0.351],
-          [ 44143.   ,      1.   ,      0.338,      3.   ,      0.719]])
+   [[  1812.         1.         0.069      3.         1.832]
+    [  1905.         1.         0.192      3.         2.812]
+    [  4802.         1.         0.009      3.         0.935]
+    [  6092.         1.         3.329      2.         0.274]
+    [  7776.         1.         0.885      3.         0.349]
+    [  9225.         1.         0.018      2.         1.521]
+    [ 11426.         1.         1.026      3.         0.223]
+    [ 17994.         1.         0.374      2.         0.618]
+    [ 18169.         1.         1.141      3.         0.688]
+    [ 19480.         1.         6.983      3.         1.049]
+    [ 21206.         1.         2.583      2.         0.173]
+    [ 22754.         1.         1.162      3.         2.465]
+    [ 27998.         1.         0.535      2.         1.631]
+    [ 28313.         1.         4.603      3.         0.686]
+    [ 29297.         1.         1.071      3.         0.001]
+    [ 31358.         1.         2.123      3.         2.785]
+    [ 36316.         1.         0.138      3.         0.951]
+    [ 36354.         1.         0.465      2.         0.853]
+    [ 40565.         1.         5.387      3.         0.006]
+    [ 44143.         1.         1.22       3.         0.039]]
+   >>> print(ae_table) # non-qtl
+   [[     0.      1.      0.      2.      0.]
+    [     1.      2.      0.      3.      0.]
+    [     2.      2.      0.      3.      0.]
+    ...,
+    [ 44442.      1.      0.      2.      0.]
+    [ 44443.      1.      0.      3.      0.]
+    [ 44444.      1.      0.      3.      0.]]
+
 
 For speed of computation we construct an array of allele effects where the row
 of the array corresponds to the locus and the column corresponds to the integer
@@ -189,36 +227,42 @@ representing the allele state.
    :caption: Putting the allele effects in an array for speed of computation
 
    >>> ae_array = trait.construct_ae_array(ae_table, qtl)
-   >>> ae_array[qtl]
-   array([[ 0.   ,  2.559,  0.   ,  1.962,  0.   ],
-       [ 0.   ,  0.169,  0.   ,  0.199,  0.   ],
-       [ 0.   ,  0.533,  0.   ,  0.523,  0.   ],
-       [ 0.   ,  0.5  ,  4.702,  0.   ,  0.   ],
-       [ 0.   ,  1.825,  0.   ,  0.156,  0.   ],
-       [ 0.   ,  0.793,  1.657,  0.   ,  0.   ],
-       [ 0.   ,  1.064,  0.   ,  0.228,  0.   ],
-       [ 0.   ,  0.221,  0.015,  0.   ,  0.   ],
-       [ 0.   ,  1.011,  0.   ,  1.45 ,  0.   ],
-       [ 0.   ,  1.443,  0.   ,  0.046,  0.   ],
-       [ 0.   ,  0.554,  1.086,  0.   ,  0.   ],
-       [ 0.   ,  0.904,  0.   ,  0.628,  0.   ],
-       [ 0.   ,  0.361,  0.023,  0.   ,  0.   ],
-       [ 0.   ,  1.953,  0.   ,  0.033,  0.   ],
-       [ 0.   ,  2.737,  0.   ,  3.567,  0.   ],
-       [ 0.   ,  0.778,  0.   ,  1.601,  0.   ],
-       [ 0.   ,  6.54 ,  0.   ,  2.131,  0.   ],
-       [ 0.   ,  0.573,  1.766,  0.   ,  0.   ],
-       [ 0.   ,  0.137,  0.   ,  0.351,  0.   ],
-       [ 0.   ,  0.338,  0.   ,  0.719,  0.   ]])
+   >>> print(ae_array[qtl])
+   [[ 0.     0.069  0.     1.832  0.   ]
+    [ 0.     0.192  0.     2.812  0.   ]
+    [ 0.     0.009  0.     0.935  0.   ]
+    [ 0.     3.329  0.274  0.     0.   ]
+    [ 0.     0.885  0.     0.349  0.   ]
+    [ 0.     0.018  1.521  0.     0.   ]
+    [ 0.     1.026  0.     0.223  0.   ]
+    [ 0.     0.374  0.618  0.     0.   ]
+    [ 0.     1.141  0.     0.688  0.   ]
+    [ 0.     6.983  0.     1.049  0.   ]
+    [ 0.     2.583  0.173  0.     0.   ]
+    [ 0.     1.162  0.     2.465  0.   ]
+    [ 0.     0.535  1.631  0.     0.   ]
+    [ 0.     4.603  0.     0.686  0.   ]
+    [ 0.     1.071  0.     0.001  0.   ]
+    [ 0.     2.123  0.     2.785  0.   ]
+    [ 0.     0.138  0.     0.951  0.   ]
+    [ 0.     0.465  0.853  0.     0.   ]
+    [ 0.     5.387  0.     0.006  0.   ]
+    [ 0.     1.22   0.     0.039  0.   ]]
 
-Then we calculate ``g``: the value corresponding to the alleles of an individual
-without any noise or error.
+.. _definition_of_g:
+
+Definition of ``g``
+===================
+
+``g`` is the sum of the allele effects of an individual's genotype. There is
+no noise or error in ``g`` because we have *a priori* determined the allele
+effects.
 
 .. code-block:: python
    :caption: Calculating g values
 
    >>> operators.calculate_g(example_pop)
-   >>> np.array(example_pop.indInfo('g'))
+   >>> print(np.array(example_pop.indInfo('g')))
    array([ 40.5  ,  57.516,  42.954,  44.655,  58.748,  45.196,  44.301,
         37.803,  42.125,  48.263,  59.79 ,  46.791,  44.018,  40.228,
         46.464,  54.358,  50.271,  48.995,  49.538,  34.851,  43.836,
@@ -235,6 +279,16 @@ without any noise or error.
         44.809,  39.963,  46.583,  43.055,  49.495,  41.973,  46.353,
         43.615,  46.172,  39.211,  44.044,  44.618,  42.06 ,  43.291])
 
+.. _plotting_the_distribution_of_g:
+
+Plotting the Distribution of ``g``
+----------------------------------
+
+Let's visually inspect the distribution of ``g`` for this population.
+
+
+
+
 .. _validating_the_calculate_g_function:
 
 Validating the ``calculate_g`` Function
@@ -243,7 +297,7 @@ Validating the ``calculate_g`` Function
 Let's make sure that our function is correctly matching allele to its effect and
 summing the effects correctly. We will look at the alleles individual ``1`` of
 ``example_pop`` at the QTL. Then we will sum the effects and compare the result
-with our function ``calculate_g``.
+with our function :func:`calculate_g`.
 
 .. code-block:: python
    :caption: Validating the calculation of ``g``
@@ -261,8 +315,52 @@ with our function ``calculate_g``.
    >>> example_pop.indByID(1).g
    40.500306681374504
 
+.. _calculating_error:
+
+Calculation of Error Term
+=========================
+
+To simulate the experimental noise a term :math:`\epsilon` is added to each
+individual's ``g`` value.
+:math:`\epsilon` is a random variable with a normal distribution given by
+mean :math:`0` and variance given by:
+
+.. math::
+
+   \sigma^2_g = V_g * (\frac{1}{h^2} - 1)
+
+Where :math:`V_g` is the variance of ``g`` and :math:`h^2` is the
+narrow sense heritability.
+
+
+.. math::
+
+   \varepsilon \sim \mathcal{N} (0, \sigma^2_g)
+
+Hence an individual's value of ``p`` is calculated by
+
+.. math::
+
+   p = g + \epsilon
+
+.. _calculating_p:
+
+Calculating ``p``
+=================
+
+It is straightforward to calculate ``p`` for the population but we already
+have a function to make it even easier for ourselves.
+
+.. code-block:: python
+   :caption: Computing ``p`` for each individual
+
+   >>> operators.calculate_p(example_pop)
+   >>> print(np.array(example_pop.indInfo('p')))
+
+
+
 Using a Normal Distribution Instead of Exponential
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+==================================================
 
 Suppose we wanted to use a normal distribution for allele effects instead of
 an exponential. All we need to do is change the parameter in the

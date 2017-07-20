@@ -40,6 +40,7 @@ The genotype data is in a file called ``genotype_matrix.txt``. There are 44445
 loci and 105 individuals. We are making use of the very convenient
 :mod:`pandas` :func:`read_csv` function. However, the ``pandas.DataFrame``
 is immediately converted into a ``numpy.array``.
+
 .. code-block:: python
    :caption: Read the file with the genotype matrix using ``pandas``
 
@@ -62,6 +63,9 @@ example this is a truncated representation of individual ``1``'s genotype.
    >>> print(genotypes[0])
    ['2/1' '3/2' '2/3' ..., '1/2' '1/3' '3/1']
 
+We need to transform the genotype data into a format which is acceptable to
+:mod:`simuPOP`.
+
 .. code-block:: python
    :caption: Converting ``numpy.array`` into ``Python.list``
 
@@ -77,7 +81,7 @@ Genetic Map
 ===========
 
 The genetic map is parsed the same way as the genotype matrix.
-:file:`example_genetic_map` has columns:
+:file:`example_genetic_map.txt` has columns:
 
 + locus
 + chromosome
@@ -97,7 +101,7 @@ The genetic map is parsed the same way as the genotype matrix.
     [ 44445.        10.        89.77 ]]
 
 The :mod:`collections` allows us to easily obtain the genomic structure from
-the genetic map. We will count how many loci are on each chromosome by using the
+the genetic map. We will count how many loci are on each chromosome by using a
 :class:`Counter` from :mod:`collections`.
 
 .. code-block:: python
@@ -113,12 +117,15 @@ the genetic map. We will count how many loci are on each chromosome by using the
    >>> print(chromosome_lengths)
    [6939, 5171, 4974, 4819, 4838, 3570, 3775, 3849, 3337, 3173]
 
-.. warning:: ``Counter``s may not be ordered the same way the data was entered
 
-.. _creating_the_population:
+.. warning::
 
-Creating the Population
-=======================
+   ``Counter`` may not be ordered the same way the data was entered
+
+.. _creating_and_saving_the_population:
+
+Creating and Saving the Population
+##################################
 
 Finally create an "empty" ``Population`` object and set the genotypes. We can
 save the :class:`Population` object in native :mod:`simuPOP` format so we
@@ -133,14 +140,14 @@ same population.
    ...      ind.setGenotype(converted_genotypes[i])
 
 Let's examine ``example_pop`` to get a feel for :mod:`simuPOP`. :mod:`simuPOP`
-has a distinctive _feel_ compared to most other Python packages.
+has a distinct *feel* compared to most other Python packages.
 :mod:`simuPOP` has a Python interface but it is really a C++ program. If you
 are like the author of this walkthrough and Python is your first language
 :mod:`simuPOP` can be intimidating. However, every single moment of frustration
 pays off in both expected and unexpected ways. Make sure to thank the author
 `Bo Peng`_ for all of his hard work in creating :mod:`simuPOP`.
 
-.. _`Bo Peng`:://github.com/BoPeng/simuPOP
+.. _`Bo Peng` : //github.com/BoPeng/simuPOP
 
 .. code-block:: python
    :caption: Examining a :class:`Population`

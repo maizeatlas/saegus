@@ -249,7 +249,9 @@ def calculate_error_variance(pop, heritability):
     epsilon = variance_of_g*(1/heritability - 1)
     pop.dvars().epsilon = epsilon
 
-def phenotypic_effect_calculator(pop):
+# todo Create documentation entry for calculate_p
+
+def calculate_p(pop):
     """
     Simulate measurement error by adding random error to genotypic
     contribution.
