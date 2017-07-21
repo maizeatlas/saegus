@@ -5,9 +5,52 @@ import pandas as pd
 import numpy as np
 import csv
 import random
+import h5py
 
 
 # todo Create operators to store the HDF5 data during an evolutionary scenario
+
+# todo Create documentation for H5AlleleFrequencies
+
+class HDF5AlleleFrequencies(sim.PyOperator):
+    def __init__(self, allele_frequency_group, allele_data, *args, **kwargs):
+        self.allele_frequency_group = allele_frequency_group
+        self.allele_data = allele_data
+        sim.PyOperator.__init__(self, func=self.hdf5_allele_frequencies,
+                                *args, **kwargs)
+
+    def hdf5_allele_frequencies(self, pop):
+        allele_frequency_table = np.zeros((pop.totNumLoci(), 5))
+        allele_frequency_table[:, 0] = self.allele_data[:, 0]
+        for i in range(1, 5):
+            allele_frequency_table[:, i] = [
+                pop.dvars().alleleFreq[locus][allele] for
+                locus, allele in zip(self.allele_data[:, 0],
+                                     self.allele_data[:, i])]
+
+        generation = str(pop.dvars().gen)
+        self.allele_frequency_group[generation] = allele_frequency_table
+
+# todo Create documentation for H5AlleleFrequencies
+
+
+class HDF5GenotypeFrequencies(sim.PyOperator):
+    def __init__(self, genotype_frequency_group, *args, **kwargs):
+        self.genotype_frequency_group = genotype_frequency_group
+        sim.PyOperator__init__(self, func=hdf5_genotype_frequencies,
+                               *args, **kwargs)
+
+    def hdf5_genotype_frequencies(self, pop):
+        genotype_frequency_array = np.ndarray((pop.totNumLoci(), 5, 5))
+
+        for locus in range(pop.totNumLoci()):
+            for genotype in pop.dvars().genoFreq[locus].keys():
+                genotype_frequency_array[locus][genotype] = \
+                    pop.dvars().genoFreq[locus][genotype]
+        generation = str(pop.dvars().gen)
+
+        self.genotype_frequency_group[generation] = genotype_frequency_array
+
 
 class CalculateErrorVariance(sim.PyOperator):
     def __init__(self, heritability, *args, **kwargs):
@@ -245,6 +288,7 @@ def calculate_error_variance(pop, heritability):
     of the error distribution. The error distribution generates noise
     found in real experiments.
     """
+    assert 1 < heritability < 0, "heritability must be between 0 anc 1"
     variance_of_g = np.var(pop.indInfo('g'))
     epsilon = variance_of_g*(1/heritability - 1)
     pop.dvars().epsilon = epsilon

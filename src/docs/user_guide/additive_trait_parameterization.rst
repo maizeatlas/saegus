@@ -26,17 +26,6 @@ for each individual which will help us verify that the trait is being calculated
 correctly. In this example we will randomly choose quantitative trait loci from
 among loci which are segregating in ``example_pop``.
 
-Steps:
-
-   + Load Population
-   + Add Information Fields
-   + Determine Segregating Loci
-   + Choose QTL
-   + Assign Allele Effects
-   + Calculate G
-   + Calculate error
-   + Calculate P
-
 .. _preparing_the_population:
 
 Preparing the Population
@@ -261,7 +250,7 @@ effects.
 .. code-block:: python
    :caption: Calculating g values
 
-   >>> operators.calculate_g(example_pop)
+   >>> operators.calculate_g(example_pop, ae_array)
    >>> print(np.array(example_pop.indInfo('g')))
    array([ 40.5  ,  57.516,  42.954,  44.655,  58.748,  45.196,  44.301,
         37.803,  42.125,  48.263,  59.79 ,  46.791,  44.018,  40.228,
@@ -279,20 +268,11 @@ effects.
         44.809,  39.963,  46.583,  43.055,  49.495,  41.973,  46.353,
         43.615,  46.172,  39.211,  44.044,  44.618,  42.06 ,  43.291])
 
-.. _plotting_the_distribution_of_g:
-
-Plotting the Distribution of ``g``
-----------------------------------
-
-Let's visually inspect the distribution of ``g`` for this population.
-
-
-
 
 .. _validating_the_calculate_g_function:
 
 Validating the ``calculate_g`` Function
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------------------------
 
 Let's make sure that our function is correctly matching allele to its effect and
 summing the effects correctly. We will look at the alleles individual ``1`` of
@@ -392,8 +372,8 @@ an exponential. All we need to do is change the parameter in the
     [ 40565.         1.        -1.582      3.        -0.679]
     [ 44143.         1.         0.046      3.         1.264]]
 
-Recomputing Using Normal Values
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Recomputing Using Normally Distributed Allele Effects
+-----------------------------------------------------
 
 .. code-block:: python
    :caption: Recalculate ``g``

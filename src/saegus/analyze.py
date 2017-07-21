@@ -99,6 +99,7 @@ def gather_allele_frequencies(pop, allele_state_table):
 
 # todo Add documentation for gather_genotype_frequencies into analyze.rst
 # todo Add usage example for gather_genotype_frequencies into analyze.rst
+# todo Update documentation of gather_genotype_frequencies to reflect separation of steps
 
 def gather_genotype_frequencies(pop):
     """
@@ -112,11 +113,8 @@ def gather_genotype_frequencies(pop):
         >>> genotypes_by_locus = np.array(np.ndarray.nonzero(genotype_frequency_array)).T
 
     :param sim.Population pop: Diploid population with bi-allelic loci
-    :return: Two arrays: frequency array and genotypes as coordinates
+    :return: 3D genotype frequency array
     """
-
-
-    sim.stat(pop, genoFreq=sim.ALL_AVAIL)
 
     genotype_frequency_array = np.ndarray((pop.totNumLoci(), 5, 5))
 
