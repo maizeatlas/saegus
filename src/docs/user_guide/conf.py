@@ -53,14 +53,14 @@ templates_path = ['saegus_templates']
 source_suffix = '.rst'
 
 # The encoding of source files.
-#source_encoding = 'utf-8-sig'
+source_encoding = 'utf-8-sig'
 
 # The master toctree document.
 master_doc = 'index'
 
 # General information about the project.
 project = 'saegus'
-copyright = '2016, John J. Dougherty III'
+copyright = '2017, John J. Dougherty III'
 author = 'John J. Dougherty III'
 
 # The version info for the project you're documenting, acts as replacement for

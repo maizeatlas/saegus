@@ -2,15 +2,96 @@
 .. _operators_of_saegus:
 
 #############################
-Operators Of :py:mod:`saegus`
+Operators of :py:mod:`saegus`
 #############################
 
-All of the classes in this module are derived from the simuPOP.PyOperator
-class. Each class performs some task inside of the evolutionary process.
-simuPOP offers a standard library of operators for common population genetics
-processes. The operators defined in this module perform operations which
-would either be impossible or difficult to implement using standard simuPOP
-operators.
+All of the classes in this module are derived from the
+:class:`simuPOP.PyOperator` class. Each class performs some task inside of the
+evolutionary process. :py:mod:`simuPOP` offers a standard library of operators
+for common population genetics processes. The operators defined in this module
+perform operations which would either be impossible or difficult to implement
+using standard :py:mod:`simuPOP` operators.
+
+.. _operators:
+
+Operators
+#########
+
+
+
+.. _geno_additive_array:
+
+:py:class:`GenoAdditiveArray`
+=============================
+
+.. py:class:: GenoAdditiveArray(qtl, allele_effects)
+
+   :param list qtl: List of int
+   :param numpy.array allele_effects: Array rows of locus, columns by allele state
+
+   .. py:method:: additive_model(pop)
+
+      :param simuPOP.Population: Diploid population with ``g`` defined
+
+   Operator form used during evolutionary scenario to sum the allele effects
+   and assign the result to the infoField ``g``.
+
+.. _calculate_error_variance:
+
+:py:class:`CalculateErrorVariance
+=================================
+
+.. py:class:: CalculateErrorVariance(heritability)
+
+   An operator to calculate the variance of the experimental error distribution.
+   We assume that there is some degree of error when measuring phenotypes in
+   an actual experiment. Measurement error is represented as a random draw
+   from a normal distribution with mean zero and variance ``epsilon`` where
+
+.. math::
+
+   e = V_g * (1/h^2 - 1)
+
+``epsilon`` is assigned as a population variable. This operator is typically
+called once in the initOps phase of an evolutionary process. At present
+:class:`CalculateErrorVariance` is hard coded to calculate
+``genotypic_variance`` as the sample variance of the infoField ``g``.
+Population must have infoField ``g``, 0 < ``heritability`` < 1.
+:class:`GenoAdditive` must be called before :class:`CalculateErrorVariance` or
+values of ``g`` must be assigned to each individual.
+
+.. _pheno_additive:
+
+:py:class:`PhenoAdditive`
+=========================
+
+.. py:class:: PhenoAdditive()
+
+   Mainly an operator to add 'noise' or 'error' to the value from genotypic
+   effects. Requires ``epsilon`` to be defined as in
+   py:class:`CalculateErrorVariance`
+
+
+.. py:class:: CullPopulation()
+
+.. py:class:: Sorter()
+
+.. py:class:: MetaPopulation()
+
+.. py:class:: ReplicateMetaPopulation()
+
+.. py:class:: SaveMetaPopulation()
+
+.. py:class:: RandomlyAssignFemaleFitness()
+
+.. py:class:: RandomlyAssignMaleFitness()
+
+.. py:class:: DiscardRandomOffspring()
+
+.. py:class:: SaveMetaPopulations()
+
+.. todo:: Create operators for storing HDF5 data during the evolutionary process.
+
 
 .. _function_forms_of_operators:
 
@@ -19,8 +100,8 @@ Function Forms of Operators
 
 .. _assign_additive_g_function:
 
-Assign Additive G Function
---------------------------
+:py:function:`assign_additive_g`
+================================
 
 .. py:function:: assign_additive_g(pop, qtl, allele_effects)
 
@@ -32,11 +113,20 @@ Assign Additive G Function
 
    :func:`assign_additive_g` assumes that the population has infoField ``g`` defined.
 
+.. _calculate_g:
+
+:py:function:`calculate_g`
+==========================
+
+.. py:function:: calculate_g(pop, allele_effects_array)
+
+   :param simuPOP.Population pop: Diploid population with ``g`` defined
+   :param allele_effects_array: Array with rows of loci and columns as allele states
+
 .. _calculate_error_variance_function:
 
-:py:function:`assign_additive_g`
---------------------------------
-
+:py:function:`calculate_error_variance`
+=======================================
 
 .. py:function:: calculate_error_variance(pop, heritability)
 
@@ -60,67 +150,13 @@ Assign Additive G Function
 
    :func:`phenotypic_effect_calculator` assumes that the population has infoField ``p`` defined.
 
+.. _calculate_p:
 
-.. _operators:
+:py:function:`calculate_p`
+==========================
 
-Operators
-#########
+.. py:function:: calculate_p(pop)
 
-.. py:class:: GenoAdditive()
-
-
-.. _geno_additive_array:
-
-Geno Additive Array
--------------------
-
-.. py:class:: GenoAdditiveArray()
-
-.. py:class:: PhenotypeCalculator()
-
-
-.. _calculate_error_variance:
-
-Calculate Error Variance
-------------------------
-
-.. py:class:: CalculateErrorVariance(heritability)
-
-   An operator to calculate the variance of the experimental error distribution.
-   We assume that there is some degree of error when measuring phenotypes in
-   an actual experiment. Measurement error is represented as a random draw
-   from a normal distribution with mean zero and variance ``epsilon`` where
-
-.. math::
-
-   e = V_g * (1/h^2 - 1)
-
-``epsilon`` is assigned as a population variable. This operator is typically
-called once in the initOps phase of an evolutionary process. At present
-:class:`CalculateErrorVariance` is hard coded to calculate
-``genotypic_variance`` as the sample variance of the infoField ``g``.
-Population must have infoField ``g``, 0 < heritability < 1.
-:class:`GenoAdditive` must be called before :class:`CalculateErrorVariance` or
-values of ``g`` must be assigned to each individual.
-
-.. py:class:: CullPopulation()
-
-.. py:class:: Sorter()
-
-.. py:class:: MetaPopulation()
-
-.. py:class:: ReplicateMetaPopulation()
-
-.. py:class:: SaveMetaPopulation()
-
-.. py:class:: RandomlyAssignFemaleFitness()
-
-.. py:class:: RandomlyAssignMaleFitness()
-
-.. py:class:: DiscardRandomOffspring()
-
-.. py:class:: SaveMetaPopulations()
-
-.. py:class:: InfoAndGenotypeWriter()
-
-.. todo:: Create operators for storing HDF5 data during the evolutionary process.
+   Adds error term to each individual's ``g`` value drawn from a normal
+   distribution with mean ``0`` and variance as defined in
+   :py:function:`calculate_error_variance`

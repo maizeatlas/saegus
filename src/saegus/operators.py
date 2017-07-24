@@ -10,7 +10,7 @@ import h5py
 
 # todo Create operators to store the HDF5 data during an evolutionary scenario
 
-# todo Create documentation for H5AlleleFrequencies
+# todo Create documentation for HDF5AlleleFrequencies
 
 class HDF5AlleleFrequencies(sim.PyOperator):
     def __init__(self, allele_frequency_group, allele_data, *args, **kwargs):
@@ -30,9 +30,9 @@ class HDF5AlleleFrequencies(sim.PyOperator):
 
         generation = str(pop.dvars().gen)
         self.allele_frequency_group[generation] = allele_frequency_table
+        return True
 
-# todo Create documentation for H5AlleleFrequencies
-
+# todo Create documentation for HDF5AlleleFrequencies
 
 class HDF5GenotypeFrequencies(sim.PyOperator):
     def __init__(self, genotype_frequency_group, *args, **kwargs):
@@ -50,7 +50,21 @@ class HDF5GenotypeFrequencies(sim.PyOperator):
         generation = str(pop.dvars().gen)
 
         self.genotype_frequency_group[generation] = genotype_frequency_array
+        return True
 
+# todo Create documentation for HDF5Trait in operators.py
+
+class HDF5Trait(sim.PyOperator):
+    def __init__(self, trait_info_field, hdf5_trait_group, *args, **kwargs):
+        self.trait_info_field = trait_info_field
+        self.hdf5_trait_group = hdf5_trait_group
+        sim.__init__(self, func=self.hdf5_trait, *args, **kwargs)
+
+    def hdf5_trait(self, pop):
+        generation = str(pop.dvars().gen)
+        trait = np.array(pop.indInfo(self.trait_info_field))
+        self.hdf5_trait_group[generation+'/'+self.trait_info_field] = trait
+        return True
 
 class CalculateErrorVariance(sim.PyOperator):
     def __init__(self, heritability, *args, **kwargs):
@@ -69,6 +83,7 @@ class CalculateErrorVariance(sim.PyOperator):
         pop.dvars().epsilon = epsilon
         return True
 
+# todo Create documentation for GenoAdditive in operators.rst
 
 class GenoAdditive(sim.PyOperator):
     def __init__(self, qtl, allele_effects, *args, **kwargs):
@@ -101,18 +116,34 @@ class GenoAdditiveArray(sim.PyOperator):
     def additive_model(self, pop):
         """
         Calculates genotypic contribution ``g`` by summing the effect of each
-        allele at each locus
+        allele at each locus. For use in diploid populations.
         """
         for ind in pop.individuals():
-            alpha_genotype, beta_genotype = np.asarray(ind.genotype(ploidy=0)), \
+            alpha_genotype, omega_genotype = np.asarray(ind.genotype(ploidy=0)), \
                                             np.asarray(ind.genotype(ploidy=1))
             ind.g = sum(self.allele_effects[range(pop.totNumLoci()),
                                             alpha_genotype]) +\
                     sum(self.allele_effects[range(pop.totNumLoci()),
-                                            beta_genotype])
+                                            omega_genotype])
         return True
 
+class PhenoAdditive(sim.PyOperator):
+    def __init__(self, *args, **kwargs):
+        sim.PyOperator.__init__(self, fun=self.calculate_additive_p,
+                                *args, **kwargs)
 
+    def calculate_additive_p(self, pop):
+        """
+        Simulate measurement error by adding random error to genotypic
+        contribution. Relies on defining `epsilon` as in
+        :class:`CalculateErrorVariance`
+        :warning: ``g`` and ``p`` must be defined as infoFields
+        """
+        for ind in pop.individuals():
+            ind.p = ind.g + random.normalvariate(0, pop.dvars().epsilon)
+        return True
+
+# todo PhenotypeCalculator deprecated. Old name. Old and outdated documentation
 
 class PhenotypeCalculator(sim.PyOperator):
     """
@@ -136,6 +167,7 @@ class PhenotypeCalculator(sim.PyOperator):
             ind.p = ind.g + random.normalvariate(0, pop.dvars().epsilon)
         return True
 
+# todo Create documentation for CullPopulation in operators.rst
 
 class CullPopulation(sim.PyOperator):
     def __init__(self, proportion_selected, *args, **kwargs):
@@ -151,6 +183,7 @@ class CullPopulation(sim.PyOperator):
         pop.setIndInfo([x > cutoff for x in p], 'fitness')
         return True
 
+# todo Create documentation for Sorter in operators.rst
 
 class Sorter(sim.PyOperator):
     """
@@ -163,6 +196,8 @@ class Sorter(sim.PyOperator):
     def sort_on_info_field(self, pop):
         pop.sortIndividuals(self.info_field, reverse=True)
         return True
+
+# todo Create documentation for MetaPopulation in operators.rst
 
 class MetaPopulation(sim.PyOperator):
     """
@@ -184,6 +219,7 @@ class MetaPopulation(sim.PyOperator):
         self.meta_population.addIndFrom(sampled)
         return True
 
+# todo Create documentation for ReplicateMetaPopulation in operators.rst
 
 class ReplicateMetaPopulation(sim.PyOperator):
     """
@@ -205,6 +241,7 @@ class ReplicateMetaPopulation(sim.PyOperator):
         self.meta_sample_library[rep_id].append(sampled)
         return True
 
+# todo Create documentation for SaveMetaPopulations in operators.rst
 
 class SaveMetaPopulations(sim.PyOperator):
     """
@@ -224,7 +261,7 @@ class SaveMetaPopulations(sim.PyOperator):
         return True
 
 
-
+# todo Create documentation for RandomlyAssignFemaleFitness in operators.rst
 
 class RandomlyAssignFemaleFitness(sim.PyOperator):
     """
@@ -243,6 +280,7 @@ class RandomlyAssignFemaleFitness(sim.PyOperator):
             pop.indByID(id).female_fitness = 1
         return True
 
+# todo Create documentation for RandomlyAssignMaleFitness in operators.rst
 
 class RandomlyAssignMaleFitness(sim.PyOperator):
     """
@@ -265,6 +303,7 @@ class RandomlyAssignMaleFitness(sim.PyOperator):
             pop.indByID(male_id).male_fitness = 1.0
         return True
 
+# todo Create documentation for DiscardRandomOffspring in operators.rst
 
 class DiscardRandomOffspring(sim.PyOperator):
     """
@@ -298,25 +337,28 @@ def calculate_error_variance(pop, heritability):
 def calculate_p(pop):
     """
     Simulate measurement error by adding random error to genotypic
-    contribution.
+    contribution. Normal distribution mean 0 and variance equal to epsilon
     """
     for ind in pop.individuals():
         ind.p = ind.g + random.normalvariate(0, pop.dvars().epsilon)
 
 # todo Create documentation entry for calculate_g. Replaces assign_additive_g
 
-def calculate_g(example_pop, allele_effects_array):
+def calculate_g(pop, allele_effects_array):
     """
     Convenience function to calculate ``g`` of the population using an array
-    of allele effects designed expressly for the purpose of calcualtion.
+    of allele effects designed expressly for the purpose of calculation.
+    For use in a diploid population.
 
-    :param example_pop:
+    :param pop:
     :param allele_effects_array:
     :return:
     """
-    for ind in example_pop.individuals():
-        ind.g = sum(allele_effects_array[range(example_pop.totNumLoci()), np.asarray(ind.genotype(ploidy=0))]
-       + allele_effects_array[range(example_pop.totNumLoci()), np.asarray(ind.genotype(ploidy=1))])
+    for ind in pop.individuals():
+        ind.g = sum(allele_effects_array[range(pop.totNumLoci()), np.asarray(ind.genotype(ploidy=0))]
+       + allele_effects_array[range(pop.totNumLoci()), np.asarray(ind.genotype(ploidy=1))])
+
+# assign_additive_g is deprecated
 
 def assign_additive_g(pop, qtl, allele_effects):
     """
