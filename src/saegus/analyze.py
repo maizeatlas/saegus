@@ -1036,7 +1036,6 @@ def collect_haplotype_data(pop, allele_effects, quantitative_trait_loci):
     return haplotypes
 
 
-
 def generate_haplotype_data_table(pop, haplotype_data):
     """
     Generates a table for easy analysis and visualization of haplotypes,
@@ -1089,11 +1088,17 @@ class GWAS(object):
         self.loci = loci
         self.run_id = run_id
         self.int_to_snp_conversions = {0: 'A', 1: 'C',
-                                       2: 'G', 3: 'T', 4: '-', 5: '+'}
+                                       2: 'G', 3: 'T',
+                                       4: '-', 5: '+'}
+
 
         self.individual_names = np.core.defchararray.add('I',
                     defchararray.array(np.asarray(self.pop.indInfo('ind_id'),
                         dtype=np.int_), copy=False, unicode=np.unicode_))
+
+    def __str__(self):
+        return "Conversions: \n "+ str(self.int_to_snp_conversions)
+
 
     # noinspection PyArgumentList
     def calculate_count_matrix(self, allele_subset, seg_loci,
@@ -1215,6 +1220,7 @@ class GWAS(object):
                                   'QCode'] + list(
             self.individual_names)
 
+        segregating_loci_array = np.array(segregating_loci)
         hapmap_matrix = pd.DataFrame(columns=hapmap_ordered_columns)
         hapmap_matrix.rs = locus_names
         hapmap_matrix.alleles = alleles_column
@@ -1241,6 +1247,7 @@ class GWAS(object):
         unsuspected bug.
         :param trait_filename:
         """
+
         trait_vector = pd.DataFrame(np.array([self.individual_names,
                                self.pop.indInfo('p')]).T)
 
@@ -1742,7 +1749,7 @@ def write_multiple_sample_analyzer(library_of_samples, sample_size_list,
 
             ccm = gwas.calculate_count_matrix(minor_alleles)
             ps_svd = gwas.pop_struct_svd(ccm)
-            gwas.population_structure_formatter(ps_svd, indir + name + '_structure_matrix.txt')
+            gwas.population_structure_formatter(ps_svd  , indir + name + '_structure_matrix.txt')
             gwas.hapmap_formatter(int_to_snp_map,
                                          indir + name + '_simulated_hapmap.txt')
             gwas.trait_formatter(indir + name + '_phenotype_vector.txt')
