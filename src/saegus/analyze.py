@@ -1108,15 +1108,15 @@ class GWAS(object):
         :param count_matrix_filename: Output file name. If defined will write a file. Otherwise returns the count_matrix
         """
         comparison_array = np.asarray(allele_subset, dtype=np.int_)
-        count_matrix = np.zeros((self.pop.popSize(), len(self.loci)))
+        count_matrix = np.zeros((self.pop.popSize(), len(self.loci)), dtype=np.int_)
         for i, ind in enumerate(self.pop.individuals()):
             alpha_genotype = np.asarray(ind.genotype(ploidy=0))[list(seg_loci)]
             alpha_comparisons = np.equal(comparison_array, alpha_genotype,
                                          dtype=np.int8)
-            beta_genotype = np.asarray(ind.genotype(ploidy=1))[list(seg_loci)]
-            beta_comparisons = np.equal(comparison_array, beta_genotype,
+            omega_genotype = np.asarray(ind.genotype(ploidy=1))[list(seg_loci)]
+            omega_comparisons = np.equal(comparison_array, omega_genotype,
                                          dtype=np.int8)
-            counts = np.add(alpha_comparisons, beta_comparisons, dtype=np.int8)
+            counts = np.add(alpha_comparisons, omega_comparisons, dtype=np.int_)
             count_matrix[i, :] = counts
 
         if count_matrix_file_name is not None:
@@ -1362,7 +1362,7 @@ class GWASConfig(object):
         :param str tassel_input_path: Location of where the TASSEL input data is stored
         :param str tassel_outnput_path: Location of where TASSEL should store the output
         """
-        self._fun_id = run_id
+        self._run_id = run_id
         self._tassel_executable_path = tassel_executable_path
         self._tassel_output_path = tassel_output_path
         self._tassel_input_path = tassel_input_path

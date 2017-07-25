@@ -38,7 +38,7 @@ bpath = sphinxjp.themes.basicstrap.get_path()
 extensions = [
     'sphinx.ext.coverage',
     'sphinx.ext.mathjax',
-    'sphinx.ext.ifconfig',
+    'sphinx.ext.todo',
     'sphinx.ext.viewcode',
     'sphinxjp.themes.basicstrap',
 ]

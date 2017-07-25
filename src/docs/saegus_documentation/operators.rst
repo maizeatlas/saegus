@@ -65,9 +65,9 @@ values of ``g`` must be assigned to each individual.
 
 .. py:class:: PhenoAdditive()
 
-   Mainly an operator to add 'noise' or 'error' to the value from genotypic
-   effects. Requires ``epsilon`` to be defined as in
-   py:class:`CalculateErrorVariance`
+Mainly an operator to add 'noise' or 'error' to the value from genotypic
+effects. Requires ``epsilon`` to be defined as in
+py:class:`CalculateErrorVariance`
 
 
 :py:class:`HDF5AlleleFrequencies`
@@ -78,9 +78,9 @@ values of ``g`` must be assigned to each individual.
    :param h5py.Group allele_frequency_group: group for allele frequencies
    :param numpy.array allele_data: Array of allele states
 
-   Operator to store allele frequencies during :py:func:`evolve` process.
-   ``allele_data`` is gathered using :py:func:`analyze.gather_allele_data`. See
-   the entry in the user guide for collecting and storing data
+Operator to store allele frequencies during :py:func:`evolve` process.
+``allele_data`` is gathered using :py:func:`analyze.gather_allele_data`. See
+the entry in the user guide for collecting and storing data
 
 .. todo:: Show examples of each HDF5 operator
 
@@ -89,15 +89,32 @@ values of ``g`` must be assigned to each individual.
 
 .. py:class:: HDF5GenotypeFrequencies(genotype_frequency_group)
 
-   :param h5py.Group genotype_frequency_group:
+   :param h5py.Group genotype_frequency_group: group for genotype frequencies
+
+Operator to store genotype frequencies during :py:func:`evolve` process.
+Results are stored in a 3d :py:class:`numpy.array`. The axes are
+locus x alpha_allele x omega_allele. The genotypes are interpretted
+as coordinates for the purpose of easy storage and access.
 
 :py:class:`HDF5Trait`
 =====================
 
+.. py:class:: HDF5Trait(trait_information_field, trait_group)
+
+   :param trait_information_field str: string corresponding to trait
+   :param h5py.Group trait group: group for trait information
+
+Operator to store the data from :py:class:`Population.indInfo(trait_information_field)`
+such as ``g`` and ``p`` in the User Guide examples. Traits are stored as
+generation + '/' trait_information_field.
+
 :py:class:`HDF5Close`
 =====================
 
+.. py:class:: HDF5Close(hdf5_file)
 
+Closes the HDF5 file. Meant to be used in ``finalOps`` after an evolutionary
+process.
 
 
 .. py:class:: CullPopulation()
