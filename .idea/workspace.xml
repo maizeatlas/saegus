@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="trying to fix error">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/docs/user_guide/additive_trait_parameterization.rst" afterPath="$PROJECT_DIR$/src/docs/user_guide/additive_trait_parameterization.rst" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/docs/user_guide/additive_trait_parameterization_notebook.ipynb" afterPath="$PROJECT_DIR$/src/docs/user_guide/additive_trait_parameterization_notebook.ipynb" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/docs/user_guide/multiple_generations_and_data_storage.rst" afterPath="$PROJECT_DIR$/src/docs/user_guide/integrated_example_multiple_generations_and_data_storage.rst" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/docs/user_guide/index.rst" afterPath="$PROJECT_DIR$/src/docs/user_guide/index.rst" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/docs/user_guide/integrated_example_multiple_generations_and_data_storage_notebook.ipynb" afterPath="$PROJECT_DIR$/src/docs/user_guide/integrated_example_multiple_generations_and_data_storage_notebook.ipynb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/docs/user_guide/multi_parental_populations.rst" afterPath="$PROJECT_DIR$/src/docs/user_guide/multi_parental_populations.rst" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/saegus/operators.py" afterPath="$PROJECT_DIR$/src/saegus/operators.py" />
     </list>
     <ignored path="saegus_project.iws" />
@@ -54,20 +57,18 @@
             <file leaf-file-name="operators.py" pinned="false" current-in-tab="true">
               <entry file="file://$PROJECT_DIR$/src/saegus/operators.py">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="368">
-                    <caret line="332" column="33" lean-forward="false" selection-start-line="332" selection-start-column="33" selection-end-line="332" selection-end-column="33" />
+                  <state relative-caret-position="435">
+                    <caret line="71" column="30" lean-forward="false" selection-start-line="71" selection-start-column="30" selection-end-line="71" selection-end-column="30" />
                     <folding>
                       <element signature="e#24#45#0" expanded="true" />
-                      <element signature="e#3390#4128#0" expanded="false" />
-                      <element signature="e#4175#5128#0" expanded="false" />
-                      <element signature="e#5171#5756#0" expanded="false" />
-                      <element signature="e#5884#6747#0" expanded="false" />
-                      <element signature="e#6854#7401#0" expanded="false" />
-                      <element signature="e#7492#7859#0" expanded="false" />
-                      <element signature="e#7966#8763#0" expanded="false" />
-                      <element signature="e#8888#9920#0" expanded="false" />
-                      <element signature="e#11988#13246#0" expanded="false" />
-                      <element signature="e#13369#13975#0" expanded="false" />
+                      <element signature="e#3783#4521#0" expanded="false" />
+                      <element signature="e#6278#7141#0" expanded="false" />
+                      <element signature="e#7248#7795#0" expanded="false" />
+                      <element signature="e#7886#8253#0" expanded="false" />
+                      <element signature="e#8360#9157#0" expanded="false" />
+                      <element signature="e#9282#10314#0" expanded="false" />
+                      <element signature="e#12382#13640#0" expanded="false" />
+                      <element signature="e#13763#14369#0" expanded="false" />
                     </folding>
                   </state>
                 </provider>
@@ -76,8 +77,8 @@
             <file leaf-file-name="analyze.py" pinned="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="1980">
-                    <caret line="147" column="0" lean-forward="false" selection-start-line="147" selection-start-column="0" selection-end-line="147" selection-end-column="0" />
+                  <state relative-caret-position="270">
+                    <caret line="33" column="10" lean-forward="false" selection-start-line="33" selection-start-column="10" selection-end-line="33" selection-end-column="10" />
                     <folding>
                       <element signature="e#17228#29262#0" expanded="false" />
                     </folding>
@@ -127,28 +128,8 @@
       <file leaf-file-name="operators.rst" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/docs/saegus_documentation/operators.rst">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="additive_trait_parameterization.rst" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/docs/user_guide/additive_trait_parameterization.rst">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="547">
-              <caret line="385" column="0" lean-forward="false" selection-start-line="385" selection-start-column="0" selection-end-line="385" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="multiple_generations_and_data_storage.rst" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/docs/user_guide/multiple_generations_and_data_storage.rst">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="322">
-              <caret line="173" column="57" lean-forward="false" selection-start-line="173" selection-start-column="57" selection-end-line="173" selection-end-column="57" />
+            <state relative-caret-position="600">
+              <caret line="40" column="0" lean-forward="false" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -157,8 +138,18 @@
       <file leaf-file-name="index.rst" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/docs/user_guide/index.rst">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="13" column="15" lean-forward="false" selection-start-line="13" selection-start-column="15" selection-end-line="13" selection-end-column="15" />
+            <state relative-caret-position="300">
+              <caret line="20" column="63" lean-forward="false" selection-start-line="20" selection-start-column="63" selection-end-line="20" selection-end-column="63" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="integrated_example_multiple_generations_and_data_storage.rst" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/docs/user_guide/integrated_example_multiple_generations_and_data_storage.rst">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="421">
+              <caret line="207" column="0" lean-forward="false" selection-start-line="207" selection-start-column="0" selection-end-line="207" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -167,8 +158,8 @@
       <file leaf-file-name="multi_parental_populations.rst" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/docs/user_guide/multi_parental_populations.rst">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="34" column="0" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+            <state relative-caret-position="3825">
+              <caret line="255" column="4" lean-forward="false" selection-start-line="255" selection-start-column="4" selection-end-line="255" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -220,7 +211,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/docs/saegus_documentation/simulate.rst" />
         <option value="$PROJECT_DIR$/src/docs/saegus_documentation/saegus_build/html/_static/alabaster.css" />
         <option value="$PROJECT_DIR$/devel/tuson_selection/test_tuson_functions..py" />
         <option value="$PROJECT_DIR$/devel/tuson_selection/test_tuson_functions.py" />
@@ -249,7 +239,6 @@
         <option value="$PROJECT_DIR$/devel/tuson_selection/conf.py" />
         <option value="$PROJECT_DIR$/src/docs/saegus_documentation/parameters.rst" />
         <option value="$PROJECT_DIR$/src/saegus/breed.py" />
-        <option value="$PROJECT_DIR$/src/docs/user_guide/multi_parental_populations.rst" />
         <option value="$PROJECT_DIR$/src/saegus/parameters.py" />
         <option value="$PROJECT_DIR$/src/docs/saegus_documentation/introduction.rst" />
         <option value="$PROJECT_DIR$/src/docs/saegus_documentation/analyze.rst" />
@@ -267,10 +256,12 @@
         <option value="$PROJECT_DIR$/src/saegus/analyze.py" />
         <option value="$PROJECT_DIR$/src/docs/saegus_documentation/operators.rst" />
         <option value="$PROJECT_DIR$/src/docs/user_guide/conf.py" />
-        <option value="$PROJECT_DIR$/src/docs/user_guide/index.rst" />
         <option value="$PROJECT_DIR$/src/docs/user_guide/multiple_generations_and_data_storage.rst" />
-        <option value="$PROJECT_DIR$/src/saegus/operators.py" />
         <option value="$PROJECT_DIR$/src/docs/user_guide/additive_trait_parameterization.rst" />
+        <option value="$PROJECT_DIR$/src/docs/user_guide/multi_parental_populations.rst" />
+        <option value="$PROJECT_DIR$/src/docs/user_guide/index.rst" />
+        <option value="$PROJECT_DIR$/src/saegus/operators.py" />
+        <option value="$PROJECT_DIR$/src/docs/user_guide/integrated_example_multiple_generations_and_data_storage.rst" />
       </list>
     </option>
   </component>
@@ -292,10 +283,10 @@
     </layout>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1665" />
-    <option name="y" value="-4" />
-    <option name="width" value="1615" />
-    <option name="height" value="1054" />
+    <option name="x" value="256" />
+    <option name="y" value="133" />
+    <option name="width" value="1153" />
+    <option name="height" value="658" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -1091,17 +1082,17 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1665" y="-4" width="1615" height="1054" extended-state="6" />
+    <frame x="256" y="133" width="1153" height="658" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2829828" sideWeight="0.49436393" order="1" side_tool="false" content_ui="tabs" x="162" y="208" width="676" height="407" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36133695" sideWeight="0.49436393" order="1" side_tool="false" content_ui="tabs" x="162" y="208" width="676" height="407" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31303117" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25281805" sideWeight="0.64395785" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17864339" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1528777" sideWeight="0.23544632" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.67346936" sideWeight="0.48971722" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.8341385" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="true" internal_type="DOCKED" type="FLOATING" visible="true" show_stripe_button="true" weight="0.32132965" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="911" y="150" width="402" height="641" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="true" internal_type="DOCKED" type="FLOATING" visible="false" show_stripe_button="true" weight="0.32132965" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="911" y="150" width="402" height="641" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="true" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.8681319" sideWeight="0.35604218" order="15" side_tool="false" content_ui="tabs" x="589" y="537" width="907" height="372" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6959459" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.10220588" sideWeight="0.5056361" order="0" side_tool="true" content_ui="tabs" />
@@ -1120,7 +1111,7 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="File Transfer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32905984" sideWeight="0.4976744" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="The R Graphics" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32975152" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.53162396" sideWeight="0.4974293" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.52988046" sideWeight="0.4974293" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Concurrent Activities Diagram" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32744783" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -1170,13 +1161,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../tuson_simulation/docs/index.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../tuson_simulation/docs/overview.rst">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1311,6 +1295,11 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/devel/tuson_selection/genetic_map.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="25" lean-forward="true" selection-start-line="16" selection-start-column="25" selection-end-line="16" selection-end-column="25" />
+        </state>
+      </provider>
       <provider editor-type-id="csv-data-editor">
         <state>
           <format>
@@ -1333,11 +1322,6 @@
               </header>
             </csv-format>
           </format>
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="25" lean-forward="true" selection-start-line="16" selection-start-column="25" selection-end-line="16" selection-end-column="25" />
         </state>
       </provider>
     </entry>
@@ -1481,34 +1465,81 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/multi_parental_populations.rst">
+    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/additive_trait_parameterization_notebook.ipynb">
+      <provider selected="true" editor-type-id="ipnb-editor">
+        <state>
+          <selected id="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/additive_trait_parameterization.rst">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="34" column="0" lean-forward="false" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="547">
+          <caret line="385" column="0" lean-forward="false" selection-start-line="385" selection-start-column="0" selection-end-line="385" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/integrated_example_multiple_generations_and_data_storage_notebook.ipynb">
+      <provider selected="true" editor-type-id="ipnb-editor">
+        <state>
+          <selected id="-1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/docs/saegus_documentation/operators.rst">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="600">
+          <caret line="40" column="0" lean-forward="false" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/docs/user_guide/index.rst">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="15" lean-forward="false" selection-start-line="13" selection-start-column="15" selection-end-line="13" selection-end-column="15" />
+        <state relative-caret-position="300">
+          <caret line="20" column="63" lean-forward="false" selection-start-line="20" selection-start-column="63" selection-end-line="20" selection-end-column="63" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/multi_parental_populations.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3825">
+          <caret line="255" column="4" lean-forward="false" selection-start-line="255" selection-start-column="4" selection-end-line="255" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/integrated_example_multiple_generations_and_data_storage.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="421">
+          <caret line="207" column="0" lean-forward="false" selection-start-line="207" selection-start-column="0" selection-end-line="207" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/saegus/operators.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="71" column="30" lean-forward="false" selection-start-line="71" selection-start-column="30" selection-end-line="71" selection-end-column="30" />
+          <folding>
+            <element signature="e#24#45#0" expanded="true" />
+            <element signature="e#3783#4521#0" expanded="false" />
+            <element signature="e#6278#7141#0" expanded="false" />
+            <element signature="e#7248#7795#0" expanded="false" />
+            <element signature="e#7886#8253#0" expanded="false" />
+            <element signature="e#8360#9157#0" expanded="false" />
+            <element signature="e#9282#10314#0" expanded="false" />
+            <element signature="e#12382#13640#0" expanded="false" />
+            <element signature="e#13763#14369#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1980">
-          <caret line="147" column="0" lean-forward="false" selection-start-line="147" selection-start-column="0" selection-end-line="147" selection-end-column="0" />
+        <state relative-caret-position="270">
+          <caret line="33" column="10" lean-forward="false" selection-start-line="33" selection-start-column="10" selection-end-line="33" selection-end-column="10" />
           <folding>
             <element signature="e#17228#29262#0" expanded="false" />
           </folding>
@@ -1533,49 +1564,6 @@
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/additive_trait_parameterization_notebook.ipynb">
-      <provider selected="true" editor-type-id="ipnb-editor">
-        <state>
-          <selected id="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/multiple_generations_and_data_storage.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="173" column="57" lean-forward="false" selection-start-line="173" selection-start-column="57" selection-end-line="173" selection-end-column="57" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/saegus/operators.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="332" column="33" lean-forward="false" selection-start-line="332" selection-start-column="33" selection-end-line="332" selection-end-column="33" />
-          <folding>
-            <element signature="e#24#45#0" expanded="true" />
-            <element signature="e#3390#4128#0" expanded="false" />
-            <element signature="e#4175#5128#0" expanded="false" />
-            <element signature="e#5171#5756#0" expanded="false" />
-            <element signature="e#5884#6747#0" expanded="false" />
-            <element signature="e#6854#7401#0" expanded="false" />
-            <element signature="e#7492#7859#0" expanded="false" />
-            <element signature="e#7966#8763#0" expanded="false" />
-            <element signature="e#8888#9920#0" expanded="false" />
-            <element signature="e#11988#13246#0" expanded="false" />
-            <element signature="e#13369#13975#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/additive_trait_parameterization.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="547">
-          <caret line="385" column="0" lean-forward="false" selection-start-line="385" selection-start-column="0" selection-end-line="385" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>

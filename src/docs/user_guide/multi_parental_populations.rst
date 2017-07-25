@@ -42,7 +42,7 @@ Load up the recombination map for this example
 .. _example_multi_parental:
 
 Example Multi-Parental Population
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=================================
 
 In these examples the term multi-parental population implies that a group of
 founders are mated in pairs to create an F\ :sub:`1` population. The
@@ -56,7 +56,7 @@ explained with a picture. Suppose you have individuals A, B, C, D, E, F, G, H
 .. _multiple_ways:
 
 Multi-Parental Breeding Protocol
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+================================
 
 Through the course of development I developed several ways to specify creating
 a multi-parental multi-generational mating scenario. Each way has it's own

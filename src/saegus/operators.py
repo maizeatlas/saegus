@@ -37,11 +37,11 @@ class HDF5AlleleFrequencies(sim.PyOperator):
 class HDF5GenotypeFrequencies(sim.PyOperator):
     def __init__(self, genotype_frequency_group, *args, **kwargs):
         self.genotype_frequency_group = genotype_frequency_group
-        sim.PyOperator__init__(self, func=hdf5_genotype_frequencies,
+        sim.PyOperator.__init__(self, func=self.hdf5_genotype_frequencies,
                                *args, **kwargs)
 
     def hdf5_genotype_frequencies(self, pop):
-        genotype_frequency_array = np.ndarray((pop.totNumLoci(), 5, 5))
+        genotype_frequency_array = np.zeros((pop.totNumLoci(), 5, 5))
 
         for locus in range(pop.totNumLoci()):
             for genotype in pop.dvars().genoFreq[locus].keys():
@@ -58,13 +58,26 @@ class HDF5Trait(sim.PyOperator):
     def __init__(self, trait_info_field, hdf5_trait_group, *args, **kwargs):
         self.trait_info_field = trait_info_field
         self.hdf5_trait_group = hdf5_trait_group
-        sim.__init__(self, func=self.hdf5_trait, *args, **kwargs)
+        sim.PyOperator.__init__(self, func=self.hdf5_trait, *args, **kwargs)
 
     def hdf5_trait(self, pop):
         generation = str(pop.dvars().gen)
         trait = np.array(pop.indInfo(self.trait_info_field))
-        self.hdf5_trait_group[generation+'/'+self.trait_info_field] = trait
+        self.hdf5_trait_group[str(generation) +'/'+self.trait_info_field] = trait
         return True
+
+class HDF5Close(sim.PyOperator):
+    """
+    Simple closing operator meant to be used in finalOps.
+    Closes the h5.File object.
+
+    """
+    def __init__(self, hdf5_file, *args, **kwargs):
+        self.hdf5_file = hdf5_file
+        sim.PyOperator.__init__(self, func=self.close_hdf5_file, *args, **kwargs)
+
+    def close_hdf5_file(self):
+        self.hdf5_file.close()
 
 class CalculateErrorVariance(sim.PyOperator):
     def __init__(self, heritability, *args, **kwargs):
@@ -129,7 +142,7 @@ class GenoAdditiveArray(sim.PyOperator):
 
 class PhenoAdditive(sim.PyOperator):
     def __init__(self, *args, **kwargs):
-        sim.PyOperator.__init__(self, fun=self.calculate_additive_p,
+        sim.PyOperator.__init__(self, func=self.calculate_additive_p,
                                 *args, **kwargs)
 
     def calculate_additive_p(self, pop):

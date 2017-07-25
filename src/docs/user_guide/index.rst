@@ -18,5 +18,5 @@ infrastructure of :py:mod:`simuPOP`.
    structured_population_expansion.rst
    multi_parental_populations.rst
    collecting_and_storing_data.rst
-   multiple_generations_and_data_storage.rst
+   integrated_example_multiple_generations_and_data_storage.rst
 

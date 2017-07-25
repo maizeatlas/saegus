@@ -189,17 +189,19 @@ are stored in the :py:class:`h5py.File` generation by generation.
 
    >>> example_pop.evolve(
    >>>  preOps=[
-   ...      sim.Stat(alleleFreq=sim.ALL_AVAIL),
-   ...      sim.Stat(genoFreq=sim.ALL_AVAIL),
-   ...      operators.HDF5AlleleFrequencies(allele_group),
-   ...      operators.HDF5GenotypeFrequencies(genotype_group),
-   ...      operators.HDFTrait('g', trait_group),
-   ...      operators.HDFTrait('p', trait_group),
+   ...      sim.Stat(alleleFreq=sim.ALL_AVAIL), #calculate allele frequencies
+   ...      sim.Stat(genoFreq=sim.ALL_AVAIL), # calculate genotype frequencies
+   ...      operators.HDF5AlleleFrequencies(allele_group), #store allele frequencies
+   ...      operators.HDF5GenotypeFrequencies(genotype_group), # store genotype frequencies
+   ...      operators.GenoAdditiveArray(qtl, ae_array), # calculate g
+   ...      operators.PhenoAdditive(), # calulcate p
+   ...      operators.HDFTrait('g', trait_group), # store g
+   ...      operators.HDFTrait('p', trait_group), # store p
    ...           ],
    ...  matingScheme=sim.RandomMating(ops=[
    ...      sim.IdTagger(),
    ...      sim.PedigreeTagger(),
    ...      sim.Recombinator(rates=recom_rates)],
    ...      subPopSize=1000),
-   ...  gen=5,
+   ...  gen=10,
    ... )
