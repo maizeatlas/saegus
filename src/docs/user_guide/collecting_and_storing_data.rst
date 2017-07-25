@@ -99,7 +99,7 @@ The array for allele frequencies has the same ordering of columns:
     [ 44443.         0.738      0.262      0.262      0.738]
     [ 44444.         0.267      0.733      0.267      0.733]]
 
-.. _genotype_data:
+.. _collect_and_store_genotype_data:
 
 Genotype Data
 =============

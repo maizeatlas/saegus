@@ -66,6 +66,8 @@ class HDF5Trait(sim.PyOperator):
         self.hdf5_trait_group[str(generation) +'/'+self.trait_info_field] = trait
         return True
 
+# todo Create documentation for HDF5Close in operators.py
+
 class HDF5Close(sim.PyOperator):
     """
     Simple closing operator meant to be used in finalOps.

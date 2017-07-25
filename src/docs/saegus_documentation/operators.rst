@@ -17,8 +17,6 @@ using standard :py:mod:`simuPOP` operators.
 Operators
 #########
 
-
-
 .. _geno_additive_array:
 
 :py:class:`GenoAdditiveArray`
@@ -38,8 +36,8 @@ Operators
 
 .. _calculate_error_variance:
 
-:py:class:`CalculateErrorVariance
-=================================
+:py:class:`CalculateErrorVariance`
+==================================
 
 .. py:class:: CalculateErrorVariance(heritability)
 
@@ -72,6 +70,36 @@ values of ``g`` must be assigned to each individual.
    py:class:`CalculateErrorVariance`
 
 
+:py:class:`HDF5AlleleFrequencies`
+=================================
+
+.. py:class:: HDF5AlleleFrequencies(allele_frequency_group, allele_data)
+
+   :param h5py.Group allele_frequency_group: group for allele frequencies
+   :param numpy.array allele_data: Array of allele states
+
+   Operator to store allele frequencies during :py:func:`evolve` process.
+   ``allele_data`` is gathered using :py:func:`analyze.gather_allele_data`. See
+   the entry in the user guide for collecting and storing data
+
+.. todo:: Show examples of each HDF5 operator
+
+:py:class:`HDF5GenotypeFrequencies`
+===================================
+
+.. py:class:: HDF5GenotypeFrequencies(genotype_frequency_group)
+
+   :param h5py.Group genotype_frequency_group:
+
+:py:class:`HDF5Trait`
+=====================
+
+:py:class:`HDF5Close`
+=====================
+
+
+
+
 .. py:class:: CullPopulation()
 
 .. py:class:: Sorter()
@@ -90,8 +118,6 @@ values of ``g`` must be assigned to each individual.
 
 .. py:class:: SaveMetaPopulations()
 
-.. todo:: Create operators for storing HDF5 data during the evolutionary process.
-
 
 .. _function_forms_of_operators:
 
@@ -100,8 +126,8 @@ Function Forms of Operators
 
 .. _assign_additive_g_function:
 
-:py:function:`assign_additive_g`
-================================
+:py:func:`assign_additive_g`
+============================
 
 .. py:function:: assign_additive_g(pop, qtl, allele_effects)
 
@@ -115,25 +141,25 @@ Function Forms of Operators
 
 .. _calculate_g:
 
-:py:function:`calculate_g`
-==========================
+:py:func:`calculate_g`
+======================
 
-.. py:function:: calculate_g(pop, allele_effects_array)
+.. :py:func:: calculate_g(pop, allele_effects_array)
 
    :param simuPOP.Population pop: Diploid population with ``g`` defined
    :param allele_effects_array: Array with rows of loci and columns as allele states
 
 .. _calculate_error_variance_function:
 
-:py:function:`calculate_error_variance`
-=======================================
+:py:func:`calculate_error_variance`
+===================================
 
-.. py:function:: calculate_error_variance(pop, heritability)
+.. :py:func:: calculate_error_variance(pop, heritability)
 
    :parameter pop: simuPOP.Population with a quantitative trait
    :parameter heritability: Parameter determining how much noise exists between genotype and phenotype
 
-.. py:function:: phenotypic_effect_calculator(pop)
+.. :py:func:: phenotypic_effect_calculator(pop)
 
    :parameter pop: simuPOP.Population with quantitative trait
 
@@ -142,9 +168,7 @@ Function Forms of Operators
    The error term ``epsilon`` is defined as a random draw from a normal distribution with
    mean :math:`0` and variance :math:`1 - V_g(1/h^2 - 1)`.
 
-   .. note::
-
-      :math:`V_g` is defined as the variance of genotypic effect ``g``.
+   :math:`V_g` is defined as the variance of genotypic effect ``g``.
 
 .. warning::
 
@@ -152,11 +176,11 @@ Function Forms of Operators
 
 .. _calculate_p:
 
-:py:function:`calculate_p`
-==========================
+:py:func:`calculate_p`
+======================
 
-.. py:function:: calculate_p(pop)
+.. :py:func:: calculate_p(pop)
 
    Adds error term to each individual's ``g`` value drawn from a normal
    distribution with mean ``0`` and variance as defined in
-   :py:function:`calculate_error_variance`
+   :py:func:`calculate_error_variance`

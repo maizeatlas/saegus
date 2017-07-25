@@ -4,10 +4,7 @@
 Analyze Module
 ==============
 
-
-
-
-.. _gather_allele_data:
+.. _analyze_mod_gather_allele_data:
 
 .. py:function:: gather_allele_data(pop)
 
@@ -15,6 +12,8 @@ Analyze Module
    :return: Array labeling alpha, omega, minor and major alleles
 
    .. warning:: Assumes alleles states are 1, 2, 3, 4
+
+   .. note:: Must call simuPOP.stat(pop, alleleFreq=simuPOP.ALL_AVAIL) to use this function
 
    Constructs a numpy.array with columns:
    locus   alpha   omega   minor   major
@@ -26,6 +25,7 @@ Analyze Module
    the locus to make the rest of the data structures consistent.
 
    .. code-block:: python
+   :caption: :py:mod:`gather_allele_data` example
 
       >>> allele_data = gather_allele_data(pop)
       >>> print(allele_data)
@@ -41,12 +41,12 @@ Analyze Module
 
 .. py:function:: gather_allele_frequencies(pop)
 
-   :param sim.Population pop: diploid ``simuPOP.Population``
+   :param Population pop: diploid :py:class:`Population`
    :return: Array of allele frequencies of alpha, omega, minor and major
 
    .. warning:: Assumes allele states are 1, 2, 3, 4
 
-   Constructs a ``np.array`` with columns:
+   Constructs a :py:class:`np.array` with columns:
    locus alpha_frequency   omega_frequency   minor_frequency   major_frequency
 
    Loci at 0.5 frequency have the minor allele set as the alpha allele and the

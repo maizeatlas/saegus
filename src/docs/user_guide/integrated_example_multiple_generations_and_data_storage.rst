@@ -182,7 +182,7 @@ are stored in the :py:class:`h5py.File` generation by generation.
 .. code-block:: python
    :caption: Creating the allele data and frequency arrays
 
-   >>> allele_data_table =
+   >>> allele_data_table = analyze.gather_allele_data(example_pop)
 
 .. code-block:: python
    :caption: Storing ten generations of data
@@ -203,5 +203,13 @@ are stored in the :py:class:`h5py.File` generation by generation.
    ...      sim.PedigreeTagger(),
    ...      sim.Recombinator(rates=recom_rates)],
    ...      subPopSize=1000),
+   ...  finalOps=operators.HDF5Close(),
    ...  gen=10,
    ... )
+   10
+
+The data for ten generations of random mating with heritability = 0.7 is stored
+in ``integrated_example_data.hdf5``. There is a brief tutorial on accessing the
+data in :ref:`collect_and_store_data` for both :py:mod:`h5py` in Python
+and :mod:`h5` in R.
+

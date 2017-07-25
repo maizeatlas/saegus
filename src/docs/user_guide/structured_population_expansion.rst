@@ -4,10 +4,11 @@
 Expanding A Population According to Structure Matrix
 ####################################################
 
-This example uses ``simuPOP``'s capability to perform non-random mating schemes
-We have inferred the population structure of ``example_pop``. The goal of this
-example is to use the population structure to re-create the original population.
-The genome of each individual in ``example_pop`` derives from a single
+This example uses :py:mod:`simuPOP`'s capability to perform non-random
+mating schemes We have inferred the population structure of ``example_pop``.
+The goal of this example is to use the population structure to create a
+simulated population with similar structure to the original population. The
+genome of each individual in ``example_pop`` derives from a single
 sub-population or a combination of sub-populations.
 
 ``population_structure_matrix.txt`` defines the proportion of the genome
@@ -64,22 +65,22 @@ We will import a file that tells us the likely mating structure of each of the
    >>> popst = parameters.PopulationStructure(example_pop)
    >>> proportions = np.array(np.array(structure_matrix)[:, 1:7])
    >>> proportions
-   array([[0.0, 0.9996, 0.0, 0.0004, 0.0, 0.0],
-          [0.011000000000000001, 0.0015, 0.0004, 0.1047, 0.0, 0.8824],
-          [0.0, 0.3832, 0.0, 0.6168, 0.0, 0.0],
-          [0.0, 0.4085, 0.5134, 0.0782, 0.0, 0.0],
-          [0.0, 0.0009, 0.0, 0.0048, 0.0, 0.9943],
-          [0.2195, 0.0198, 0.021, 0.2371, 0.1295, 0.3731],
-          [0.0, 0.4907, 0.0, 0.5093, 0.0, 0.0],
-          [0.9994, 0.0, 0.0, 0.0006, 0.0, 0.0],
-          [0.4155, 0.0079, 0.0007, 0.5736, 0.0005, 0.0018],
-          [0.0, 0.4622, 0.0, 0.5378, 0.0, 0.0],
-          [0.0, 0.0003, 0.0, 0.0115, 0.0, 0.9882],
-          [0.0, 0.0, 0.0, 1.0, 0.0, 0.0],
-          [0.9243, 0.001, 0.0008, 0.0729, 0.001, 0.0],
-          [0.3813, 0.0014, 0.6129, 0.0024, 0.0008, 0.0012],
-          ...
-          [0.0, 0.4602, 0.0, 0.5398, 0.0, 0.0]], dtype=object)
+   [[0.0, 0.9996, 0.0, 0.0004, 0.0, 0.0],
+   [0.011000000000000001, 0.0015, 0.0004, 0.1047, 0.0, 0.8824],
+   [0.0, 0.3832, 0.0, 0.6168, 0.0, 0.0],
+   [0.0, 0.4085, 0.5134, 0.0782, 0.0, 0.0],
+   [0.0, 0.0009, 0.0, 0.0048, 0.0, 0.9943],
+   [0.2195, 0.0198, 0.021, 0.2371, 0.1295, 0.3731],
+   [0.0, 0.4907, 0.0, 0.5093, 0.0, 0.0],
+   [0.9994, 0.0, 0.0, 0.0006, 0.0, 0.0],
+   [0.4155, 0.0079, 0.0007, 0.5736, 0.0005, 0.0018],
+   [0.0, 0.4622, 0.0, 0.5378, 0.0, 0.0],
+   [0.0, 0.0003, 0.0, 0.0115, 0.0, 0.9882],
+   [0.0, 0.0, 0.0, 1.0, 0.0, 0.0],
+   [0.9243, 0.001, 0.0008, 0.0729, 0.001, 0.0],
+   [0.3813, 0.0014, 0.6129, 0.0024, 0.0008, 0.0012],
+   ...
+   [0.0, 0.4602, 0.0, 0.5398, 0.0, 0.0]]
 
 
 There is a very small amount of rounding error in the proportions for some
@@ -215,7 +216,7 @@ Parent Chooser and Recombination Map
 The class containing the parent chooser function must be instantiated with the
 expanded population size. The recombination map will be parsed with an older
 function. We will explain in a later section more details about recombination
-in ``simuPOP``.
+in :py:mod:`simuPOP`.
 
 .. code-block:: python
    :caption: Instantiating parent chooser and parsing recombination map
@@ -270,17 +271,16 @@ the ``ind_id``, ``mother_id`` and ``father_id`` fields.
    >>> pedigree = np.array((example_pop.indInfo('ind_id'),
    ...                      example_pop.indInfo('mother_id'),
    ...                      example_pop.indInfo('father_id'))).T
-   >>> pedigree
-   array([[  106.,    45.,    86.],
-       [  107.,    26.,    70.],
-       [  108.,    60.,    31.],
-       ...,
-       [ 1103.,    63.,    65.],
-       [ 1104.,    20.,    67.],
-       [ 1105.,    39.,    40.]])
+   >>> print(pedigree)
+   [[  106.,    45.,    86.],
+   [  107.,    26.,    70.],
+   [  108.,    60.,    31.],
+   ...,
+   [ 1103.,    63.,    65.],
+   [ 1104.,    20.,    67.],
+   [ 1105.,    39.,    40.]]
 
-For this example we will not validate the pedigree. To provide accurate results
-we would have to use a smaller pool of individuals.
+For this example we will not validate the pedigree.
 
 
 
