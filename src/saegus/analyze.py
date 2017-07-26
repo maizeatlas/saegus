@@ -17,8 +17,6 @@ import lxml.etree as etree
 from . import operators, parameters
 
 
-# todo Update documentation of gather_allele_data to reflect that allele frequencies must be computed
-
 def gather_allele_data(pop):
     """
     Constructs a numpy.array with columns:
@@ -1121,7 +1119,7 @@ class GWAS(object):
             omega_genotype = np.asarray(ind.genotype(ploidy=1))[list(seg_loci)]
             omega_comparisons = np.equal(comparison_array, omega_genotype,
                                          dtype=np.int8)
-            counts = np.add(alpha_comparisons, omega_comparisons, dtype=np.int_)
+            counts = np.add(alpha_comparisons, omega_comparisons, dtype=np.int8)
             count_matrix[i, :] = counts
 
         if count_matrix_file_name is not None:
