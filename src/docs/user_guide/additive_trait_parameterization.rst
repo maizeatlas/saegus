@@ -16,7 +16,6 @@ Additive Trait Parameterization
    >>> from saegus import operators, parameters
    >>> np.set_printoptions(suppress=True, precision=5)
 
-
 .. _overview_of_additive_trait_example:
 
 Our goal is to show how to parameterize an additive trait in :mod`saegus` code.

@@ -136,7 +136,65 @@ A genotype is given in terms of two uppercase letters.
 
 
 ``saegus`` automatically does the conversion into hapmap format provided with a
-``dict`` to code the allele of each individual into a letter.
+``dict`` to code the allele of each individual into a letter. For these
+examples the allele states (``1, 2, 3, 4``) have nothing to do with the
+corresponding nucleotides of the hapmap format. The :py:class:`GWAS`
+automatically creates an attribute ``individual names`` which formats the
+``ind_id`` for TASSEL.
+
+.. code-block:: python
+   :caption: Formatting genotype matrix in hapmap format
+
+   >>> gwas = analyze.GWAS(example_pop, segregating_loci, 'example')
+   >>> print(gwas.individual_names)
+   ['I1' 'I2' 'I3' 'I4' 'I5' 'I6' 'I7' 'I8' 'I9' 'I10' 'I11' 'I12' 'I13' 'I14'
+    'I15' 'I16' 'I17' 'I18' 'I19' 'I20' 'I21' 'I22' 'I23' 'I24' 'I25' 'I26'
+    'I27' 'I28' 'I29' 'I30' 'I31' 'I32' 'I33' 'I34' 'I35' 'I36' 'I37' 'I38'
+    'I39' 'I40' 'I41' 'I42' 'I43' 'I44' 'I45' 'I46' 'I47' 'I48' 'I49' 'I50'
+    'I51' 'I52' 'I53' 'I54' 'I55' 'I56' 'I57' 'I58' 'I59' 'I60' 'I61' 'I62'
+    'I63' 'I64' 'I65' 'I66' 'I67' 'I68' 'I69' 'I70' 'I71' 'I72' 'I73' 'I74'
+    'I75' 'I76' 'I77' 'I78' 'I79' 'I80' 'I81' 'I82' 'I83' 'I84' 'I85' 'I86'
+    'I87' 'I88' 'I89' 'I90' 'I91' 'I92' 'I93' 'I94' 'I95' 'I96' 'I97' 'I98'
+    'I99' 'I100' 'I101' 'I102' 'I103' 'I104' 'I105']
+   >>> hapmap_columns = ['rs', 'alleles', 'chrom', 'pos',
+   ...              'strand', 'assembly', 'center',
+   ...              'center', 'protLSID', 'assayLSID',
+   ...              'panelLSID', 'QCode'] + list(gwas.individual_names)
+   ...              ]
+   >>> hapmap_matrix = pd.DataFrame(columns=hapmap_columns)
+   >>> hapmap.rs = segregating_loci
+   >>> hapmap.alleles = segregating_minor_alleles
+   >>> chromosomes = np.array([example_pop.chromLocusPair(locus)[0] + 1
+   ...                          for locus in segregating_loci], dtype=np.int8)
+   >>> hapmap.chrom = chromosomes
+   >>> hapmap_matrix.pos = np.arange(segregating_loci.shape)
+   >>> hapmap_matrix.loc[:, 'strand':'QCode'] = np.core.defchararray.array(
+   ...                          [['NA']*42837]*8).T
+   >>> for i, ind in enumerate(example_pop.individuals()):
+   ...       hapmap_matrix.loc[:, gwas.individual_names[i]] = [
+   ...           ''.join(sorted(gwas.int_to_snp_conversions[a] +
+   ...                     gwas.int_to_snp_conversions[b]))
+   ...           for a, b, in zip(
+   ...              np.array(ind.genotype(ploidy=0))[segregating_loci],
+   ...              np.array(ind.genotype(ploidy=1))[segregating_loci])
+   ...               ]
+   >>> print(np.array(hapmap_matrix))
+   [[0 1 1 ..., 'GG' 'GG' 'GG']
+    [1 2 1 ..., 'GT' 'GG' 'TT']
+    [2 3 1 ..., 'GG' 'GG' 'GG']
+    ...,
+    [44442 2 10 ..., 'GG' 'CG' 'CG']
+    [44443 3 10 ..., 'CT' 'CC' 'CT']
+    [44444 1 10 ..., 'CC' 'TT' 'TT']]
+
+The final step is to write the hapmap to a ``txt`` file with the appropriate
+rows and columns.
+
+.. code-block:: python
+   :caption: Writing the hapmap file for TASSEL
+
+   >>> with open('example_hapmap.txt', 'w') as hapmap_file:
+   ...         hapmap_matrix.to_csv(hapmap_file, sep='\t', index=False)
 
 
 .. _calculating_the_kinship_matrix:
@@ -243,7 +301,27 @@ the significance of each principal component.
 .. code-block:: python
    :caption: Population structure calculation
 
-   >>>
+   >>> column_means = np.apply_along_axis(np.mean, axis=0, arr=count_matrix)
+   >>> shifted = np.array(
+   ...    [count_matrix[:, i] - column_means[i] for i in range(42837)]).T
+   >>> P = column_means/2
+   >>> scale = np.sqrt(P*(1-P))
+   >>> M = np.matrix(
+   ...     np.array([shifted[:, i] / scale[i] for i in range(42837)]).T)
+   >>> X = (1/42837)*(M * M.T)
+   >>> eigendata = linalg.eig(X)
+   >>> eigenvalues = np.array(eigendata[0], dtype=np.float)
+   >>> eigenvectors = np.array(eigendata[1], dtype=np.float)
+
+All of the above calculations are performed by
+:py:method:`pop_struct_eigendecomp`. The file for the population structure
+covariates is written by :py:method:`population_structure_formatter`
+
+.. code-block:: python
+   :caption: Population structure file
+
+   >>> gwas.population_structure_formatter(eigenvalues, eigenvectors,
+   ...    number_of_pcs=2, pop_struct_file_name='example_structure.txt')
 
 .. _formatting_trait_data:
 

@@ -16,6 +16,7 @@ import xml.etree.ElementTree as ET
 import lxml.etree as etree
 from . import operators, parameters
 
+# todo Create documentation for gather_allele_data. Very useful function.
 
 def gather_allele_data(pop):
     """
@@ -387,7 +388,7 @@ class MetaGeneration(object):
                 gwas = GWAS(sample, loci, run_id)
 
                 ccm = gwas.calculate_count_matrix(minor_alleles, loci)
-                ps_svd = gwas.pop_struct_svd(ccm)
+                ps_svd = gwas.pop_struct_eigdencomp(ccm)
                 gwas.population_structure_formatter(ps_svd,
                                                     indir + name + '_structure_matrix.txt')
                 gwas.hapmap_formatter(int_to_snp_map,
@@ -600,7 +601,7 @@ class MultiGeneration(object):
                 gwas = GWAS(sample, loci, run_id)
 
                 ccm = gwas.calculate_count_matrix(minor_alleles, loci)
-                ps_svd = gwas.pop_struct_svd(ccm)
+                ps_svd = gwas.pop_struct_eigdencomp(ccm)
                 gwas.population_structure_formatter(ps_svd,
                                         indir + name + '_structure_matrix.txt')
                 gwas.hapmap_formatter(int_to_snp_map,
@@ -1073,6 +1074,8 @@ def generate_haplotype_data_table(pop, haplotype_data):
             haplotype_table.append(row)
     return pd.DataFrame(haplotype_table, columns=data_columns)
 
+# todo Create docs for GWAS class
+# todo GWAS class has undergone significant changes
 
 class GWAS(object):
     """
@@ -1081,13 +1084,15 @@ class GWAS(object):
     of the genotype covarience matrix. Details can be found in the paper:
     Population Structure and Eigenanalysis Patterson et al 2006.
     """
-    def __init__(self, pop, loci, run_id):
+    def __init__(self, pop, segregating_loci, minor_alleles, run_id):
         self.pop = pop
-        self.loci = loci
+        self.segregating_loci = segregating_loci
+        self.minor_alleles = minor_alleles
         self.run_id = run_id
         self.int_to_snp_conversions = {0: 'A', 1: 'C',
                                        2: 'G', 3: 'T',
                                        4: '-', 5: '+'}
+        self.segregating_minor_alleles = self.minor_alleles[segregating_loci]
 
 
         self.individual_names = np.core.defchararray.add('I',
@@ -1097,9 +1102,9 @@ class GWAS(object):
     def __str__(self):
         return "Conversions: \n "+ str(self.int_to_snp_conversions)
 
+# todo Create docs for GWAS.calculate_count_matrix
 
-    # noinspection PyArgumentList
-    def calculate_count_matrix(self, allele_subset, seg_loci,
+    def calculate_count_matrix(self,
                                count_matrix_file_name = None):
         """
         A function to calculate the copy numbers of either the minor or
@@ -1110,25 +1115,31 @@ class GWAS(object):
         :param allele_subset: Allows user to choose a custom set of alleles to use i.e. minor vs major.
         :param count_matrix_filename: Output file name. If defined will write a file. Otherwise returns the count_matrix
         """
-        comparison_array = np.asarray(allele_subset, dtype=np.int_)
-        count_matrix = np.zeros((self.pop.popSize(), len(self.loci)), dtype=np.int_)
-        for i, ind in enumerate(self.pop.individuals()):
-            alpha_genotype = np.asarray(ind.genotype(ploidy=0))[list(seg_loci)]
-            alpha_comparisons = np.equal(comparison_array, alpha_genotype,
-                                         dtype=np.int8)
-            omega_genotype = np.asarray(ind.genotype(ploidy=1))[list(seg_loci)]
-            omega_comparisons = np.equal(comparison_array, omega_genotype,
-                                         dtype=np.int8)
-            counts = np.add(alpha_comparisons, omega_comparisons, dtype=np.int8)
-            count_matrix[i, :] = counts
+
+        count_matrix = np.zeros((self.pop.popSize(),
+                                 self.segregating_loci.shape),
+                                 dtype=np.int_)
+
+        for i, ind in enumerate(example_pop.individuals()):
+            ageno = np.array(ind.genotype(ploidy=0), dtype=np.int8)[
+                segregating_loci]
+            bgeno = np.array(ind.genotype(ploidy=1), dtype=np.int8)[
+                segregating_loci]
+            acomps = np.array(np.equal(self.segregating_minor_alleles, ageno),
+                              dtype=np.int8)
+            bcomps = np.array(np.equal(self.segregating_minor_alleles, bgeno),
+                              dtype=np.int8)
+            comp_count = acomps + bcomps
+            count_matrix[i, :] = comp_count
 
         if count_matrix_file_name is not None:
             np.savetxt(count_matrix_file_name, count_matrix, fmt="%d")
 
         return count_matrix
 
+# todo Create docs for GWAS.pop_struct_eigendecomp
 
-    def pop_struct_svd(self, count_matrix):
+    def pop_struct_eigdencomp(self, count_matrix):
         """
 
         Follows procedure of Population Structure and Eigenanalysis
@@ -1140,30 +1151,33 @@ class GWAS(object):
         :param count_matrix:
 
         """
-        shift = np.apply_along_axis(np.mean, axis=1, arr=count_matrix)
-        p_vector = np.divide(shift, 2)
-        scale = np.sqrt(np.multiply(p_vector, (1-p_vector)))
 
-        shift_matrix = np.zeros((count_matrix.shape[0], count_matrix.shape[1]))
-        scale_matrix = np.zeros((count_matrix.shape[0], count_matrix.shape[1]))
-        for i in range(len(self.loci)):
-            shift_matrix[:, i] = shift
-            scale_matrix[:, i] = scale
+        column_means = np.apply_along_axis(
+                        np.mean, axis=0, arr=count_matrix)
+        shifted = np.array(
+            [count_matrix[:, i] - column_means[i]
+             for i in range(self.segregating_loci.shape)]).T
+        P = column_means / 2
+        scale = np.sqrt(P * (1 - P))
 
-        corrected_matrix = (count_matrix - shift_matrix)/scale_matrix
-        # singular value decomposition using scipy linalg module
-        eigenvectors, s, v = linalg.svd(corrected_matrix)
-        eigenvalues = np.diagonal(
-            np.square(
-                linalg.diagsvd(s, count_matrix.shape[1], count_matrix.shape[0]))).T
+        M = np.matrix(
+            np.array([shifted[:, i] / scale[i]
+                      for i in range(self.segregating_loci.shape)]).T)
 
-        sum_of_eigenvalues = np.sum(eigenvalues)
-        fraction_of_variance = np.divide(eigenvalues, sum_of_eigenvalues)
-        eigen_data = {'vectors': eigenvectors, 'values': eigenvalues,
-                      'fraction_variance': fraction_of_variance}
-        return eigen_data
+        X = (1/self.segregating_loci.shape)*(M*M.T)
+        eigendata = linalg.eig(X)
 
-    def population_structure_formatter(self, eigen_data, pop_struct_file_name = None):
+        eigenvalues = np.array(eigendata[0], dtype=np.float)
+        eigenvectors = np.array(eigendata[1], dtype=np.float)
+
+        return eigenvalues, eigenvectors
+
+# todo Create docs for GWAS.population_structure_formatter
+
+    def population_structure_formatter(self, eigenvalues,
+                                       eigenvectors,
+                                       number_of_pcs = 2,
+                                       pop_struct_file_name = None):
         """
         Writes the first two of the population structure matrix to a
         file. First column of the file is are names.
@@ -1171,19 +1185,22 @@ class GWAS(object):
         :param eigen_data:
         """
 
-        ordered_names = self.individual_names
+        struct_covariates = [
+            eigenvalues[i]*eigenvectors[i] for i in range(number_of_pcs)
+        ]
+        structure_matrix = pd.DataFrame(struct_covariates[i].T
+                                        for i in range(number_of_pcs)).T
+        structure_matrix.index = self.individual_names
 
-        structure_matrix = pd.DataFrame([list(eigen_data['vectors'][:, 0].T),
-                                         list(eigen_data['vectors'][:, 1].T)]).T
-        structure_matrix.index = ordered_names
+        header_cols = ['\td'+str(i) for i in range(number_of_pcs)]
 
         if pop_struct_file_name is not None:
-            header = "<Covariate>\t\t\n<Trait>\td1\td2\n"
+            header = "<Covariate>\t\t\n<Trait>" + "".join(header_cols) + "\n"
             with open(pop_struct_file_name, 'w') as f:
                 f.write(header)
                 structure_matrix.to_csv(f, sep='\t', index=True, header=False)
-#       structure_matrix.index = ordered_names
-        return structure_matrix
+
+# todo Create docs for GWAS.test_statistic
 
     def test_statistic(self, eigenvalues):
         sum_of_eigenvalues = np.sum(eigenvalues)
@@ -1199,12 +1216,15 @@ class GWAS(object):
         test_statistic = (lowercase_l - mu_hat) / sigma_hat
         return test_statistic
 
+# todo Create docs for GWAS.hapmap_formatter
+# todo Significant changes to GWAS.hapmap_formatter
+
     def hapmap_formatter(self, segregating_loci,
-                         alleles_column,
-                             locus_names,
-                             corresponding_chromosomes,
-                             pos_column,
-                             hapmap_file_name=None):
+                            alleles_column,
+                            locus_names,
+                            corresponding_chromosomes,
+                            pos_column,
+                            hapmap_file_name=None):
 
         # Need to guarantee that the column names are in same order as the
         # genoype data. Iterate over individuals in population to build up a
@@ -1230,12 +1250,17 @@ class GWAS(object):
             hapmap_matrix.ix[:, self.individual_names[i]] = [
                 ''.join(sorted(self.int_to_snp_conversions[a]
                                + self.int_to_snp_conversions[b]))
-                for a, b in zip(np.asarray(ind.genotype(ploidy=0))[list(segregating_loci)], np.asarray(ind.genotype(ploidy=1))[list(segregating_loci)])]
+            for a, b in zip(np.asarray(ind.genotype(ploidy=0))[segregating_loci],
+                            np.asarray(ind.genotype(ploidy=1))[segregating_loci]
+                            )
+            ]
 
         if hapmap_file_name is not None:
             hapmap_matrix.to_csv(hapmap_file_name, sep='\t', index=False)
 
         return hapmap_matrix
+
+# todo Add entry for GWAS.trait_formatter definition and usage example
 
     def trait_formatter(self, trait_file_name = None):
         """
@@ -1256,6 +1281,8 @@ class GWAS(object):
                 trait_vector.to_csv(f, sep='\t', index=False, header=False)
 
         return trait_vector
+
+# todo Add entry for GWAS.calc_kinship_matrix in docs. Extended entry to show math
 
     def calc_kinship_matrix(self, allele_count_matrix,
                             allele_frequencies,
@@ -1506,7 +1533,7 @@ def single_sample_analyzer(full_population, sample_size,
 
     indir = "C:\\tassel\\input\\"
     ccm = gwas.calculate_count_matrix(indir + 'daoko_girl_MAC.txt')
-    ps_svd = gwas.pop_struct_svd(ccm)
+    ps_svd = gwas.pop_struct_eigdencomp(ccm)
     ps_m = gwas.population_structure_formatter(ps_svd, indir + str(sample_size) +
                                                '_daoko_girl_structure_matrix.txt')
     hmap = gwas.hapmap_formatter(int_to_snp_map,
@@ -1746,7 +1773,7 @@ def write_multiple_sample_analyzer(library_of_samples, sample_size_list,
             indir = "C:\\tassel\\input\\"
 
             ccm = gwas.calculate_count_matrix(minor_alleles)
-            ps_svd = gwas.pop_struct_svd(ccm)
+            ps_svd = gwas.pop_struct_eigdencomp(ccm)
             gwas.population_structure_formatter(ps_svd  , indir + name + '_structure_matrix.txt')
             gwas.hapmap_formatter(int_to_snp_map,
                                          indir + name + '_simulated_hapmap.txt')
