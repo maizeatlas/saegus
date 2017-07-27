@@ -662,6 +662,7 @@ class MultiGeneration(object):
 
         return additive_variance
 
+# todo SingleGeneration is probably depracated
 
 class SingleGeneration(object):
     def __init__(self):
@@ -1117,19 +1118,19 @@ class GWAS(object):
         """
 
         count_matrix = np.zeros((self.pop.popSize(),
-                                 self.segregating_loci.shape),
+                                 self.segregating_loci.shape[0]),
                                  dtype=np.int_)
 
-        for i, ind in enumerate(example_pop.individuals()):
-            ageno = np.array(ind.genotype(ploidy=0), dtype=np.int8)[
-                segregating_loci]
-            bgeno = np.array(ind.genotype(ploidy=1), dtype=np.int8)[
-                segregating_loci]
-            acomps = np.array(np.equal(self.segregating_minor_alleles, ageno),
+        for i, ind in enumerate(self.pop.individuals()):
+            alpha_geno = np.array(ind.genotype(ploidy=0), dtype=np.int8)[
+                self.segregating_loci]
+            omega_geno = np.array(ind.genotype(ploidy=1), dtype=np.int8)[
+                self.segregating_loci]
+            alpha_comparisons = np.array(np.equal(self.segregating_minor_alleles, alpha_geno),
                               dtype=np.int8)
-            bcomps = np.array(np.equal(self.segregating_minor_alleles, bgeno),
+            omega_comparions = np.array(np.equal(self.segregating_minor_alleles, omega_geno),
                               dtype=np.int8)
-            comp_count = acomps + bcomps
+            comp_count = alpha_comparisons + omega_comparions
             count_matrix[i, :] = comp_count
 
         if count_matrix_file_name is not None:
@@ -1219,11 +1220,7 @@ class GWAS(object):
 # todo Create docs for GWAS.hapmap_formatter
 # todo Significant changes to GWAS.hapmap_formatter
 
-    def hapmap_formatter(self, segregating_loci,
-                            alleles_column,
-                            locus_names,
-                            corresponding_chromosomes,
-                            pos_column,
+    def hapmap_formatter(self,
                             hapmap_file_name=None):
 
         # Need to guarantee that the column names are in same order as the
@@ -1238,20 +1235,25 @@ class GWAS(object):
                                   'QCode'] + list(
             self.individual_names)
 
-        segregating_loci_array = np.array(segregating_loci)
         hapmap_matrix = pd.DataFrame(columns=hapmap_ordered_columns)
-        hapmap_matrix.rs = locus_names
-        hapmap_matrix.alleles = alleles_column
-        hapmap_matrix.chrom = corresponding_chromosomes
-        hapmap_matrix.pos = pos_column
-        hapmap_matrix.ix[:, 'strand':'QCode'] = np.core.defchararray.array([['NA']*len(locus_names)]*7).T
+        hapmap_matrix.rs = self.segregating_loci
+        hapmap_matrix.alleles = self.segregating_minor_alleles
+
+        chromosomes = np.array([self.pop.chromLocusPair(locus)[0] + 1
+                                for locus in self.segregating_loci],
+                               dtype=np.int8)
+
+        hapmap_matrix.chrom = chromosomes
+        hapmap_matrix.pos = np.arange(self.pop.totNumLoci())
+        hapmap_matrix.loc[:, 'strand':'QCode'] = np.core.defchararray.array(
+            [['NA']*len(locus_names)]*7).T
 
         for i, ind in enumerate(self.pop.individuals()):
-            hapmap_matrix.ix[:, self.individual_names[i]] = [
+            hapmap_matrix.loc[:, self.individual_names[i]] = [
                 ''.join(sorted(self.int_to_snp_conversions[a]
                                + self.int_to_snp_conversions[b]))
-            for a, b in zip(np.asarray(ind.genotype(ploidy=0))[segregating_loci],
-                            np.asarray(ind.genotype(ploidy=1))[segregating_loci]
+            for a, b in zip(np.asarray(ind.genotype(ploidy=0))[self.segregating_loci],
+                            np.asarray(ind.genotype(ploidy=1))[self.segregating_loci]
                             )
             ]
 
@@ -1284,8 +1286,7 @@ class GWAS(object):
 
 # todo Add entry for GWAS.calc_kinship_matrix in docs. Extended entry to show math
 
-    def calc_kinship_matrix(self, allele_count_matrix,
-                            allele_frequencies,
+    def calc_kinship_matrix(self, count_matrix,
                             kinship_matrix_file_name = None):
         """
         Calculates the kinship matrix according to VanRaden 2008:
@@ -1305,27 +1306,29 @@ class GWAS(object):
         :return:
         :rtype:
         """
-        M = np.matrix(allele_count_matrix - 1)
-        P = 2*(allele_frequencies - 0.5)
-        Z = M - P
-        scaling_terms = np.zeros((len(self.loci)))
-        for idx, probability in enumerate(allele_frequencies):
-            scaling_terms[idx] = 2*probability*(1 - probability)
 
-        scaling_factor = sum(scaling_terms)
+        M = np.matrix(((-1)*count_matrix) + 1)
+        P = np.array([self.pop.dvars().alleleFreq[locus][allele]
+                          for locus, allele in zip(self.segregating_loci,
+                               self.segregating_minor_alleles)])
+        Z = np.zeros((self.pop.popSize(), len(self.segregating_loci)))
 
-        G = Z*Z.T/scaling_factor
+        for i in range(self.pop.popSize()):
+            Z[i, :] = M[i, :] - 2*(P - 1/2)
 
-        annotated_G = pd.DataFrame(G, index=self.individual_names)
+        G = (Z * Z.T) / (2 * np.sum((P * (1 - P))))
+
+        G = pd.DataFrame(G, index=self.individual_names)
 
         if kinship_matrix_file_name is not None:
             header = "{}\n".format(self.pop.popSize())
             with open(kinship_matrix_file_name, 'w') as f:
                 f.write(header)
-                annotated_G.to_csv(f, sep='\t', index=True, header=False,
-                                      float_format='%.3f')
+                G.to_csv(f, sep='\t', index=True, header=False,
+                                      float_format='%.5f')
 
-        return annotated_G
+        return G
+
 
     def replicate_tassel_gwas_configs(self, rep_id, sample_size,
                                           hapmap_file_name,

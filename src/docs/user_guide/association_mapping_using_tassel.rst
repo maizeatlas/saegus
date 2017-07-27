@@ -196,6 +196,8 @@ rows and columns.
    >>> with open('example_hapmap.txt', 'w') as hapmap_file:
    ...         hapmap_matrix.to_csv(hapmap_file, sep='\t', index=False)
 
+All of the operations to format the genotypes into hapmap format are
+encapsulated inside of :func:`hapmap_formatter`.
 
 .. _calculating_the_kinship_matrix:
 
@@ -204,13 +206,33 @@ Kinship Matrix
 
 The kinship matrix is calculated via the method given in VanRaden2008_. It
 is the same method implemented in Synbreed. The marker allele is interpreted
-as the minor allele. The elements of :math:`\textbf{M}` are :math:`-1` for the minor
-allele homozygote, :math:`0` for the heterozygote and :math:`1` for the
-major allele homozygote.
+as the minor allele. The elements of :math:`\mathbf{V_{n x m}}` are
+:math:`-1` for the minor allele homozygote, :math:`0` for the heterozygote
+and :math:`1` for the major allele homozygote.
 
 * :math:`n` The number of individuals
 * :math:`m` The number of loci
-* :math:`p_i` Frequency of the major allele
+* :math:`p_i` Frequency of the minor allele at locus i
+
+We can obtain :math:`\mathbf{V}` by multiplying :math:`\mathbf{C}` by
+:math:`-1` and adding :math:`1`. Recall that
+:math:`\mathbf{C}` is given by :func:`calculate_count_matrix`
+in terms of minor alleles.
+
+.. math::
+
+   \left[
+   \begin{array}
+   ((-1)*2 + 1 = (-1) \\
+   (-1)*1 + 1 = 0 \\
+   (-1)*0 + 1 = 1
+   \end{array}
+   \right]
+
+Which is exactly what is required. We use method (1) to compute
+:math:`\mathbf{G}`. We only need to add ``individual_names`` to the header
+of :math:`\mathbf{G}` for use in TASSEL.
+
 
 .. math::
 
@@ -218,11 +240,12 @@ major allele homozygote.
 
 .. math::
 
-   \mathbf{Z}_{n \times m} = \mathbf{M} - \mathbf{P}
+   \mathbf{Z}_{n \times m} = \mathbf{V_j} - \mathbf{P}
 
 .. math::
 
-   \mathbf{M}^{T}\mathbf{M}
+   \mathbf{G} = \frac{\mathbf{Z}\mathbf{Z^T}}{2\sum_{i}p_i(1-p_i)}
+
 
 
 .. _calculating_population_structure:
@@ -313,9 +336,9 @@ the significance of each principal component.
    >>> eigenvalues = np.array(eigendata[0], dtype=np.float)
    >>> eigenvectors = np.array(eigendata[1], dtype=np.float)
 
-All of the above calculations are performed by
-:py:method:`pop_struct_eigendecomp`. The file for the population structure
-covariates is written by :py:method:`population_structure_formatter`
+All of the above calculations are performed by :func:`pop_struct_eigendecomp`.
+The file for the population structure covariates is written by
+:func:`population_structure_formatter`
 
 .. code-block:: python
    :caption: Population structure file
