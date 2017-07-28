@@ -54,21 +54,6 @@ examples.
    >>> sim.stat(example_pop, numOfSegSites=sim.ALL_AVAIL, vars=['segSites'])
    >>> segregating_loci = example_pop.dvars().segSites
 
-We will use exponentially distributed mean ``1``) allele effects with 20 ``qtl``
-
-.. code-block:: python
-   :caption: Setting up additive parameterization
-
-   >>> qtl = sorted(random.sample(segregating_loci, 20))
-   >>> allele_effects_table = trait.construct_ae_table(example_pop, qtl, random.expovariate, 1)
-   >>> allele_effects_array = trait.construct_ae_array(allele_effects_table, qtl)
-   >>> heritability = 0.7
-   >>> operators.calculate_g(example_pop, allele_effects_array)
-   >>> operators.calculate_error_variance(example_pop, heritability)
-   >>> operators.calculate_p(example_pop)
-   >>> analyze.trait_formatter()
-
-
 .. _hapmap_formatted_data:
 
 Hapmap Formatted Data
@@ -199,54 +184,6 @@ rows and columns.
 All of the operations to format the genotypes into hapmap format are
 encapsulated inside of :func:`hapmap_formatter`.
 
-.. _calculating_the_kinship_matrix:
-
-Kinship Matrix
-==============
-
-The kinship matrix is calculated via the method given in VanRaden2008_. It
-is the same method implemented in Synbreed. The marker allele is interpreted
-as the minor allele. The elements of :math:`\mathbf{V_{n x m}}` are
-:math:`-1` for the minor allele homozygote, :math:`0` for the heterozygote
-and :math:`1` for the major allele homozygote.
-
-* :math:`n` The number of individuals
-* :math:`m` The number of loci
-* :math:`p_i` Frequency of the minor allele at locus i
-
-We can obtain :math:`\mathbf{V}` by multiplying :math:`\mathbf{C}` by
-:math:`-1` and adding :math:`1`. Recall that
-:math:`\mathbf{C}` is given by :func:`calculate_count_matrix`
-in terms of minor alleles.
-
-.. math::
-
-   \left[
-   \begin{array}
-   ((-1)*2 + 1 = (-1) \\
-   (-1)*1 + 1 = 0 \\
-   (-1)*0 + 1 = 1
-   \end{array}
-   \right]
-
-Which is exactly what is required. We use method (1) to compute
-:math:`\mathbf{G}`. We only need to add ``individual_names`` to the header
-of :math:`\mathbf{G}` for use in TASSEL.
-
-
-.. math::
-
-   \mathbf{P} = 2(p_i - \frac{1}{2})
-
-.. math::
-
-   \mathbf{Z}_{n \times m} = \mathbf{V_j} - \mathbf{P}
-
-.. math::
-
-   \mathbf{G} = \frac{\mathbf{Z}\mathbf{Z^T}}{2\sum_{i}p_i(1-p_i)}
-
-
 
 .. _calculating_population_structure:
 
@@ -346,6 +283,109 @@ The file for the population structure covariates is written by
    >>> gwas.population_structure_formatter(eigenvalues, eigenvectors,
    ...    number_of_pcs=2, pop_struct_file_name='example_structure.txt')
 
+
+
+.. _calculating_the_kinship_matrix:
+
+Kinship Matrix
+==============
+
+The kinship matrix is calculated via the method given in VanRaden2008_. It
+is the same method implemented in Synbreed. The marker allele is interpreted
+as the minor allele. The elements of :math:`\mathbf{V_{n x m}}` are
+:math:`-1` for the minor allele homozygote, :math:`0` for the heterozygote
+and :math:`1` for the major allele homozygote.
+
+* :math:`n` The number of individuals
+* :math:`m` The number of loci
+* :math:`p_i` Frequency of the minor allele at locus i
+
+We can obtain :math:`\mathbf{V}` by multiplying :math:`\mathbf{C}` by
+:math:`-1` and adding :math:`1`. Recall that
+:math:`\mathbf{C}` is given by :func:`calculate_count_matrix`
+in terms of minor alleles.
+
+.. math::
+
+   \left[
+   \begin{array}
+   ((-1)*2 + 1 = (-1) \\
+   (-1)*1 + 1 = 0 \\
+   (-1)*0 + 1 = 1
+   \end{array}
+   \right]
+
+Which is exactly what is required. We use method (1) to compute
+:math:`\mathbf{G}`. We only need to add ``individual_names`` to the header
+of :math:`\mathbf{G}` for use in TASSEL.
+
+
+.. math::
+
+   \mathbf{P} = 2(p_i - \frac{1}{2})
+
+.. math::
+
+   \mathbf{Z}_{n \times m} = \mathbf{V_j} - \mathbf{P}
+
+.. math::
+
+   \mathbf{G} = \frac{\mathbf{Z}\mathbf{Z^T}}{2\sum_{i}p_i(1-p_i)}
+
+.. code-block:: python
+   :caption: Calculation of the kinship matrix
+
+   >>> V = (-1)*count_matrix + 1  # count_matrix was computed in population structure
+   >>> P = np.array([gwas.pop.dvars().alleleFreq[locus][allele]
+   ...                       for locus, allele in zip(self.segregating_loci,
+   ...                            gwas.segregating_minor_alleles)])
+   >>> Z = np.zeros((gwas.pop.popSize(), len(gwas.segregating_loci)))
+   >>> for i in range(gwas.pop.popSize()):
+   ...      Z[i, :] = V[i, :] - 2*(P - 1/2)
+   >>> G = (Z * Z.T) / (2 * np.sum((P * (1 - P))))
+
+All of the calculation are performed by :func:`calculate_kinship_matrix`. This
+block is to show the calculation explicitly without having to source dive. Now
+we write the file for TASSEL.
+
+.. code-block:: python
+   :caption: Write kinship matrix to file
+
+   >>> G = pd.DataFrame(G, index=gwas.individual_names)
+   >>> header = "{}\n".format(gwas.pop.popSize())
+   >>> with open('example_kinship.txt', 'w') as kinship_file:
+   ...      kinship_file.write(header)
+   ...      G.to_csv(kinship_file, sep='\t', index=True, header=False
+   ...                      float_format='%.5f')
+
+
+.. _comment_about_synbreed:
+
+Comment About Synbreed
+----------------------
+
+Accoding to VanRaden2008_ the vector P is defined as allele frequencies
+expressed as a difference from 0.5 and multipled by 2. However the
+Synbreed_ documentation defines P as
+
+
+   If ret="realized", the realized relatedness between individuals is computed
+   according to the formulas in Habier et al. (2007) or vanRaden (2008)
+
+   .. math::
+
+      \mathbf{U} = \frac{\mathbf{ZZ^T}}{2\sum_i p_i(1-p_i)}
+
+   where Z = W − P, W is the marker matrix, P contains the allele frequencies
+   multiplied by 2, :math:`p_i` is the allele frequency of marker i, and the
+   sum is over all loci.
+
+For the time being I have adjusted the calculation to match
+:mod:`Synbreed`; however, it is not what is written in the VanRaden2008_ paper.
+
+
+
+
 .. _formatting_trait_data:
 
 Trait
@@ -353,15 +393,36 @@ Trait
 
 Our simulated trait data is given a header and output as a text file.
 TASSEL uses html style tags <tag> in the header to label the input of each
-file.
+file. We will use exponentially distributed allele effects with 20 ``qtl``
+
+.. math::
+
+   G \sim Exp(1)
 
 .. code-block:: python
    :caption: Functions for handling trait data
 
+   >>> qtl = sorted(random.sample(segregating_loci, 20))
+   >>> trait = parameters.Trait()
+   >>> allele_effects_table = trait.construct_allele_effects_table(example_pop, qtl, random.expovariate, 1)
+   >>> allele_effects_array = trait.construct_ae_array(allele_effects_table, qtl)
    >>> heritability = 0.7
-   >>> operators.calculate_g(example_pop)
+   >>> operators.calculate_g(example_pop, allele_effects_array)
    >>> operators.calculate_error_variance(example_pop, heritability)
    >>> operators.calculate_p(example_pop)
+   >>> tassel_trait = gwas.trait_formatter(trait_file_name='example_trait.txt')
+
+For analysis of the TASSEL output we need to store the information about
+QTL and allele effects.
+
+.. code-block:: python
+   :caption: Storing qtl, allele effects and allele frequencies
+
+   >>> example_trait_data = h5py.File('example_quantitative_trait.hdf5')
+   >>> example_trait_data['allele/effects'] = allele_effects_table
+   >>> allele_frequencies = analyze.gather_allele_frequencies(example_pop, allele_states)
+   >>> example_trait_data['allele/frequencies'] = allele_frequencies
+   >>> example_trait_data.close()
 
 .. _tassel_config_file:
 
@@ -370,9 +431,73 @@ TASSEL Config File
 
 The final component is a ``xml`` file which specifies the protocol for
 TASSEL to run. The config file can be in terms of relative or absolute paths
-for its input. All TASSEL options can be specified in the config file.
+for its input. All TASSEL options can be specified in the config file. This
+is the content of the ``xml`` file.
 
 
+.. code-block:: xml
+   :caption: Contents of the conig file
+
+   >>> <?xml version='1.0' encoding='UTF-8' standalone='no'?>
+   ...   <TasselPipeline>
+   ...    <fork1>
+   ...        <h>example_hapmap.txt</h>
+   ...    </fork1>
+   ...    <fork2>
+   ...        <t>example_trait.txt</t>
+   ...    </fork2>
+   ...    <fork3>
+   ...        <q>example_structure.txt</q>
+   ...    </fork3>
+   ...    <fork4>
+   ...        <k>example_kinship.txt</k>
+   ...    </fork4>
+   ...    <combine5>
+   ...        <input1/>
+   ...        <input2/>
+   ...        <input3/>
+   ...        <intersect/>
+   ...    </combine5>
+   ...    <combine6>
+   ...        <input5/>
+   ...        <input4/>
+   ...        <mlm/>
+   ...        <mlmCompressionLevel>
+   ...            None
+   ...        </mlmCompressionLevel>
+   ...        <export>example_out__</export>
+   ...    </combine6>
+   ...    <runfork1/>
+   ...    <runfork2/>
+   ...    <runfork3/>
+   ...    <runfork4/>
+   ... </TasselPipeline>
+
+In this case the "forks" are only using the filename; however, in actual use
+the entire absolute path is given for the input files. The
+:func:`tassel_gwas_config` creates the file for each run given the file names.
+:mod:`saegus` attaches the full absolute path using the platform independent
+:mod:`os` module. The config file approach for TASSEL allows the simulation and
+analysis procedure to be automated by a shell script or batch file.
+
+.. _running_tassel_mlm:
+
+Running TASSEL Mixed Linear Model
+=================================
+
+We are using :mod:`tassel-5-standalone`. This version requires Java 8 and can
+be downloaded at http://www.maizegenetics.net/tassel. The command to run
+TASSEL using the config file is very simple. I usually copy the config file to
+the TASSEL directory; however, you can simply specify the absolute path. Then
+run the following command
+
+.. code-block:: sh
+   :caption: Running TASSEL standalone
+
+   >>> ./run_pipeline.pl -Xmx6g -configFile example_gwas_pipeline.xml
+
+
+.. _Synbreed: https://cran.r-project.org/web/packages/synbreed/synbreed.pdf
 
 .. [Patterson2006] Patterson, N, Price, A, Reich, D. (2006). Population Structure and Eigenanalysis. PLOS Genetics, 2(12). doi:10:1371/journal.pgen.0020190
 

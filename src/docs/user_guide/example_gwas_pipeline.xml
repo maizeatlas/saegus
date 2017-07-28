@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<TasselPipeline>
+    <fork1>
+        <h>/home/vakanas/BISB/rjwlab-scripts/saegus_project/src/docs/user_guide/example_hapmap.txt</h>
+    </fork1>
+    <fork2>
+        <t>/home/vakanas/BISB/rjwlab-scripts/saegus_project/src/docs/user_guide/example_trait.txt</t>
+    </fork2>
+    <fork3>
+        <q>/home/vakanas/BISB/rjwlab-scripts/saegus_project/src/docs/user_guide/example_structure.txt</q>
+    </fork3>
+    <fork4>
+        <k>/home/vakanas/BISB/rjwlab-scripts/saegus_project/src/docs/user_guide/example_kinship.txt</k>
+    </fork4>
+    <combine5>
+        <input1/>
+        <input2/>
+        <input3/>
+        <intersect/>
+    </combine5>
+    <combine6>
+        <input5/>
+        <input4/>
+        <mlm/>
+        <mlmCompressionLevel>
+            None
+        </mlmCompressionLevel>
+        <export>example_</export>
+    </combine6>
+    <runfork1/>
+    <runfork2/>
+    <runfork3/>
+    <runfork4/>
+</TasselPipeline>

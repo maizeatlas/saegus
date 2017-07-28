@@ -5,11 +5,12 @@ import numpy as np
 from numpy.core import defchararray
 import pandas as pd
 import collections as col
-import os
+from os import path
 import copy
 import random
 import shelve
 import h5py
+import array
 from scipy import linalg
 from functools import singledispatch
 import xml.etree.ElementTree as ET
@@ -1140,7 +1141,7 @@ class GWAS(object):
 
 # todo Create docs for GWAS.pop_struct_eigendecomp
 
-    def pop_struct_eigdencomp(self, count_matrix):
+    def pop_struct_eigendecomp(self, count_matrix):
         """
 
         Follows procedure of Population Structure and Eigenanalysis
@@ -1157,15 +1158,15 @@ class GWAS(object):
                         np.mean, axis=0, arr=count_matrix)
         shifted = np.array(
             [count_matrix[:, i] - column_means[i]
-             for i in range(self.segregating_loci.shape)]).T
+             for i in range(self.segregating_loci.shape[0])]).T
         P = column_means / 2
         scale = np.sqrt(P * (1 - P))
 
         M = np.matrix(
             np.array([shifted[:, i] / scale[i]
-                      for i in range(self.segregating_loci.shape)]).T)
+                      for i in range(self.segregating_loci.shape[0])]).T)
 
-        X = (1/self.segregating_loci.shape)*(M*M.T)
+        X = (1/self.segregating_loci.shape[0])*(M*M.T)
         eigendata = linalg.eig(X)
 
         eigenvalues = np.array(eigendata[0], dtype=np.float)
@@ -1200,6 +1201,8 @@ class GWAS(object):
             with open(pop_struct_file_name, 'w') as f:
                 f.write(header)
                 structure_matrix.to_csv(f, sep='\t', index=True, header=False)
+        if pop_struct_file_name is None:
+                return structure_matrix
 
 # todo Create docs for GWAS.test_statistic
 
@@ -1239,14 +1242,15 @@ class GWAS(object):
         hapmap_matrix.rs = self.segregating_loci
         hapmap_matrix.alleles = self.segregating_minor_alleles
 
+        seg_loci = array.array('I', self.segregating_loci)
         chromosomes = np.array([self.pop.chromLocusPair(locus)[0] + 1
-                                for locus in self.segregating_loci],
+                                for locus in seg_loci],
                                dtype=np.int8)
 
         hapmap_matrix.chrom = chromosomes
-        hapmap_matrix.pos = np.arange(self.pop.totNumLoci())
+        hapmap_matrix.pos = np.arange(self.pop.dvars().numOfSegSites)
         hapmap_matrix.loc[:, 'strand':'QCode'] = np.core.defchararray.array(
-            [['NA']*len(locus_names)]*7).T
+            [['NA']*len(self.segregating_loci)]*7).T
 
         for i, ind in enumerate(self.pop.individuals()):
             hapmap_matrix.loc[:, self.individual_names[i]] = [
@@ -1259,8 +1263,8 @@ class GWAS(object):
 
         if hapmap_file_name is not None:
             hapmap_matrix.to_csv(hapmap_file_name, sep='\t', index=False)
-
-        return hapmap_matrix
+        if hapmap_file_name is None:
+            return hapmap_matrix
 
 # todo Add entry for GWAS.trait_formatter definition and usage example
 
@@ -1281,8 +1285,8 @@ class GWAS(object):
             with open(trait_file_name, 'w') as f:
                 f.write(header)
                 trait_vector.to_csv(f, sep='\t', index=False, header=False)
-
-        return trait_vector
+        if trait_file_name is None:
+            return trait_vector
 
 # todo Add entry for GWAS.calc_kinship_matrix in docs. Extended entry to show math
 
@@ -1307,16 +1311,17 @@ class GWAS(object):
         :rtype:
         """
 
-        M = np.matrix(((-1)*count_matrix) + 1)
+        V = np.matrix(((-1)*count_matrix) + 1)
         P = np.array([self.pop.dvars().alleleFreq[locus][allele]
                           for locus, allele in zip(self.segregating_loci,
                                self.segregating_minor_alleles)])
-        Z = np.zeros((self.pop.popSize(), len(self.segregating_loci)))
+        Z = np.matrix(np.zeros((self.pop.popSize(),
+                                len(self.segregating_loci))))
 
         for i in range(self.pop.popSize()):
-            Z[i, :] = M[i, :] - 2*(P - 1/2)
+            Z[i, :] = V[i, :] - 2*(P)
 
-        G = (Z * Z.T) / (2 * np.sum((P * (1 - P))))
+        G = (Z * Z.T) / (2* np.sum((P * (1 - P))))
 
         G = pd.DataFrame(G, index=self.individual_names)
 
@@ -1326,8 +1331,39 @@ class GWAS(object):
                 f.write(header)
                 G.to_csv(f, sep='\t', index=True, header=False,
                                       float_format='%.5f')
+        if kinship_matrix_file_name is None:
+            return G
 
-        return G
+    def tassel_gwas_config(self,
+                           config_template: str = None,
+                           hapmap_file_name: str = None,
+                           kinship_file_name: str = None,
+                           trait_file_name: str = None,
+                           structure_file_name: str = None,
+                           output_prefix: str = None,
+                           ):
+
+        import xml.etree.ElementTree as ET
+        import lxml.etree as etree
+        from os import path
+
+        tree = ET.parse(config_template)
+        root = tree.getroot()
+        lxml_tree = etree.fromstring(ET.tostring(root))
+        lxml_root = lxml_tree.getroottree()
+
+        lxml_root.find('fork1/h').text = str(path.abspath(hapmap_file_name))
+        lxml_root.find('fork2/t').text = str(path.abspath(trait_file_name))
+        lxml_root.find('fork3/q').text = str(path.abspath(structure_file_name))
+        lxml_root.find('fork4/k').text = str(path.abspath(kinship_file_name))
+
+        lxml_root.find('combine6/export').text = output_prefix
+
+        lxml_root.write(self.run_id + '_' + "gwas_pipeline.xml",
+                        encoding="UTF-8",
+                        method="xml", xml_declaration=True, standalone='',
+                        pretty_print=True)
+
 
 
     def replicate_tassel_gwas_configs(self, rep_id, sample_size,
