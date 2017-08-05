@@ -6,7 +6,6 @@
       <sourceFolder url="file://$MODULE_DIR$/devel/development_scripts" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/devel/scriptz" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/scripts" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/tests" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/devel/data_dump" />
     </content>
     <content url="file://$MODULE_DIR$/../tuson_simulation" />

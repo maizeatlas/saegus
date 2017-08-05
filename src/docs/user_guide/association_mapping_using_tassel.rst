@@ -419,6 +419,7 @@ QTL and allele effects.
    :caption: Storing qtl, allele effects and allele frequencies
 
    >>> example_trait_data = h5py.File('example_quantitative_trait.hdf5')
+   >>> example_trait_data['qtl'] = np.array(qtl)
    >>> example_trait_data['allele/effects'] = allele_effects_table
    >>> allele_frequencies = analyze.gather_allele_frequencies(example_pop, allele_states)
    >>> example_trait_data['allele/frequencies'] = allele_frequencies
@@ -491,7 +492,7 @@ TASSEL using the config file is very simple. I usually copy the config file to
 the TASSEL directory; however, you can simply specify the absolute path. Then
 run the following command
 
-.. code-block:: sh
+.. code-block:: shell
    :caption: Running TASSEL standalone
 
    >>> ./run_pipeline.pl -Xmx6g -configFile example_gwas_pipeline.xml
