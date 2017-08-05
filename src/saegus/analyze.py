@@ -1188,7 +1188,7 @@ class GWAS(object):
         """
 
         struct_covariates = [
-            eigenvalues[i]*eigenvectors[i] for i in range(number_of_pcs)
+            eigenvectors[i] for i in range(number_of_pcs)
         ]
         structure_matrix = pd.DataFrame(struct_covariates[i].T
                                         for i in range(number_of_pcs)).T
