@@ -5,4 +5,7 @@
     <option name="URL" value="http://localhost:8888" />
   </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="$USER_HOME$/anaconda43/bin/python" project-jdk-type="Python SDK" />
+  <component name="RustProjectSettings">
+    <option name="toolchainHomeDirectory" value="/usr/local/bin" />
+  </component>
 </project>

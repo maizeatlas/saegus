@@ -1134,8 +1134,14 @@ class GWAS(object):
             comp_count = alpha_comparisons + omega_comparions
             count_matrix[i, :] = comp_count
 
+            formatted_locus_names = ["M" + str(site) for
+                                     site in self.pop.dvars().segSites]
+
         if count_matrix_file_name is not None:
-            np.savetxt(count_matrix_file_name, count_matrix, fmt="%d")
+            named_count_matrix = pd.DataFrame(count_matrix,
+                         index=list(map(str, self.pop.indInfo('ind_id'))),
+                         columns=formatted_locus_names)
+            named_count_matrix.to_csv(count_matrix_file_name, sep="\t")
 
         return count_matrix
 
@@ -1188,13 +1194,13 @@ class GWAS(object):
         """
 
         struct_covariates = [
-            eigenvectors[i] for i in range(number_of_pcs)
+            eigenvalues[i]*eigenvectors[i] for i in range(number_of_pcs)
         ]
         structure_matrix = pd.DataFrame(struct_covariates[i].T
                                         for i in range(number_of_pcs)).T
         structure_matrix.index = self.individual_names
 
-        header_cols = ['\td'+str(i) for i in range(number_of_pcs)]
+        header_cols = ['\tQ'+str(i) for i in range(number_of_pcs)]
 
         if pop_struct_file_name is not None:
             header = "<Covariate>\t\t\n<Trait>" + "".join(header_cols) + "\n"
@@ -1318,10 +1324,14 @@ class GWAS(object):
         Z = np.matrix(np.zeros((self.pop.popSize(),
                                 len(self.segregating_loci))))
 
-        for i in range(self.pop.popSize()):
-            Z[i, :] = V[i, :] - 2*(P)
+        G = np.zeros((self.pop.popSize(), self.pop.popSize()), dtype=np.float)
 
-        G = (Z * Z.T) / (2* np.sum((P * (1 - P))))
+        for i in range(self.pop.popSize()):
+            Z[i, :] = V[i, :] - 2*(P - 0.5)
+
+        for i in range(self.pop.popSize()):
+            for j in range(self.pop.popSize()):
+                G[i, j] = np.sum(Z[i, :]*Z.T[:, j])
 
         G = pd.DataFrame(G, index=self.individual_names)
 
