@@ -1317,12 +1317,13 @@ class GWAS(object):
         :rtype:
         """
 
-        V = np.matrix(((-1)*count_matrix) + 1)
+        V = ((-1)*count_matrix) + 1
         P = np.array([self.pop.dvars().alleleFreq[locus][allele]
                           for locus, allele in zip(self.segregating_loci,
                                self.segregating_minor_alleles)])
-        Z = np.matrix(np.zeros((self.pop.popSize(),
-                                len(self.segregating_loci))))
+
+        Z = np.zeros((self.pop.popSize(),
+                                len(self.segregating_loci)))
 
         G = np.zeros((self.pop.popSize(), self.pop.popSize()), dtype=np.float)
 

@@ -287,7 +287,7 @@ Groups, Datasets and Metadata
 
 A ``group`` is a sub-directory and a ``dataset`` is an array of data. A
 sub-directory has metadata: size measured in bytes and access permissions.
-An HDF5 ``group`` in HDF5 can have metadata as well; however, a ``dataset``
+An HDF5 ``group`` in HDF5 can have metadata; however, a ``dataset``
 can also have metadata.
 
 .. code-block:: python

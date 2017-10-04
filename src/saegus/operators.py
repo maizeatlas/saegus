@@ -8,8 +8,110 @@ import random
 import h5py
 
 
-# todo Create operators to store the HDF5 data during an evolutionary scenario
+class HDF5Pedigree(sim.PyOperator):
 
+    """
+    An operator to store pedigrees in the form of numpy.arrays with columns
+    ind_id  mother_id  father_id
+    The pedigree is stored in an HDF5 Dataset by generation
+
+    >>> example_pop.evolve(
+    ...     preOps=[
+    ...         operators.HDF5Pedigree(example_file, 'pedigree/generation', [0, 0])
+    ...         ],
+    ...     gen=1,
+    ...     )
+
+    """
+
+    def __init__(self, data_file: h5py.File, dataset_path: str,
+                 virtual_subpopulation=None, *args, **kwargs):
+        self.data_file = data_file
+        self.dataset_path = dataset_path
+        self.virtual_subpopulation = virtual_subpopulation
+        sim.PyOperator.__init__(self, func=self.min_allele_frqs,
+                                *args, **kwargs)
+
+    def create_and_store_pedigree(self, pop):
+
+        if pop.numVirtualSubPop() > 0:
+            pedigree = np.array([
+                pop.indInfo('ind_id', self.virtual_subpopulation),
+                pop.indInfo('mother_id', self.virtual_subpopulation),
+                pop.indInfo('father_id', self.virtual_subpopulation)]).T
+
+        if pop.numVirtualSubPop() == 0:
+            pedigree = np.array([pop.indInfo('ind_id'),
+                                 pop.indInfo('mother_id'),
+                                 pop.indInfo('father_id')]).T
+
+        generational_path = self.dataset_path + '/' + str(pop.dvars().gen)
+        self.data_file[generational_path] = pedigree
+        return True
+
+# todo Add documentation for SampleSetter
+
+class SampleSetter(sim.PyOperator):
+
+    def __init__(self, sample_size, *args, **kwargs):
+        self.sample_size = sample_size
+        sim.PyOperator.__init__(self, func=self.sample_setter,
+                                *args, **kwargs)
+
+    def sample_setter(self, pop):
+        """
+        Chooses :param:sample_size individuals and sets their infoField
+        value to ``1`` indicating that they have been chosen to be part
+        of the sample. Meant to be used during an evolutionary process.
+
+        "Sampled" individuals are in virtual sub-pop [0, 0]
+
+        :warning: Erases current virtual sub-population split
+
+        :param pop:
+        :return:
+        """
+
+
+        sampled_inds = random.sample(pop.indInfo('ind_id'), self.sample_size)
+        for ind in sampled_inds:
+            pop.indByID(ind).sample = 1
+
+        pop.setVirtualSplitter(sim.InfoSplitter('sample',
+                                values=[1, 0],
+                                names=['sampled', 'not_sampled']))
+
+        return True
+
+
+# todo Add documentation for PreSelection
+
+class PreSelection(sim.PyOperator):
+
+    def __init__(self, proportions, *args, **kwargs):
+        self.proportions = proportions
+        sim.PyOperator.__init__(self, func=self.pre_sel_sort,
+                                *args, **kwargs)
+
+    def pre_sel_sort(self, pop):
+        """
+        Meant to set up the population for truncation selection.
+        Can be used in an evolutionary process to provide easy
+        way to implement non-random mating schemes.
+
+        :warning: Replaces current virtual sub-population split
+
+        :param pop:
+        :return:
+        """
+
+        pop.sortIndividuals('p')
+        pop.setVirtualSplitter(sim.ProportionSplitter(self.proportions,
+                                      names=['not_selected','selected']))
+        return True
+
+
+# todo Function of some HDF5 operators modified to include
 # todo Create documentation for HDF5AlleleFrequencies
 
 class HDF5AlleleFrequencies(sim.PyOperator):
@@ -32,7 +134,36 @@ class HDF5AlleleFrequencies(sim.PyOperator):
         self.allele_frequency_group[generation] = allele_frequency_table
         return True
 
-# todo Create documentation for HDF5AlleleFrequencies
+class HDF5MinorAlleleFrequencies(sim.PyOperator):
+
+    def __init__(self, data_file, dataset_path, minor_alleles,
+                 virtual_subpopulation, *args, **kwargs):
+        self.data_file = data_file
+        self.dataset_path = dataset_path
+        self.minor_alleles = minor_alleles
+        self.virtual_subpopulation = virtual_subpopulation
+        sim.PyOperator.__init__(self, func=self.min_allele_frqs,
+                                *args, **kwargs)
+
+    def min_allele_frqs(self, pop):
+        minor_afrqs = np.zeros(pop.totNumLoci())
+
+        if pop.numVirtualSubPop() > 0:
+            for locus in pop.dvars().segSites:
+                minor_afrqs[locus] = \
+                    pop.dvars(self.virtual_subpopulation).alleleFreq[locus][self.minor_alleles[locus]]
+
+        if pop.numVirtualSubPop() == 0:
+            for locus in pop.dvars().segSites:
+                minor_afrqs[locus] = \
+                    pop.dvars().alleleFreq[locus][self.minor_alleles[locus]]
+
+        generational_path = self.dataset_path + '/' + str(pop.dvars().gen)
+        self.data_file[generational_path] = minor_afrqs
+        return True
+
+
+# todo Create documentation for HDF5GenotypeFrequencies
 
 class HDF5GenotypeFrequencies(sim.PyOperator):
     def __init__(self, genotype_frequency_group, *args, **kwargs):
@@ -53,17 +184,30 @@ class HDF5GenotypeFrequencies(sim.PyOperator):
         return True
 
 # todo Create documentation for HDF5Trait in operators.py
+# todo Add documentation HDF5Trait : ability for subpopulations
 
 class HDF5Trait(sim.PyOperator):
-    def __init__(self, trait_info_field, hdf5_trait_group, *args, **kwargs):
+    def __init__(self, data_file, dataset_path, trait_info_field,
+                 virtual_subpopulation=None,
+                 *args, **kwargs):
+        self.data_file = data_file
+        self.dataset_path = dataset_path
         self.trait_info_field = trait_info_field
-        self.hdf5_trait_group = hdf5_trait_group
+        self.virtual_subpopulation = virtual_subpopulation
         sim.PyOperator.__init__(self, func=self.hdf5_trait, *args, **kwargs)
 
     def hdf5_trait(self, pop):
         generation = str(pop.dvars().gen)
-        trait = np.array(pop.indInfo(self.trait_info_field))
-        self.hdf5_trait_group[str(generation) +'/'+self.trait_info_field] = trait
+        if pop.numVirtualSubPop() > 0:
+            trait = np.array(pop.indInfo(self.trait_info_field,
+                                         self.virtual_subpopulation))
+            storage_path = self.dataset_path + '/' + str(generation)
+            self.data_file[storage_path] = trait
+
+        if pop.numVirtualSubPop() == 0:
+            trait = np.array(pop.indInfo(self.trait_info_field))
+            storage_path = self.dataset_path + '/' + str(generation)
+            self.data_file[storage_path] = trait
         return True
 
 # todo Create documentation for HDF5Close in operators.py

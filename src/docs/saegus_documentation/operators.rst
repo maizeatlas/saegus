@@ -19,8 +19,8 @@ Operators
 
 .. _geno_additive_array:
 
-:py:class:`GenoAdditiveArray`
-=============================
+py:class:`GenoAdditiveArray`
+============================
 
 .. py:class:: GenoAdditiveArray(qtl, allele_effects)
 
@@ -36,8 +36,8 @@ Operators
 
 .. _calculate_error_variance:
 
-:py:class:`CalculateErrorVariance`
-==================================
+py:class:`CalculateErrorVariance`
+=================================
 
 .. py:class:: CalculateErrorVariance(heritability)
 
@@ -60,8 +60,8 @@ values of ``g`` must be assigned to each individual.
 
 .. _pheno_additive:
 
-:py:class:`PhenoAdditive`
-=========================
+py:class:`PhenoAdditive`
+========================
 
 .. py:class:: PhenoAdditive()
 
@@ -70,8 +70,8 @@ effects. Requires ``epsilon`` to be defined as in
 py:class:`CalculateErrorVariance`
 
 
-:py:class:`HDF5AlleleFrequencies`
-=================================
+py:class:`HDF5AlleleFrequencies`
+================================
 
 .. py:class:: HDF5AlleleFrequencies(allele_frequency_group, allele_data)
 
@@ -84,8 +84,49 @@ the entry in the user guide for collecting and storing data
 
 .. todo:: Show examples of each HDF5 operator
 
-:py:class:`HDF5GenotypeFrequencies`
-===================================
+.. code-block:: python
+
+   >>> example_pop.evolve(
+   ...    preOps=[
+   ...      operators.SampleSetter(50),
+   ...      sim.Stat(alleleFreq=segregating_loci, subPops=[(0, 0)],
+   ...              vars=['alleleFreq_sp']),
+   ...      operators.GenoAdditiveArray(qtl, ae_array),
+   ...      operators.PhenoAdditive(),
+   ...      operators.HDF5MinorAlleleFrequencies(data_file, 'allele/frq',
+   ...                                          minor_alleles, [0, 0]),
+   ...      operators.HDF5Trait(data_file, 'trait/p', 'p',  [0, 0]),
+   ...      operators.HDF5Trait(data_file, 'trait/g', 'g', [0, 0]),
+   ...      operators.PreSelection([0.95, 0.05]),
+   ...    ],
+   ...    matingScheme=
+   ...      sim.HomoMating(
+   ...        sim.PolyParentsChooser(
+   ...          polySex=sim.MALE, polyNum=10
+   ...            ),
+   ...        sim.OffspringGenerator(ops=[
+   ...            sim.IdTagger(),
+   ...            sim.PedigreeTagger(),
+   ...            sim.Recombinator(rates=recom_map),
+   ...        ]), subPopSize=1000
+   ...    ),
+   ...    finalOps=[
+   ...        operators.SampleSetter(50),
+   ...        sim.Stat(alleleFreq=segregating_loci, subPops=[(0, 0)],
+   ...                vars=['alleleFreq_sp']),
+   ...        operators.GenoAdditiveArray(qtl, ae_array),
+   ...        operators.PhenoAdditive(),
+   ...        operators.HDF5MinorAlleleFrequencies(data_file, 'allele/frq',
+   ...                                            minor_alleles, [0, 0]),
+   ...        operators.HDF5Trait(data_file, 'trait/p', 'p',  [0, 0]),
+   ...        operators.HDF5Trait(data_file, 'trait/g', 'g', [0, 0]),
+   ...    ],
+   ...    gen=2
+   ...   )
+   1
+
+py:class:`HDF5GenotypeFrequencies`
+==================================
 
 .. py:class:: HDF5GenotypeFrequencies(genotype_frequency_group)
 
@@ -96,8 +137,8 @@ Results are stored in a 3d :py:class:`numpy.array`. The axes are
 locus x alpha_allele x omega_allele. The genotypes are interpretted
 as coordinates for the purpose of easy storage and access.
 
-:py:class:`HDF5Trait`
-=====================
+py:class:`HDF5Trait`
+====================
 
 .. py:class:: HDF5Trait(trait_information_field, trait_group)
 
@@ -108,8 +149,8 @@ Operator to store the data from :py:class:`Population.indInfo(trait_information_
 such as ``g`` and ``p`` in the User Guide examples. Traits are stored as
 generation + '/' trait_information_field.
 
-:py:class:`HDF5Close`
-=====================
+py:class:`HDF5Close`
+====================
 
 .. py:class:: HDF5Close(hdf5_file)
 
@@ -143,8 +184,8 @@ Function Forms of Operators
 
 .. _assign_additive_g_function:
 
-:py:func:`assign_additive_g`
-============================
+py:func:`assign_additive_g`
+===========================
 
 .. py:function:: assign_additive_g(pop, qtl, allele_effects)
 
@@ -158,8 +199,8 @@ Function Forms of Operators
 
 .. _calculate_g:
 
-:py:func:`calculate_g`
-======================
+py:func:`calculate_g`
+=====================
 
 .. :py:func:: calculate_g(pop, allele_effects_array)
 
@@ -168,8 +209,8 @@ Function Forms of Operators
 
 .. _calculate_error_variance_function:
 
-:py:func:`calculate_error_variance`
-===================================
+py:func:`calculate_error_variance`
+==================================
 
 .. :py:func:: calculate_error_variance(pop, heritability)
 
@@ -193,8 +234,8 @@ Function Forms of Operators
 
 .. _calculate_p:
 
-:py:func:`calculate_p`
-======================
+py:func:`calculate_p`
+=====================
 
 .. :py:func:: calculate_p(pop)
 

@@ -4,6 +4,22 @@ import simuPOP as sim
 
 from . import operators
 
+
+# todo Create documentation for DirectionalSelection
+
+class DirectionalSelection(object):
+
+    def __init__(self, pop, subPop=[]):
+        self.pop = pop
+        self.sub_pop = subPop
+        self.selected_inds = self.pop.indInfo('ind_id', self.sub_pop)
+
+
+    def dir_sel_chooser(self, pop):
+        while True:
+            selected_parent_id = random.choice(self.selected_inds)
+            yield self.pop.indByID(selected_parent_id), self.pop.indByID(second_parent_id)
+
 class MAGIC(object):
     """
     MAGIC: Multi-parent Advanced Generation Inter Crosses
