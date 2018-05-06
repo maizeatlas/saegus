@@ -187,6 +187,7 @@ class HDF5GenotypeFrequencies(sim.PyOperator):
 # todo Add documentation HDF5Trait : ability for subpopulations
 
 class HDF5Trait(sim.PyOperator):
+
     def __init__(self, data_file, dataset_path, trait_info_field,
                  virtual_subpopulation=None,
                  *args, **kwargs):
@@ -216,8 +217,8 @@ class HDF5Close(sim.PyOperator):
     """
     Simple closing operator meant to be used in finalOps.
     Closes the h5.File object.
-
     """
+
     def __init__(self, hdf5_file, *args, **kwargs):
         self.hdf5_file = hdf5_file
         sim.PyOperator.__init__(self, func=self.close_hdf5_file, *args, **kwargs)
@@ -226,6 +227,7 @@ class HDF5Close(sim.PyOperator):
         self.hdf5_file.close()
 
 class CalculateErrorVariance(sim.PyOperator):
+
     def __init__(self, heritability, *args, **kwargs):
         self.heritability = heritability
         sim.PyOperator.__init__(self, func=self.calculate_error_variance,
