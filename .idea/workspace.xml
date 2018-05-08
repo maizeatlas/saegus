@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/devel/magic/1478/segregating_loci_storage.bak" beforeDir="false" afterPath="$PROJECT_DIR$/devel/magic/1478/segregating_loci_storage.bak" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/devel/magic/1478/segregating_loci_storage.dat" beforeDir="false" afterPath="$PROJECT_DIR$/devel/magic/1478/segregating_loci_storage.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/devel/magic/1478/segregating_loci_storage.dir" beforeDir="false" afterPath="$PROJECT_DIR$/devel/magic/1478/segregating_loci_storage.dir" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/saegus/analyze.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/saegus/analyze.py" afterDir="false" />
-    </list>
+    <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="" />
     <ignored path="saegus_project.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -69,8 +63,8 @@
       <file leaf-file-name="analyze.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="623">
-              <caret line="402" column="11" lean-forward="true" selection-start-line="402" selection-start-column="11" selection-end-line="402" selection-end-column="11" />
+            <state relative-caret-position="141">
+              <caret line="1271" selection-start-line="1271" selection-end-line="1271" />
             </state>
           </provider>
         </entry>
@@ -144,8 +138,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>allele</find>
-      <find>code</find>
       <find>segregating</find>
       <find>greatest_probability_index[i]</find>
       <find>minor</find>
@@ -171,9 +163,11 @@
       <find>count</find>
       <find>calculate_count</find>
       <find>images</find>
-      <find>GWAS</find>
       <find>Multi</find>
       <find>Meta</find>
+      <find>GWAS.h</find>
+      <find>multiple_sample_analyzer</find>
+      <find>GWAS</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -273,11 +267,11 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="4">
-    <option name="x" value="832" />
-    <option name="y" value="24" />
-    <option name="width" value="768" />
-    <option name="height" value="876" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="65" />
+    <option name="y" value="-4" />
+    <option name="width" value="1535" />
+    <option name="height" value="904" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -866,7 +860,14 @@
       <option name="project" value="LOCAL" />
       <updated>1525766523207</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="This is unbelievable. When I switched to a Linux OS for my laptop I &#10;never completed a full run with TASSEL. Everything is half finished&#10;and all the way broken. How did this happen to me?">
+      <created>1525782398600</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1525782398600</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers>
       <Generic url="http://localhost">
         <option name="loginAnonymously" value="true" />
@@ -902,7 +903,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="832" y="24" width="768" height="876" extended-state="4" />
+    <frame x="65" y="-4" width="1535" height="904" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" x="162" y="208" width="676" height="407" id="Project" order="0" sideWeight="0.49027777" weight="0.6731302" />
@@ -1000,7 +1001,8 @@
     <MESSAGE value="trying to fix error" />
     <MESSAGE value="Before converting storage functions to use h5py instead of pandas/PyTables." />
     <MESSAGE value="Before changing &quot;gather_allele_data&quot; in analyze. Encountered problem &#10;when trying to use it in the magic1478 population. Attempting to use it &#10;solely on segregating loci to determine if the problem is due to fixed&#10;loci." />
-    <option name="LAST_COMMIT_MESSAGE" value="Before changing &quot;gather_allele_data&quot; in analyze. Encountered problem &#10;when trying to use it in the magic1478 population. Attempting to use it &#10;solely on segregating loci to determine if the problem is due to fixed&#10;loci." />
+    <MESSAGE value="This is unbelievable. When I switched to a Linux OS for my laptop I &#10;never completed a full run with TASSEL. Everything is half finished&#10;and all the way broken. How did this happen to me?" />
+    <option name="LAST_COMMIT_MESSAGE" value="This is unbelievable. When I switched to a Linux OS for my laptop I &#10;never completed a full run with TASSEL. Everything is half finished&#10;and all the way broken. How did this happen to me?" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1355,8 +1357,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="623">
-          <caret line="402" column="11" lean-forward="true" selection-start-line="402" selection-start-column="11" selection-end-line="402" selection-end-column="11" />
+        <state relative-caret-position="141">
+          <caret line="1271" selection-start-line="1271" selection-end-line="1271" />
         </state>
       </provider>
     </entry>
