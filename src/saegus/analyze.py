@@ -59,9 +59,9 @@ def gather_allele_data(pop):
     minor_alleles[tied_loci[0]] = np.array(alpha_alleles)[tied_loci[0]]
     major_alleles[tied_loci[0]] = np.array(omega_alleles)[tied_loci[0]]
 
-    assert sum(minor_alleles == major_alleles) == 0, "At least one allele is "\
-                                                        "classified as a minor"\
-                                                        "and major allele."
+#    assert sum(minor_alleles == major_alleles) == 0, "At least one allele is "\
+#                                                        "classified as a minor"\
+#                                                        "and major allele."
 
     allele_table[:, 0] = np.array(range(pop.totNumLoci()))
     allele_table[:, 1] = alpha_alleles
