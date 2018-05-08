@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="trying to fix error">
-      <change beforePath="$PROJECT_DIR$/.idea/saegus_project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/saegus_project.iml" afterDir="false" />
+    <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/devel/magic/1478/destined_for_icqg.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/devel/magic/1478/destined_for_icqg.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/devel/magic/1478/docs_run_demonstration.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/devel/magic/1478/docs_run_demonstration.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/devel/magic/1478/icqg_loci_conversions.bak" beforeDir="false" afterPath="$PROJECT_DIR$/devel/magic/1478/icqg_loci_conversions.bak" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/devel/magic/1478/icqg_loci_conversions.dir" beforeDir="false" afterPath="$PROJECT_DIR$/devel/magic/1478/icqg_loci_conversions.dir" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/saegus/operators.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/saegus/operators.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/devel/magic/1478/analyzing_epsilon.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/devel/magic/1478/analyzing_epsilon.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/saegus/analyze.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/saegus/analyze.py" afterDir="false" />
     </list>
     <ignored path="saegus_project.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -71,8 +67,8 @@
       <file leaf-file-name="analyze.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1642" selection-start-line="1642" selection-end-line="1642" />
+            <state relative-caret-position="405">
+              <caret line="43" column="25" selection-start-line="43" selection-start-column="25" selection-end-line="43" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -80,7 +76,7 @@
       <file leaf-file-name="tuson_genetic_drift.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/devel/tuson_selection/tuson_genetic_drift.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="840">
+            <state relative-caret-position="960">
               <caret line="64" column="26" selection-start-line="64" selection-start-column="26" selection-end-line="64" selection-end-column="26" />
             </state>
           </provider>
@@ -239,13 +235,13 @@
         <option value="$PROJECT_DIR$/src/saegus/breed.py" />
         <option value="$PROJECT_DIR$/src/docs/user_guide/parent_choosers.rst" />
         <option value="$PROJECT_DIR$/src/docs/user_guide/parent_choosers_and_virtual_splitters.rst" />
-        <option value="$PROJECT_DIR$/src/saegus/analyze.py" />
         <option value="$PROJECT_DIR$/src/docs/user_guide/index.rst" />
         <option value="$PROJECT_DIR$/src/docs/user_guide/notes_on_visualization.rst" />
         <option value="$PROJECT_DIR$/src/docs/saegus_documentation/operators.rst" />
         <option value="$PROJECT_DIR$/src/docs/user_guide/collecting_and_storing_data.rst" />
         <option value="$PROJECT_DIR$/src/docs/user_guide/notes_on_genetic_map.rst" />
         <option value="$PROJECT_DIR$/src/saegus/operators.py" />
+        <option value="$PROJECT_DIR$/src/saegus/analyze.py" />
       </list>
     </option>
   </component>
@@ -276,10 +272,10 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="65" />
-    <option name="y" value="-4" />
-    <option name="width" value="1535" />
-    <option name="height" value="904" />
+    <option name="x" value="356" />
+    <option name="y" value="68" />
+    <option name="width" value="1005" />
+    <option name="height" value="666" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -854,7 +850,14 @@
       <option name="project" value="LOCAL" />
       <updated>1466791045806</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Before converting storage functions to use h5py instead of pandas/PyTables.">
+      <created>1525588328779</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1525588328779</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers>
       <Generic url="http://localhost">
         <option name="loginAnonymously" value="true" />
@@ -891,16 +894,17 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1535" height="904" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" x="162" y="208" width="676" height="407" id="Project" order="0" sideWeight="0.49465242" visible="true" weight="0.3143049" />
+      <window_info content_ui="combo" x="162" y="208" width="676" height="407" id="Project" order="0" sideWeight="0.4906417" visible="true" weight="0.32639354" />
       <window_info anchor="bottom" id="TODO" order="8" weight="0.2274436" />
       <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.50235057" side_tool="true" weight="0.8333333" />
-      <window_info anchor="right" x="0" y="0" width="201" height="446" id="Documentation" order="10" side_tool="true" visible="true" weight="0.1779718" />
+      <window_info anchor="right" x="0" y="0" width="201" height="438" id="Documentation" order="10" side_tool="true" weight="0.17726798" />
       <window_info anchor="bottom" id="Version Control" order="5" sideWeight="0.48971722" weight="0.67333335" />
       <window_info anchor="bottom" id="Python Console" order="13" sideWeight="0.49764943" weight="0.8333333" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.23544632" weight="0.72533333" />
       <window_info anchor="right" id="SciView" order="3" weight="0.32975152" />
-      <window_info active="true" x="911" y="150" width="402" height="641" id="Structure" order="1" sideWeight="0.5053476" side_tool="true" visible="true" weight="0.3143049" />
+      <window_info active="true" x="911" y="150" width="402" height="641" id="Structure" order="1" sideWeight="0.5093583" side_tool="true" visible="true" weight="0.32639354" />
       <window_info anchor="bottom" auto_hide="true" x="589" y="537" width="907" height="372" id="Terminal" internal_type="SLIDING" order="15" sideWeight="0.35604218" type="SLIDING" weight="0.8670886" />
       <window_info id="Favorites" order="2" sideWeight="0.5056361" side_tool="true" weight="0.10220588" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.6959459" />
@@ -918,40 +922,40 @@
       <window_info anchor="right" id="Packages" order="5" weight="0.32940108" />
       <window_info anchor="bottom" id="Application Servers" order="4" />
       <window_info anchor="right" auto_hide="true" id="Data View" internal_type="SLIDING" order="9" type="SLIDING" weight="0.32940108" />
+      <window_info anchor="bottom" id="Find" order="7" sideWeight="0.4974293" weight="0.52913755" />
       <window_info anchor="right" id="The R Graphics" order="7" weight="0.32975152" />
       <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
       <window_info anchor="right" id="Database" order="0" weight="0.17864339" />
       <window_info anchor="bottom" id="Message" order="6" />
-      <window_info anchor="bottom" id="Find" order="7" sideWeight="0.4974293" weight="0.52913755" />
     </layout>
     <layout-to-restore>
+      <window_info anchor="bottom" id="Application Servers" order="2" />
       <window_info anchor="bottom" id="DB Execution Console" order="0" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="6" weight="0.25" />
       <window_info x="162" y="208" width="676" height="407" id="Project" order="1" sideWeight="0.49436393" visible="true" weight="0.3566152" />
       <window_info anchor="bottom" id="Run" order="6" sideWeight="0.23544632" weight="0.72533333" />
-      <window_info anchor="top" content_ui="combo" id="DB Browser" internal_type="SLIDING" order="0" side_tool="true" type="SLIDING" weight="0.329904" />
       <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
-      <window_info anchor="right" auto_hide="true" id="Data View" internal_type="SLIDING" order="7" type="SLIDING" weight="0.32940108" />
+      <window_info anchor="right" id="Ant Build" order="4" weight="0.25" />
       <window_info auto_hide="true" x="911" y="150" width="402" height="641" id="Structure" order="2" weight="0.26930827" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="2" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="File Transfer" order="12" sideWeight="0.4976744" weight="0.32905984" />
       <window_info anchor="bottom" id="TODO" order="10" weight="0.2274436" />
       <window_info anchor="bottom" id="Python Console" order="13" weight="0.8341385" />
-      <window_info anchor="right" id="The R Graphics" order="5" weight="0.32975152" />
-      <window_info anchor="bottom" id="Application Servers" order="2" />
+      <window_info anchor="top" content_ui="combo" id="DB Browser" internal_type="SLIDING" order="0" side_tool="true" type="SLIDING" weight="0.329904" />
+      <window_info anchor="right" auto_hide="true" id="Data View" internal_type="SLIDING" order="7" type="SLIDING" weight="0.32940108" />
       <window_info anchor="right" id="Mongo Explorer" order="1" />
       <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
-      <window_info anchor="bottom" id="Debug" order="7" weight="0.6959459" />
+      <window_info anchor="right" id="Database" order="0" weight="0.17864339" />
       <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.4974055" weight="0.32972136" />
-      <window_info anchor="bottom" auto_hide="true" x="589" y="537" width="907" height="372" id="Terminal" internal_type="SLIDING" order="15" sideWeight="0.35604218" type="SLIDING" weight="0.8670886" />
-      <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.64395785" side_tool="true" weight="0.2514535" />
+      <window_info anchor="bottom" id="Message" order="4" />
+      <window_info anchor="bottom" id="Debug" order="7" weight="0.6959459" />
       <window_info anchor="bottom" id="Find" order="5" sideWeight="0.4974293" weight="0.52913755" />
       <window_info anchor="bottom" id="Version Control" order="3" sideWeight="0.48971722" weight="0.67333335" />
-      <window_info active="true" anchor="bottom" id="Concurrent Activities Diagram" order="14" visible="true" weight="0.32744783" />
-      <window_info anchor="bottom" id="File Transfer" order="12" sideWeight="0.4976744" weight="0.32905984" />
-      <window_info anchor="bottom" id="Message" order="4" />
-      <window_info anchor="right" id="Database" order="0" weight="0.17864339" />
+      <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.64395785" side_tool="true" weight="0.2514535" />
       <window_info anchor="right" id="Packages" order="3" weight="0.32940108" />
+      <window_info anchor="right" id="The R Graphics" order="5" weight="0.32975152" />
+      <window_info anchor="bottom" auto_hide="true" x="589" y="537" width="907" height="372" id="Terminal" internal_type="SLIDING" order="15" sideWeight="0.35604218" type="SLIDING" weight="0.8670886" />
+      <window_info active="true" anchor="bottom" id="Concurrent Activities Diagram" order="14" visible="true" weight="0.32744783" />
       <window_info id="Favorites" order="0" sideWeight="0.5056361" side_tool="true" weight="0.10220588" />
     </layout-to-restore>
   </component>
@@ -985,7 +989,8 @@
     <MESSAGE value="General reorginzations, added typical parameter files in .yaml format.&#10;Renamed some modules to more descriptive names.&#10;Repaired code which calculates kinship matrix." />
     <MESSAGE value="Updates and minor changes to parameters class Genotype" />
     <MESSAGE value="trying to fix error" />
-    <option name="LAST_COMMIT_MESSAGE" value="trying to fix error" />
+    <MESSAGE value="Before converting storage functions to use h5py instead of pandas/PyTables." />
+    <option name="LAST_COMMIT_MESSAGE" value="Before converting storage functions to use h5py instead of pandas/PyTables." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1000,6 +1005,90 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/index.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/association_mapping_using_tassel.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" column="22" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/saegus/parse.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1005">
+          <caret line="70" selection-start-line="70" selection-end-line="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="12675">
+          <caret line="845" column="60" lean-forward="true" selection-start-line="845" selection-start-column="60" selection-end-line="845" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/saegus/operators.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7920">
+          <caret line="534" selection-start-line="534" selection-end-line="534" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/devel/tuson_selection/tuson_genetic_drift.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="960">
+          <caret line="64" column="26" selection-start-line="64" selection-start-column="26" selection-end-line="64" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/integrated_example_multiple_generations_and_data_storage.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2955">
+          <caret line="197" column="42" selection-start-line="197" selection-start-column="42" selection-end-line="197" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/docs/saegus_documentation/operators.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="31" selection-start-line="31" selection-end-line="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/index.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/association_mapping_using_tassel.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" column="22" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/saegus/parse.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1005">
+          <caret line="70" selection-start-line="70" selection-end-line="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="24630">
+          <caret line="1642" selection-start-line="1642" selection-end-line="1642" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/operators.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="7920">
@@ -1242,7 +1331,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/devel/tuson_selection/tuson_genetic_drift.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="840">
+        <state relative-caret-position="960">
           <caret line="64" column="26" selection-start-line="64" selection-start-column="26" selection-end-line="64" selection-end-column="26" />
         </state>
       </provider>
@@ -1256,8 +1345,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1642" selection-start-line="1642" selection-end-line="1642" />
+        <state relative-caret-position="405">
+          <caret line="43" column="25" selection-start-line="43" selection-start-column="25" selection-end-line="43" selection-end-column="25" />
         </state>
       </provider>
     </entry>

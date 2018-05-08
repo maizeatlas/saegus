@@ -41,8 +41,8 @@ def gather_allele_data(pop):
         if alpha_alleles[locus] == omega_alleles[locus]:
             omega_alleles[locus] = 0
 
-    minor_table = np.ones((pop.totNumLoci(), 5))
-    major_table = np.zeros((pop.totNumLoci(), 5))
+    minor_table = np.ones((pop.totNumLoci(), 6))
+    major_table = np.zeros((pop.totNumLoci(), 6))
 
     for locus, alpha, omega in zip(range(pop.totNumLoci()), alpha_alleles,
                                    omega_alleles):
