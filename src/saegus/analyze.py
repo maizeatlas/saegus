@@ -1346,12 +1346,12 @@ class GWAS(object):
             return G
 
     def tassel_gwas_config(self,
-                           config_template: str = None,
-                           hapmap_file_name: str = None,
-                           kinship_file_name: str = None,
-                           trait_file_name: str = None,
-                           structure_file_name: str = None,
-                           output_prefix: str = None,
+                           config_template: str = '',
+                           hapmap_file_name: str = '',
+                           kinship_file_name: str = '',
+                           trait_file_name: str = '',
+                           structure_file_name: str = '',
+                           output_prefix: str = '',
                            ):
 
         import xml.etree.ElementTree as ET
