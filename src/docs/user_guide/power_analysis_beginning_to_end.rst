@@ -45,8 +45,10 @@ in the TASSEL results.
    > rownames(q_p) = marker_column
    > rownames(q_add_p) = marker_column
 
-
-
+The result from this block of code is a text file which has two columns:
+a column of the indexes corresponding to the loci and the Q values
+corresponding to the ``add_p`` column in the TASSEL output file. The output
+file is titled ``<run_id_prefix>_qvalues.txt``.
 
 
 Analysis in Python

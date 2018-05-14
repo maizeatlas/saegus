@@ -257,16 +257,16 @@ class Trait(object):
 
     """
 
-    def __init__(self):
-        pass
+    def __init__(self, pop):
+        self.pop = pop
 
     # todo Create documentation for construct_allele_effects_table
 
-    def construct_allele_effects_table(self, pop: sim.Population, qtl: list,
+    def construct_allele_effects_table(self, qtl: list,
                                        distribution_function,
                                        *distribution_function_parameters):
 
-        allele_effects_table = np.zeros((pop.totNumLoci(), 5))
+        allele_effects_table = np.zeros((self.pop.totNumLoci(), 5))
         alpha_alleles = []
         omega_alleles = []
 
@@ -305,6 +305,27 @@ class Trait(object):
             allele_effects_array[int(row[0]), int(row[3])] = row[4]
 
         return allele_effects_array
+
+    def construct_minor_major_effects(self, allele_state_array, qtl):
+        """
+        Defines allele effects at each locus in terms of the minor/major
+        alleles. ``allele_state_array`` assumes that allele state data is
+        organized in particular way.
+        Columns of ``allele_state_array``: locus, alpha, omega, minor, major
+
+        Returns array which has columns:
+        locus, minor_allele_state, minor_allele_effects, major_allele_state,
+        major_allele_effect
+
+        Allows for easy integration with other tabular data by joining on the
+        locus column.
+
+        :param allele_state_array: Array which gives minor and major alleles by locus
+        :param qtl: Loci which have non-zero allele effects
+        :return: Array which relates minor and major allele states to their effect
+        """
+
+
 
     def seg_qtl_chooser(self, pop: sim.Population, loci_subset: list, number_qtl: int):
         """

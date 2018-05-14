@@ -2,12 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/devel/magic/1478/creating_q_value_R_script.ipynb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/devel/magic/1478/q_value_calculation.r" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/devel/magic/1478/run_vandaleer_linux.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/devel/magic/1478/run_vandaleer_linux.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/docs/user_guide/power_analysis_automation.sh" beforeDir="false" afterPath="$PROJECT_DIR$/src/docs/user_guide/power_analysis_automation.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/saegus/analyze.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/saegus/analyze.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/devel/magic/1478/creating_q_value_R_script.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/devel/magic/1478/creating_q_value_R_script.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/docs/user_guide/example_kinship.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/docs/user_guide/example_kinship.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/docs/user_guide/example_trait.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/docs/user_guide/example_trait.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/docs/user_guide/example_trait_data.hdf5" beforeDir="false" afterPath="$PROJECT_DIR$/src/docs/user_guide/example_trait_data.hdf5" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/docs/user_guide/power_analysis_beginning_to_end.rst" beforeDir="false" afterPath="$PROJECT_DIR$/src/docs/user_guide/power_analysis_beginning_to_end.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/docs/user_guide/power_analysis_notebook.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/src/docs/user_guide/power_analysis_notebook.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/saegus/parameters.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/saegus/parameters.py" afterDir="false" />
     </list>
     <ignored path="saegus_project.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -70,8 +72,17 @@
       <file leaf-file-name="analyze.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="28860">
-              <caret line="1940" selection-start-line="1940" selection-end-line="1940" />
+            <state relative-caret-position="60">
+              <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="parameters.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/saegus/parameters.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="486">
+              <caret line="264" column="45" selection-start-line="264" selection-start-column="45" selection-end-line="264" selection-end-column="45" />
             </state>
           </provider>
         </entry>
@@ -85,19 +96,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="power_analysis_beginning_to_end.rst" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/docs/user_guide/power_analysis_beginning_to_end.rst">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="381">
-              <caret line="38" column="29" selection-start-line="38" selection-start-column="29" selection-end-line="38" selection-end-column="29" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="tuson_genetic_drift.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/devel/tuson_selection/tuson_genetic_drift.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="840">
+            <state relative-caret-position="666">
               <caret line="64" column="26" selection-start-line="64" selection-start-column="26" selection-end-line="64" selection-end-column="26" />
             </state>
           </provider>
@@ -106,7 +108,7 @@
       <file leaf-file-name="integrated_example_multiple_generations_and_data_storage.rst" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/docs/user_guide/integrated_example_multiple_generations_and_data_storage.rst">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2955">
+            <state relative-caret-position="666">
               <caret line="197" column="42" selection-start-line="197" selection-start-column="42" selection-end-line="197" selection-end-column="42" />
             </state>
           </provider>
@@ -127,11 +129,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>greatest_probability_index[i]</find>
-      <find>minor</find>
-      <find>alabaster</find>
-      <find>``simuPOP``</find>
-      <find>construct</find>
       <find>error</find>
       <find>todo</find>
       <find>py:function</find>
@@ -157,6 +154,11 @@
       <find>multiple_sample_analyzer</find>
       <find>generate_super_table</find>
       <find>GWAS</find>
+      <find>allele_eff</find>
+      <find>allele_effects_table</find>
+      <find>construct_allele_effects</find>
+      <find>construct_allele</find>
+      <find>construct</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -182,7 +184,6 @@
         <option value="$APPLICATION_HOME_DIR$/bin/pycharm.vmoptions" />
         <option value="$PROJECT_DIR$/devel/tuson_selection/conf.py" />
         <option value="$PROJECT_DIR$/src/docs/saegus_documentation/parameters.rst" />
-        <option value="$PROJECT_DIR$/src/saegus/parameters.py" />
         <option value="$PROJECT_DIR$/src/docs/saegus_documentation/introduction.rst" />
         <option value="$PROJECT_DIR$/src/docs/user_guide/tuson_demo_run.rst" />
         <option value="$PROJECT_DIR$/src/docs/user_guide/user_guide_build/_static/css/bootstrap2/bootstrap.min.css" />
@@ -207,7 +208,6 @@
         <option value="$PROJECT_DIR$/devel/magic/1478/pipeline_phases/phase_three.r" />
         <option value="$PROJECT_DIR$/src/docs/user_guide/example_structure.txt" />
         <option value="$PROJECT_DIR$/src/docs/user_guide/synbreed_relatedness_matrix.txt" />
-        <option value="$PROJECT_DIR$/src/docs/user_guide/power_analysis_beginning_to_end.rst" />
         <option value="$PROJECT_DIR$/src/docs/user_guide/example_rm_simulation.py" />
         <option value="$PROJECT_DIR$/src/docs/user_guide/example_am_computation.py" />
         <option value="$PROJECT_DIR$/src/docs/user_guide/q_val_analysis.r.py" />
@@ -225,8 +225,10 @@
         <option value="$PROJECT_DIR$/src/docs/user_guide/collecting_and_storing_data.rst" />
         <option value="$PROJECT_DIR$/src/docs/user_guide/notes_on_genetic_map.rst" />
         <option value="$PROJECT_DIR$/src/saegus/operators.py" />
-        <option value="$PROJECT_DIR$/src/saegus/analyze.py" />
         <option value="$PROJECT_DIR$/src/docs/user_guide/power_analysis_automation.sh" />
+        <option value="$PROJECT_DIR$/src/docs/user_guide/power_analysis_beginning_to_end.rst" />
+        <option value="$PROJECT_DIR$/src/saegus/analyze.py" />
+        <option value="$PROJECT_DIR$/src/saegus/parameters.py" />
       </list>
     </option>
   </component>
@@ -256,7 +258,7 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="4">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="832" />
     <option name="y" value="24" />
     <option name="width" value="768" />
@@ -335,6 +337,13 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="docs" type="462c0819:PsiDirectoryNode" />
               <item name="user_guide" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="saegus_project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="saegus_project" type="47feb1d3:ProjectViewModuleNode" />
+              <item name="saegus_project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="saegus" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -887,7 +896,14 @@
       <option name="project" value="LOCAL" />
       <updated>1525786045038</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Created the Rscript file which runs the Q value calculation and outputs&#10;the results formatted for further processing in Python. The notebook&#10;I developed the Rscript in is &quot;creating_the_q_value_R_script.ipynb&quot; and&#10;the actual Rscript is &quot;q_value_calculation.r&quot;. The script is called&#10;with the run id parameter.">
+      <created>1526246396046</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1526246396047</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers>
       <Generic url="http://localhost">
         <option name="loginAnonymously" value="true" />
@@ -923,18 +939,18 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="832" y="24" width="768" height="876" extended-state="4" />
+    <frame x="65" y="-4" width="1535" height="904" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" x="162" y="208" width="676" height="407" id="Project" order="0" sideWeight="0.4888889" visible="true" weight="0.88642657" />
+      <window_info active="true" content_ui="combo" x="162" y="208" width="676" height="407" id="Project" order="0" sideWeight="0.4888889" visible="true" weight="0.3210208" />
       <window_info anchor="bottom" id="TODO" order="8" weight="0.2274436" />
       <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.50235057" side_tool="true" weight="0.8333333" />
-      <window_info anchor="right" x="0" y="0" width="141" height="676" id="Documentation" order="10" side_tool="true" visible="true" weight="0.11218837" />
+      <window_info anchor="right" x="0" y="0" width="141" height="676" id="Documentation" order="10" side_tool="true" visible="true" weight="0.055070516" />
       <window_info anchor="bottom" id="Version Control" order="5" sideWeight="0.48971722" weight="0.67333335" />
       <window_info anchor="bottom" id="Python Console" order="13" sideWeight="0.49764943" weight="0.8333333" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.23544632" weight="0.72533333" />
       <window_info anchor="right" id="SciView" order="3" weight="0.32975152" />
-      <window_info x="911" y="150" width="402" height="641" id="Structure" order="1" sideWeight="0.51111114" side_tool="true" visible="true" weight="0.88642657" />
+      <window_info x="911" y="150" width="402" height="641" id="Structure" order="1" sideWeight="0.51111114" side_tool="true" weight="0.49445984" />
       <window_info anchor="bottom" auto_hide="true" x="589" y="537" width="907" height="372" id="Terminal" internal_type="SLIDING" order="15" sideWeight="0.35604218" type="SLIDING" weight="0.8670886" />
       <window_info id="Favorites" order="2" sideWeight="0.5056361" side_tool="true" weight="0.10220588" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.6959459" />
@@ -1023,7 +1039,8 @@
     <MESSAGE value="Before changing &quot;gather_allele_data&quot; in analyze. Encountered problem &#10;when trying to use it in the magic1478 population. Attempting to use it &#10;solely on segregating loci to determine if the problem is due to fixed&#10;loci." />
     <MESSAGE value="This is unbelievable. When I switched to a Linux OS for my laptop I &#10;never completed a full run with TASSEL. Everything is half finished&#10;and all the way broken. How did this happen to me?" />
     <MESSAGE value="TASSEL Association mapping up and running. First set of output is under&#10;the run id &quot;vandaleer&quot;. Does not make use of the function&#10;&quot;multiple_sample_analyzer&quot; but performs each step manually." />
-    <option name="LAST_COMMIT_MESSAGE" value="TASSEL Association mapping up and running. First set of output is under&#10;the run id &quot;vandaleer&quot;. Does not make use of the function&#10;&quot;multiple_sample_analyzer&quot; but performs each step manually." />
+    <MESSAGE value="Created the Rscript file which runs the Q value calculation and outputs&#10;the results formatted for further processing in Python. The notebook&#10;I developed the Rscript in is &quot;creating_the_q_value_R_script.ipynb&quot; and&#10;the actual Rscript is &quot;q_value_calculation.r&quot;. The script is called&#10;with the run id parameter." />
+    <option name="LAST_COMMIT_MESSAGE" value="Created the Rscript file which runs the Q value calculation and outputs&#10;the results formatted for further processing in Python. The notebook&#10;I developed the Rscript in is &quot;creating_the_q_value_R_script.ipynb&quot; and&#10;the actual Rscript is &quot;q_value_calculation.r&quot;. The script is called&#10;with the run id parameter." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1038,13 +1055,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/integrated_example_multiple_generations_and_data_storage.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2955">
-          <caret line="197" column="42" selection-start-line="197" selection-start-column="42" selection-end-line="197" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/docs/saegus_documentation/operators.rst">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="465">
@@ -1292,24 +1302,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/association_mapping_using_tassel.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="25" column="22" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/parse.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1005">
           <caret line="70" selection-start-line="70" selection-end-line="70" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/integrated_example_multiple_generations_and_data_storage.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2955">
-          <caret line="197" column="42" selection-start-line="197" selection-start-column="42" selection-end-line="197" selection-end-column="42" />
         </state>
       </provider>
     </entry>
@@ -1320,24 +1316,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/devel/tuson_selection/tuson_genetic_drift.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="840">
-          <caret line="64" column="26" selection-start-line="64" selection-start-column="26" selection-end-line="64" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/operators.py">
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret line="534" selection-start-line="534" selection-end-line="534" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="28860">
-          <caret line="1940" selection-start-line="1940" selection-end-line="1940" />
         </state>
       </provider>
     </entry>
@@ -1374,8 +1356,43 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/docs/user_guide/power_analysis_beginning_to_end.rst">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="381">
-          <caret line="38" column="29" selection-start-line="38" selection-start-column="29" selection-end-line="38" selection-end-column="29" />
+        <state relative-caret-position="621">
+          <caret line="55" selection-start-line="55" selection-end-line="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/association_mapping_using_tassel.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="486">
+          <caret line="497" lean-forward="true" selection-start-line="497" selection-end-line="497" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/integrated_example_multiple_generations_and_data_storage.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="666">
+          <caret line="197" column="42" selection-start-line="197" selection-start-column="42" selection-end-line="197" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/devel/tuson_selection/tuson_genetic_drift.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="666">
+          <caret line="64" column="26" selection-start-line="64" selection-start-column="26" selection-end-line="64" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/saegus/parameters.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="486">
+          <caret line="264" column="45" selection-start-line="264" selection-start-column="45" selection-end-line="264" selection-end-column="45" />
         </state>
       </provider>
     </entry>
