@@ -3,11 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/devel/magic/1478/creating_q_value_R_script.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/devel/magic/1478/creating_q_value_R_script.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/docs/user_guide/example_kinship.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/docs/user_guide/example_kinship.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/docs/user_guide/example_trait.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/docs/user_guide/example_trait.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/docs/user_guide/example_trait_data.hdf5" beforeDir="false" afterPath="$PROJECT_DIR$/src/docs/user_guide/example_trait_data.hdf5" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/docs/user_guide/power_analysis_beginning_to_end.rst" beforeDir="false" afterPath="$PROJECT_DIR$/src/docs/user_guide/power_analysis_beginning_to_end.rst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/docs/user_guide/power_analysis_notebook.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/src/docs/user_guide/power_analysis_notebook.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/saegus/parameters.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/saegus/parameters.py" afterDir="false" />
     </list>
@@ -81,8 +76,8 @@
       <file leaf-file-name="parameters.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/saegus/parameters.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="486">
-              <caret line="264" column="45" selection-start-line="264" selection-start-column="45" selection-end-line="264" selection-end-column="45" />
+            <state relative-caret-position="396">
+              <caret line="308" column="63" selection-start-line="308" selection-start-column="63" selection-end-line="308" selection-end-column="63" />
             </state>
           </provider>
         </entry>
@@ -260,9 +255,9 @@
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="832" />
-    <option name="y" value="24" />
-    <option name="width" value="768" />
-    <option name="height" value="876" />
+    <option name="y" value="6" />
+    <option name="width" value="766" />
+    <option name="height" value="904" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -903,7 +898,14 @@
       <option name="project" value="LOCAL" />
       <updated>1526246396047</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Creating new functions to aid in interepretation of TASSEL results.&#10;Adding function to parameters.Trait which relates the minor and major&#10;alleles to their effect. Existing functions do not directly relate&#10;the minor/major allele state and corresponding allele effect. Making&#10;slight changes to parameters.Trait class to be initialized to a&#10;population.">
+      <created>1526287320515</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1526287320515</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers>
       <Generic url="http://localhost">
         <option name="loginAnonymously" value="true" />
@@ -942,7 +944,7 @@
     <frame x="65" y="-4" width="1535" height="904" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" x="162" y="208" width="676" height="407" id="Project" order="0" sideWeight="0.4888889" visible="true" weight="0.3210208" />
+      <window_info content_ui="combo" x="162" y="208" width="676" height="407" id="Project" order="0" sideWeight="0.4888889" weight="0.6620499" />
       <window_info anchor="bottom" id="TODO" order="8" weight="0.2274436" />
       <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.50235057" side_tool="true" weight="0.8333333" />
       <window_info anchor="right" x="0" y="0" width="141" height="676" id="Documentation" order="10" side_tool="true" visible="true" weight="0.055070516" />
@@ -1040,7 +1042,8 @@
     <MESSAGE value="This is unbelievable. When I switched to a Linux OS for my laptop I &#10;never completed a full run with TASSEL. Everything is half finished&#10;and all the way broken. How did this happen to me?" />
     <MESSAGE value="TASSEL Association mapping up and running. First set of output is under&#10;the run id &quot;vandaleer&quot;. Does not make use of the function&#10;&quot;multiple_sample_analyzer&quot; but performs each step manually." />
     <MESSAGE value="Created the Rscript file which runs the Q value calculation and outputs&#10;the results formatted for further processing in Python. The notebook&#10;I developed the Rscript in is &quot;creating_the_q_value_R_script.ipynb&quot; and&#10;the actual Rscript is &quot;q_value_calculation.r&quot;. The script is called&#10;with the run id parameter." />
-    <option name="LAST_COMMIT_MESSAGE" value="Created the Rscript file which runs the Q value calculation and outputs&#10;the results formatted for further processing in Python. The notebook&#10;I developed the Rscript in is &quot;creating_the_q_value_R_script.ipynb&quot; and&#10;the actual Rscript is &quot;q_value_calculation.r&quot;. The script is called&#10;with the run id parameter." />
+    <MESSAGE value="Creating new functions to aid in interepretation of TASSEL results.&#10;Adding function to parameters.Trait which relates the minor and major&#10;alleles to their effect. Existing functions do not directly relate&#10;the minor/major allele state and corresponding allele effect. Making&#10;slight changes to parameters.Trait class to be initialized to a&#10;population." />
+    <option name="LAST_COMMIT_MESSAGE" value="Creating new functions to aid in interepretation of TASSEL results.&#10;Adding function to parameters.Trait which relates the minor and major&#10;alleles to their effect. Existing functions do not directly relate&#10;the minor/major allele state and corresponding allele effect. Making&#10;slight changes to parameters.Trait class to be initialized to a&#10;population." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1391,8 +1394,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/parameters.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="264" column="45" selection-start-line="264" selection-start-column="45" selection-end-line="264" selection-end-column="45" />
+        <state relative-caret-position="396">
+          <caret line="308" column="63" selection-start-line="308" selection-start-column="63" selection-end-line="308" selection-end-column="63" />
         </state>
       </provider>
     </entry>

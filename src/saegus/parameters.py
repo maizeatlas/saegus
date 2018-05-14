@@ -257,16 +257,16 @@ class Trait(object):
 
     """
 
-    def __init__(self, pop):
-        self.pop = pop
+    def __init__(self):
+        pass
 
     # todo Create documentation for construct_allele_effects_table
 
-    def construct_allele_effects_table(self, qtl: list,
+    def construct_allele_effects_table(self, pop: sim.Population, qtl: list,
                                        distribution_function,
                                        *distribution_function_parameters):
 
-        allele_effects_table = np.zeros((self.pop.totNumLoci(), 5))
+        allele_effects_table = np.zeros((pop.totNumLoci(), 5))
         alpha_alleles = []
         omega_alleles = []
 
@@ -306,7 +306,12 @@ class Trait(object):
 
         return allele_effects_array
 
-    def construct_minor_major_effects(self, allele_state_array, qtl):
+    # todo Create example use for construct_minor_major_effects
+
+    def construct_minor_major_effects(self, allele_state_array,
+                                      allele_effects_table,
+                                      allele_effects_array,
+                                      qtl):
         """
         Defines allele effects at each locus in terms of the minor/major
         alleles. ``allele_state_array`` assumes that allele state data is
@@ -324,6 +329,55 @@ class Trait(object):
         :param qtl: Loci which have non-zero allele effects
         :return: Array which relates minor and major allele states to their effect
         """
+
+        minor_major_allele_effects = np.zeros((self.pop.totNumLoci(), 5))
+
+        minor_alleles = allele_state_array[:, 3]
+        major_alleles = allele_state_array[:, 4]
+
+        minor_major_allele_effects[:, 0] = list(range(self.pop.totNumLoci()))
+        minor_major_allele_effects[:, 1] = minor_alleles
+        minor_major_allele_effects[:, 3] = major_alleles
+
+        minor_alpha_loci = np.where(allele_effects_table[:, 1 ==
+                                       minor_alleles])[0]
+        minor_omega_loci = np.where(allele_effects_table[:, 3] ==
+                                       minor_alleles)[0]
+        assert minor_alpha_loci.shape[0] + minor_omega_loci.shape[0] \
+               == self.pop.totNumLoci(), "Error. Number of minor alpha and " \
+                                         "minor omega loci should sum to " \
+                                         "the total number of loci in the " \
+                                         "population."
+
+        major_alpha_loci = np.where(allele_effects_table[:, 1] ==
+                                       major_alleles)[0]
+        major_omega_loci = np.where(allele_effects_table[:, 3] ==
+                                       major_alleles)[0]
+
+        assert major_alpha_loci.shape[0] + major_omega_loci.shape[0] \
+               == self.pop.totNumLoci(), "Error. Number of major alpha and " \
+                                         "major omega loci should sum to " \
+                                         "the total number of loci in the " \
+                                         "population."
+
+        for locus in qtl:
+            if locus in minor_alpha_loci:
+                minor_major_allele_effects[locus, 2] = \
+                    allele_effects_array[locus, np.int(minor_alleles[locus])]
+            if locus in minor_omega_loci:
+                minor_major_allele_effects[locus, 2] = \
+                    allele_effects_array[locus, np.int(minor_alleles[locus])]
+            if locus in major_alpha_loci:
+                minor_major_allele_effects[locus, 4] = \
+                    allele_effects_array[locus, np.int(major_alleles[locus])]
+                minor_major_allele_effects[locus, 4] = \
+                    allele_effects_array[locus, np.int(major_alleles[locus])]
+
+        return minor_major_allele_effects
+
+
+
+
 
 
 
