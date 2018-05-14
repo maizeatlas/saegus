@@ -330,35 +330,26 @@ class Trait(object):
         :return: Array which relates minor and major allele states to their effect
         """
 
-        minor_major_allele_effects = np.zeros((self.pop.totNumLoci(), 5))
+        minor_major_allele_effects = np.zeros((allele_effects_array.shape[0],
+                                               5))
 
         minor_alleles = allele_state_array[:, 3]
         major_alleles = allele_state_array[:, 4]
 
-        minor_major_allele_effects[:, 0] = list(range(self.pop.totNumLoci()))
+        minor_major_allele_effects[:, 0] = list(range(
+            allele_effects_array.shape[0]))
         minor_major_allele_effects[:, 1] = minor_alleles
         minor_major_allele_effects[:, 3] = major_alleles
 
-        minor_alpha_loci = np.where(allele_effects_table[:, 1 ==
-                                       minor_alleles])[0]
+        minor_alpha_loci = np.where(allele_effects_table[:, 1] ==
+                                    minor_alleles)[0]
         minor_omega_loci = np.where(allele_effects_table[:, 3] ==
-                                       minor_alleles)[0]
-        assert minor_alpha_loci.shape[0] + minor_omega_loci.shape[0] \
-               == self.pop.totNumLoci(), "Error. Number of minor alpha and " \
-                                         "minor omega loci should sum to " \
-                                         "the total number of loci in the " \
-                                         "population."
+                                    minor_alleles)[0]
 
         major_alpha_loci = np.where(allele_effects_table[:, 1] ==
                                        major_alleles)[0]
         major_omega_loci = np.where(allele_effects_table[:, 3] ==
                                        major_alleles)[0]
-
-        assert major_alpha_loci.shape[0] + major_omega_loci.shape[0] \
-               == self.pop.totNumLoci(), "Error. Number of major alpha and " \
-                                         "major omega loci should sum to " \
-                                         "the total number of loci in the " \
-                                         "population."
 
         for locus in qtl:
             if locus in minor_alpha_loci:
@@ -370,6 +361,7 @@ class Trait(object):
             if locus in major_alpha_loci:
                 minor_major_allele_effects[locus, 4] = \
                     allele_effects_array[locus, np.int(major_alleles[locus])]
+            if locus in major_omega_loci:
                 minor_major_allele_effects[locus, 4] = \
                     allele_effects_array[locus, np.int(major_alleles[locus])]
 
