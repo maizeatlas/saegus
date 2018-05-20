@@ -3,8 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/devel/magic/1478/multi-replicate-magic-1478.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/devel/magic/1478/multi-replicate-magic-1478.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/devel/magic/1478/run_vandaleer_linux.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/devel/magic/1478/run_vandaleer_linux.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/docs/user_guide/example_trait_data.hdf5" beforeDir="false" afterPath="$PROJECT_DIR$/src/docs/user_guide/example_trait_data.hdf5" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/docs/user_guide/power_analysis_notebook.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/src/docs/user_guide/power_analysis_notebook.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/saegus/parameters.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/saegus/parameters.py" afterDir="false" />
     </list>
     <ignored path="saegus_project.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -58,35 +60,26 @@
       <file leaf-file-name="operators.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/saegus/operators.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
+            <state relative-caret-position="7920">
               <caret line="534" selection-start-line="534" selection-end-line="534" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="analyze.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="analyze.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
+            <state relative-caret-position="302">
+              <caret line="1610" column="7" lean-forward="true" selection-start-line="1610" selection-start-column="7" selection-end-line="1610" selection-end-column="7" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="parameters.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="parameters.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/saegus/parameters.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="308" column="63" selection-start-line="308" selection-start-column="63" selection-end-line="308" selection-end-column="63" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="q_val_analysis.r" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/docs/user_guide/q_val_analysis.r">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" column="11" selection-start-line="2" selection-start-column="11" selection-end-line="2" selection-end-column="11" />
+            <state relative-caret-position="4320">
+              <caret line="295" selection-start-line="295" selection-end-line="295" />
             </state>
           </provider>
         </entry>
@@ -94,17 +87,8 @@
       <file leaf-file-name="tuson_genetic_drift.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/devel/tuson_selection/tuson_genetic_drift.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="666">
+            <state relative-caret-position="840">
               <caret line="64" column="26" selection-start-line="64" selection-start-column="26" selection-end-line="64" selection-end-column="26" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="integrated_example_multiple_generations_and_data_storage.rst" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/docs/user_guide/integrated_example_multiple_generations_and_data_storage.rst">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="666">
-              <caret line="197" column="42" selection-start-line="197" selection-start-column="42" selection-end-line="197" selection-end-column="42" />
             </state>
           </provider>
         </entry>
@@ -255,9 +239,9 @@
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="832" />
-    <option name="y" value="6" />
-    <option name="width" value="766" />
-    <option name="height" value="904" />
+    <option name="y" value="24" />
+    <option name="width" value="768" />
+    <option name="height" value="876" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -303,35 +287,7 @@
               <item name="saegus_project" type="b2602c69:ProjectViewProjectNode" />
               <item name="saegus_project" type="47feb1d3:ProjectViewModuleNode" />
               <item name="saegus_project" type="462c0819:PsiDirectoryNode" />
-              <item name="devel" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="saegus_project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="saegus_project" type="47feb1d3:ProjectViewModuleNode" />
-              <item name="saegus_project" type="462c0819:PsiDirectoryNode" />
-              <item name="devel" type="462c0819:PsiDirectoryNode" />
-              <item name="magic" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="saegus_project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="saegus_project" type="47feb1d3:ProjectViewModuleNode" />
-              <item name="saegus_project" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="saegus_project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="saegus_project" type="47feb1d3:ProjectViewModuleNode" />
-              <item name="saegus_project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="docs" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="saegus_project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="saegus_project" type="47feb1d3:ProjectViewModuleNode" />
-              <item name="saegus_project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="docs" type="462c0819:PsiDirectoryNode" />
-              <item name="user_guide" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="saegus_project" type="b2602c69:ProjectViewProjectNode" />
@@ -905,7 +861,21 @@
       <option name="project" value="LOCAL" />
       <updated>1526287320515</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Decided not to change the parameters.Trait class after all. Eventually&#10;I will probably make &quot;qtl&quot; an init paramter. Added function&#10;Trait.construct_minor_major_effects to parameters.">
+      <created>1526289216336</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1526289216336</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Added the new function, debugged and tested it. It works! My first&#10;new working function in I have no idea how long.">
+      <created>1526289702247</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1526289702247</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers>
       <Generic url="http://localhost">
         <option name="loginAnonymously" value="true" />
@@ -944,15 +914,15 @@
     <frame x="65" y="-4" width="1535" height="904" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" x="162" y="208" width="676" height="407" id="Project" order="0" sideWeight="0.4888889" weight="0.6620499" />
+      <window_info content_ui="combo" x="162" y="208" width="676" height="407" id="Project" order="0" sideWeight="0.4875" weight="0.6620499" />
       <window_info anchor="bottom" id="TODO" order="8" weight="0.2274436" />
       <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.50235057" side_tool="true" weight="0.8333333" />
-      <window_info anchor="right" x="0" y="0" width="141" height="676" id="Documentation" order="10" side_tool="true" visible="true" weight="0.055070516" />
+      <window_info anchor="right" x="0" y="0" width="142" height="676" id="Documentation" order="10" side_tool="true" visible="true" weight="0.026192075" />
       <window_info anchor="bottom" id="Version Control" order="5" sideWeight="0.48971722" weight="0.67333335" />
       <window_info anchor="bottom" id="Python Console" order="13" sideWeight="0.49764943" weight="0.8333333" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.23544632" weight="0.72533333" />
       <window_info anchor="right" id="SciView" order="3" weight="0.32975152" />
-      <window_info x="911" y="150" width="402" height="641" id="Structure" order="1" sideWeight="0.51111114" side_tool="true" weight="0.49445984" />
+      <window_info active="true" x="911" y="150" width="402" height="641" id="Structure" order="1" sideWeight="0.5125" side_tool="true" visible="true" weight="0.3210208" />
       <window_info anchor="bottom" auto_hide="true" x="589" y="537" width="907" height="372" id="Terminal" internal_type="SLIDING" order="15" sideWeight="0.35604218" type="SLIDING" weight="0.8670886" />
       <window_info id="Favorites" order="2" sideWeight="0.5056361" side_tool="true" weight="0.10220588" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.6959459" />
@@ -977,12 +947,12 @@
       <window_info anchor="bottom" id="Message" order="6" />
     </layout>
     <layout-to-restore>
-      <window_info anchor="bottom" id="Application Servers" order="2" />
+      <window_info anchor="right" id="The R Graphics" order="5" weight="0.32975152" />
       <window_info anchor="bottom" id="DB Execution Console" order="0" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="6" weight="0.25" />
       <window_info x="162" y="208" width="676" height="407" id="Project" order="1" sideWeight="0.49436393" visible="true" weight="0.3566152" />
-      <window_info anchor="right" id="The R Graphics" order="5" weight="0.32975152" />
-      <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
+      <window_info anchor="bottom" id="Version Control" order="3" sideWeight="0.48971722" weight="0.67333335" />
+      <window_info anchor="bottom" id="Python Console" order="13" weight="0.8341385" />
       <window_info anchor="right" id="Ant Build" order="4" weight="0.25" />
       <window_info auto_hide="true" x="911" y="150" width="402" height="641" id="Structure" order="2" weight="0.26930827" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="2" type="SLIDING" weight="0.4" />
@@ -991,19 +961,19 @@
       <window_info anchor="bottom" id="Run" order="6" sideWeight="0.23544632" weight="0.72533333" />
       <window_info anchor="top" content_ui="combo" id="DB Browser" internal_type="SLIDING" order="0" side_tool="true" type="SLIDING" weight="0.329904" />
       <window_info anchor="right" auto_hide="true" id="Data View" internal_type="SLIDING" order="7" type="SLIDING" weight="0.32940108" />
-      <window_info anchor="bottom" id="Python Console" order="13" weight="0.8341385" />
-      <window_info anchor="bottom" id="Find" order="5" sideWeight="0.4974293" weight="0.52913755" />
+      <window_info anchor="right" id="Mongo Explorer" order="1" />
+      <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
+      <window_info anchor="bottom" id="Application Servers" order="2" />
       <window_info anchor="right" id="Database" order="0" weight="0.17864339" />
       <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.4974055" weight="0.32972136" />
-      <window_info anchor="right" id="Mongo Explorer" order="1" />
+      <window_info active="true" anchor="bottom" id="Concurrent Activities Diagram" order="14" visible="true" weight="0.32744783" />
       <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.64395785" side_tool="true" weight="0.2514535" />
-      <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
-      <window_info anchor="bottom" id="Version Control" order="3" sideWeight="0.48971722" weight="0.67333335" />
+      <window_info anchor="bottom" id="Find" order="5" sideWeight="0.4974293" weight="0.52913755" />
+      <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
       <window_info anchor="bottom" id="Debug" order="7" weight="0.6959459" />
-      <window_info anchor="right" id="Packages" order="3" weight="0.32940108" />
       <window_info anchor="bottom" id="Message" order="4" />
       <window_info anchor="bottom" auto_hide="true" x="589" y="537" width="907" height="372" id="Terminal" internal_type="SLIDING" order="15" sideWeight="0.35604218" type="SLIDING" weight="0.8670886" />
-      <window_info active="true" anchor="bottom" id="Concurrent Activities Diagram" order="14" visible="true" weight="0.32744783" />
+      <window_info anchor="right" id="Packages" order="3" weight="0.32940108" />
       <window_info id="Favorites" order="0" sideWeight="0.5056361" side_tool="true" weight="0.10220588" />
     </layout-to-restore>
   </component>
@@ -1043,7 +1013,9 @@
     <MESSAGE value="TASSEL Association mapping up and running. First set of output is under&#10;the run id &quot;vandaleer&quot;. Does not make use of the function&#10;&quot;multiple_sample_analyzer&quot; but performs each step manually." />
     <MESSAGE value="Created the Rscript file which runs the Q value calculation and outputs&#10;the results formatted for further processing in Python. The notebook&#10;I developed the Rscript in is &quot;creating_the_q_value_R_script.ipynb&quot; and&#10;the actual Rscript is &quot;q_value_calculation.r&quot;. The script is called&#10;with the run id parameter." />
     <MESSAGE value="Creating new functions to aid in interepretation of TASSEL results.&#10;Adding function to parameters.Trait which relates the minor and major&#10;alleles to their effect. Existing functions do not directly relate&#10;the minor/major allele state and corresponding allele effect. Making&#10;slight changes to parameters.Trait class to be initialized to a&#10;population." />
-    <option name="LAST_COMMIT_MESSAGE" value="Creating new functions to aid in interepretation of TASSEL results.&#10;Adding function to parameters.Trait which relates the minor and major&#10;alleles to their effect. Existing functions do not directly relate&#10;the minor/major allele state and corresponding allele effect. Making&#10;slight changes to parameters.Trait class to be initialized to a&#10;population." />
+    <MESSAGE value="Decided not to change the parameters.Trait class after all. Eventually&#10;I will probably make &quot;qtl&quot; an init paramter. Added function&#10;Trait.construct_minor_major_effects to parameters." />
+    <MESSAGE value="Added the new function, debugged and tested it. It works! My first&#10;new working function in I have no idea how long." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added the new function, debugged and tested it. It works! My first&#10;new working function in I have no idea how long." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1058,6 +1030,13 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3120">
+          <caret line="208" selection-start-line="208" selection-end-line="208" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/docs/saegus_documentation/operators.rst">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="465">
@@ -1321,15 +1300,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/operators.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
+        <state relative-caret-position="7920">
           <caret line="534" selection-start-line="534" selection-end-line="534" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/q_val_analysis.r">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="11" selection-start-line="2" selection-start-column="11" selection-end-line="2" selection-end-column="11" />
         </state>
       </provider>
     </entry>
@@ -1339,9 +1311,6 @@
           <caret line="13" column="8" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="8" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/devel/magic/1478/pipeline_phases/phase_three.r">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/devel/magic/1478/pipeline_phases/phase_two.sh">
       <provider selected="true" editor-type-id="text-editor">
@@ -1380,22 +1349,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/devel/tuson_selection/tuson_genetic_drift.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="666">
+        <state relative-caret-position="840">
           <caret line="64" column="26" selection-start-line="64" selection-start-column="26" selection-end-line="64" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
+    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/q_val_analysis.r">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="20" lean-forward="true" selection-start-line="20" selection-end-line="20" />
+        <state relative-caret-position="30">
+          <caret line="2" column="11" selection-start-line="2" selection-start-column="11" selection-end-line="2" selection-end-column="11" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/parameters.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="308" column="63" selection-start-line="308" selection-start-column="63" selection-end-line="308" selection-end-column="63" />
+        <state relative-caret-position="4320">
+          <caret line="295" selection-start-line="295" selection-end-line="295" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="302">
+          <caret line="1610" column="7" lean-forward="true" selection-start-line="1610" selection-start-column="7" selection-end-line="1610" selection-end-column="7" />
         </state>
       </provider>
     </entry>
