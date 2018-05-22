@@ -1280,6 +1280,34 @@ class GWAS(object):
                         method="xml", xml_declaration=True, standalone='',
                         pretty_print=True)
 
+    def single_gen_multi_rep_tassel_config(self,
+                           rep_id: int,
+                           config_template: str = '',
+                           hapmap_file_name: str = '',
+                           kinship_file_name: str = '',
+                           trait_file_name: str = '',
+                           structure_file_name: str = '',
+                           output_prefix: str = '',
+                           ):
+
+        tree = ET.parse(config_template)
+        root = tree.getroot()
+        lxml_tree = etree.fromstring(ET.tostring(root))
+        lxml_root = lxml_tree.getroottree()
+
+        lxml_root.find('fork1/h').text = str(path.abspath(hapmap_file_name))
+        lxml_root.find('fork2/t').text = str(path.abspath(trait_file_name))
+        lxml_root.find('fork3/q').text = str(path.abspath(structure_file_name))
+        lxml_root.find('fork4/k').text = str(path.abspath(kinship_file_name))
+
+        lxml_root.find('combine6/export').text = output_prefix
+
+        lxml_root.write(self.run_id + '_' + str(rep_id) + '_' + "gwas_pipeline.xml",
+                        encoding="UTF-8",
+                        method="xml", xml_declaration=True, standalone='',
+                        pretty_print=True)
+
+
 
 
     def replicate_tassel_gwas_configs(self, rep_id, sample_size,
@@ -1805,6 +1833,61 @@ class Study(object):
                 pop.dvars().genoFreq[locus][genotype]
 
         return genotype_frequency_array
+
+    def single_gen_multi_rep_tassel_input(self,
+                               sample_library,
+                               hdf5_data_file,
+                               qtl,
+                               allele_effects,
+                               minor_alleles,
+                               segregating_loci):
+
+
+        int_to_snp_map = {0: 'A', 1: 'C', 2: 'G', 3: 'T', 4: '-', 5: '+'}
+        indir = "/home/vakanas/tassel-5-standalone/"
+
+        for rep_id, sample_list in sample_library.items():
+#            for sample in sample_list:
+
+#            gen_id_name = str(int(max(sample.indInfo('generation'))))
+#            rep_id_name = str(rep_id)
+
+#                operators.assign_additive_g(sample, qtl,
+#                                    allele_effects)
+#                operators.calculate_error_variance(sample, 0.7)
+#                operators.calculate_p(sample)
+
+            name = self.run_id+'_'+str(rep_id)
+            minor_allele_frequencies = \
+                np.array(hdf5_data_file['allele/frequency/replicate/' +
+                                       rep_id_name])[segregating_loci, 3]
+
+#            af_access_name = '/'.join(['af', rep_id_name, gen_id_name])
+#            minor_allele_frequencies = minor_allele_frequency_file[af_access_name][list(segregating_loci)]
+
+            gwas = GWAS(sample_list[0], segregating_loci, self.run_id)
+
+            ccm = gwas.calculate_count_matrix(minor_alleles, segregating_loci)
+            ps_svd = gwas.pop_struct_eigdencomp(ccm)
+            gwas.population_structure_formatter(ps_svd,
+                                    indir + name + '_structure_matrix.txt')
+            gwas.hapmap_formatter(int_to_snp_map,
+                                  indir + name + '_simulated_hapmap.txt')
+            gwas.trait_formatter(indir + name + '_phenotype_vector.txt')
+            gwas.calc_kinship_matrix(ccm, minor_allele_frequencies,
+                             indir + name + '_kinship_matrix.txt')
+
+            gwas.replicate_tassel_gwas_configs(self.rep_id,
+                                               gen_id_name,
+                                   indir + name + '_simulated_hapmap.txt',
+                                   indir + name + '_kinship_matrix.txt',
+                                   indir + name + '_phenotype_vector.txt',
+                                   indir + name + '_structure_matrix.txt',
+                                   "C:\\tassel\\output\\" + name + '_out_',
+                                               "C:\\Users\DoubleDanks\\BISB\\wisser\\code\\rjwlab-scripts\\"
+                                               "saegus_project\\devel\\magic\\1478\\gwas_pipeline.xml")
+
+    minor_allele_frequency_file.close()
 
 
 # Deleted write_multiple_sample_analyzer. Function exists in other places.

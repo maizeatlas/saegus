@@ -4,7 +4,6 @@
     <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/saegus/analyze.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/saegus/analyze.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/saegus/parameters.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/saegus/parameters.py" afterDir="false" />
     </list>
     <ignored path="saegus_project.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -67,8 +66,8 @@
       <file leaf-file-name="analyze.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="232">
-              <caret line="1284" column="8" selection-start-line="1284" selection-start-column="8" selection-end-line="1284" selection-end-column="8" />
+            <state relative-caret-position="357">
+              <caret line="1291" lean-forward="true" selection-start-line="1291" selection-end-line="1291" />
               <folding>
                 <element signature="e#24#45#0" expanded="true" />
                 <element signature="e#645#1575#0" />
@@ -77,12 +76,20 @@
                 <element signature="e#4025#4424#0" />
                 <element signature="e#4522#4921#0" />
                 <element signature="e#5029#5168#0" />
-                <element signature="e#13216#25257#0" />
                 <element signature="e#25343#32784#0" />
                 <element signature="e#32841#36453#0" />
                 <element signature="e#36568#38869#0" />
                 <element signature="e#38963#40743#0" />
                 <element signature="e#40819#42457#0" />
+                <element signature="e#67105#67433#0" />
+                <element signature="e#67538#67874#0" />
+                <element signature="e#68013#70686#0" />
+                <element signature="e#70893#72694#0" />
+                <element signature="e#72758#73510#0" />
+                <element signature="e#73591#74022#0" />
+                <element signature="e#74150#76442#0" />
+                <element signature="e#76518#77382#0" />
+                <element signature="e#77692#78517#0" />
               </folding>
             </state>
           </provider>
@@ -92,7 +99,7 @@
         <entry file="file://$PROJECT_DIR$/src/saegus/parameters.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="38">
-              <caret line="452" column="44" lean-forward="true" selection-start-line="452" selection-start-column="44" selection-end-line="452" selection-end-column="44" />
+              <caret line="452" column="44" selection-start-line="452" selection-start-column="44" selection-end-line="452" selection-end-column="44" />
               <folding>
                 <element signature="e#218#3818#0" />
                 <element signature="e#3861#9747#0" />
@@ -116,7 +123,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>py:function</find>
       <find>:py:module</find>
       <find>:py:mod:</find>
       <find>vanraden</find>
@@ -146,6 +152,7 @@
       <find>construct</find>
       <find>Study</find>
       <find>h5py</find>
+      <find>replicate_tassel_gwas</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -246,10 +253,10 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="65" />
-    <option name="y" value="-4" />
-    <option name="width" value="1535" />
-    <option name="height" value="904" />
+    <option name="x" value="542" />
+    <option name="y" value="336" />
+    <option name="width" value="768" />
+    <option name="height" value="589" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -926,7 +933,14 @@
       <option name="project" value="LOCAL" />
       <updated>1526971968310</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Deleted several functions from parameters and analyze. Having several&#10;versions of the same function with similar names is extremely confusing.&#10;Several of them were hard-coded or just completely useless.">
+      <created>1526986896763</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1526986896763</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers>
       <Generic url="http://localhost">
         <option name="loginAnonymously" value="true" />
@@ -963,6 +977,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1535" height="904" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" x="162" y="208" width="676" height="407" id="Project" order="0" sideWeight="0.486631" weight="0.6615178" />
       <window_info anchor="bottom" id="TODO" order="8" weight="0.2274436" />
@@ -972,7 +987,7 @@
       <window_info anchor="bottom" id="Python Console" order="13" sideWeight="0.49764943" weight="0.8333333" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.23544632" weight="0.72533333" />
       <window_info anchor="right" id="SciView" order="3" weight="0.32975152" />
-      <window_info active="true" x="911" y="150" width="402" height="641" id="Structure" order="1" sideWeight="0.51336896" side_tool="true" visible="true" weight="0.22162525" />
+      <window_info active="true" x="911" y="150" width="402" height="641" id="Structure" order="1" sideWeight="0.51336896" side_tool="true" visible="true" weight="0.45668232" />
       <window_info anchor="bottom" auto_hide="true" x="589" y="537" width="907" height="372" id="Terminal" internal_type="SLIDING" order="15" sideWeight="0.35604218" type="SLIDING" weight="0.8670886" />
       <window_info id="Favorites" order="2" sideWeight="0.5056361" side_tool="true" weight="0.10220588" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.6959459" />
@@ -1072,7 +1087,8 @@
     <MESSAGE value="Moved several functions to analyze.Study. Deprecated many functions in&#10;analyze because they were older versions of newer functions. The&#10;classes SingleGeneration and MetaGeneration are virtual clones of one &#10;another. I will probably end up merging the two into Study. Comitting&#10;before moving anything else around." />
     <MESSAGE value="parameters module has different functions to do pretty much the same&#10;things. Same problem as the analyze module. I am deprecating the &#10;Trait.assign_allele_effects function and changing the inputs of&#10;Trait.construct_allele_effects_table." />
     <MESSAGE value="Had to make small adjustment to Trait.construct_ae_array to allow&#10;for up to 6 allele states at a locus. small_scale_run.ipynb contains&#10;a run using the most recent/working version of all functions." />
-    <option name="LAST_COMMIT_MESSAGE" value="Had to make small adjustment to Trait.construct_ae_array to allow&#10;for up to 6 allele states at a locus. small_scale_run.ipynb contains&#10;a run using the most recent/working version of all functions." />
+    <MESSAGE value="Deleted several functions from parameters and analyze. Having several&#10;versions of the same function with similar names is extremely confusing.&#10;Several of them were hard-coded or just completely useless." />
+    <option name="LAST_COMMIT_MESSAGE" value="Deleted several functions from parameters and analyze. Having several&#10;versions of the same function with similar names is extremely confusing.&#10;Several of them were hard-coded or just completely useless." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1421,7 +1437,7 @@
     <entry file="file://$PROJECT_DIR$/src/saegus/parameters.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="38">
-          <caret line="452" column="44" lean-forward="true" selection-start-line="452" selection-start-column="44" selection-end-line="452" selection-end-column="44" />
+          <caret line="452" column="44" selection-start-line="452" selection-start-column="44" selection-end-line="452" selection-end-column="44" />
           <folding>
             <element signature="e#218#3818#0" />
             <element signature="e#3861#9747#0" />
@@ -1431,8 +1447,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="232">
-          <caret line="1284" column="8" selection-start-line="1284" selection-start-column="8" selection-end-line="1284" selection-end-column="8" />
+        <state relative-caret-position="357">
+          <caret line="1291" lean-forward="true" selection-start-line="1291" selection-end-line="1291" />
           <folding>
             <element signature="e#24#45#0" expanded="true" />
             <element signature="e#645#1575#0" />
@@ -1441,12 +1457,20 @@
             <element signature="e#4025#4424#0" />
             <element signature="e#4522#4921#0" />
             <element signature="e#5029#5168#0" />
-            <element signature="e#13216#25257#0" />
             <element signature="e#25343#32784#0" />
             <element signature="e#32841#36453#0" />
             <element signature="e#36568#38869#0" />
             <element signature="e#38963#40743#0" />
             <element signature="e#40819#42457#0" />
+            <element signature="e#67105#67433#0" />
+            <element signature="e#67538#67874#0" />
+            <element signature="e#68013#70686#0" />
+            <element signature="e#70893#72694#0" />
+            <element signature="e#72758#73510#0" />
+            <element signature="e#73591#74022#0" />
+            <element signature="e#74150#76442#0" />
+            <element signature="e#76518#77382#0" />
+            <element signature="e#77692#78517#0" />
           </folding>
         </state>
       </provider>
