@@ -1759,10 +1759,13 @@ class Study(object):
     def gather_allele_frequencies(self, pop, allele_state_table):
         """
         Constructs an array of allele frequencies with columns:
-        locus   alpha_frequency omega_frequency minor_frequency major_frequency
+        allele_frequency_table[:, 0] : locus
+        allele_frequency_table[:, 1] : alpha
+        allele_frequency_table[:, 2] : omega
+        allele_frequency_table[:, 3] : minor
+        allele_frequency_table[:, 4] : major
 
-
-        :param sim.Population pop: diploid population bi-allelic loci
+        :param sim.Population pop: diploid population di-allelic loci
         :return: numpy.array of allele frequencies
         """
 

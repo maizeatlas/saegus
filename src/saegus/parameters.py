@@ -406,6 +406,8 @@ class Trait(object):
         alleles = np.array(pd.read_hdf(allele_file_name))
         return alleles
 
+
+
     def assign_allele_effects(self, alleles, qtl, distribution_function,
                                   *distribution_function_parameters):
 

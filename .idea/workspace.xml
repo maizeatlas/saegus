@@ -3,10 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/devel/magic/1478/multi-replicate-magic-1478.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/devel/magic/1478/multi-replicate-magic-1478.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/devel/magic/1478/run_vandaleer_linux.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/devel/magic/1478/run_vandaleer_linux.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/docs/user_guide/example_trait_data.hdf5" beforeDir="false" afterPath="$PROJECT_DIR$/src/docs/user_guide/example_trait_data.hdf5" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/docs/user_guide/power_analysis_notebook.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/src/docs/user_guide/power_analysis_notebook.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/saegus/analyze.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/saegus/analyze.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/saegus/parameters.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/saegus/parameters.py" afterDir="false" />
     </list>
     <ignored path="saegus_project.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -66,20 +64,26 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="analyze.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="analyze.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="302">
-              <caret line="1610" column="7" lean-forward="true" selection-start-line="1610" selection-start-column="7" selection-end-line="1610" selection-end-column="7" />
+            <state relative-caret-position="621">
+              <caret line="1025" selection-start-line="1025" selection-end-line="1025" />
+              <folding>
+                <element signature="e#36844#40410#0" />
+                <element signature="e#40512#42767#0" />
+                <element signature="e#42848#44475#0" />
+                <element signature="e#44538#46098#0" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="parameters.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="parameters.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/saegus/parameters.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4320">
-              <caret line="295" selection-start-line="295" selection-end-line="295" />
+            <state relative-caret-position="202">
+              <caret line="262" column="66" lean-forward="true" selection-start-line="262" selection-start-column="66" selection-end-line="262" selection-end-column="66" />
             </state>
           </provider>
         </entry>
@@ -108,8 +112,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>error</find>
-      <find>todo</find>
       <find>py:function</find>
       <find>:py:module</find>
       <find>:py:mod:</find>
@@ -138,6 +140,8 @@
       <find>construct_allele_effects</find>
       <find>construct_allele</find>
       <find>construct</find>
+      <find>Study</find>
+      <find>h5py</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -239,9 +243,9 @@
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="832" />
-    <option name="y" value="24" />
+    <option name="y" value="-4" />
     <option name="width" value="768" />
-    <option name="height" value="876" />
+    <option name="height" value="868" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -875,7 +879,21 @@
       <option name="project" value="LOCAL" />
       <updated>1526289702247</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Committing before moving all data collection and data storage functions&#10;in the 'analyze' module to analyze.Study.">
+      <created>1526858700747</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1526858700747</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Moved several functions to analyze.Study. Deprecated many functions in&#10;analyze because they were older versions of newer functions. The&#10;classes SingleGeneration and MetaGeneration are virtual clones of one &#10;another. I will probably end up merging the two into Study. Comitting&#10;before moving anything else around.">
+      <created>1526954352317</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1526954352317</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers>
       <Generic url="http://localhost">
         <option name="loginAnonymously" value="true" />
@@ -917,12 +935,12 @@
       <window_info content_ui="combo" x="162" y="208" width="676" height="407" id="Project" order="0" sideWeight="0.4875" weight="0.6620499" />
       <window_info anchor="bottom" id="TODO" order="8" weight="0.2274436" />
       <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.50235057" side_tool="true" weight="0.8333333" />
-      <window_info anchor="right" x="0" y="0" width="142" height="676" id="Documentation" order="10" side_tool="true" visible="true" weight="0.026192075" />
+      <window_info anchor="right" x="0" y="0" width="142" height="676" id="Documentation" order="10" side_tool="true" weight="0.33795014" />
       <window_info anchor="bottom" id="Version Control" order="5" sideWeight="0.48971722" weight="0.67333335" />
       <window_info anchor="bottom" id="Python Console" order="13" sideWeight="0.49764943" weight="0.8333333" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.23544632" weight="0.72533333" />
       <window_info anchor="right" id="SciView" order="3" weight="0.32975152" />
-      <window_info active="true" x="911" y="150" width="402" height="641" id="Structure" order="1" sideWeight="0.5125" side_tool="true" visible="true" weight="0.3210208" />
+      <window_info active="true" x="911" y="150" width="402" height="641" id="Structure" order="1" sideWeight="0.5125" side_tool="true" visible="true" weight="0.3062458" />
       <window_info anchor="bottom" auto_hide="true" x="589" y="537" width="907" height="372" id="Terminal" internal_type="SLIDING" order="15" sideWeight="0.35604218" type="SLIDING" weight="0.8670886" />
       <window_info id="Favorites" order="2" sideWeight="0.5056361" side_tool="true" weight="0.10220588" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.6959459" />
@@ -947,34 +965,37 @@
       <window_info anchor="bottom" id="Message" order="6" />
     </layout>
     <layout-to-restore>
-      <window_info anchor="right" id="The R Graphics" order="5" weight="0.32975152" />
       <window_info anchor="bottom" id="DB Execution Console" order="0" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="6" weight="0.25" />
-      <window_info x="162" y="208" width="676" height="407" id="Project" order="1" sideWeight="0.49436393" visible="true" weight="0.3566152" />
-      <window_info anchor="bottom" id="Version Control" order="3" sideWeight="0.48971722" weight="0.67333335" />
-      <window_info anchor="bottom" id="Python Console" order="13" weight="0.8341385" />
-      <window_info anchor="right" id="Ant Build" order="4" weight="0.25" />
-      <window_info auto_hide="true" x="911" y="150" width="402" height="641" id="Structure" order="2" weight="0.26930827" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="2" type="SLIDING" weight="0.4" />
-      <window_info anchor="bottom" id="File Transfer" order="12" sideWeight="0.4976744" weight="0.32905984" />
-      <window_info anchor="bottom" id="TODO" order="10" weight="0.2274436" />
-      <window_info anchor="bottom" id="Run" order="6" sideWeight="0.23544632" weight="0.72533333" />
-      <window_info anchor="top" content_ui="combo" id="DB Browser" internal_type="SLIDING" order="0" side_tool="true" type="SLIDING" weight="0.329904" />
-      <window_info anchor="right" auto_hide="true" id="Data View" internal_type="SLIDING" order="7" type="SLIDING" weight="0.32940108" />
-      <window_info anchor="right" id="Mongo Explorer" order="1" />
-      <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
-      <window_info anchor="bottom" id="Application Servers" order="2" />
-      <window_info anchor="right" id="Database" order="0" weight="0.17864339" />
-      <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.4974055" weight="0.32972136" />
       <window_info active="true" anchor="bottom" id="Concurrent Activities Diagram" order="14" visible="true" weight="0.32744783" />
-      <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.64395785" side_tool="true" weight="0.2514535" />
-      <window_info anchor="bottom" id="Find" order="5" sideWeight="0.4974293" weight="0.52913755" />
-      <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
-      <window_info anchor="bottom" id="Debug" order="7" weight="0.6959459" />
-      <window_info anchor="bottom" id="Message" order="4" />
+      <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.4974055" weight="0.32972136" />
+      <window_info anchor="bottom" id="Python Console" order="13" sideWeight="0.49764943" weight="0.8333333" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.23544632" weight="0.72533333" />
+      <window_info anchor="right" id="Mongo Explorer" order="1" />
+      <window_info anchor="bottom" id="Find" order="7" sideWeight="0.4974293" weight="0.52913755" />
+      <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="6" weight="0.25" />
+      <window_info anchor="top" content_ui="combo" id="DB Browser" internal_type="SLIDING" order="0" side_tool="true" type="SLIDING" weight="0.329904" />
+      <window_info anchor="right" id="Cargo" order="4" />
+      <window_info id="Favorites" order="2" sideWeight="0.5056361" side_tool="true" weight="0.10220588" />
       <window_info anchor="bottom" auto_hide="true" x="589" y="537" width="907" height="372" id="Terminal" internal_type="SLIDING" order="15" sideWeight="0.35604218" type="SLIDING" weight="0.8670886" />
-      <window_info anchor="right" id="Packages" order="3" weight="0.32940108" />
-      <window_info id="Favorites" order="0" sideWeight="0.5056361" side_tool="true" weight="0.10220588" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="2" type="SLIDING" weight="0.4" />
+      <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.50235057" side_tool="true" weight="0.8333333" />
+      <window_info anchor="bottom" id="File Transfer" order="12" sideWeight="0.4976744" weight="0.32905984" />
+      <window_info anchor="right" x="0" y="0" width="142" height="676" id="Documentation" order="10" side_tool="true" weight="0.33795014" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="8" weight="0.25" />
+      <window_info anchor="right" id="Packages" order="5" weight="0.32940108" />
+      <window_info anchor="bottom" id="Application Servers" order="4" />
+      <window_info anchor="right" auto_hide="true" id="Data View" internal_type="SLIDING" order="9" type="SLIDING" weight="0.32940108" />
+      <window_info anchor="right" id="The R Graphics" order="7" weight="0.32975152" />
+      <window_info content_ui="combo" x="162" y="208" width="676" height="407" id="Project" order="0" sideWeight="0.4875" weight="0.6620499" />
+      <window_info anchor="right" id="SciView" order="3" weight="0.32975152" />
+      <window_info anchor="right" id="Database" order="0" weight="0.17864339" />
+      <window_info anchor="bottom" id="Message" order="6" />
+      <window_info anchor="bottom" id="TODO" order="8" weight="0.2274436" />
+      <window_info active="true" x="911" y="150" width="402" height="641" id="Structure" order="1" sideWeight="0.5125" side_tool="true" visible="true" weight="0.3062458" />
+      <window_info anchor="bottom" id="Version Control" order="5" sideWeight="0.48971722" weight="0.67333335" />
+      <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.6959459" />
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1015,7 +1036,9 @@
     <MESSAGE value="Creating new functions to aid in interepretation of TASSEL results.&#10;Adding function to parameters.Trait which relates the minor and major&#10;alleles to their effect. Existing functions do not directly relate&#10;the minor/major allele state and corresponding allele effect. Making&#10;slight changes to parameters.Trait class to be initialized to a&#10;population." />
     <MESSAGE value="Decided not to change the parameters.Trait class after all. Eventually&#10;I will probably make &quot;qtl&quot; an init paramter. Added function&#10;Trait.construct_minor_major_effects to parameters." />
     <MESSAGE value="Added the new function, debugged and tested it. It works! My first&#10;new working function in I have no idea how long." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added the new function, debugged and tested it. It works! My first&#10;new working function in I have no idea how long." />
+    <MESSAGE value="Committing before moving all data collection and data storage functions&#10;in the 'analyze' module to analyze.Study." />
+    <MESSAGE value="Moved several functions to analyze.Study. Deprecated many functions in&#10;analyze because they were older versions of newer functions. The&#10;classes SingleGeneration and MetaGeneration are virtual clones of one &#10;another. I will probably end up merging the two into Study. Comitting&#10;before moving anything else around." />
+    <option name="LAST_COMMIT_MESSAGE" value="Moved several functions to analyze.Study. Deprecated many functions in&#10;analyze because they were older versions of newer functions. The&#10;classes SingleGeneration and MetaGeneration are virtual clones of one &#10;another. I will probably end up merging the two into Study. Comitting&#10;before moving anything else around." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1361,17 +1384,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/saegus/parameters.py">
+    <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4320">
-          <caret line="295" selection-start-line="295" selection-end-line="295" />
+        <state relative-caret-position="621">
+          <caret line="1025" selection-start-line="1025" selection-end-line="1025" />
+          <folding>
+            <element signature="e#36844#40410#0" />
+            <element signature="e#40512#42767#0" />
+            <element signature="e#42848#44475#0" />
+            <element signature="e#44538#46098#0" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
+    <entry file="file://$PROJECT_DIR$/src/saegus/parameters.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="1610" column="7" lean-forward="true" selection-start-line="1610" selection-start-column="7" selection-end-line="1610" selection-end-column="7" />
+        <state relative-caret-position="202">
+          <caret line="262" column="66" lean-forward="true" selection-start-line="262" selection-start-column="66" selection-end-line="262" selection-end-column="66" />
         </state>
       </provider>
     </entry>
