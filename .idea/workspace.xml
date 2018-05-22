@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/devel/magic/1478/small_scale_run.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/devel/magic/1478/small_scale_run.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/saegus/analyze.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/saegus/analyze.py" afterDir="false" />
     </list>
     <ignored path="saegus_project.iws" />
@@ -66,8 +67,8 @@
       <file leaf-file-name="analyze.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="1291" lean-forward="true" selection-start-line="1291" selection-end-line="1291" />
+            <state relative-caret-position="381">
+              <caret line="1313" column="12" selection-start-line="1313" selection-start-column="12" selection-end-line="1313" selection-end-column="12" />
               <folding>
                 <element signature="e#24#45#0" expanded="true" />
                 <element signature="e#645#1575#0" />
@@ -940,7 +941,14 @@
       <option name="project" value="LOCAL" />
       <updated>1526986896763</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Added the 'small_scale_run.ipynb' to VCS. It is useful as a model&#10;because it reflects all recent changes to saegus. I need to add methods&#10;in the GWAS module which create the TASSEL configuration files for&#10;each scenario: (single generation, multiple replicates), &#10;(multiple generations, single replicate) so on and so forth. I am &#10;currently testing the (single generation, multiple replicates) method.">
+      <created>1526995357072</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1526995357072</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers>
       <Generic url="http://localhost">
         <option name="loginAnonymously" value="true" />
@@ -1088,7 +1096,8 @@
     <MESSAGE value="parameters module has different functions to do pretty much the same&#10;things. Same problem as the analyze module. I am deprecating the &#10;Trait.assign_allele_effects function and changing the inputs of&#10;Trait.construct_allele_effects_table." />
     <MESSAGE value="Had to make small adjustment to Trait.construct_ae_array to allow&#10;for up to 6 allele states at a locus. small_scale_run.ipynb contains&#10;a run using the most recent/working version of all functions." />
     <MESSAGE value="Deleted several functions from parameters and analyze. Having several&#10;versions of the same function with similar names is extremely confusing.&#10;Several of them were hard-coded or just completely useless." />
-    <option name="LAST_COMMIT_MESSAGE" value="Deleted several functions from parameters and analyze. Having several&#10;versions of the same function with similar names is extremely confusing.&#10;Several of them were hard-coded or just completely useless." />
+    <MESSAGE value="Added the 'small_scale_run.ipynb' to VCS. It is useful as a model&#10;because it reflects all recent changes to saegus. I need to add methods&#10;in the GWAS module which create the TASSEL configuration files for&#10;each scenario: (single generation, multiple replicates), &#10;(multiple generations, single replicate) so on and so forth. I am &#10;currently testing the (single generation, multiple replicates) method." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added the 'small_scale_run.ipynb' to VCS. It is useful as a model&#10;because it reflects all recent changes to saegus. I need to add methods&#10;in the GWAS module which create the TASSEL configuration files for&#10;each scenario: (single generation, multiple replicates), &#10;(multiple generations, single replicate) so on and so forth. I am &#10;currently testing the (single generation, multiple replicates) method." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1447,8 +1456,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="1291" lean-forward="true" selection-start-line="1291" selection-end-line="1291" />
+        <state relative-caret-position="381">
+          <caret line="1313" column="12" selection-start-line="1313" selection-start-column="12" selection-end-line="1313" selection-end-column="12" />
           <folding>
             <element signature="e#24#45#0" expanded="true" />
             <element signature="e#645#1575#0" />
