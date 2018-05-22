@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/saegus/analyze.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/saegus/analyze.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/saegus/parameters.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/saegus/parameters.py" afterDir="false" />
     </list>
     <ignored path="saegus_project.iws" />
@@ -55,11 +54,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="operators.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="operators.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/saegus/operators.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7920">
-              <caret line="534" selection-start-line="534" selection-end-line="534" />
+            <state relative-caret-position="195">
+              <caret line="497" column="21" lean-forward="true" selection-start-line="497" selection-start-column="21" selection-end-line="497" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -67,8 +66,8 @@
       <file leaf-file-name="analyze.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="621">
-              <caret line="1025" selection-start-line="1025" selection-end-line="1025" />
+            <state relative-caret-position="300">
+              <caret line="1706" column="38" lean-forward="true" selection-start-line="1706" selection-start-column="38" selection-end-line="1706" selection-end-column="38" />
               <folding>
                 <element signature="e#36844#40410#0" />
                 <element signature="e#40512#42767#0" />
@@ -79,11 +78,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="parameters.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="parameters.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/saegus/parameters.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="202">
-              <caret line="262" column="66" lean-forward="true" selection-start-line="262" selection-start-column="66" selection-end-line="262" selection-end-column="66" />
+            <state relative-caret-position="30">
+              <caret line="257" column="7" lean-forward="true" selection-start-line="257" selection-start-column="7" selection-end-line="257" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -274,38 +273,7 @@
       <sortByType Scope="true" ProjectPane="true" />
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="saegus_project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="saegus_project" type="47feb1d3:ProjectViewModuleNode" />
-            </path>
-            <path>
-              <item name="saegus_project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="saegus_project" type="47feb1d3:ProjectViewModuleNode" />
-              <item name="saegus_project" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="saegus_project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="saegus_project" type="47feb1d3:ProjectViewModuleNode" />
-              <item name="saegus_project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="saegus_project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="saegus_project" type="47feb1d3:ProjectViewModuleNode" />
-              <item name="saegus_project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="saegus" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="SQL Dialects" />
@@ -893,7 +861,14 @@
       <option name="project" value="LOCAL" />
       <updated>1526954352317</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="parameters module has different functions to do pretty much the same&#10;things. Same problem as the analyze module. I am deprecating the &#10;Trait.assign_allele_effects function and changing the inputs of&#10;Trait.construct_allele_effects_table.">
+      <created>1526968453230</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1526968453230</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers>
       <Generic url="http://localhost">
         <option name="loginAnonymously" value="true" />
@@ -934,7 +909,7 @@
     <layout>
       <window_info content_ui="combo" x="162" y="208" width="676" height="407" id="Project" order="0" sideWeight="0.4875" weight="0.6620499" />
       <window_info anchor="bottom" id="TODO" order="8" weight="0.2274436" />
-      <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.50235057" side_tool="true" weight="0.8333333" />
+      <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.50235057" side_tool="true" weight="0.8328877" />
       <window_info anchor="right" x="0" y="0" width="142" height="676" id="Documentation" order="10" side_tool="true" weight="0.33795014" />
       <window_info anchor="bottom" id="Version Control" order="5" sideWeight="0.48971722" weight="0.67333335" />
       <window_info anchor="bottom" id="Python Console" order="13" sideWeight="0.49764943" weight="0.8333333" />
@@ -1038,7 +1013,8 @@
     <MESSAGE value="Added the new function, debugged and tested it. It works! My first&#10;new working function in I have no idea how long." />
     <MESSAGE value="Committing before moving all data collection and data storage functions&#10;in the 'analyze' module to analyze.Study." />
     <MESSAGE value="Moved several functions to analyze.Study. Deprecated many functions in&#10;analyze because they were older versions of newer functions. The&#10;classes SingleGeneration and MetaGeneration are virtual clones of one &#10;another. I will probably end up merging the two into Study. Comitting&#10;before moving anything else around." />
-    <option name="LAST_COMMIT_MESSAGE" value="Moved several functions to analyze.Study. Deprecated many functions in&#10;analyze because they were older versions of newer functions. The&#10;classes SingleGeneration and MetaGeneration are virtual clones of one &#10;another. I will probably end up merging the two into Study. Comitting&#10;before moving anything else around." />
+    <MESSAGE value="parameters module has different functions to do pretty much the same&#10;things. Same problem as the analyze module. I am deprecating the &#10;Trait.assign_allele_effects function and changing the inputs of&#10;Trait.construct_allele_effects_table." />
+    <option name="LAST_COMMIT_MESSAGE" value="parameters module has different functions to do pretty much the same&#10;things. Same problem as the analyze module. I am deprecating the &#10;Trait.assign_allele_effects function and changing the inputs of&#10;Trait.construct_allele_effects_table." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1321,13 +1297,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/saegus/operators.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7920">
-          <caret line="534" selection-start-line="534" selection-end-line="534" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/docs/user_guide/power_analysis_automation.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
@@ -1384,10 +1353,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/saegus/parameters.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="257" column="7" lean-forward="true" selection-start-line="257" selection-start-column="7" selection-end-line="257" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="621">
-          <caret line="1025" selection-start-line="1025" selection-end-line="1025" />
+        <state relative-caret-position="300">
+          <caret line="1706" column="38" lean-forward="true" selection-start-line="1706" selection-start-column="38" selection-end-line="1706" selection-end-column="38" />
           <folding>
             <element signature="e#36844#40410#0" />
             <element signature="e#40512#42767#0" />
@@ -1397,10 +1373,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/saegus/parameters.py">
+    <entry file="file://$PROJECT_DIR$/src/saegus/operators.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="262" column="66" lean-forward="true" selection-start-line="262" selection-start-column="66" selection-end-line="262" selection-end-column="66" />
+        <state relative-caret-position="195">
+          <caret line="497" column="21" lean-forward="true" selection-start-line="497" selection-start-column="21" selection-end-line="497" selection-end-column="21" />
         </state>
       </provider>
     </entry>

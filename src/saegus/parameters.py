@@ -246,8 +246,8 @@ class MissingGenotypeData(object):
 
 class Trait(object):
     """
-    This class carries functions responsible for assigning and handling
-    trait models: Decision making process simulator uses to assign phenotypes.
+    A class to assign allele effects for additive traits.
+
 
     For the time being we assume certain things about the integers representing
     allele states and the ploidy of the organism.
@@ -262,25 +262,35 @@ class Trait(object):
 
     # todo Create documentation for construct_allele_effects_table
 
-    def construct_allele_effects_table(self, pop: sim.Population, qtl: list,
+    def construct_allele_effects_table(self,
+                                       allele_states: np.ndarray,
+                                       qtl: list,
                                        distribution_function,
                                        *distribution_function_parameters):
+        """
+        Creates an array which provides the allele state and its corresponding
+        allele effect for di-allelic population. The distribution_function is
+        a function from the Python Standard Library random module.
 
-        allele_effects_table = np.zeros((pop.totNumLoci(), 5))
-        alpha_alleles = []
-        omega_alleles = []
+        Columns of allele_effects_table:
+        allele_effects_table[:, 0] : locus
+        allele_effects_table[:, 1] : alpha
+        allele_effects_table[:, 2] : alpha effect
+        allele_effects_table[:, 3] : omega
+        allele_effects_table[:, 4] : omega effect
 
-        sim.stat(pop, alleleFreq=sim.ALL_AVAIL)
+        :param allele_states: number_loci x 2 array of integer allele states
+        :param list[int] qtl: loci with nonzero allele effects
+        :param distribution_function: sampling distribution
+        :param distribution_function_parameters: corresponding parameters
+        :return:
+        """
 
-        for locus in range(pop.totNumLoci()):
-            alpha_alleles.append(list(pop.dvars().alleleFreq[locus])[0])
-            omega_alleles.append(list(pop.dvars().alleleFreq[locus])[-1])
-            if alpha_alleles[locus] == omega_alleles[locus]:
-                omega_alleles[locus] = 0
+        allele_effects_table = np.zeros((allele_states.shape[0], 5))
 
-        allele_effects_table[:, 0] = list(range(pop.totNumLoci()))
-        allele_effects_table[:, 1] = alpha_alleles
-        allele_effects_table[:, 3] = omega_alleles
+        allele_effects_table[:, 0] = list(range(allele_states.shape[0]))
+        allele_effects_table[:, 1] = allele_states[:, 0]
+        allele_effects_table[:, 3] = allele_states[:, 1]
 
         for locus in qtl:
             allele_effects_table[locus, 2] = \
@@ -299,7 +309,7 @@ class Trait(object):
         array corresponds to the allele at that locus. It makes computation
         of genotypic value and phenotypic value very fast.
         """
-        allele_effects_array = np.zeros(allele_effects_table.shape)
+        allele_effects_array = np.zeros((allele_effects_table.shape[0], 6))
         for row in allele_effects_table[qtl]:
             allele_effects_array[int(row[0]), int(row[1])] = row[2]
             allele_effects_array[int(row[0]), int(row[3])] = row[4]
@@ -368,48 +378,22 @@ class Trait(object):
         return minor_major_allele_effects
 
 
+# Deleted Trait.seg_qtl_chooser function. It was not useful.
 
+# Deleted Trait.load_alleles function. It was not useful.
 
-
-
-
-    def seg_qtl_chooser(self, pop: sim.Population, loci_subset: list, number_qtl: int):
-        """
-        Chooses a random sample of ``number_qtl`` loci to be designated as QTL.
-        Only chooses from among loci which are segregating in ``pop``.
-        Determines which loci are segregating in ``loci_subset``.
-        ``loci_subset`` can be all loci or a subset of them.
-        :param number_qtl:
-        :type number_qtl:
-        :return:
-        :rtype:
-        """
-        sim.stat(pop, numOfSegSites=loci_subset, vars=['numOfSegSites',
-                                                       'numOfSegSites_sp',
-                                                       'segSites', 'segSites_sp'])
-
-        permissible_qtl = [locus for locus in pop.dvars().segSites if locus in
-                           loci_subset]
-
-        qtl = sorted(random.sample(permissible_qtl, number_qtl))
-        return qtl
-
-    def load_alleles(self, allele_file_name):
-        """
-        Loads alleles for all loci formatted in a way appropriate for assign_allele_effects.
-
-
-        :param str allele_filename: HDF Filename containing alleles at each locus.
-        :return:
-        """
-
-        alleles = np.array(pd.read_hdf(allele_file_name))
-        return alleles
-
-
+# DEPRECATED
 
     def assign_allele_effects(self, alleles, qtl, distribution_function,
                                   *distribution_function_parameters):
+        """
+        Deprecated. Use Trait.construct_allele_effects_table
+        :param alleles:
+        :param qtl:
+        :param distribution_function:
+        :param distribution_function_parameters:
+        :return:
+        """
 
         allele_effects = {}
         for locus in qtl:
