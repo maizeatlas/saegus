@@ -1262,9 +1262,6 @@ class GWAS(object):
                            output_prefix: str = '',
                            ):
 
-        import xml.etree.ElementTree as ET
-        import lxml.etree as etree
-        from os import path
 
         tree = ET.parse(config_template)
         root = tree.getroot()
@@ -1769,8 +1766,6 @@ class Study(object):
         :return: numpy.array of allele frequencies
         """
 
-    #    allele_data_table = gather_allele_data(pop)
-
         allele_frequency_table = np.zeros((pop.totNumLoci(), 5))
 
         allele_frequency_table[:, 0] = allele_state_table[:, 0]
@@ -1812,58 +1807,7 @@ class Study(object):
         return genotype_frequency_array
 
 
-
-
-def write_multiple_sample_analyzer(library_of_samples, sample_size_list,
-                             quantitative_trait_loci, alleles, allele_effects,
-                         heritability, segregating_loci, run_id='infinite',
-                         sub_run_id = '',
-                         allele_frequency_hdf=''):
-
-
-    syn_parameters = shelve.open('synthesis_parameters')
-    int_to_snp_map = syn_parameters['integer_to_snp']
-    syn_parameters.close()
-
-    allele_frqs = pd.HDFStore(allele_frequency_hdf)
-
-    for rep_id, sample_list in library_of_samples.items():
-        for sample_population in sample_list:
-
-            operators.assign_additive_g(sample_population, quantitative_trait_loci,
-                                        allele_effects)
-            operators.calculate_error_variance(sample_population, heritability)
-            operators.calculate_p(sample_population)
-
-            name = run_id + sub_run_id + '_' + str(rep_id) + '_' + str(sample_population.popSize())
-            afrq_name = run_id + '/' + str(rep_id) + '/' + str(sample_population.popSize())
-            minor_alleles = allele_frqs[afrq_name]['minor_allele']
-            minor_allele_frequencies = np.array([allele_frqs[afrq_name]['minor_frequency'][locus] for locus in segregating_loci])
-
-            gwas = GWAS(sample_population, segregating_loci, run_id)
-
-            indir = "C:\\tassel\\input\\"
-
-            ccm = gwas.calculate_count_matrix(minor_alleles)
-            ps_svd = gwas.pop_struct_eigdencomp(ccm)
-            gwas.population_structure_formatter(ps_svd  , indir + name + '_structure_matrix.txt')
-            gwas.hapmap_formatter(int_to_snp_map,
-                                         indir + name + '_simulated_hapmap.txt')
-            gwas.trait_formatter(indir + name + '_phenotype_vector.txt')
-            gwas.calc_kinship_matrix(ccm, minor_allele_frequencies,
-                                            indir + name + '_kinship_matrix.txt')
-
-            gwas.replicate_tassel_gwas_configs(str(rep_id), sample_population.popSize(),
-                indir + name + '_simulated_hapmap.txt',
-                indir + name + '_kinship_matrix.txt',
-                indir + name + '_phenotype_vector.txt',
-                indir + name + '_structure_matrix.txt',
-                "C:\\tassel\\output\\" + name + '_out_',
-                                              "C:\\Users\DoubleDanks\\BISB\\wisser\\code\\rjwlab-scripts\\"
-                                              "saegus_project\\devel\\magic\\1478\\" + run_id + "_gwas_pipeline.xml")
-
-    allele_frqs.close()
-
+# Deleted write_multiple_sample_analyzer. Function exists in other places.
 
 def generate_allele_effects_frequencies(sample_population,
                                         alleles,

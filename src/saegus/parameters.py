@@ -403,9 +403,12 @@ class Trait(object):
                     distribution_function(*distribution_function_parameters)
         return allele_effects
 
+# DEPRECATED
+
     def convert_allele_effects_into_array(self, total_number_loci,
                                           total_number_alleles, allele_effects):
         """
+        Deprecated. Use Trait.construct_ae_array.
         Convenience function to turn an allele effect dictionary to an array
         where the row is the locus and column corresponds to allele state.
         Locate effect by allele_effect_array[locus, allele_at_locus].
