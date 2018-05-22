@@ -17,113 +17,9 @@ import xml.etree.ElementTree as ET
 import lxml.etree as etree
 from . import operators, parameters
 
-# todo Create documentation for gather_allele_data. Very useful function.
-
-def gather_allele_data(pop):
-    """
-    Constructs a numpy.array with columns:
-    locus   alpha   omega   minor   major
-
-    Loci at 0.5 frequency have the minor allele set as the alpha allele
-    and the major allele set as the omega allele
-
-    :param sim.Population pop: diploid simuPOP population
-    :return: Array labeling alpha, omega, minor and major alleles
-    """
-
-    allele_table = np.zeros((pop.totNumLoci(), 5))
-    alpha_alleles = []
-    omega_alleles = []
-
-    for locus in range(pop.totNumLoci()):
-        alpha_alleles.append(list(pop.dvars().alleleFreq[locus])[0])
-        omega_alleles.append(list(pop.dvars().alleleFreq[locus])[-1])
-        if alpha_alleles[locus] == omega_alleles[locus]:
-            omega_alleles[locus] = 0
-
-    minor_table = np.ones((pop.totNumLoci(), 6))
-    major_table = np.zeros((pop.totNumLoci(), 6))
-
-    for locus, alpha, omega in zip(range(pop.totNumLoci()), alpha_alleles,
-                                   omega_alleles):
-        minor_table[locus, alpha] = pop.dvars().alleleFreq[locus][alpha]
-        minor_table[locus, omega] = pop.dvars().alleleFreq[locus][omega]
-        major_table[locus, alpha] = pop.dvars().alleleFreq[locus][alpha]
-        major_table[locus, omega] = pop.dvars().alleleFreq[locus][omega]
-
-    minor_alleles = np.array(
-        [np.argmin(minor_table[locus]) for locus in range(pop.totNumLoci())])
-    major_alleles = np.array(
-        [np.argmax(major_table[locus]) for locus in range(pop.totNumLoci())])
-    tied_loci = np.where(minor_alleles == major_alleles)
-    minor_alleles[tied_loci[0]] = np.array(alpha_alleles)[tied_loci[0]]
-    major_alleles[tied_loci[0]] = np.array(omega_alleles)[tied_loci[0]]
-
-#    assert sum(minor_alleles == major_alleles) == 0, "At least one allele is "\
-#                                                        "classified as a minor"\
-#                                                        "and major allele."
-
-    allele_table[:, 0] = np.array(range(pop.totNumLoci()))
-    allele_table[:, 1] = alpha_alleles
-    allele_table[:, 2] = omega_alleles
-    allele_table[:, 3] = minor_alleles
-    allele_table[:, 4] = major_alleles
-
-    return allele_table
 
 # todo Modify user_guide to reflect the separation of steps
 
-def gather_allele_frequencies(pop, allele_state_table):
-    """
-    Constructs an array of allele frequencies with columns:
-    locus   alpha_frequency omega_frequency minor_frequency major_frequency
-
-
-    :param sim.Population pop: diploid population bi-allelic loci
-    :return: numpy.array of allele frequencies
-    """
-
-#    allele_data_table = gather_allele_data(pop)
-
-    allele_frequency_table = np.zeros((pop.totNumLoci(), 5))
-
-    allele_frequency_table[:, 0] = allele_state_table[:, 0]
-    for i in range(1, 5):
-        allele_frequency_table[:, i] = [
-            pop.dvars().alleleFreq[locus][allele] for
-                locus, allele in zip(allele_state_table[:, 0],
-                                     allele_state_table[:, i])]
-
-    return allele_frequency_table
-
-
-# todo Add documentation for gather_genotype_frequencies into analyze.rst
-# todo Add usage example for gather_genotype_frequencies into analyze.rst
-# todo Update documentation of gather_genotype_frequencies to reflect separation of steps
-
-def gather_genotype_frequencies(pop):
-    """
-    Constructs a 3D array with dimensions number_of_loci x 5 x 5
-    Genotypes are treated as 2D coordinates along the locus axis
-
-    .. note:: To get the genotypes by locus we can use a single line of code.
-
-    .. code-block:: python
-
-        >>> genotypes_by_locus = np.array(np.ndarray.nonzero(genotype_frequency_array)).T
-
-    :param sim.Population pop: Diploid population with bi-allelic loci
-    :return: 3D genotype frequency array
-    """
-
-    genotype_frequency_array = np.ndarray((pop.totNumLoci(), 5, 5))
-
-    for locus in range(pop.totNumLoci()):
-        for genotype in pop.dvars().genoFreq[locus].keys():
-            genotype_frequency_array[locus][genotype] = \
-            pop.dvars().genoFreq[locus][genotype]
-
-    return genotype_frequency_array
 
 
 def tassel_results_tables(gwas_file_name, q_values_file_name,
@@ -149,9 +45,13 @@ def tassel_results_tables(gwas_file_name, q_values_file_name,
     return raw_gwas_results
 
 
+# DEPRECATED
+
 def generate_allele_effects_table(population_allele_frequencies, allele_array,
                                   allele_effect_array):
     """
+    Deprecated. Use methods from Study class.
+
     Creates a pandas DataFrame with the columns:
     + alpha allele
     + alpha allele effect
@@ -832,9 +732,11 @@ class SingleGeneration(object):
                                   for locus, genotype in
                                   enumerate(minor_homozygote_genotypes))))
 
+# DEPRECATED
 
 def allele_data(pop, alleles, loci):
     """
+    Deprecated. Use methods from Study class.
     Determines the minor alleles, minor allele frequencies, major alleles and
     major allele frequencies.
 
@@ -917,10 +819,12 @@ def allele_data(pop, alleles, loci):
 
     return allele_data_structure
 
+# DEPRECATED
 
 def allele_frq_table(pop, number_gens,
     allele_frq_data, recombination_rates, genetic_map):
     """
+    Deprecated. Use methods from Study class.
     Generates a large table which centralizes all allele frequency data.
     The data is inserted into a pandas DataFrame object.
     Useful for downstream analysis and insertion into a database.
@@ -985,10 +889,12 @@ def allele_frq_table(pop, number_gens,
     af_table = pd.DataFrame(data, columns=data_columns)
     return af_table
 
+# DEPRECATED
 
 def collect_haplotype_data(pop, allele_effects, quantitative_trait_loci):
     """
-
+    Deprecated. Have not used or needed this function for a very long time.
+    Collects effect and frequency data for 'triplet' haplotype configuration.
     :param pop:
     :type pop:
     :param allele_effects:
@@ -1036,9 +942,11 @@ def collect_haplotype_data(pop, allele_effects, quantitative_trait_loci):
 
     return haplotypes
 
+# DEPRECATED
 
 def generate_haplotype_data_table(pop, haplotype_data):
     """
+    Deprecated. Have not used or needed to use this function for a long time.
     Generates a table for easy analysis and visualization of haplotypes,
     effects, frequencies and locations.
 
@@ -1537,6 +1445,7 @@ class GWASConfig(object):
 
 
 
+# todo Deprecate analyze.single_sample_analyzer
 
 def single_sample_analyzer(full_population, sample_size,
                                quantitative_trait_loci, alleles,
@@ -1544,6 +1453,9 @@ def single_sample_analyzer(full_population, sample_size,
                                        run_id='infinite'):
 
     """
+    Deprecated. This function is hardcoded. Included in documentation to make
+    sure I remembered how to get the TASSEL output.
+
     A function to call all of the functions in order to get from population
     to TASSEL input and output.
 
@@ -1604,19 +1516,19 @@ def single_sample_analyzer(full_population, sample_size,
 
 class Study(object):
     """
-    Encapsulation of functions and properties to track information about a line
-    of analysis or idea. Required parameter is a str run_id. Hence everything
-    with the same run_id is related.
+    Study contains functions related to the collection and analysis of
+    data pertaining to a simulation. Data such as allele frequencies are stored
+    in HDF5 files.
 
     """
 
 
-    def __init__(self, run_id):
+    def __init__(self, run_id: str):
         """
-        Studies are identified by their run_id. A study has its own set of
+        Studies are identified by their run_id. A Study has its own set of
         input/output associated with it identifiable by the run_id in the file
         name.
-        :param str run_id: Unique identifier to naturally group related pieces of data.
+        :param str run_id: Unique string identifier
         """
         self.run_id = run_id
         self.integer_to_snp = {0: 'A', 1: 'C', 2: 'G', 3: 'T', 4: 'D', 5: 'I'}
@@ -1789,6 +1701,113 @@ class Study(object):
                 hdf_store.put(name, af)
 
         hdf_store.close()
+
+    # todo Create documentation for gather_allele_data. Very useful function.
+
+    def gather_allele_data(self, pop):
+        """
+        Constructs a numpy.array with columns:
+        locus   alpha   omega   minor   major
+
+        Loci at 0.5 frequency have the minor allele set as the alpha allele
+        and the major allele set as the omega allele
+
+        :param sim.Population pop: diploid simuPOP population
+        :return: Array labeling alpha, omega, minor and major alleles
+        """
+
+        allele_table = np.zeros((pop.totNumLoci(), 5))
+        alpha_alleles = []
+        omega_alleles = []
+
+        for locus in range(pop.totNumLoci()):
+            alpha_alleles.append(list(pop.dvars().alleleFreq[locus])[0])
+            omega_alleles.append(list(pop.dvars().alleleFreq[locus])[-1])
+            if alpha_alleles[locus] == omega_alleles[locus]:
+                omega_alleles[locus] = 0
+
+        minor_table = np.ones((pop.totNumLoci(), 6))
+        major_table = np.zeros((pop.totNumLoci(), 6))
+
+        for locus, alpha, omega in zip(range(pop.totNumLoci()), alpha_alleles,
+                                       omega_alleles):
+            minor_table[locus, alpha] = pop.dvars().alleleFreq[locus][alpha]
+            minor_table[locus, omega] = pop.dvars().alleleFreq[locus][omega]
+            major_table[locus, alpha] = pop.dvars().alleleFreq[locus][alpha]
+            major_table[locus, omega] = pop.dvars().alleleFreq[locus][omega]
+
+        minor_alleles = np.array(
+            [np.argmin(minor_table[locus]) for locus in range(pop.totNumLoci())])
+        major_alleles = np.array(
+            [np.argmax(major_table[locus]) for locus in range(pop.totNumLoci())])
+        tied_loci = np.where(minor_alleles == major_alleles)
+        minor_alleles[tied_loci[0]] = np.array(alpha_alleles)[tied_loci[0]]
+        major_alleles[tied_loci[0]] = np.array(omega_alleles)[tied_loci[0]]
+
+    #    assert sum(minor_alleles == major_alleles) == 0, "At least one allele is "\
+    #                                                        "classified as a minor"\
+    #                                                        "and major allele."
+
+        allele_table[:, 0] = np.array(range(pop.totNumLoci()))
+        allele_table[:, 1] = alpha_alleles
+        allele_table[:, 2] = omega_alleles
+        allele_table[:, 3] = minor_alleles
+        allele_table[:, 4] = major_alleles
+
+        return allele_table
+
+    def gather_allele_frequencies(self, pop, allele_state_table):
+        """
+        Constructs an array of allele frequencies with columns:
+        locus   alpha_frequency omega_frequency minor_frequency major_frequency
+
+
+        :param sim.Population pop: diploid population bi-allelic loci
+        :return: numpy.array of allele frequencies
+        """
+
+    #    allele_data_table = gather_allele_data(pop)
+
+        allele_frequency_table = np.zeros((pop.totNumLoci(), 5))
+
+        allele_frequency_table[:, 0] = allele_state_table[:, 0]
+        for i in range(1, 5):
+            allele_frequency_table[:, i] = [
+                pop.dvars().alleleFreq[locus][allele] for
+                    locus, allele in zip(allele_state_table[:, 0],
+                                         allele_state_table[:, i])]
+
+        return allele_frequency_table
+
+
+    # todo Add documentation for gather_genotype_frequencies into analyze.rst
+    # todo Add usage example for gather_genotype_frequencies into analyze.rst
+    # todo Update documentation of gather_genotype_frequencies to reflect separation of steps
+
+    def gather_genotype_frequencies(self, pop):
+        """
+        Constructs a 3D array with dimensions number_of_loci x 5 x 5
+        Genotypes are treated as 2D coordinates along the locus axis
+
+        .. note:: To get the genotypes by locus we can use a single line of code.
+
+        .. code-block:: python
+
+            >>> genotypes_by_locus = np.array(np.ndarray.nonzero(genotype_frequency_array)).T
+
+        :param sim.Population pop: Diploid population with bi-allelic loci
+        :return: 3D genotype frequency array
+        """
+
+        genotype_frequency_array = np.ndarray((pop.totNumLoci(), 5, 5))
+
+        for locus in range(pop.totNumLoci()):
+            for genotype in pop.dvars().genoFreq[locus].keys():
+                genotype_frequency_array[locus][genotype] = \
+                pop.dvars().genoFreq[locus][genotype]
+
+        return genotype_frequency_array
+
 
 
 
