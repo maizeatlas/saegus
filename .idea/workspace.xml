@@ -4,7 +4,6 @@
     <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/devel/magic/1478/small_scale_run.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/devel/magic/1478/small_scale_run.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/saegus/analyze.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/saegus/analyze.py" afterDir="false" />
     </list>
     <ignored path="saegus_project.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -67,8 +66,8 @@
       <file leaf-file-name="analyze.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="1906" column="30" selection-start-line="1906" selection-start-column="30" selection-end-line="1906" selection-end-column="30" />
+            <state relative-caret-position="300">
+              <caret line="1320" column="9" lean-forward="true" selection-start-line="1320" selection-start-column="9" selection-end-line="1320" selection-end-column="9" />
               <folding>
                 <element signature="e#24#45#0" expanded="true" />
                 <element signature="e#645#1575#0" />
@@ -77,18 +76,29 @@
                 <element signature="e#4025#4424#0" />
                 <element signature="e#4522#4921#0" />
                 <element signature="e#5029#5168#0" />
-                <element signature="e#25343#32784#0" />
                 <element signature="e#32841#36453#0" />
                 <element signature="e#36568#38869#0" />
                 <element signature="e#38963#40743#0" />
                 <element signature="e#40819#42457#0" />
                 <element signature="e#43577#43636#0" />
                 <element signature="e#43798#45631#0" />
-                <element signature="e#45745#46850#0" />
                 <element signature="e#47158#48101#0" />
                 <element signature="e#48198#48904#0" />
                 <element signature="e#49096#50919#0" />
                 <element signature="e#51056#51789#0" />
+                <element signature="e#83496#84965#0" />
+                <element signature="e#85204#85812#0" />
+                <element signature="e#86009#87461#0" />
+                <element signature="e#87612#88214#0" />
+                <element signature="e#87612#87850#1" />
+                <element signature="e#88303#88623#0" />
+                <element signature="e#88741#89157#0" />
+                <element signature="e#89286#89903#0" />
+                <element signature="e#90395#91204#0" />
+                <element signature="e#91326#92582#0" />
+                <element signature="e#92695#93501#0" />
+                <element signature="e#93532#94646#0" />
+                <element signature="e#94677#100006#0" />
               </folding>
             </state>
           </provider>
@@ -252,9 +262,9 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="65" />
+    <option name="x" value="85" />
     <option name="y" value="24" />
-    <option name="width" value="768" />
+    <option name="width" value="1122" />
     <option name="height" value="876" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -284,94 +294,48 @@
       <sortByType Scope="true" ProjectPane="true" />
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="saegus_project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="saegus_project" type="47feb1d3:ProjectViewModuleNode" />
-            </path>
-            <path>
-              <item name="saegus_project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="saegus_project" type="47feb1d3:ProjectViewModuleNode" />
-              <item name="saegus_project" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="saegus_project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="saegus_project" type="47feb1d3:ProjectViewModuleNode" />
-              <item name="saegus_project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="saegus_project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="saegus_project" type="47feb1d3:ProjectViewModuleNode" />
-              <item name="saegus_project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="docs" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="saegus_project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="saegus_project" type="47feb1d3:ProjectViewModuleNode" />
-              <item name="saegus_project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="docs" type="462c0819:PsiDirectoryNode" />
-              <item name="user_guide" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="saegus_project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="saegus_project" type="47feb1d3:ProjectViewModuleNode" />
-              <item name="saegus_project" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="saegus" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="SQL Dialects" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../tuson_simulation/tuson/parameter_files/genetic_map.txt" />
-    <property name="ToolWindowDB Browser.ShowToolbar" value="false" />
-    <property name="nodejs_interpreter_path" value="node" />
-    <property name="com.intellij.ide.scratch.LRUPopupBuilder$2/Languages" value="Python" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="73" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="88" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder1" value="1" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="89" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder2" value="2" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="447" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder3" value="3" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="109" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="73" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth1" value="88" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth2" value="89" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth3" value="447" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder0" value="0" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="108" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="109" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
-    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="371" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth0" value="109" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth1" value="108" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth2" value="109" />
+    <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="371" />
+    <property name="ToolWindowDB Browser.ShowToolbar" value="false" />
+    <property name="ToolWindowDatabase.ShowToolbar" value="false" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="com.intellij.database.dataSource.DataSourceTemplate" value="Sqlite (Xerial)" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$2/Languages" value="Python" />
+    <property name="js-jscs-nodeInterpreter" value="C:\nodejs\node.exe" />
     <property name="js.buildTools.grunt.grunt-cli.package" value="" />
     <property name="js.buildTools.gulp.gulp_package_dir" value="" />
-    <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="js-jscs-nodeInterpreter" value="C:\nodejs\node.exe" />
-    <property name="com.intellij.database.dataSource.DataSourceTemplate" value="Sqlite (Xerial)" />
-    <property name="prop_add_unversioned_files" value="true" />
     <property name="js.eslint.eslintPackage" value="" />
-    <property name="node.js.path.for.package.jscs" value="project" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../tuson_simulation/tuson/parameter_files/genetic_map.txt" />
     <property name="node.js.detected.package.jscs" value="true" />
-    <property name="node.js.selected.package.jscs" value="" />
-    <property name="node.js.path.for.package.stylelint" value="project" />
     <property name="node.js.detected.package.stylelint" value="true" />
-    <property name="node.js.selected.package.stylelint" value="" />
-    <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.jscs" value="project" />
+    <property name="node.js.path.for.package.stylelint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.jscs" value="" />
+    <property name="node.js.selected.package.stylelint" value="" />
     <property name="node.js.selected.package.tslint" value="" />
-    <property name="ToolWindowDatabase.ShowToolbar" value="false" />
+    <property name="nodejs_interpreter_path" value="node" />
+    <property name="prop_add_unversioned_files" value="true" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -960,7 +924,14 @@
       <option name="project" value="LOCAL" />
       <updated>1527153148924</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Calculation for the kinship matrix has been corrected. I am currently&#10;fixing the function for the automation of the TASSEL input files.">
+      <created>1527155241346</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1527155241346</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers>
       <Generic url="http://localhost">
         <option name="loginAnonymously" value="true" />
@@ -996,7 +967,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="24" width="768" height="876" extended-state="4" />
+    <frame x="65" y="-4" width="1535" height="904" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" x="162" y="208" width="676" height="407" id="Project" order="0" sideWeight="0.486631" weight="0.6615178" />
@@ -1007,7 +978,7 @@
       <window_info anchor="bottom" id="Python Console" order="13" sideWeight="0.49764943" weight="0.8333333" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.23544632" weight="0.72533333" />
       <window_info anchor="right" id="SciView" order="3" weight="0.32975152" />
-      <window_info active="true" x="911" y="150" width="402" height="641" id="Structure" order="1" sideWeight="0.51336896" side_tool="true" visible="true" weight="0.5955679" />
+      <window_info active="true" x="911" y="150" width="402" height="641" id="Structure" order="1" sideWeight="0.51336896" side_tool="true" visible="true" weight="0.15244299" />
       <window_info anchor="bottom" auto_hide="true" x="589" y="537" width="907" height="372" id="Terminal" internal_type="SLIDING" order="15" sideWeight="0.35604218" type="SLIDING" weight="0.8670886" />
       <window_info id="Favorites" order="2" sideWeight="0.5056361" side_tool="true" weight="0.10220588" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.6959459" />
@@ -1084,7 +1055,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/archives/wgs" />
     </ignored-roots>
-    <MESSAGE value="TASSEL_GWAS.ipynb implements multi-replicate runs of the simulator.&#10;Stores all related parameter files in .yaml format using a new function.&#10;Creates a configFile to run TASSEL for each replicate using a .xml template." />
     <MESSAGE value="Minor changes to simulator output.&#10;Parmeter sets for every replicate are written to files with corresponding names.&#10;Added a batch script gwas_pipeline.cmd to run multiple replicates through TASSEL.&#10;" />
     <MESSAGE value="Consolidated many separate directories under a single pycharm project.&#10;Minor changes to some functions.&#10;Developing GWAS output analysis." />
     <MESSAGE value="Prior commit had wgs-0.1.0 under a separate, private git repository." />
@@ -1109,7 +1079,8 @@
     <MESSAGE value="Added the 'small_scale_run.ipynb' to VCS. It is useful as a model&#10;because it reflects all recent changes to saegus. I need to add methods&#10;in the GWAS module which create the TASSEL configuration files for&#10;each scenario: (single generation, multiple replicates), &#10;(multiple generations, single replicate) so on and so forth. I am &#10;currently testing the (single generation, multiple replicates) method." />
     <MESSAGE value="Configuration file function in GWAS module for &#10;(single generation, multiple replicates) has been tested. New paradigm&#10;for configuration file function is to make most of the input default&#10;arguments. The only thing that really changes between simulations are&#10;the file prefixes." />
     <MESSAGE value="At some point during the switch to a Linux OS from Windows 7 I &#10;changed the calculation of analyze.calc_kinship_matrix from a &#10;calculation which worked to a calculation which made no sense. What&#10;the hell happened?" />
-    <option name="LAST_COMMIT_MESSAGE" value="At some point during the switch to a Linux OS from Windows 7 I &#10;changed the calculation of analyze.calc_kinship_matrix from a &#10;calculation which worked to a calculation which made no sense. What&#10;the hell happened?" />
+    <MESSAGE value="Calculation for the kinship matrix has been corrected. I am currently&#10;fixing the function for the automation of the TASSEL input files." />
+    <option name="LAST_COMMIT_MESSAGE" value="Calculation for the kinship matrix has been corrected. I am currently&#10;fixing the function for the automation of the TASSEL input files." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1468,8 +1439,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="1906" column="30" selection-start-line="1906" selection-start-column="30" selection-end-line="1906" selection-end-column="30" />
+        <state relative-caret-position="300">
+          <caret line="1320" column="9" lean-forward="true" selection-start-line="1320" selection-start-column="9" selection-end-line="1320" selection-end-column="9" />
           <folding>
             <element signature="e#24#45#0" expanded="true" />
             <element signature="e#645#1575#0" />
@@ -1478,18 +1449,29 @@
             <element signature="e#4025#4424#0" />
             <element signature="e#4522#4921#0" />
             <element signature="e#5029#5168#0" />
-            <element signature="e#25343#32784#0" />
             <element signature="e#32841#36453#0" />
             <element signature="e#36568#38869#0" />
             <element signature="e#38963#40743#0" />
             <element signature="e#40819#42457#0" />
             <element signature="e#43577#43636#0" />
             <element signature="e#43798#45631#0" />
-            <element signature="e#45745#46850#0" />
             <element signature="e#47158#48101#0" />
             <element signature="e#48198#48904#0" />
             <element signature="e#49096#50919#0" />
             <element signature="e#51056#51789#0" />
+            <element signature="e#83496#84965#0" />
+            <element signature="e#85204#85812#0" />
+            <element signature="e#86009#87461#0" />
+            <element signature="e#87612#88214#0" />
+            <element signature="e#87612#87850#1" />
+            <element signature="e#88303#88623#0" />
+            <element signature="e#88741#89157#0" />
+            <element signature="e#89286#89903#0" />
+            <element signature="e#90395#91204#0" />
+            <element signature="e#91326#92582#0" />
+            <element signature="e#92695#93501#0" />
+            <element signature="e#93532#94646#0" />
+            <element signature="e#94677#100006#0" />
           </folding>
         </state>
       </provider>
