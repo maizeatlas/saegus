@@ -1204,7 +1204,7 @@ class GWAS(object):
 
 # todo Add entry for GWAS.calc_kinship_matrix in docs. Extended entry to show math
 
-    def calc_kinship_matrix(self, count_matrix,
+    def calc_kinship_matrix(self, count_matrix, allele_frequencies,
                             kinship_matrix_file_name = None):
         """
         Calculates the kinship matrix according to VanRaden 2008:
@@ -1212,46 +1212,63 @@ class GWAS(object):
         file formatted for Tassel. The variable names try to be consistent
         with the variable names in the paper.
 
-        The allele frequencies used for this function are with respect to
-        the aggregate population: all individuals sampled during selection.
-
-        Unsure if I should use the G0 allele or not.
-        Will decide after TASSEL results.
-
         :param allele_count_matrix:
-        :param allele_data:
+        :param allele_frequencies:
         :param kinship_filename:
         :return:
         :rtype:
         """
 
-        V = ((-1)*count_matrix) + 1
-        P = np.array([self.pop.dvars().alleleFreq[locus][allele]
-                          for locus, allele in zip(self.segregating_loci,
-                               self.segregating_minor_alleles)])
+        M = np.matrix(count_matrix - 1)
+        P = 2*(allele_frequencies - 0.5)
+        Z = M - P
+        scaling_terms = np.zeros((len(allele_frequencies)))
+        for idx, probability in enumerate(allele_frequencies):
+            scaling_terms[idx] = 2*probability*(1 - probability)
 
-        Z = np.zeros((self.pop.popSize(),
-                                len(self.segregating_loci)))
+        scaling_factor = sum(scaling_terms)
 
-        G = np.zeros((self.pop.popSize(), self.pop.popSize()), dtype=np.float)
+        G = Z*Z.T/scaling_factor
 
-        for i in range(self.pop.popSize()):
-            Z[i, :] = V[i, :] - 2*(P - 0.5)
-
-        for i in range(self.pop.popSize()):
-            for j in range(self.pop.popSize()):
-                G[i, j] = np.sum(Z[i, :]*Z.T[:, j])
-
-        G = pd.DataFrame(G, index=self.individual_names)
+        annotated_G = pd.DataFrame(G, index=self.individual_names)
 
         if kinship_matrix_file_name is not None:
             header = "{}\n".format(self.pop.popSize())
             with open(kinship_matrix_file_name, 'w') as f:
                 f.write(header)
-                G.to_csv(f, sep='\t', index=True, header=False,
-                                      float_format='%.5f')
-        if kinship_matrix_file_name is None:
-            return G
+                annotated_G.to_csv(f, sep='\t', index=True, header=False,
+                                      float_format='%.3f')
+
+        return G
+
+
+#        V = ((-1)*count_matrix) + 1
+#        P = np.array([self.pop.dvars().alleleFreq[locus][allele]
+#                          for locus, allele in zip(self.segregating_loci,
+#                               self.segregating_minor_alleles)])
+
+#        Z = np.zeros((self.pop.popSize(),
+#                                len(self.segregating_loci)))
+
+#        G = np.zeros((self.pop.popSize(), self.pop.popSize()), dtype=np.float)
+
+#        for i in range(self.pop.popSize()):
+#            Z[i, :] = V[i, :] - 2*(P - 0.5)
+
+#        for i in range(self.pop.popSize()):
+#            for j in range(self.pop.popSize()):
+#                G[i, j] = np.sum(Z[i, :]*Z.T[:, j])
+
+#        G = pd.DataFrame(G, index=self.individual_names)
+
+#        if kinship_matrix_file_name is not None:
+#            header = "{}\n".format(self.pop.popSize())
+#            with open(kinship_matrix_file_name, 'w') as f:
+#                f.write(header)
+#                G.to_csv(f, sep='\t', index=True, header=False,
+#                                      float_format='%.5f')
+#        if kinship_matrix_file_name is None:
+#            return G
 
     def tassel_gwas_config(self,
                            config_template: str = '',
@@ -1893,6 +1910,7 @@ class Study(object):
                         self.run_id)
 
             ccm = gwas.calculate_count_matrix()
+            gwas.pop_struct_eigendecomp(cm)
             gwas.population_structure_formatter(ps_svd,
                                     indir + name + '_structure_matrix.txt')
             gwas.hapmap_formatter(int_to_snp_map,

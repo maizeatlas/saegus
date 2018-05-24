@@ -67,8 +67,8 @@
       <file leaf-file-name="analyze.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="1235" column="63" selection-start-line="1235" selection-start-column="63" selection-end-line="1235" selection-end-column="63" />
+            <state relative-caret-position="323">
+              <caret line="1906" column="30" selection-start-line="1906" selection-start-column="30" selection-end-line="1906" selection-end-column="30" />
               <folding>
                 <element signature="e#24#45#0" expanded="true" />
                 <element signature="e#645#1575#0" />
@@ -82,6 +82,13 @@
                 <element signature="e#36568#38869#0" />
                 <element signature="e#38963#40743#0" />
                 <element signature="e#40819#42457#0" />
+                <element signature="e#43577#43636#0" />
+                <element signature="e#43798#45631#0" />
+                <element signature="e#45745#46850#0" />
+                <element signature="e#47158#48101#0" />
+                <element signature="e#48198#48904#0" />
+                <element signature="e#49096#50919#0" />
+                <element signature="e#51056#51789#0" />
               </folding>
             </state>
           </provider>
@@ -133,7 +140,6 @@
       <find>GWAS.h</find>
       <find>multiple_sample_analyzer</find>
       <find>generate_super_table</find>
-      <find>GWAS</find>
       <find>allele_eff</find>
       <find>allele_effects_table</find>
       <find>construct_allele_effects</find>
@@ -145,6 +151,7 @@
       <find>minor_alleles</find>
       <find>pop_struct_eigendecomp</find>
       <find>kinship</find>
+      <find>GWAS</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -245,9 +252,9 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="75" />
+    <option name="x" value="65" />
     <option name="y" value="24" />
-    <option name="width" value="670" />
+    <option name="width" value="768" />
     <option name="height" value="876" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -946,7 +953,14 @@
       <option name="project" value="LOCAL" />
       <updated>1526997686401</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="At some point during the switch to a Linux OS from Windows 7 I &#10;changed the calculation of analyze.calc_kinship_matrix from a &#10;calculation which worked to a calculation which made no sense. What&#10;the hell happened?">
+      <created>1527153148924</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1527153148924</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers>
       <Generic url="http://localhost">
         <option name="loginAnonymously" value="true" />
@@ -982,7 +996,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="-4" width="1535" height="904" extended-state="6" />
+    <frame x="65" y="24" width="768" height="876" extended-state="4" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" x="162" y="208" width="676" height="407" id="Project" order="0" sideWeight="0.486631" weight="0.6615178" />
@@ -993,7 +1007,7 @@
       <window_info anchor="bottom" id="Python Console" order="13" sideWeight="0.49764943" weight="0.8333333" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.23544632" weight="0.72533333" />
       <window_info anchor="right" id="SciView" order="3" weight="0.32975152" />
-      <window_info active="true" x="911" y="150" width="402" height="641" id="Structure" order="1" sideWeight="0.51336896" side_tool="true" visible="true" weight="0.2887844" />
+      <window_info active="true" x="911" y="150" width="402" height="641" id="Structure" order="1" sideWeight="0.51336896" side_tool="true" visible="true" weight="0.5955679" />
       <window_info anchor="bottom" auto_hide="true" x="589" y="537" width="907" height="372" id="Terminal" internal_type="SLIDING" order="15" sideWeight="0.35604218" type="SLIDING" weight="0.8670886" />
       <window_info id="Favorites" order="2" sideWeight="0.5056361" side_tool="true" weight="0.10220588" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.6959459" />
@@ -1070,7 +1084,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/archives/wgs" />
     </ignored-roots>
-    <MESSAGE value="Attempting to change operators in general-case single or multi-replicate operators." />
     <MESSAGE value="TASSEL_GWAS.ipynb implements multi-replicate runs of the simulator.&#10;Stores all related parameter files in .yaml format using a new function.&#10;Creates a configFile to run TASSEL for each replicate using a .xml template." />
     <MESSAGE value="Minor changes to simulator output.&#10;Parmeter sets for every replicate are written to files with corresponding names.&#10;Added a batch script gwas_pipeline.cmd to run multiple replicates through TASSEL.&#10;" />
     <MESSAGE value="Consolidated many separate directories under a single pycharm project.&#10;Minor changes to some functions.&#10;Developing GWAS output analysis." />
@@ -1095,7 +1108,8 @@
     <MESSAGE value="Deleted several functions from parameters and analyze. Having several&#10;versions of the same function with similar names is extremely confusing.&#10;Several of them were hard-coded or just completely useless." />
     <MESSAGE value="Added the 'small_scale_run.ipynb' to VCS. It is useful as a model&#10;because it reflects all recent changes to saegus. I need to add methods&#10;in the GWAS module which create the TASSEL configuration files for&#10;each scenario: (single generation, multiple replicates), &#10;(multiple generations, single replicate) so on and so forth. I am &#10;currently testing the (single generation, multiple replicates) method." />
     <MESSAGE value="Configuration file function in GWAS module for &#10;(single generation, multiple replicates) has been tested. New paradigm&#10;for configuration file function is to make most of the input default&#10;arguments. The only thing that really changes between simulations are&#10;the file prefixes." />
-    <option name="LAST_COMMIT_MESSAGE" value="Configuration file function in GWAS module for &#10;(single generation, multiple replicates) has been tested. New paradigm&#10;for configuration file function is to make most of the input default&#10;arguments. The only thing that really changes between simulations are&#10;the file prefixes." />
+    <MESSAGE value="At some point during the switch to a Linux OS from Windows 7 I &#10;changed the calculation of analyze.calc_kinship_matrix from a &#10;calculation which worked to a calculation which made no sense. What&#10;the hell happened?" />
+    <option name="LAST_COMMIT_MESSAGE" value="At some point during the switch to a Linux OS from Windows 7 I &#10;changed the calculation of analyze.calc_kinship_matrix from a &#10;calculation which worked to a calculation which made no sense. What&#10;the hell happened?" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1454,8 +1468,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="1235" column="63" selection-start-line="1235" selection-start-column="63" selection-end-line="1235" selection-end-column="63" />
+        <state relative-caret-position="323">
+          <caret line="1906" column="30" selection-start-line="1906" selection-start-column="30" selection-end-line="1906" selection-end-column="30" />
           <folding>
             <element signature="e#24#45#0" expanded="true" />
             <element signature="e#645#1575#0" />
@@ -1469,6 +1483,13 @@
             <element signature="e#36568#38869#0" />
             <element signature="e#38963#40743#0" />
             <element signature="e#40819#42457#0" />
+            <element signature="e#43577#43636#0" />
+            <element signature="e#43798#45631#0" />
+            <element signature="e#45745#46850#0" />
+            <element signature="e#47158#48101#0" />
+            <element signature="e#48198#48904#0" />
+            <element signature="e#49096#50919#0" />
+            <element signature="e#51056#51789#0" />
           </folding>
         </state>
       </provider>
