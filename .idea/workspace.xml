@@ -67,8 +67,8 @@
       <file leaf-file-name="analyze.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="381">
-              <caret line="1313" column="12" selection-start-line="1313" selection-start-column="12" selection-end-line="1313" selection-end-column="12" />
+            <state relative-caret-position="165">
+              <caret line="1235" column="63" selection-start-line="1235" selection-start-column="63" selection-end-line="1235" selection-end-column="63" />
               <folding>
                 <element signature="e#24#45#0" expanded="true" />
                 <element signature="e#645#1575#0" />
@@ -82,15 +82,6 @@
                 <element signature="e#36568#38869#0" />
                 <element signature="e#38963#40743#0" />
                 <element signature="e#40819#42457#0" />
-                <element signature="e#67105#67433#0" />
-                <element signature="e#67538#67874#0" />
-                <element signature="e#68013#70686#0" />
-                <element signature="e#70893#72694#0" />
-                <element signature="e#72758#73510#0" />
-                <element signature="e#73591#74022#0" />
-                <element signature="e#74150#76442#0" />
-                <element signature="e#76518#77382#0" />
-                <element signature="e#77692#78517#0" />
               </folding>
             </state>
           </provider>
@@ -99,7 +90,7 @@
       <file leaf-file-name="parameters.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/saegus/parameters.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="38">
+            <state relative-caret-position="3300">
               <caret line="452" column="44" selection-start-line="452" selection-start-column="44" selection-end-line="452" selection-end-column="44" />
               <folding>
                 <element signature="e#218#3818#0" />
@@ -124,9 +115,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>:py:module</find>
-      <find>:py:mod:</find>
-      <find>vanraden</find>
       <find>gwas</find>
       <find>svd</find>
       <find>calculate_cou</find>
@@ -154,6 +142,9 @@
       <find>Study</find>
       <find>h5py</find>
       <find>replicate_tassel_gwas</find>
+      <find>minor_alleles</find>
+      <find>pop_struct_eigendecomp</find>
+      <find>kinship</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -254,10 +245,10 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="542" />
-    <option name="y" value="336" />
-    <option name="width" value="768" />
-    <option name="height" value="589" />
+    <option name="x" value="75" />
+    <option name="y" value="24" />
+    <option name="width" value="670" />
+    <option name="height" value="876" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -948,7 +939,14 @@
       <option name="project" value="LOCAL" />
       <updated>1526995357072</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Configuration file function in GWAS module for &#10;(single generation, multiple replicates) has been tested. New paradigm&#10;for configuration file function is to make most of the input default&#10;arguments. The only thing that really changes between simulations are&#10;the file prefixes.">
+      <created>1526997686401</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1526997686401</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers>
       <Generic url="http://localhost">
         <option name="loginAnonymously" value="true" />
@@ -990,17 +988,18 @@
       <window_info content_ui="combo" x="162" y="208" width="676" height="407" id="Project" order="0" sideWeight="0.486631" weight="0.6615178" />
       <window_info anchor="bottom" id="TODO" order="8" weight="0.2274436" />
       <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.50235057" side_tool="true" weight="0.8328877" />
-      <window_info anchor="right" x="0" y="0" width="142" height="676" id="Documentation" order="10" side_tool="true" weight="0.33795014" />
+      <window_info anchor="right" x="0" y="0" width="218" height="676" id="Documentation" order="10" side_tool="true" weight="0.33754864" />
       <window_info anchor="bottom" id="Version Control" order="5" sideWeight="0.48971722" weight="0.67333335" />
       <window_info anchor="bottom" id="Python Console" order="13" sideWeight="0.49764943" weight="0.8333333" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.23544632" weight="0.72533333" />
       <window_info anchor="right" id="SciView" order="3" weight="0.32975152" />
-      <window_info active="true" x="911" y="150" width="402" height="641" id="Structure" order="1" sideWeight="0.51336896" side_tool="true" visible="true" weight="0.45668232" />
+      <window_info active="true" x="911" y="150" width="402" height="641" id="Structure" order="1" sideWeight="0.51336896" side_tool="true" visible="true" weight="0.2887844" />
       <window_info anchor="bottom" auto_hide="true" x="589" y="537" width="907" height="372" id="Terminal" internal_type="SLIDING" order="15" sideWeight="0.35604218" type="SLIDING" weight="0.8670886" />
       <window_info id="Favorites" order="2" sideWeight="0.5056361" side_tool="true" weight="0.10220588" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.6959459" />
       <window_info anchor="bottom" id="DB Execution Console" order="0" />
       <window_info active="true" anchor="bottom" id="Concurrent Activities Diagram" order="14" visible="true" weight="0.32744783" />
+      <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.4974055" weight="0.32972136" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="2" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="6" weight="0.25" />
@@ -1009,14 +1008,13 @@
       <window_info anchor="bottom" id="File Transfer" order="12" sideWeight="0.4976744" weight="0.32905984" />
       <window_info anchor="right" id="Mongo Explorer" order="1" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="8" weight="0.25" />
-      <window_info anchor="right" id="Database" order="0" weight="0.17864339" />
       <window_info anchor="right" id="Packages" order="5" weight="0.32940108" />
       <window_info anchor="bottom" id="Application Servers" order="4" />
       <window_info anchor="right" auto_hide="true" id="Data View" internal_type="SLIDING" order="9" type="SLIDING" weight="0.32940108" />
       <window_info anchor="bottom" id="Find" order="7" sideWeight="0.4974293" weight="0.52913755" />
       <window_info anchor="right" id="The R Graphics" order="7" weight="0.32975152" />
       <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
-      <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.4974055" weight="0.32972136" />
+      <window_info anchor="right" id="Database" order="0" weight="0.17864339" />
       <window_info anchor="bottom" id="Message" order="6" />
     </layout>
     <layout-to-restore>
@@ -1032,7 +1030,6 @@
       <window_info anchor="right" id="Cargo" order="4" />
       <window_info id="Favorites" order="2" sideWeight="0.5056361" side_tool="true" weight="0.10220588" />
       <window_info anchor="bottom" auto_hide="true" x="589" y="537" width="907" height="372" id="Terminal" internal_type="SLIDING" order="15" sideWeight="0.35604218" type="SLIDING" weight="0.8670886" />
-      <window_info anchor="right" auto_hide="true" id="Data View" internal_type="SLIDING" order="9" type="SLIDING" weight="0.32940108" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="2" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.50235057" side_tool="true" weight="0.8328877" />
       <window_info anchor="bottom" id="File Transfer" order="12" sideWeight="0.4976744" weight="0.32905984" />
@@ -1040,7 +1037,7 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="8" weight="0.25" />
       <window_info anchor="right" id="Packages" order="5" weight="0.32940108" />
       <window_info anchor="bottom" id="Application Servers" order="4" />
-      <window_info anchor="bottom" id="Version Control" order="5" sideWeight="0.48971722" weight="0.67333335" />
+      <window_info anchor="right" auto_hide="true" id="Data View" internal_type="SLIDING" order="9" type="SLIDING" weight="0.32940108" />
       <window_info anchor="right" id="The R Graphics" order="7" weight="0.32975152" />
       <window_info content_ui="combo" x="162" y="208" width="676" height="407" id="Project" order="0" sideWeight="0.486631" weight="0.6615178" />
       <window_info anchor="right" id="SciView" order="3" weight="0.32975152" />
@@ -1048,6 +1045,7 @@
       <window_info anchor="bottom" id="Message" order="6" />
       <window_info anchor="bottom" id="TODO" order="8" weight="0.2274436" />
       <window_info active="true" x="911" y="150" width="402" height="641" id="Structure" order="1" sideWeight="0.51336896" side_tool="true" visible="true" weight="0.45735392" />
+      <window_info anchor="bottom" id="Version Control" order="5" sideWeight="0.48971722" weight="0.67333335" />
       <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
       <window_info anchor="bottom" id="Find" order="7" sideWeight="0.4974293" weight="0.52913755" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.6959459" />
@@ -1072,7 +1070,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/archives/wgs" />
     </ignored-roots>
-    <MESSAGE value="Minor changes to. Inclusion of an ipython notebook designed to run several replicates and save their data to a file.&#10;" />
     <MESSAGE value="Attempting to change operators in general-case single or multi-replicate operators." />
     <MESSAGE value="TASSEL_GWAS.ipynb implements multi-replicate runs of the simulator.&#10;Stores all related parameter files in .yaml format using a new function.&#10;Creates a configFile to run TASSEL for each replicate using a .xml template." />
     <MESSAGE value="Minor changes to simulator output.&#10;Parmeter sets for every replicate are written to files with corresponding names.&#10;Added a batch script gwas_pipeline.cmd to run multiple replicates through TASSEL.&#10;" />
@@ -1097,7 +1094,8 @@
     <MESSAGE value="Had to make small adjustment to Trait.construct_ae_array to allow&#10;for up to 6 allele states at a locus. small_scale_run.ipynb contains&#10;a run using the most recent/working version of all functions." />
     <MESSAGE value="Deleted several functions from parameters and analyze. Having several&#10;versions of the same function with similar names is extremely confusing.&#10;Several of them were hard-coded or just completely useless." />
     <MESSAGE value="Added the 'small_scale_run.ipynb' to VCS. It is useful as a model&#10;because it reflects all recent changes to saegus. I need to add methods&#10;in the GWAS module which create the TASSEL configuration files for&#10;each scenario: (single generation, multiple replicates), &#10;(multiple generations, single replicate) so on and so forth. I am &#10;currently testing the (single generation, multiple replicates) method." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added the 'small_scale_run.ipynb' to VCS. It is useful as a model&#10;because it reflects all recent changes to saegus. I need to add methods&#10;in the GWAS module which create the TASSEL configuration files for&#10;each scenario: (single generation, multiple replicates), &#10;(multiple generations, single replicate) so on and so forth. I am &#10;currently testing the (single generation, multiple replicates) method." />
+    <MESSAGE value="Configuration file function in GWAS module for &#10;(single generation, multiple replicates) has been tested. New paradigm&#10;for configuration file function is to make most of the input default&#10;arguments. The only thing that really changes between simulations are&#10;the file prefixes." />
+    <option name="LAST_COMMIT_MESSAGE" value="Configuration file function in GWAS module for &#10;(single generation, multiple replicates) has been tested. New paradigm&#10;for configuration file function is to make most of the input default&#10;arguments. The only thing that really changes between simulations are&#10;the file prefixes." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1436,16 +1434,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/saegus/operators.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="497" column="21" selection-start-line="497" selection-start-column="21" selection-end-line="497" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/parameters.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="38">
+        <state relative-caret-position="3300">
           <caret line="452" column="44" selection-start-line="452" selection-start-column="44" selection-end-line="452" selection-end-column="44" />
           <folding>
             <element signature="e#218#3818#0" />
@@ -1454,10 +1445,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/saegus/operators.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="497" column="21" selection-start-line="497" selection-start-column="21" selection-end-line="497" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="381">
-          <caret line="1313" column="12" selection-start-line="1313" selection-start-column="12" selection-end-line="1313" selection-end-column="12" />
+        <state relative-caret-position="165">
+          <caret line="1235" column="63" selection-start-line="1235" selection-start-column="63" selection-end-line="1235" selection-end-column="63" />
           <folding>
             <element signature="e#24#45#0" expanded="true" />
             <element signature="e#645#1575#0" />
@@ -1471,15 +1469,6 @@
             <element signature="e#36568#38869#0" />
             <element signature="e#38963#40743#0" />
             <element signature="e#40819#42457#0" />
-            <element signature="e#67105#67433#0" />
-            <element signature="e#67538#67874#0" />
-            <element signature="e#68013#70686#0" />
-            <element signature="e#70893#72694#0" />
-            <element signature="e#72758#73510#0" />
-            <element signature="e#73591#74022#0" />
-            <element signature="e#74150#76442#0" />
-            <element signature="e#76518#77382#0" />
-            <element signature="e#77692#78517#0" />
           </folding>
         </state>
       </provider>

@@ -1083,8 +1083,8 @@ class GWAS(object):
         X = (1/self.segregating_loci.shape[0])*(M*M.T)
         eigendata = linalg.eig(X)
 
-        eigenvalues = np.array(eigendata[0], dtype=np.float)
-        eigenvectors = np.array(eigendata[1], dtype=np.float)
+        eigenvalues = np.real(eigendata[0])
+        eigenvectors = np.array(eigendata[1])
 
         return eigenvalues, eigenvectors
 
@@ -1292,7 +1292,8 @@ class GWAS(object):
 
         """
         Creates configuration file for TASSEL for simulations which use
-        a single generation with multiple replicates.
+        a single generation with multiple replicates. Output is XML file
+        which runs mixed linear model using tassel-5-standalone.
 
         :param rep_id:
         :param config_template:
@@ -1329,8 +1330,6 @@ class GWAS(object):
                         encoding="UTF-8",
                         method="xml", xml_declaration=True, standalone='',
                         pretty_print=True)
-
-
 
 
     def replicate_tassel_gwas_configs(self, rep_id, sample_size,
@@ -1493,7 +1492,7 @@ class GWASConfig(object):
 
 
 
-# todo Deprecate analyze.single_sample_analyzer
+# DEPRECATED
 
 def single_sample_analyzer(full_population, sample_size,
                                quantitative_trait_loci, alleles,
@@ -1867,8 +1866,9 @@ class Study(object):
         indir = "/home/vakanas/tassel-5-standalone/"
         segregating_loci = np.array(hdf5_data_file['segregating_loci'])
         minor_alleles = \
-            np.array(hdf5_data_file['allele/states'])[segregating_loci, 3]
+            np.array(hdf5_data_file['allele/states'], dtype=np.int_)[:, 3]
 #        qtl = np.array(hdf5_data_file['qtl'])
+
 
         for rep_id, sample_list in sample_library.items():
 #            for sample in sample_list:
@@ -1889,10 +1889,10 @@ class Study(object):
 #            af_access_name = '/'.join(['af', rep_id_name, gen_id_name])
 #            minor_allele_frequencies = minor_allele_frequency_file[af_access_name][list(segregating_loci)]
 
-            gwas = GWAS(sample_list[0], segregating_loci, self.run_id)
+            gwas = GWAS(sample_list[0], segregating_loci, minor_alleles,
+                        self.run_id)
 
-            ccm = gwas.calculate_count_matrix(minor_alleles, segregating_loci)
-            ps_svd = gwas.pop_struct_eigdencomp(ccm)
+            ccm = gwas.calculate_count_matrix()
             gwas.population_structure_formatter(ps_svd,
                                     indir + name + '_structure_matrix.txt')
             gwas.hapmap_formatter(int_to_snp_map,
