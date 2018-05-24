@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/src/docs/user_guide/q_value_calculation.r" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/docs/user_guide/simulated_mlm.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/devel/magic/1478/small_scale_run.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/devel/magic/1478/small_scale_run.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/saegus/analyze.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/saegus/analyze.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/docs/user_guide/power_analysis_beginning_to_end.rst" beforeDir="false" afterPath="$PROJECT_DIR$/src/docs/user_guide/power_analysis_beginning_to_end.rst" afterDir="false" />
     </list>
     <ignored path="saegus_project.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -64,11 +66,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="analyze.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="analyze.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="1329" column="58" lean-forward="true" selection-start-line="1329" selection-start-column="58" selection-end-line="1329" selection-end-column="58" />
+            <state relative-caret-position="591">
+              <caret line="1401" selection-start-line="1401" selection-end-line="1401" />
               <folding>
                 <element signature="e#24#45#0" expanded="true" />
                 <element signature="e#645#1575#0" />
@@ -84,6 +86,33 @@
                 <element signature="e#43577#43636#0" />
                 <element signature="e#43798#45631#0" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="simulated_mlm.sh" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/docs/user_guide/simulated_mlm.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="power_analysis_beginning_to_end.rst" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/docs/user_guide/power_analysis_beginning_to_end.rst">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="426">
+              <caret line="65" column="1" selection-start-line="65" selection-start-column="1" selection-end-line="65" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="q_value_calculation.r" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/docs/user_guide/q_value_calculation.r">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="480">
+              <caret line="32" column="1" lean-forward="true" selection-start-line="32" selection-start-column="1" selection-end-line="32" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -165,8 +194,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/devel/magic/1478/pipeline_phases/phase_one.py" />
-        <option value="$PROJECT_DIR$/src/docs/saegus_documentation/parse.rst" />
         <option value="$APPLICATION_HOME_DIR$/bin/pycharm64.vmoptions" />
         <option value="$APPLICATION_HOME_DIR$/bin/pycharm.vmoptions" />
         <option value="$PROJECT_DIR$/devel/tuson_selection/conf.py" />
@@ -212,10 +239,12 @@
         <option value="$PROJECT_DIR$/src/docs/user_guide/notes_on_genetic_map.rst" />
         <option value="$PROJECT_DIR$/src/saegus/operators.py" />
         <option value="$PROJECT_DIR$/src/docs/user_guide/power_analysis_automation.sh" />
-        <option value="$PROJECT_DIR$/src/docs/user_guide/power_analysis_beginning_to_end.rst" />
         <option value="$PROJECT_DIR$/src/saegus/parameters.py" />
         <option value="$PROJECT_DIR$/src/docs/user_guide/collecting_and_storing_data.rst" />
         <option value="$PROJECT_DIR$/src/saegus/analyze.py" />
+        <option value="$PROJECT_DIR$/src/docs/user_guide/simulated_mlm.sh" />
+        <option value="$PROJECT_DIR$/src/docs/user_guide/power_analysis_beginning_to_end.rst" />
+        <option value="$PROJECT_DIR$/src/docs/user_guide/q_value_calculation.r" />
       </list>
     </option>
   </component>
@@ -968,7 +997,14 @@
       <option name="project" value="LOCAL" />
       <updated>1527158022333</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="Running the TASSEL input functions from a loop in &#10;small_scale_run.ipynb. Had problem with TASSEL failing to load one of&#10;the files. Turns out I had not added the .txt extension to the end of&#10;the file. Corrected the file name problem and TASSEL ran fine. Writing&#10;the bash script to loop through the config files for a run now.">
+      <created>1527168292195</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1527168292196</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers>
       <Generic url="http://localhost">
         <option name="loginAnonymously" value="true" />
@@ -1005,7 +1041,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1535" height="904" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" x="162" y="208" width="676" height="407" id="Project" order="0" sideWeight="0.48395723" visible="true" weight="0.2921424" />
       <window_info anchor="bottom" id="TODO" order="8" weight="0.2274436" />
@@ -1015,7 +1050,7 @@
       <window_info anchor="bottom" id="Python Console" order="13" sideWeight="0.49764943" weight="0.8333333" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.23544632" weight="0.72533333" />
       <window_info anchor="right" id="SciView" order="3" weight="0.32975152" />
-      <window_info x="911" y="150" width="402" height="641" id="Structure" order="1" sideWeight="0.51604277" side_tool="true" visible="true" weight="0.2921424" />
+      <window_info x="911" y="150" width="402" height="641" id="Structure" order="1" sideWeight="0.51604277" side_tool="true" weight="0.2921424" />
       <window_info anchor="bottom" auto_hide="true" x="589" y="537" width="907" height="372" id="Terminal" internal_type="SLIDING" order="15" sideWeight="0.35604218" type="SLIDING" weight="0.8670886" />
       <window_info id="Favorites" order="2" sideWeight="0.5056361" side_tool="true" weight="0.10220588" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.6959459" />
@@ -1092,7 +1127,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/archives/wgs" />
     </ignored-roots>
-    <MESSAGE value="Consolidated many separate directories under a single pycharm project.&#10;Minor changes to some functions.&#10;Developing GWAS output analysis." />
     <MESSAGE value="Prior commit had wgs-0.1.0 under a separate, private git repository." />
     <MESSAGE value="Cleaning up separate git repositories.&#10;&#10;" />
     <MESSAGE value="Some changes to docs.&#10;Added some new functions to analyze.&#10;&#10;" />
@@ -1117,7 +1151,8 @@
     <MESSAGE value="At some point during the switch to a Linux OS from Windows 7 I &#10;changed the calculation of analyze.calc_kinship_matrix from a &#10;calculation which worked to a calculation which made no sense. What&#10;the hell happened?" />
     <MESSAGE value="Calculation for the kinship matrix has been corrected. I am currently&#10;fixing the function for the automation of the TASSEL input files." />
     <MESSAGE value="Seems like whenever the TASSEL input function is placed is placed&#10;into the method of another class something very strange happens. I get&#10;error messages which make absolutely no sense. All the functions&#10;inside of the TASSEL input function run completely fine on their own.&#10;It seems if run inside the 'Study' class something goes terribly wrong." />
-    <option name="LAST_COMMIT_MESSAGE" value="Seems like whenever the TASSEL input function is placed is placed&#10;into the method of another class something very strange happens. I get&#10;error messages which make absolutely no sense. All the functions&#10;inside of the TASSEL input function run completely fine on their own.&#10;It seems if run inside the 'Study' class something goes terribly wrong." />
+    <MESSAGE value="Running the TASSEL input functions from a loop in &#10;small_scale_run.ipynb. Had problem with TASSEL failing to load one of&#10;the files. Turns out I had not added the .txt extension to the end of&#10;the file. Corrected the file name problem and TASSEL ran fine. Writing&#10;the bash script to loop through the config files for a run now." />
+    <option name="LAST_COMMIT_MESSAGE" value="Running the TASSEL input functions from a loop in &#10;small_scale_run.ipynb. Had problem with TASSEL failing to load one of&#10;the files. Turns out I had not added the .txt extension to the end of&#10;the file. Corrected the file name problem and TASSEL ran fine. Writing&#10;the bash script to loop through the config files for a run now." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1132,20 +1167,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/docs/saegus_documentation/operators.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="31" selection-start-line="31" selection-end-line="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/index.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" selection-start-line="22" selection-end-line="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/docs/user_guide/association_mapping_using_tassel.rst">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="375">
@@ -1407,13 +1428,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/power_analysis_beginning_to_end.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="621">
-          <caret line="55" selection-start-line="55" selection-end-line="55" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/docs/user_guide/association_mapping_using_tassel.rst">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="486">
@@ -1476,8 +1490,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="1329" column="58" lean-forward="true" selection-start-line="1329" selection-start-column="58" selection-end-line="1329" selection-end-column="58" />
+        <state relative-caret-position="591">
+          <caret line="1401" selection-start-line="1401" selection-end-line="1401" />
           <folding>
             <element signature="e#24#45#0" expanded="true" />
             <element signature="e#645#1575#0" />
@@ -1493,6 +1507,27 @@
             <element signature="e#43577#43636#0" />
             <element signature="e#43798#45631#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/power_analysis_beginning_to_end.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="426">
+          <caret line="65" column="1" selection-start-line="65" selection-start-column="1" selection-end-line="65" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/q_value_calculation.r">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="32" column="1" lean-forward="true" selection-start-line="32" selection-start-column="1" selection-end-line="32" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/simulated_mlm.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
         </state>
       </provider>
     </entry>

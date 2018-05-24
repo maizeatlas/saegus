@@ -22,7 +22,29 @@ TASSEL Analysis
 
 After the simulation ceases the data files are written. All we need to do
 is to run TASSEL using our configFile. If there are multiple replicates
-we can use the shell to loop over each configuration file.
+we can use the shell to loop over each configuration file. The shell script
+is contained in ``simulated_mlm.sh``.
+
+.. code-block:: bash
+   :caption: Contents of the ``simulated_mlm.sh`` script
+
+   #!/usr/bin/env bash
+
+   for $filename in $@;
+   do
+      echo "Running $filename now.\n"
+      ./run_pipeline.pl -Xmx6g -configFile $filename
+   done
+
+
+The input is the ``run_id`` followed by the wildcard character ``*``.
+For example:
+
+.. code-block:: sh
+
+   ~/tassel-5-standalone$ bash simulated_mlm.sh small*.xml
+
+Which iterates through all of the TASSEL configuration files.
 
 Calculation of Q-values in R
 ############################
