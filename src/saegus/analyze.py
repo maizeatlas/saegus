@@ -1277,6 +1277,7 @@ class GWAS(object):
                            trait_file_name: str = '',
                            structure_file_name: str = '',
                            output_prefix: str = '',
+                           tassel_exe_path = '/home/vakanas/tassel-5-standalone/'
                            ):
 
 
@@ -1305,12 +1306,15 @@ class GWAS(object):
                            trait_file_name: str = 'phenotype_vector.txt',
                            structure_file_name: str = 'structure_matrix.txt',
                            output_prefix: str = '',
+                           tassel_exe_path = '/home/vakanas/tassel-5-standalone/',
                            ):
 
         """
         Creates configuration file for TASSEL for simulations which use
         a single generation with multiple replicates. Output is XML file
         which runs mixed linear model using tassel-5-standalone.
+
+        All input files are placed into the tassel-5-standalone/input directory
 
         :param rep_id:
         :param config_template:
@@ -1324,26 +1328,31 @@ class GWAS(object):
 
         hapmap_file_name = \
             self.run_id + '_' + str(rep_id) + '_' + hapmap_file_name
+        hapmap_file_path = path.join(tassel_exe_path, 'input', hapmap_file_name)
         kinship_file_name = \
             self.run_id + '_' + str(rep_id) + '_' + kinship_file_name
+        kinship_file_path = path.join(tassel_exe_path, 'input', kinship_file_name)
         trait_file_name = \
             self.run_id + '_' + str(rep_id) + '_' + trait_file_name
+        trait_file_path = path.join(tassel_exe_path, 'input', trait_file_name)
         structure_file_name = \
             self.run_id + '_' + str(rep_id) + '_' + structure_file_name
+        structure_file_path = path.join(tassel_exe_path, 'input', structure_file_name)
+        config_file_name = \
+            self.run_id + '_' + str(rep_id) + '_gwas_pipeline.xml'
+        config_file_path = path.join(tassel_exe_path, config_file_name)
 
         tree = ET.parse(config_template)
         root = tree.getroot()
         lxml_tree = etree.fromstring(ET.tostring(root))
         lxml_root = lxml_tree.getroottree()
 
-        lxml_root.find('fork1/h').text = str(path.abspath(hapmap_file_name))
-        lxml_root.find('fork2/t').text = str(path.abspath(trait_file_name))
-        lxml_root.find('fork3/q').text = str(path.abspath(structure_file_name))
-        lxml_root.find('fork4/k').text = str(path.abspath(kinship_file_name))
-
+        lxml_root.find('fork1/h').text = hapmap_file_path
+        lxml_root.find('fork2/t').text = trait_file_path
+        lxml_root.find('fork3/q').text = structure_file_path
+        lxml_root.find('fork4/k').text = kinship_file_path
         lxml_root.find('combine6/export').text = output_prefix
-
-        lxml_root.write(self.run_id + '_' + str(rep_id) + '_' + "gwas_pipeline.xml",
+        lxml_root.write(config_file_path,
                         encoding="UTF-8",
                         method="xml", xml_declaration=True, standalone='',
                         pretty_print=True)

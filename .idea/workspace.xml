@@ -4,6 +4,7 @@
     <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/devel/magic/1478/small_scale_run.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/devel/magic/1478/small_scale_run.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/saegus/analyze.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/saegus/analyze.py" afterDir="false" />
     </list>
     <ignored path="saegus_project.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -57,7 +58,7 @@
       <file leaf-file-name="operators.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/saegus/operators.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
+            <state relative-caret-position="7365">
               <caret line="497" column="21" selection-start-line="497" selection-start-column="21" selection-end-line="497" selection-end-column="21" />
             </state>
           </provider>
@@ -66,8 +67,8 @@
       <file leaf-file-name="analyze.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="1320" column="9" lean-forward="true" selection-start-line="1320" selection-start-column="9" selection-end-line="1320" selection-end-column="9" />
+            <state relative-caret-position="144">
+              <caret line="1329" column="58" lean-forward="true" selection-start-line="1329" selection-start-column="58" selection-end-line="1329" selection-end-column="58" />
               <folding>
                 <element signature="e#24#45#0" expanded="true" />
                 <element signature="e#645#1575#0" />
@@ -82,23 +83,6 @@
                 <element signature="e#40819#42457#0" />
                 <element signature="e#43577#43636#0" />
                 <element signature="e#43798#45631#0" />
-                <element signature="e#47158#48101#0" />
-                <element signature="e#48198#48904#0" />
-                <element signature="e#49096#50919#0" />
-                <element signature="e#51056#51789#0" />
-                <element signature="e#83496#84965#0" />
-                <element signature="e#85204#85812#0" />
-                <element signature="e#86009#87461#0" />
-                <element signature="e#87612#88214#0" />
-                <element signature="e#87612#87850#1" />
-                <element signature="e#88303#88623#0" />
-                <element signature="e#88741#89157#0" />
-                <element signature="e#89286#89903#0" />
-                <element signature="e#90395#91204#0" />
-                <element signature="e#91326#92582#0" />
-                <element signature="e#92695#93501#0" />
-                <element signature="e#93532#94646#0" />
-                <element signature="e#94677#100006#0" />
               </folding>
             </state>
           </provider>
@@ -263,9 +247,9 @@
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="85" />
-    <option name="y" value="24" />
+    <option name="y" value="25" />
     <option name="width" value="1122" />
-    <option name="height" value="876" />
+    <option name="height" value="845" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -294,7 +278,53 @@
       <sortByType Scope="true" ProjectPane="true" />
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes />
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="saegus_project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="saegus_project" type="47feb1d3:ProjectViewModuleNode" />
+            </path>
+            <path>
+              <item name="saegus_project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="saegus_project" type="47feb1d3:ProjectViewModuleNode" />
+              <item name="saegus_project" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="saegus_project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="saegus_project" type="47feb1d3:ProjectViewModuleNode" />
+              <item name="saegus_project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="saegus_project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="saegus_project" type="47feb1d3:ProjectViewModuleNode" />
+              <item name="saegus_project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="docs" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="saegus_project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="saegus_project" type="47feb1d3:ProjectViewModuleNode" />
+              <item name="saegus_project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="docs" type="462c0819:PsiDirectoryNode" />
+              <item name="user_guide" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="saegus_project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="saegus_project" type="47feb1d3:ProjectViewModuleNode" />
+              <item name="saegus_project" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="saegus" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
@@ -931,7 +961,14 @@
       <option name="project" value="LOCAL" />
       <updated>1527155241346</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Seems like whenever the TASSEL input function is placed is placed&#10;into the method of another class something very strange happens. I get&#10;error messages which make absolutely no sense. All the functions&#10;inside of the TASSEL input function run completely fine on their own.&#10;It seems if run inside the 'Study' class something goes terribly wrong.">
+      <created>1527158022332</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1527158022333</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers>
       <Generic url="http://localhost">
         <option name="loginAnonymously" value="true" />
@@ -970,21 +1007,20 @@
     <frame x="65" y="-4" width="1535" height="904" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" x="162" y="208" width="676" height="407" id="Project" order="0" sideWeight="0.486631" weight="0.6615178" />
+      <window_info active="true" content_ui="combo" x="162" y="208" width="676" height="407" id="Project" order="0" sideWeight="0.48395723" visible="true" weight="0.2921424" />
       <window_info anchor="bottom" id="TODO" order="8" weight="0.2274436" />
       <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.50235057" side_tool="true" weight="0.8328877" />
-      <window_info anchor="right" x="0" y="0" width="218" height="676" id="Documentation" order="10" side_tool="true" weight="0.33754864" />
+      <window_info anchor="right" x="0" y="0" width="230" height="617" id="Documentation" order="10" side_tool="true" visible="true" weight="0.24378778" />
       <window_info anchor="bottom" id="Version Control" order="5" sideWeight="0.48971722" weight="0.67333335" />
       <window_info anchor="bottom" id="Python Console" order="13" sideWeight="0.49764943" weight="0.8333333" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.23544632" weight="0.72533333" />
       <window_info anchor="right" id="SciView" order="3" weight="0.32975152" />
-      <window_info active="true" x="911" y="150" width="402" height="641" id="Structure" order="1" sideWeight="0.51336896" side_tool="true" visible="true" weight="0.15244299" />
+      <window_info x="911" y="150" width="402" height="641" id="Structure" order="1" sideWeight="0.51604277" side_tool="true" visible="true" weight="0.2921424" />
       <window_info anchor="bottom" auto_hide="true" x="589" y="537" width="907" height="372" id="Terminal" internal_type="SLIDING" order="15" sideWeight="0.35604218" type="SLIDING" weight="0.8670886" />
       <window_info id="Favorites" order="2" sideWeight="0.5056361" side_tool="true" weight="0.10220588" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.6959459" />
       <window_info anchor="bottom" id="DB Execution Console" order="0" />
       <window_info active="true" anchor="bottom" id="Concurrent Activities Diagram" order="14" visible="true" weight="0.32744783" />
-      <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.4974055" weight="0.32972136" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="2" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="6" weight="0.25" />
@@ -993,13 +1029,14 @@
       <window_info anchor="bottom" id="File Transfer" order="12" sideWeight="0.4976744" weight="0.32905984" />
       <window_info anchor="right" id="Mongo Explorer" order="1" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="8" weight="0.25" />
+      <window_info anchor="right" id="Database" order="0" weight="0.17864339" />
       <window_info anchor="right" id="Packages" order="5" weight="0.32940108" />
       <window_info anchor="bottom" id="Application Servers" order="4" />
       <window_info anchor="right" auto_hide="true" id="Data View" internal_type="SLIDING" order="9" type="SLIDING" weight="0.32940108" />
       <window_info anchor="bottom" id="Find" order="7" sideWeight="0.4974293" weight="0.52913755" />
       <window_info anchor="right" id="The R Graphics" order="7" weight="0.32975152" />
       <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
-      <window_info anchor="right" id="Database" order="0" weight="0.17864339" />
+      <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.4974055" weight="0.32972136" />
       <window_info anchor="bottom" id="Message" order="6" />
     </layout>
     <layout-to-restore>
@@ -1015,6 +1052,7 @@
       <window_info anchor="right" id="Cargo" order="4" />
       <window_info id="Favorites" order="2" sideWeight="0.5056361" side_tool="true" weight="0.10220588" />
       <window_info anchor="bottom" auto_hide="true" x="589" y="537" width="907" height="372" id="Terminal" internal_type="SLIDING" order="15" sideWeight="0.35604218" type="SLIDING" weight="0.8670886" />
+      <window_info anchor="right" auto_hide="true" id="Data View" internal_type="SLIDING" order="9" type="SLIDING" weight="0.32940108" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="2" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.50235057" side_tool="true" weight="0.8328877" />
       <window_info anchor="bottom" id="File Transfer" order="12" sideWeight="0.4976744" weight="0.32905984" />
@@ -1022,7 +1060,7 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="8" weight="0.25" />
       <window_info anchor="right" id="Packages" order="5" weight="0.32940108" />
       <window_info anchor="bottom" id="Application Servers" order="4" />
-      <window_info anchor="right" auto_hide="true" id="Data View" internal_type="SLIDING" order="9" type="SLIDING" weight="0.32940108" />
+      <window_info anchor="bottom" id="Version Control" order="5" sideWeight="0.48971722" weight="0.67333335" />
       <window_info anchor="right" id="The R Graphics" order="7" weight="0.32975152" />
       <window_info content_ui="combo" x="162" y="208" width="676" height="407" id="Project" order="0" sideWeight="0.486631" weight="0.6615178" />
       <window_info anchor="right" id="SciView" order="3" weight="0.32975152" />
@@ -1030,7 +1068,6 @@
       <window_info anchor="bottom" id="Message" order="6" />
       <window_info anchor="bottom" id="TODO" order="8" weight="0.2274436" />
       <window_info active="true" x="911" y="150" width="402" height="641" id="Structure" order="1" sideWeight="0.51336896" side_tool="true" visible="true" weight="0.45735392" />
-      <window_info anchor="bottom" id="Version Control" order="5" sideWeight="0.48971722" weight="0.67333335" />
       <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
       <window_info anchor="bottom" id="Find" order="7" sideWeight="0.4974293" weight="0.52913755" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.6959459" />
@@ -1055,7 +1092,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/archives/wgs" />
     </ignored-roots>
-    <MESSAGE value="Minor changes to simulator output.&#10;Parmeter sets for every replicate are written to files with corresponding names.&#10;Added a batch script gwas_pipeline.cmd to run multiple replicates through TASSEL.&#10;" />
     <MESSAGE value="Consolidated many separate directories under a single pycharm project.&#10;Minor changes to some functions.&#10;Developing GWAS output analysis." />
     <MESSAGE value="Prior commit had wgs-0.1.0 under a separate, private git repository." />
     <MESSAGE value="Cleaning up separate git repositories.&#10;&#10;" />
@@ -1080,7 +1116,8 @@
     <MESSAGE value="Configuration file function in GWAS module for &#10;(single generation, multiple replicates) has been tested. New paradigm&#10;for configuration file function is to make most of the input default&#10;arguments. The only thing that really changes between simulations are&#10;the file prefixes." />
     <MESSAGE value="At some point during the switch to a Linux OS from Windows 7 I &#10;changed the calculation of analyze.calc_kinship_matrix from a &#10;calculation which worked to a calculation which made no sense. What&#10;the hell happened?" />
     <MESSAGE value="Calculation for the kinship matrix has been corrected. I am currently&#10;fixing the function for the automation of the TASSEL input files." />
-    <option name="LAST_COMMIT_MESSAGE" value="Calculation for the kinship matrix has been corrected. I am currently&#10;fixing the function for the automation of the TASSEL input files." />
+    <MESSAGE value="Seems like whenever the TASSEL input function is placed is placed&#10;into the method of another class something very strange happens. I get&#10;error messages which make absolutely no sense. All the functions&#10;inside of the TASSEL input function run completely fine on their own.&#10;It seems if run inside the 'Study' class something goes terribly wrong." />
+    <option name="LAST_COMMIT_MESSAGE" value="Seems like whenever the TASSEL input function is placed is placed&#10;into the method of another class something very strange happens. I get&#10;error messages which make absolutely no sense. All the functions&#10;inside of the TASSEL input function run completely fine on their own.&#10;It seems if run inside the 'Study' class something goes terribly wrong." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1356,13 +1393,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/power_analysis_automation.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="13" column="8" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/devel/magic/1478/pipeline_phases/phase_two.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
@@ -1432,15 +1462,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/operators.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
+        <state relative-caret-position="7365">
           <caret line="497" column="21" selection-start-line="497" selection-start-column="21" selection-end-line="497" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/power_analysis_automation.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="1320" column="9" lean-forward="true" selection-start-line="1320" selection-start-column="9" selection-end-line="1320" selection-end-column="9" />
+        <state relative-caret-position="144">
+          <caret line="1329" column="58" lean-forward="true" selection-start-line="1329" selection-start-column="58" selection-end-line="1329" selection-end-column="58" />
           <folding>
             <element signature="e#24#45#0" expanded="true" />
             <element signature="e#645#1575#0" />
@@ -1455,23 +1492,6 @@
             <element signature="e#40819#42457#0" />
             <element signature="e#43577#43636#0" />
             <element signature="e#43798#45631#0" />
-            <element signature="e#47158#48101#0" />
-            <element signature="e#48198#48904#0" />
-            <element signature="e#49096#50919#0" />
-            <element signature="e#51056#51789#0" />
-            <element signature="e#83496#84965#0" />
-            <element signature="e#85204#85812#0" />
-            <element signature="e#86009#87461#0" />
-            <element signature="e#87612#88214#0" />
-            <element signature="e#87612#87850#1" />
-            <element signature="e#88303#88623#0" />
-            <element signature="e#88741#89157#0" />
-            <element signature="e#89286#89903#0" />
-            <element signature="e#90395#91204#0" />
-            <element signature="e#91326#92582#0" />
-            <element signature="e#92695#93501#0" />
-            <element signature="e#93532#94646#0" />
-            <element signature="e#94677#100006#0" />
           </folding>
         </state>
       </provider>
