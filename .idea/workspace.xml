@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/docs/user_guide/q_value_calculation.r" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/docs/user_guide/simulated_mlm.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/devel/magic/1478/small_scale_run.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/devel/magic/1478/small_scale_run.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/docs/user_guide/power_analysis_beginning_to_end.rst" beforeDir="false" afterPath="$PROJECT_DIR$/src/docs/user_guide/power_analysis_beginning_to_end.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/docs/user_guide/simulated_mlm.sh" beforeDir="false" afterPath="$PROJECT_DIR$/src/docs/user_guide/simulated_mlm.sh" afterDir="false" />
     </list>
     <ignored path="saegus_project.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -93,8 +90,8 @@
       <file leaf-file-name="simulated_mlm.sh" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/docs/user_guide/simulated_mlm.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+            <state relative-caret-position="90">
+              <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
             </state>
           </provider>
         </entry>
@@ -242,9 +239,9 @@
         <option value="$PROJECT_DIR$/src/saegus/parameters.py" />
         <option value="$PROJECT_DIR$/src/docs/user_guide/collecting_and_storing_data.rst" />
         <option value="$PROJECT_DIR$/src/saegus/analyze.py" />
-        <option value="$PROJECT_DIR$/src/docs/user_guide/simulated_mlm.sh" />
         <option value="$PROJECT_DIR$/src/docs/user_guide/power_analysis_beginning_to_end.rst" />
         <option value="$PROJECT_DIR$/src/docs/user_guide/q_value_calculation.r" />
+        <option value="$PROJECT_DIR$/src/docs/user_guide/simulated_mlm.sh" />
       </list>
     </option>
   </component>
@@ -275,8 +272,8 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="85" />
-    <option name="y" value="25" />
+    <option name="x" value="140" />
+    <option name="y" value="-4" />
     <option name="width" value="1122" />
     <option name="height" value="845" />
   </component>
@@ -1004,7 +1001,14 @@
       <option name="project" value="LOCAL" />
       <updated>1527168292196</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="Added first draft of the bash script. Needs development because&#10;it skipped several of the configuration files. Need to refine&#10;the wildcard parameters. Also adding the Rscript to the VCS. No idea&#10;why it was not added the first time I developed it.">
+      <created>1527176359820</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1527176359820</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers>
       <Generic url="http://localhost">
         <option name="loginAnonymously" value="true" />
@@ -1041,11 +1045,12 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1535" height="904" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" x="162" y="208" width="676" height="407" id="Project" order="0" sideWeight="0.48395723" visible="true" weight="0.2921424" />
       <window_info anchor="bottom" id="TODO" order="8" weight="0.2274436" />
       <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.50235057" side_tool="true" weight="0.8328877" />
-      <window_info anchor="right" x="0" y="0" width="230" height="617" id="Documentation" order="10" side_tool="true" visible="true" weight="0.24378778" />
+      <window_info anchor="right" x="0" y="0" width="230" height="617" id="Documentation" order="10" side_tool="true" weight="0.45429364" />
       <window_info anchor="bottom" id="Version Control" order="5" sideWeight="0.48971722" weight="0.67333335" />
       <window_info anchor="bottom" id="Python Console" order="13" sideWeight="0.49764943" weight="0.8333333" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.23544632" weight="0.72533333" />
@@ -1127,7 +1132,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/archives/wgs" />
     </ignored-roots>
-    <MESSAGE value="Prior commit had wgs-0.1.0 under a separate, private git repository." />
     <MESSAGE value="Cleaning up separate git repositories.&#10;&#10;" />
     <MESSAGE value="Some changes to docs.&#10;Added some new functions to analyze.&#10;&#10;" />
     <MESSAGE value="General reorginzations, added typical parameter files in .yaml format.&#10;Renamed some modules to more descriptive names.&#10;Repaired code which calculates kinship matrix." />
@@ -1152,7 +1156,8 @@
     <MESSAGE value="Calculation for the kinship matrix has been corrected. I am currently&#10;fixing the function for the automation of the TASSEL input files." />
     <MESSAGE value="Seems like whenever the TASSEL input function is placed is placed&#10;into the method of another class something very strange happens. I get&#10;error messages which make absolutely no sense. All the functions&#10;inside of the TASSEL input function run completely fine on their own.&#10;It seems if run inside the 'Study' class something goes terribly wrong." />
     <MESSAGE value="Running the TASSEL input functions from a loop in &#10;small_scale_run.ipynb. Had problem with TASSEL failing to load one of&#10;the files. Turns out I had not added the .txt extension to the end of&#10;the file. Corrected the file name problem and TASSEL ran fine. Writing&#10;the bash script to loop through the config files for a run now." />
-    <option name="LAST_COMMIT_MESSAGE" value="Running the TASSEL input functions from a loop in &#10;small_scale_run.ipynb. Had problem with TASSEL failing to load one of&#10;the files. Turns out I had not added the .txt extension to the end of&#10;the file. Corrected the file name problem and TASSEL ran fine. Writing&#10;the bash script to loop through the config files for a run now." />
+    <MESSAGE value="Added first draft of the bash script. Needs development because&#10;it skipped several of the configuration files. Need to refine&#10;the wildcard parameters. Also adding the Rscript to the VCS. No idea&#10;why it was not added the first time I developed it." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added first draft of the bash script. Needs development because&#10;it skipped several of the configuration files. Need to refine&#10;the wildcard parameters. Also adding the Rscript to the VCS. No idea&#10;why it was not added the first time I developed it." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1526,8 +1531,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/docs/user_guide/simulated_mlm.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        <state relative-caret-position="90">
+          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
         </state>
       </provider>
     </entry>
