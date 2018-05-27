@@ -28,21 +28,32 @@ is contained in ``simulated_mlm.sh``.
 .. code-block:: bash
    :caption: Contents of the ``simulated_mlm.sh`` script
 
-   #!/usr/bin/env bash
+   #!/bin/bash
 
-   for $filename in $@;
+
+   echo "Run ID: $1, Number of Replicates $2"
+   run_id=$1
+   number_of_replicates=$2
+   final_rep_index="$((number_of_replicates - 1))"
+
+   echo "Beginning TASSEL analysis of Run ID: $run_id"
+   echo "Number of Replicates: $number_of_replicates"
+   echo "First configuration file: small_0_gwas_pipeline.xml"onca
+   echo "Final configuration file: small_"$final_rep_index"_gwas_pipeline.xml"
+
+   for i in `seq 0 $final_rep_index`
    do
-      echo "Running $filename now.\n"
-      ./run_pipeline.pl -Xmx6g -configFile $filename
+       config_file_name=$run_id$i"_gwas_pipeline.xml"
+       echo "$config_file_name"
+       ./run_pipeline.pl -Xmx6g -configFile $config_file_name
    done
 
 
-The input is the ``run_id`` followed by the wildcard character ``*``.
-For example:
+The input is the ``run_id`` followed by the number of replicates. For example:
 
 .. code-block:: sh
 
-   ~/tassel-5-standalone$ bash simulated_mlm.sh small*.xml
+   ~/tassel-5-standalone$ bash simulated_mlm.sh small 10
 
 Which iterates through all of the TASSEL configuration files.
 

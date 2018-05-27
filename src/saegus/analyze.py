@@ -1606,6 +1606,48 @@ class Study(object):
         self.run_id = run_id
         self.integer_to_snp = {0: 'A', 1: 'C', 2: 'G', 3: 'T', 4: 'D', 5: 'I'}
         self.snp_to_integer = {'A': 0, 'C': 1, 'D': 4, 'G': 2, 'I': 5, 'T': 3}
+        self.snp_to_int = {
+                            'A': 0,
+                            'C': 1,
+                            'G': 2,
+                            'T': 3,
+                            '-': 4,
+                            '+': 5
+                        }
+        self.iupac_genotype_codes = {
+                                        'A': 'AA',
+                                        0: 'A',
+                                        'AA': 'A',
+                                        1: 'C',
+                                        'C': 'CC',
+                                        'CC': 'C',
+                                        2: 'G',
+                                        'G': 'GG',
+                                        'GG': 'G',
+                                        3: 'T',
+                                        'T': 'TT',
+                                        'TT': 'T',
+                                        'R': 'AG',
+                                        'AG': 'R',
+                                        'Y': 'CT',
+                                        'CT': 'Y',
+                                        'S': 'CG',
+                                        'CG': 'S',
+                                        'W': 'AT',
+                                        'AT': 'W',
+                                        'K': 'GT',
+                                        'GT': 'K',
+                                        'M': 'AC',
+                                        'AC': 'M',
+                                        5: '+',
+                                        '+': '++',
+                                        '++': '+',
+                                        '0': '+-',
+                                        '+-': '0',
+                                        4: '-',
+                                        '-': '--',
+                                        '--': '-',
+                                    }
 
 
     def collect_samples(self, replicate_populations, sample_sizes):
@@ -1650,6 +1692,146 @@ class Study(object):
             for size in sample_sizes:
                 particular_loaded_sample_library[rep].append(sim.loadPopulation(self.run_id+ '_' + str(rep) + '_' + str(size) + '.pop'))
         return particular_loaded_sample_library
+
+
+    def calculate_power_false_positive_rate(self,
+                                            number_of_replicates,
+                                            q_value_threshold = 0.05,
+                                            hdf5_file = None):
+        """
+        Calculates power and false positive rate using TASSEL output and
+        q-values. Data is gathered from files which have the name structure:
+        '/home/vakanas/tassel-5-standalone/run_id_rep_id_out_2.txt'. I will
+        correct in future revisions of this function. 
+        Returns an array with columns:
+        power_fpr[:, 0] : Replicate ID
+        power_fpr[:, 1] : Power
+        power_fpr[:, 2] : False Positive Rate
+
+        :param raw_test_results:
+        :param number_of_replicates:
+        :param q_values:
+        :param q_value_threshold:
+        :param hdf5_file:
+        :return:
+        """
+        power_and_fprs = np.zeros((number_of_replicates, 3))
+        for rep_id in range(number_of_replicates):
+            tassel_results = pd.read_csv(
+                '/home/vakanas/tassel-5-standalone/small_' + str(
+                    rep_id) + '_out_2.txt',
+                sep='\t',
+                skiprows=[1],
+                index_col='Marker')
+            tassel_results.drop(labels=['Trait', 'Pos', 'dom_effect',
+                                        'dom_F', 'dom_p', 'Genetic Var',
+                                        'Residual Var', '-2LnLikelihood',
+                                        'add_effect', 'add_F', 'add_p',
+                                        'errordf', 'MarkerR2'],
+                                axis=1, inplace=True)
+            qvalues = pd.read_csv(
+                '/home/vakanas/tassel-5-standalone/small_' + str(
+                    rep_id) + '_out_q_values.txt',
+                sep='\t', index_col=0)
+            truncated_plus_q = tassel_results.join(qvalues)
+            if hdf5_file is not None:
+                small_data['tassel/test/replicate/' + str(rep_id)] = np.array(
+                    truncated_plus_q)
+            power = len(qvalues.ix[qvalues['q'] < q_value_threshold]) / len(qtl)
+            false_positive_rate = sum(
+                allele_effects[np.array(qvalues.ix[qvalues['q'] < 0.05].index)][
+                    1] == 0)
+            power_and_fprs[i, 0] = i
+            power_and_fprs[i, 1] = power
+            power_and_fprs[i, 2] = false_positive_rate
+
+
+    def genotypic_effects_table(self, raw_estimated_effects,
+                                allele_effects_array,
+                                pop,
+                                segregating_loci,
+                                qtl
+                                ):
+        """
+        Creates a pandas.DataFrame of estimated effect sizes for each genotype
+        as estimated by TASSEL and their true values assigned by the user.
+
+
+
+        :param raw_estimated_effects: TASSEL output with _3.txt suffix
+        :return: pandas.DataFrame of genotypic effect sizes
+        """
+
+        table_columns = [
+            'Marker',
+            'G1',
+            'P(G1)',
+            'e[G1]*',
+            'e[G1]',
+            '|e[G1]* - e[G1]|',
+            'G2',
+            'P(G2)',
+            'e[G2]*',
+            'e[G2]',
+            '|e[G2]* - e[G2]|',
+            'G3',
+            'P(G3)',
+            'e[G3]*',
+            'e[G3]',
+            '|e[G3]* - e[G3]|'
+        ]
+
+        grouped_estimated_effects = raw_estimated_effects.groupby('Marker')
+        effects_by_marker = dict(list(grouped_estimated_effects))
+
+        genotypic_effects_table = pd.DataFrame(np.zeros(len(segregating_loci),
+                                                        len(table_columns)),
+                                         index=segregating_loci,
+                                         columns=table_columns)
+        genotypic_effects_table.Marker = segregating_loci
+
+        for locus in qtl:
+            for idx, allele in enumerate(
+                    effects_by_marker[locus].Allele):
+                current_genotype = 'G' + str(idx + 1)
+                estimated_genotypic_effect_key = 'e[G' + str(idx + 1) + ']*'
+                estimated_effect = \
+                    float(
+                        effects_by_marker[locus].ix[
+                        effects_by_marker[locus].ix[:,'Allele']
+                                                    == allele].Effect
+                    )
+
+                true_genotypic_effect_key = 'e[G' + str(idx + 1) + ']'
+                true_genotypic_effect = \
+                    allele_effects_array[locus, self.snp_to_int[
+                    self.iupac_genotype_codes[allele][0]]] + \
+                    allele_effects_array[locus, self.snp_to_int[
+                        self.iupac_genotype_codes[allele][1]]]
+
+                genotypic_effects_table.ix[locus, current_genotype] = \
+                    self.iupac_genotype_codes[allele]
+                genotypic_effects_table.ix[
+                    locus, estimated_genotypic_effect_key] = estimated_effect
+                genotypic_effects_table.ix[
+                    locus, true_genotypic_effect_key] = true_genotypic_effect
+                frq_genotype_key = 'P(G' + str(idx + 1) + ')'
+                frq_genotype = pop.dvars().genoFreq[locus][
+                    self.snp_to_int[self.iupac_genotype_codes[allele][0]],
+                    self.snp_to_int[self.iupac_genotype_codes[allele][1]]]
+                genotypic_effects_table.ix[locus, frq_genotype_key] = \
+                    frq_genotype
+                abs_difference_key = \
+                    '|e[' + current_genotype + \
+                    ']* - e[' + current_genotype + ']|'
+                abs_difference = abs(estimated_effect - true_genotypic_effect)
+                genotypic_effects_table.ix[locus, abs_difference_key] \
+                    = abs_difference
+
+        return genotypic_effects_table
+
+
+
 
     def calculate_power_fpr(self, panel_map, sample_sizes, number_of_replicates,
                                 number_of_qtl):
