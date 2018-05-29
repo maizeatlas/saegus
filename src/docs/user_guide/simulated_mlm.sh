@@ -8,12 +8,12 @@ final_rep_index="$((number_of_replicates - 1))"
 
 echo "Beginning TASSEL analysis of Run ID: $run_id"
 echo "Number of Replicates: $number_of_replicates"
-echo "First configuration file: small_0_gwas_pipeline.xml"onca
+echo "First configuration file: small_0_gwas_pipeline.xml"
 echo "Final configuration file: small_"$final_rep_index"_gwas_pipeline.xml"
 
 for i in `seq 0 $final_rep_index`
 do
     config_file_name=$run_id$i"_gwas_pipeline.xml"
-    echo "$config_file_name"
+    echo "Now running: "$config_file_name".\n"
     ./run_pipeline.pl -Xmx6g -configFile $config_file_name
 done

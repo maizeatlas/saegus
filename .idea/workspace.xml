@@ -4,7 +4,7 @@
     <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/devel/magic/1478/small_scale_run.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/devel/magic/1478/small_scale_run.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/docs/user_guide/power_analysis_beginning_to_end.rst" beforeDir="false" afterPath="$PROJECT_DIR$/src/docs/user_guide/power_analysis_beginning_to_end.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/docs/user_guide/simulated_mlm.sh" beforeDir="false" afterPath="$PROJECT_DIR$/src/docs/user_guide/simulated_mlm.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/saegus/analyze.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/saegus/analyze.py" afterDir="false" />
     </list>
     <ignored path="saegus_project.iws" />
@@ -68,8 +68,8 @@
       <file leaf-file-name="analyze.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="546">
-              <caret line="1707" column="8" selection-start-line="1707" selection-start-column="8" selection-end-line="1707" selection-end-column="8" />
+            <state relative-caret-position="592">
+              <caret line="1875" column="71" lean-forward="true" selection-start-line="1875" selection-start-column="71" selection-end-line="1875" selection-end-column="71" />
               <folding>
                 <element signature="e#24#45#0" expanded="true" />
                 <element signature="e#645#1575#0" />
@@ -84,7 +84,13 @@
                 <element signature="e#40819#42457#0" />
                 <element signature="e#43577#43636#0" />
                 <element signature="e#43798#45631#0" />
-                <element signature="e#73342#76598#0" />
+                <element signature="e#56172#58286#0" />
+                <element signature="e#69341#69583#0" />
+                <element signature="e#69620#71273#0" />
+                <element signature="e#83101#84902#0" />
+                <element signature="e#84966#85718#0" />
+                <element signature="e#85799#86230#0" />
+                <element signature="e#86358#88650#0" />
               </folding>
             </state>
           </provider>
@@ -93,8 +99,8 @@
       <file leaf-file-name="simulated_mlm.sh" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/docs/user_guide/simulated_mlm.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" selection-end-line="19" />
+            <state relative-caret-position="270">
+              <caret line="18" column="4" selection-start-line="18" selection-start-column="4" selection-end-line="18" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -102,7 +108,7 @@
       <file leaf-file-name="power_analysis_beginning_to_end.rst" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/docs/user_guide/power_analysis_beginning_to_end.rst">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
+            <state relative-caret-position="450">
               <caret line="30" selection-start-line="30" selection-end-line="30" />
             </state>
           </provider>
@@ -194,7 +200,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$APPLICATION_HOME_DIR$/bin/pycharm64.vmoptions" />
         <option value="$APPLICATION_HOME_DIR$/bin/pycharm.vmoptions" />
         <option value="$PROJECT_DIR$/devel/tuson_selection/conf.py" />
         <option value="$PROJECT_DIR$/src/docs/saegus_documentation/parameters.rst" />
@@ -242,8 +247,9 @@
         <option value="$PROJECT_DIR$/src/saegus/parameters.py" />
         <option value="$PROJECT_DIR$/src/docs/user_guide/collecting_and_storing_data.rst" />
         <option value="$PROJECT_DIR$/src/docs/user_guide/q_value_calculation.r" />
-        <option value="$PROJECT_DIR$/src/docs/user_guide/simulated_mlm.sh" />
         <option value="$PROJECT_DIR$/src/docs/user_guide/power_analysis_beginning_to_end.rst" />
+        <option value="$USER_HOME$/.local/share/JetBrains/Toolbox/apps/PyCharm-P/ch-0/181.4668.75.vmoptions" />
+        <option value="$PROJECT_DIR$/src/docs/user_guide/simulated_mlm.sh" />
         <option value="$PROJECT_DIR$/src/saegus/analyze.py" />
       </list>
     </option>
@@ -274,11 +280,11 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="65" />
-    <option name="y" value="-4" />
-    <option name="width" value="1535" />
-    <option name="height" value="904" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="140" />
+    <option name="y" value="34" />
+    <option name="width" value="1122" />
+    <option name="height" value="845" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -324,22 +330,14 @@
               <item name="saegus_project" type="b2602c69:ProjectViewProjectNode" />
               <item name="saegus_project" type="47feb1d3:ProjectViewModuleNode" />
               <item name="saegus_project" type="462c0819:PsiDirectoryNode" />
-              <item name="devel" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="saegus_project" type="b2602c69:ProjectViewProjectNode" />
               <item name="saegus_project" type="47feb1d3:ProjectViewModuleNode" />
               <item name="saegus_project" type="462c0819:PsiDirectoryNode" />
-              <item name="devel" type="462c0819:PsiDirectoryNode" />
-              <item name="magic" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="saegus_project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="saegus_project" type="47feb1d3:ProjectViewModuleNode" />
-              <item name="saegus_project" type="462c0819:PsiDirectoryNode" />
-              <item name="devel" type="462c0819:PsiDirectoryNode" />
-              <item name="magic" type="462c0819:PsiDirectoryNode" />
-              <item name="1478" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="saegus" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -387,7 +385,7 @@
     <property name="node.js.selected.package.tslint" value="" />
     <property name="nodejs_interpreter_path" value="node" />
     <property name="prop_add_unversioned_files" value="true" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.appearance" />
+    <property name="settings.editor.selected.configurable" value="preferences.general" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -1011,7 +1009,14 @@
       <option name="project" value="LOCAL" />
       <updated>1527278863850</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="Approaching the end of the power analysis. Added two functions to&#10;analyze.Study for calculation of power from TASSEL output files and&#10;the construction of a table which compares genotypic effect estimates&#10;vs their true values.&#10;&#10;Both functions need to be tested and documented. But I need to sleep.&#10;So that will have to be done when I wake up.">
+      <created>1527434554500</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1527434554500</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers>
       <Generic url="http://localhost">
         <option name="loginAnonymously" value="true" />
@@ -1047,24 +1052,23 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="-4" width="1535" height="904" extended-state="6" />
+    <frame x="140" y="34" width="1122" height="845" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" x="162" y="208" width="676" height="407" id="Project" order="0" sideWeight="0.48194444" weight="0.61357343" />
+      <window_info content_ui="combo" x="162" y="208" width="676" height="407" id="Project" order="0" sideWeight="0.48128343" weight="0.29751512" />
       <window_info anchor="bottom" id="TODO" order="8" weight="0.2274436" />
       <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.50235057" side_tool="true" weight="0.8328877" />
-      <window_info anchor="right" x="0" y="0" width="230" height="617" id="Documentation" order="10" side_tool="true" weight="0.4535316" />
+      <window_info anchor="right" x="0" y="0" width="230" height="645" id="Documentation" order="10" side_tool="true" weight="0.4535316" />
       <window_info anchor="bottom" id="Version Control" order="5" sideWeight="0.48971722" weight="0.67333335" />
       <window_info anchor="bottom" id="Python Console" order="13" sideWeight="0.49764943" weight="0.8333333" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.23544632" weight="0.72533333" />
       <window_info anchor="right" id="SciView" order="3" weight="0.32975152" />
-      <window_info x="911" y="150" width="402" height="641" id="Structure" order="1" sideWeight="0.51805556" side_tool="true" weight="0.61357343" />
+      <window_info x="911" y="150" width="402" height="641" id="Structure" order="1" sideWeight="0.5187166" side_tool="true" weight="0.29751512" />
       <window_info anchor="bottom" auto_hide="true" x="589" y="537" width="907" height="372" id="Terminal" internal_type="SLIDING" order="15" sideWeight="0.35604218" type="SLIDING" weight="0.8670886" />
       <window_info id="Favorites" order="2" sideWeight="0.5056361" side_tool="true" weight="0.10220588" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.6959459" />
       <window_info anchor="bottom" id="DB Execution Console" order="0" />
       <window_info active="true" anchor="bottom" id="Concurrent Activities Diagram" order="14" visible="true" weight="0.32744783" />
-      <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.4974055" weight="0.32972136" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="2" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="6" weight="0.25" />
@@ -1073,13 +1077,14 @@
       <window_info anchor="bottom" id="File Transfer" order="12" sideWeight="0.4976744" weight="0.32905984" />
       <window_info anchor="right" id="Mongo Explorer" order="1" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="8" weight="0.25" />
+      <window_info anchor="right" id="Database" order="0" weight="0.17864339" />
       <window_info anchor="right" id="Packages" order="5" weight="0.32940108" />
       <window_info anchor="bottom" id="Application Servers" order="4" />
       <window_info anchor="right" auto_hide="true" id="Data View" internal_type="SLIDING" order="9" type="SLIDING" weight="0.32940108" />
       <window_info anchor="bottom" id="Find" order="7" sideWeight="0.4974293" weight="0.52913755" />
       <window_info anchor="right" id="The R Graphics" order="7" weight="0.32975152" />
       <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
-      <window_info anchor="right" id="Database" order="0" weight="0.17864339" />
+      <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.4974055" weight="0.32972136" />
       <window_info anchor="bottom" id="Message" order="6" />
     </layout>
     <layout-to-restore>
@@ -1087,8 +1092,9 @@
       <window_info active="true" anchor="bottom" id="Concurrent Activities Diagram" order="14" visible="true" weight="0.32744783" />
       <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.4974055" weight="0.32972136" />
       <window_info anchor="bottom" id="Python Console" order="13" sideWeight="0.49764943" weight="0.8333333" />
-      <window_info anchor="right" id="Mongo Explorer" order="1" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.23544632" weight="0.72533333" />
+      <window_info anchor="right" id="Mongo Explorer" order="1" />
+      <window_info anchor="bottom" id="Find" order="7" sideWeight="0.4974293" weight="0.52913755" />
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="6" weight="0.25" />
       <window_info anchor="top" content_ui="combo" id="DB Browser" internal_type="SLIDING" order="0" side_tool="true" type="SLIDING" weight="0.329904" />
@@ -1098,21 +1104,20 @@
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="2" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.50235057" side_tool="true" weight="0.8328877" />
       <window_info anchor="bottom" id="File Transfer" order="12" sideWeight="0.4976744" weight="0.32905984" />
-      <window_info anchor="right" x="0" y="0" width="142" height="676" id="Documentation" order="10" side_tool="true" weight="0.33795014" />
+      <window_info anchor="right" x="0" y="0" width="230" height="645" id="Documentation" order="10" side_tool="true" weight="0.4535316" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="8" weight="0.25" />
       <window_info anchor="right" id="Packages" order="5" weight="0.32940108" />
       <window_info anchor="bottom" id="Application Servers" order="4" />
       <window_info anchor="right" auto_hide="true" id="Data View" internal_type="SLIDING" order="9" type="SLIDING" weight="0.32940108" />
       <window_info anchor="right" id="The R Graphics" order="7" weight="0.32975152" />
-      <window_info content_ui="combo" x="162" y="208" width="676" height="407" id="Project" order="0" sideWeight="0.486631" weight="0.6615178" />
+      <window_info content_ui="combo" x="162" y="208" width="676" height="407" id="Project" order="0" sideWeight="0.48128343" visible="true" weight="0.29751512" />
       <window_info anchor="right" id="SciView" order="3" weight="0.32975152" />
       <window_info anchor="right" id="Database" order="0" weight="0.17864339" />
       <window_info anchor="bottom" id="Message" order="6" />
       <window_info anchor="bottom" id="TODO" order="8" weight="0.2274436" />
-      <window_info active="true" x="911" y="150" width="402" height="641" id="Structure" order="1" sideWeight="0.51336896" side_tool="true" visible="true" weight="0.45735392" />
+      <window_info active="true" x="911" y="150" width="402" height="641" id="Structure" order="1" sideWeight="0.5187166" side_tool="true" visible="true" weight="0.29751512" />
       <window_info anchor="bottom" id="Version Control" order="5" sideWeight="0.48971722" weight="0.67333335" />
       <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
-      <window_info anchor="bottom" id="Find" order="7" sideWeight="0.4974293" weight="0.52913755" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.6959459" />
     </layout-to-restore>
   </component>
@@ -1135,7 +1140,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/archives/wgs" />
     </ignored-roots>
-    <MESSAGE value="Some changes to docs.&#10;Added some new functions to analyze.&#10;&#10;" />
     <MESSAGE value="General reorginzations, added typical parameter files in .yaml format.&#10;Renamed some modules to more descriptive names.&#10;Repaired code which calculates kinship matrix." />
     <MESSAGE value="Updates and minor changes to parameters class Genotype" />
     <MESSAGE value="trying to fix error" />
@@ -1160,7 +1164,8 @@
     <MESSAGE value="Running the TASSEL input functions from a loop in &#10;small_scale_run.ipynb. Had problem with TASSEL failing to load one of&#10;the files. Turns out I had not added the .txt extension to the end of&#10;the file. Corrected the file name problem and TASSEL ran fine. Writing&#10;the bash script to loop through the config files for a run now." />
     <MESSAGE value="Added first draft of the bash script. Needs development because&#10;it skipped several of the configuration files. Need to refine&#10;the wildcard parameters. Also adding the Rscript to the VCS. No idea&#10;why it was not added the first time I developed it." />
     <MESSAGE value="Shell script has been refined. Some header text has been added to&#10;tell let the user know the input parameters at the time the script is&#10;run. First parameter is the &quot;run id&quot; followed by the number of &#10;replicates. i.e. bash simulated_mlm.sh small 10&#10;&#10;More interesting is that TASSEL will not process the runs where the&#10;entries of the population structure vector are not large enough. The&#10;error is &quot;fixed effects design matrix does not have complete rank.&quot;&#10;I will increase the sample size before proceeding with the actual data." />
-    <option name="LAST_COMMIT_MESSAGE" value="Shell script has been refined. Some header text has been added to&#10;tell let the user know the input parameters at the time the script is&#10;run. First parameter is the &quot;run id&quot; followed by the number of &#10;replicates. i.e. bash simulated_mlm.sh small 10&#10;&#10;More interesting is that TASSEL will not process the runs where the&#10;entries of the population structure vector are not large enough. The&#10;error is &quot;fixed effects design matrix does not have complete rank.&quot;&#10;I will increase the sample size before proceeding with the actual data." />
+    <MESSAGE value="Approaching the end of the power analysis. Added two functions to&#10;analyze.Study for calculation of power from TASSEL output files and&#10;the construction of a table which compares genotypic effect estimates&#10;vs their true values.&#10;&#10;Both functions need to be tested and documented. But I need to sleep.&#10;So that will have to be done when I wake up." />
+    <option name="LAST_COMMIT_MESSAGE" value="Approaching the end of the power analysis. Added two functions to&#10;analyze.Study for calculation of power from TASSEL output files and&#10;the construction of a table which compares genotypic effect estimates&#10;vs their true values.&#10;&#10;Both functions need to be tested and documented. But I need to sleep.&#10;So that will have to be done when I wake up." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1175,13 +1180,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/association_mapping_using_tassel.rst">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="25" column="22" selection-start-line="25" selection-start-column="22" selection-end-line="25" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/parse.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1005">
@@ -1505,22 +1503,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/docs/user_guide/power_analysis_beginning_to_end.rst">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
+        <state relative-caret-position="450">
           <caret line="30" selection-start-line="30" selection-end-line="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.local/share/JetBrains/Toolbox/apps/PyCharm-P/ch-0/181.4668.75.vmoptions">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="6" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/docs/user_guide/simulated_mlm.sh">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" selection-end-line="19" />
+        <state relative-caret-position="270">
+          <caret line="18" column="4" selection-start-line="18" selection-start-column="4" selection-end-line="18" selection-end-column="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="546">
-          <caret line="1707" column="8" selection-start-line="1707" selection-start-column="8" selection-end-line="1707" selection-end-column="8" />
+        <state relative-caret-position="592">
+          <caret line="1875" column="71" lean-forward="true" selection-start-line="1875" selection-start-column="71" selection-end-line="1875" selection-end-column="71" />
           <folding>
             <element signature="e#24#45#0" expanded="true" />
             <element signature="e#645#1575#0" />
@@ -1535,7 +1540,13 @@
             <element signature="e#40819#42457#0" />
             <element signature="e#43577#43636#0" />
             <element signature="e#43798#45631#0" />
-            <element signature="e#73342#76598#0" />
+            <element signature="e#56172#58286#0" />
+            <element signature="e#69341#69583#0" />
+            <element signature="e#69620#71273#0" />
+            <element signature="e#83101#84902#0" />
+            <element signature="e#84966#85718#0" />
+            <element signature="e#85799#86230#0" />
+            <element signature="e#86358#88650#0" />
           </folding>
         </state>
       </provider>
