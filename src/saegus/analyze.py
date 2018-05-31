@@ -6,6 +6,7 @@ from numpy.core import defchararray
 import pandas as pd
 import collections as col
 from os import path
+from glob import glob
 import copy
 import random
 import shelve
@@ -1043,7 +1044,7 @@ class GWAS(object):
             count_matrix[i, :] = comp_count
 
             formatted_locus_names = ["M" + str(site) for
-                                     site in self.pop.dvars().segSites]
+                                     site in self.segregating_loci]
 
         if count_matrix_file_name is not None:
             named_count_matrix = pd.DataFrame(count_matrix,
@@ -1162,7 +1163,7 @@ class GWAS(object):
                                dtype=np.int8)
 
         hapmap_matrix.chrom = chromosomes
-        hapmap_matrix.pos = np.arange(self.pop.dvars().numOfSegSites)
+        hapmap_matrix.pos = np.arange(self.segregating_loci.shape[0])
         hapmap_matrix.loc[:, 'strand':'QCode'] = np.core.defchararray.array(
             [['NA']*len(self.segregating_loci)]*7).T
 
@@ -1739,40 +1740,54 @@ class Study(object):
         :param hdf5_file: h5py.File object to store results
         :return: See above section.
         """
+
+        existing_files = glob(data_directory+self.run_id+'_'+str('*')+'_out_2.txt')
+
+
         power_and_fprs = np.zeros((number_of_replicates, 3))
         for rep_id in range(number_of_replicates):
-            tassel_results = pd.read_csv(
-                data_directory+self.run_id+'_'+ str(rep_id) + '_out_2.txt',
-                sep='\t',
-                skiprows=[1],
-                index_col='Marker')
-            tassel_results.drop(labels=['Trait', 'Pos', 'dom_effect',
-                                        'dom_F', 'dom_p', 'Genetic Var',
-                                        'Residual Var', '-2LnLikelihood',
-                                        'add_effect', 'add_F', 'add_p',
-                                        'errordf', 'MarkerR2'],
-                                axis=1, inplace=True)
-            qvalues = pd.read_csv(
-                data_directory+self.run_id+'_'+ str(rep_id) +
-                '_out_q_values.txt',
-                sep='\t', index_col=0)
-            truncated_plus_q = tassel_results.join(qvalues)
+            file_name = data_directory+self.run_id+'_'+str(rep_id)+'_out_2.txt'
+            if file_name in existing_files:
+                tassel_results = pd.read_csv(
+                    data_directory+self.run_id+'_'+ str(rep_id) + '_out_2.txt',
+                    sep='\t',
+                    skiprows=[1],
+                    index_col='Marker')
+                tassel_results.drop(labels=['Trait', 'Pos', 'dom_effect',
+                                            'dom_F', 'dom_p', 'Genetic Var',
+                                            'Residual Var', '-2LnLikelihood',
+                                            'add_effect', 'add_F', 'add_p',
+                                            'errordf', 'MarkerR2'],
+                                    axis=1, inplace=True)
+                qvalues = pd.read_csv(
+                    data_directory+self.run_id+'_'+ str(rep_id) +
+                    '_out_q_values.txt',
+                    sep='\t', index_col=0)
+                truncated_plus_q = tassel_results.join(qvalues)
 
-            power = len(qvalues.ix[qvalues['q'] < q_value_threshold]) / len(qtl)
-            false_positive_rate = sum(
-            allele_effects[
-                np.array(qvalues.ix[qvalues['q'] < q_value_threshold].index), 2] == 0) / len(qtl)
+                seg_loci = list(np.array(tassel_results.index, dtype=np.int))
 
-            power_and_fprs[rep_id, 0] = rep_id
-            power_and_fprs[rep_id, 1] = power
-            power_and_fprs[rep_id, 2] = false_positive_rate
+                non_qtl = set(seg_loci).difference(qtl)
 
-            if hdf5_file is not None:
-                hdf5_file['tassel/test/replicate/' + str(rep_id)] = np.array(
-                    truncated_plus_q)
-                hdf5_file['tassel/test/replicate/'+
-                          str(rep_id)].attrs['columns'] = \
-                    list(map(np.string_, list(tassel_results.columns)))
+                detected_loci = list(np.where(qvalues.q < q_value_threshold))[0]
+
+                true_positives = set(detected_loci).intersection(qtl)
+                power = len(true_positives) / len(qtl)
+
+                false_positive_loci = set(detected_loci).intersection(non_qtl)
+
+                false_positive_rate = len(false_positive_loci) / len(qtl)
+
+                power_and_fprs[rep_id, 0] = rep_id
+                power_and_fprs[rep_id, 1] = power
+                power_and_fprs[rep_id, 2] = false_positive_rate
+
+                if hdf5_file is not None:
+                    hdf5_file['tassel/test/replicate/' + str(rep_id)] = np.array(
+                        truncated_plus_q)
+                    hdf5_file['tassel/test/replicate/'+
+                              str(rep_id)].attrs['columns'] = \
+                        list(map(np.string_, list(tassel_results.columns)))
 
         if hdf5_file is not None:
             hdf5_file['tassel/test/power_and_fprs'] = power_and_fprs
@@ -1818,70 +1833,76 @@ class Study(object):
 
         genotype_tables = {}
 
+        existing_files = glob(data_directory+self.run_id+'_'+str('*')+'_out_3.txt')
+
         for rep in range(self.number_of_replicates):
-            raw_estimated_effects = pd.read_csv(
-                data_directory+self.run_id+'_'+str(rep)+'_out_3.txt',
-                sep='\t'
-            )
-            effects_by_marker = dict(
-                list(raw_estimated_effects.groupby('Marker')
-                     )
-            )
+            file_name = data_directory+self.run_id+'_'+str(rep)+'_out_3.txt'
+            if file_name in existing_files:
 
-            genotypic_effects_table = pd.DataFrame(
-                np.zeros((len(segregating_loci), len(table_columns))),
-                                             index=segregating_loci,
-                                             columns=table_columns)
-            genotypic_effects_table.Marker = segregating_loci
+                raw_estimated_effects = pd.read_csv(
+                    data_directory+self.run_id+'_'+str(rep)+'_out_3.txt',
+                    sep='\t'
+                )
+                effects_by_marker = dict(
+                    list(raw_estimated_effects.groupby('Marker')
+                         )
+                )
 
-            pop = sample_library[rep][0]
-            sim.stat(pop, genoFreq=list(segregating_loci))
+                genotypic_effects_table = pd.DataFrame(
+                    np.zeros((len(segregating_loci), len(table_columns))),
+                                                 index=segregating_loci,
+                                                 columns=table_columns)
+                genotypic_effects_table.Marker = segregating_loci
 
-            for locus in qtl:
-                for idx, allele in enumerate(effects_by_marker[locus].Allele):
-                    current_genotype = 'G' + str(idx + 1)
-                    estimated_genotypic_effect_key = 'e[G' + str(idx + 1) + ']*'
-                    estimated_effect = \
-                        float(
-                            effects_by_marker[locus].ix[
-                            effects_by_marker[locus].ix[:,'Allele']
-                                                        == allele].Effect
-                        )
+                pop = sample_library[rep][0]
+                sim.stat(pop, genoFreq=list(segregating_loci))
 
-                    true_genotypic_effect_key = 'e[G' + str(idx + 1) + ']'
-                    true_genotypic_effect = \
-                        allele_effects_array[locus, self.snp_to_int[
-                        self.iupac_genotype_codes[allele][0]]] + \
-                        allele_effects_array[locus, self.snp_to_int[
-                            self.iupac_genotype_codes[allele][1]]]
+                for locus in qtl:
+                    for idx, allele in enumerate(effects_by_marker[locus].Allele):
+                        current_genotype = 'G' + str(idx + 1)
+                        estimated_genotypic_effect_key = 'e[G' + str(idx + 1) + ']*'
+                        estimated_effect = \
+                            float(
+                                effects_by_marker[locus].ix[
+                                effects_by_marker[locus].ix[:,'Allele']
+                                                            == allele].Effect
+                            )
 
-                    genotypic_effects_table.ix[locus, current_genotype] = \
-                        self.iupac_genotype_codes[allele]
-                    genotypic_effects_table.ix[
-                        locus, estimated_genotypic_effect_key] = estimated_effect
-                    genotypic_effects_table.ix[
-                        locus, true_genotypic_effect_key] = true_genotypic_effect
-                    frq_genotype_key = 'P(G' + str(idx + 1) + ')'
-                    frq_genotype = pop.dvars().genoFreq[locus][
-                        self.snp_to_int[self.iupac_genotype_codes[allele][0]],
-                        self.snp_to_int[self.iupac_genotype_codes[allele][1]]]
-                    genotypic_effects_table.ix[locus, frq_genotype_key] = \
-                        frq_genotype
-                    abs_difference_key = \
-                        '|e[' + current_genotype + \
-                        ']* - e[' + current_genotype + ']|'
-                    abs_difference = abs(estimated_effect - true_genotypic_effect)
-                    genotypic_effects_table.ix[locus, abs_difference_key] \
-                        = abs_difference
+                        true_genotypic_effect_key = 'e[G' + str(idx + 1) + ']'
+                        true_genotypic_effect = \
+                            allele_effects_array[locus, self.snp_to_int[
+                            self.iupac_genotype_codes[allele][0]]] + \
+                            allele_effects_array[locus, self.snp_to_int[
+                                self.iupac_genotype_codes[allele][1]]]
 
-            genotype_tables[rep] = genotypic_effects_table
+                        genotypic_effects_table.ix[locus, current_genotype] = \
+                            self.iupac_genotype_codes[allele]
+                        genotypic_effects_table.ix[
+                            locus, estimated_genotypic_effect_key] = estimated_effect
+                        genotypic_effects_table.ix[
+                            locus, true_genotypic_effect_key] = true_genotypic_effect
+                        frq_genotype_key = 'P(G' + str(idx + 1) + ')'
+                        frq_genotype = pop.dvars().genoFreq[locus][
+                            self.snp_to_int[self.iupac_genotype_codes[allele][0]],
+                            self.snp_to_int[self.iupac_genotype_codes[allele][1]]]
+                        genotypic_effects_table.ix[locus, frq_genotype_key] = \
+                            frq_genotype
+                        abs_difference_key = \
+                            '|e[' + current_genotype + \
+                            ']* - e[' + current_genotype + ']|'
+                        abs_difference = abs(estimated_effect - true_genotypic_effect)
+                        genotypic_effects_table.ix[locus, abs_difference_key] \
+                            = abs_difference
 
-            genotypic_effects_table.to_csv(
-                self.run_id+'_'+str(rep)+'_genotypic_fx.txt', sep='\t')
+                genotype_tables[rep] = genotypic_effects_table
+
+                genotypic_effects_table.to_csv(
+                    self.run_id+'_'+str(rep)+'_genotypic_fx.txt', sep='\t')
 
 #            if hdf5_file is not None:
 #                hdf5_file['tassel/effects/replicate/'+str(rep)] = \
 #                    np.array(genotypic_effects_table)
+        return genotype_tables
 
 
 

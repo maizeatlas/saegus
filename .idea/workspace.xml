@@ -4,7 +4,6 @@
     <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/devel/magic/1478/small_scale_run.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/devel/magic/1478/small_scale_run.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/docs/user_guide/simulated_mlm.sh" beforeDir="false" afterPath="$PROJECT_DIR$/src/docs/user_guide/simulated_mlm.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/saegus/analyze.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/saegus/analyze.py" afterDir="false" />
     </list>
     <ignored path="saegus_project.iws" />
@@ -68,8 +67,8 @@
       <file leaf-file-name="analyze.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="592">
-              <caret line="1875" column="71" lean-forward="true" selection-start-line="1875" selection-start-column="71" selection-end-line="1875" selection-end-column="71" />
+            <state relative-caret-position="420">
+              <caret line="1188" selection-start-line="1188" selection-end-line="1188" />
               <folding>
                 <element signature="e#24#45#0" expanded="true" />
                 <element signature="e#645#1575#0" />
@@ -83,14 +82,9 @@
                 <element signature="e#38963#40743#0" />
                 <element signature="e#40819#42457#0" />
                 <element signature="e#43577#43636#0" />
-                <element signature="e#43798#45631#0" />
                 <element signature="e#56172#58286#0" />
-                <element signature="e#69341#69583#0" />
-                <element signature="e#69620#71273#0" />
-                <element signature="e#83101#84902#0" />
-                <element signature="e#84966#85718#0" />
-                <element signature="e#85799#86230#0" />
-                <element signature="e#86358#88650#0" />
+                <element signature="e#72040#72788#0" />
+                <element signature="e#79047#81091#0" />
               </folding>
             </state>
           </provider>
@@ -1016,7 +1010,14 @@
       <option name="project" value="LOCAL" />
       <updated>1527434554500</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="Tested both Study.calculate_power_and_false_positive and&#10;Study.genotypic_effects_tables. They both run. Sadly I am not able&#10;to easily store the genotypic effects table in the HDF5 file as I&#10;planned. Instead the function will write the output to text files.&#10;&#10;With the current parameters the power is very, very low when performed&#10;on the test run. Perhaps it is the population structure in created&#10;by performing the MAGIC-like convergence operation.">
+      <created>1527608586612</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1527608586612</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers>
       <Generic url="http://localhost">
         <option name="loginAnonymously" value="true" />
@@ -1063,12 +1064,13 @@
       <window_info anchor="bottom" id="Python Console" order="13" sideWeight="0.49764943" weight="0.8333333" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.23544632" weight="0.72533333" />
       <window_info anchor="right" id="SciView" order="3" weight="0.32975152" />
-      <window_info x="911" y="150" width="402" height="641" id="Structure" order="1" sideWeight="0.5187166" side_tool="true" weight="0.29751512" />
+      <window_info x="911" y="150" width="402" height="641" id="Structure" order="1" sideWeight="0.5187166" side_tool="true" weight="0.29739776" />
       <window_info anchor="bottom" auto_hide="true" x="589" y="537" width="907" height="372" id="Terminal" internal_type="SLIDING" order="15" sideWeight="0.35604218" type="SLIDING" weight="0.8670886" />
       <window_info id="Favorites" order="2" sideWeight="0.5056361" side_tool="true" weight="0.10220588" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.6959459" />
       <window_info anchor="bottom" id="DB Execution Console" order="0" />
       <window_info active="true" anchor="bottom" id="Concurrent Activities Diagram" order="14" visible="true" weight="0.32744783" />
+      <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.4974055" weight="0.32972136" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="2" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="6" weight="0.25" />
@@ -1077,14 +1079,13 @@
       <window_info anchor="bottom" id="File Transfer" order="12" sideWeight="0.4976744" weight="0.32905984" />
       <window_info anchor="right" id="Mongo Explorer" order="1" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="8" weight="0.25" />
-      <window_info anchor="right" id="Database" order="0" weight="0.17864339" />
       <window_info anchor="right" id="Packages" order="5" weight="0.32940108" />
       <window_info anchor="bottom" id="Application Servers" order="4" />
       <window_info anchor="right" auto_hide="true" id="Data View" internal_type="SLIDING" order="9" type="SLIDING" weight="0.32940108" />
       <window_info anchor="bottom" id="Find" order="7" sideWeight="0.4974293" weight="0.52913755" />
       <window_info anchor="right" id="The R Graphics" order="7" weight="0.32975152" />
       <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
-      <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.4974055" weight="0.32972136" />
+      <window_info anchor="right" id="Database" order="0" weight="0.17864339" />
       <window_info anchor="bottom" id="Message" order="6" />
     </layout>
     <layout-to-restore>
@@ -1092,15 +1093,15 @@
       <window_info active="true" anchor="bottom" id="Concurrent Activities Diagram" order="14" visible="true" weight="0.32744783" />
       <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.4974055" weight="0.32972136" />
       <window_info anchor="bottom" id="Python Console" order="13" sideWeight="0.49764943" weight="0.8333333" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.23544632" weight="0.72533333" />
       <window_info anchor="right" id="Mongo Explorer" order="1" />
-      <window_info anchor="bottom" id="Find" order="7" sideWeight="0.4974293" weight="0.52913755" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.23544632" weight="0.72533333" />
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="6" weight="0.25" />
       <window_info anchor="top" content_ui="combo" id="DB Browser" internal_type="SLIDING" order="0" side_tool="true" type="SLIDING" weight="0.329904" />
       <window_info anchor="right" id="Cargo" order="4" />
       <window_info id="Favorites" order="2" sideWeight="0.5056361" side_tool="true" weight="0.10220588" />
       <window_info anchor="bottom" auto_hide="true" x="589" y="537" width="907" height="372" id="Terminal" internal_type="SLIDING" order="15" sideWeight="0.35604218" type="SLIDING" weight="0.8670886" />
+      <window_info anchor="right" auto_hide="true" id="Data View" internal_type="SLIDING" order="9" type="SLIDING" weight="0.32940108" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="2" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.50235057" side_tool="true" weight="0.8328877" />
       <window_info anchor="bottom" id="File Transfer" order="12" sideWeight="0.4976744" weight="0.32905984" />
@@ -1108,7 +1109,7 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="8" weight="0.25" />
       <window_info anchor="right" id="Packages" order="5" weight="0.32940108" />
       <window_info anchor="bottom" id="Application Servers" order="4" />
-      <window_info anchor="right" auto_hide="true" id="Data View" internal_type="SLIDING" order="9" type="SLIDING" weight="0.32940108" />
+      <window_info anchor="bottom" id="Version Control" order="5" sideWeight="0.48971722" weight="0.67333335" />
       <window_info anchor="right" id="The R Graphics" order="7" weight="0.32975152" />
       <window_info content_ui="combo" x="162" y="208" width="676" height="407" id="Project" order="0" sideWeight="0.48128343" visible="true" weight="0.29751512" />
       <window_info anchor="right" id="SciView" order="3" weight="0.32975152" />
@@ -1116,8 +1117,8 @@
       <window_info anchor="bottom" id="Message" order="6" />
       <window_info anchor="bottom" id="TODO" order="8" weight="0.2274436" />
       <window_info active="true" x="911" y="150" width="402" height="641" id="Structure" order="1" sideWeight="0.5187166" side_tool="true" visible="true" weight="0.29751512" />
-      <window_info anchor="bottom" id="Version Control" order="5" sideWeight="0.48971722" weight="0.67333335" />
       <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
+      <window_info anchor="bottom" id="Find" order="7" sideWeight="0.4974293" weight="0.52913755" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.6959459" />
     </layout-to-restore>
   </component>
@@ -1140,7 +1141,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/archives/wgs" />
     </ignored-roots>
-    <MESSAGE value="General reorginzations, added typical parameter files in .yaml format.&#10;Renamed some modules to more descriptive names.&#10;Repaired code which calculates kinship matrix." />
     <MESSAGE value="Updates and minor changes to parameters class Genotype" />
     <MESSAGE value="trying to fix error" />
     <MESSAGE value="Before converting storage functions to use h5py instead of pandas/PyTables." />
@@ -1165,7 +1165,8 @@
     <MESSAGE value="Added first draft of the bash script. Needs development because&#10;it skipped several of the configuration files. Need to refine&#10;the wildcard parameters. Also adding the Rscript to the VCS. No idea&#10;why it was not added the first time I developed it." />
     <MESSAGE value="Shell script has been refined. Some header text has been added to&#10;tell let the user know the input parameters at the time the script is&#10;run. First parameter is the &quot;run id&quot; followed by the number of &#10;replicates. i.e. bash simulated_mlm.sh small 10&#10;&#10;More interesting is that TASSEL will not process the runs where the&#10;entries of the population structure vector are not large enough. The&#10;error is &quot;fixed effects design matrix does not have complete rank.&quot;&#10;I will increase the sample size before proceeding with the actual data." />
     <MESSAGE value="Approaching the end of the power analysis. Added two functions to&#10;analyze.Study for calculation of power from TASSEL output files and&#10;the construction of a table which compares genotypic effect estimates&#10;vs their true values.&#10;&#10;Both functions need to be tested and documented. But I need to sleep.&#10;So that will have to be done when I wake up." />
-    <option name="LAST_COMMIT_MESSAGE" value="Approaching the end of the power analysis. Added two functions to&#10;analyze.Study for calculation of power from TASSEL output files and&#10;the construction of a table which compares genotypic effect estimates&#10;vs their true values.&#10;&#10;Both functions need to be tested and documented. But I need to sleep.&#10;So that will have to be done when I wake up." />
+    <MESSAGE value="Tested both Study.calculate_power_and_false_positive and&#10;Study.genotypic_effects_tables. They both run. Sadly I am not able&#10;to easily store the genotypic effects table in the HDF5 file as I&#10;planned. Instead the function will write the output to text files.&#10;&#10;With the current parameters the power is very, very low when performed&#10;on the test run. Perhaps it is the population structure in created&#10;by performing the MAGIC-like convergence operation." />
+    <option name="LAST_COMMIT_MESSAGE" value="Tested both Study.calculate_power_and_false_positive and&#10;Study.genotypic_effects_tables. They both run. Sadly I am not able&#10;to easily store the genotypic effects table in the HDF5 file as I&#10;planned. Instead the function will write the output to text files.&#10;&#10;With the current parameters the power is very, very low when performed&#10;on the test run. Perhaps it is the population structure in created&#10;by performing the MAGIC-like convergence operation." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1524,8 +1525,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="592">
-          <caret line="1875" column="71" lean-forward="true" selection-start-line="1875" selection-start-column="71" selection-end-line="1875" selection-end-column="71" />
+        <state relative-caret-position="420">
+          <caret line="1188" selection-start-line="1188" selection-end-line="1188" />
           <folding>
             <element signature="e#24#45#0" expanded="true" />
             <element signature="e#645#1575#0" />
@@ -1539,14 +1540,9 @@
             <element signature="e#38963#40743#0" />
             <element signature="e#40819#42457#0" />
             <element signature="e#43577#43636#0" />
-            <element signature="e#43798#45631#0" />
             <element signature="e#56172#58286#0" />
-            <element signature="e#69341#69583#0" />
-            <element signature="e#69620#71273#0" />
-            <element signature="e#83101#84902#0" />
-            <element signature="e#84966#85718#0" />
-            <element signature="e#85799#86230#0" />
-            <element signature="e#86358#88650#0" />
+            <element signature="e#72040#72788#0" />
+            <element signature="e#79047#81091#0" />
           </folding>
         </state>
       </provider>
