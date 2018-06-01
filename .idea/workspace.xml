@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="Primarily committing to preserve the derived data tables found in &#10;&quot;small_scale_run.pynb&quot;. I am in the process of using them to write the &#10;introduction for my proposal defense.">
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/data/example_genotype_matrix.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/devel/magic/1478/small_scale_run.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/devel/magic/1478/small_scale_run.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/docs/user_guide/example_genotype_matrix.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/docs/user_guide/example_genotype_matrix.txt" afterDir="false" />
-    </list>
+    <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="Primarily committing to preserve the derived data tables found in &#10;&quot;small_scale_run.pynb&quot;. I am in the process of using them to write the &#10;introduction for my proposal defense." />
     <ignored path="saegus_project.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -78,11 +72,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
+      <file leaf-file-name="README.md" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="617">
-              <caret line="110" lean-forward="true" selection-start-line="110" selection-end-line="110" />
+            <state relative-caret-position="587">
+              <caret line="110" column="106" lean-forward="true" selection-start-line="110" selection-start-column="106" selection-end-line="110" selection-end-column="106" />
             </state>
           </provider>
         </entry>
@@ -114,11 +108,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="parameters.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="parameters.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/saegus/parameters.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3300">
-              <caret line="452" column="44" selection-start-line="452" selection-start-column="44" selection-end-line="452" selection-end-column="44" />
+            <state relative-caret-position="97">
+              <caret line="269" selection-start-line="269" selection-end-line="269" />
               <folding>
                 <element signature="e#218#3818#0" />
                 <element signature="e#3861#9747#0" />
@@ -234,7 +228,6 @@
         <option value="$PROJECT_DIR$/src/docs/user_guide/notes_on_genetic_map.rst" />
         <option value="$PROJECT_DIR$/src/saegus/operators.py" />
         <option value="$PROJECT_DIR$/src/docs/user_guide/power_analysis_automation.sh" />
-        <option value="$PROJECT_DIR$/src/saegus/parameters.py" />
         <option value="$PROJECT_DIR$/src/docs/user_guide/collecting_and_storing_data.rst" />
         <option value="$PROJECT_DIR$/src/docs/user_guide/q_value_calculation.r" />
         <option value="$PROJECT_DIR$/src/docs/user_guide/power_analysis_beginning_to_end.rst" />
@@ -242,6 +235,7 @@
         <option value="$PROJECT_DIR$/src/docs/user_guide/simulated_mlm.sh" />
         <option value="$PROJECT_DIR$/src/saegus/analyze.py" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/src/saegus/parameters.py" />
       </list>
     </option>
   </component>
@@ -336,8 +330,7 @@
               <item name="saegus_project" type="47feb1d3:ProjectViewModuleNode" />
               <item name="saegus_project" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="docs" type="462c0819:PsiDirectoryNode" />
-              <item name="user_guide" type="462c0819:PsiDirectoryNode" />
+              <item name="saegus" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="saegus_project" type="b2602c69:ProjectViewProjectNode" />
@@ -1080,7 +1073,7 @@
     <frame x="140" y="34" width="1395" height="845" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" x="162" y="208" width="676" height="407" id="Project" order="0" sideWeight="0.47777778" weight="0.92957747" />
+      <window_info active="true" content_ui="combo" x="162" y="208" width="676" height="407" id="Project" order="0" sideWeight="0.47605225" visible="true" weight="0.21793921" />
       <window_info anchor="bottom" id="TODO" order="8" weight="0.2274436" />
       <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.50235057" side_tool="true" weight="0.8302139" />
       <window_info anchor="right" x="0" y="0" width="333" height="704" id="Documentation" order="10" side_tool="true" weight="0.45332438" />
@@ -1088,7 +1081,7 @@
       <window_info anchor="bottom" id="Python Console" order="13" sideWeight="0.49764943" weight="0.8333333" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.23544632" weight="0.72533333" />
       <window_info anchor="right" id="SciView" order="3" weight="0.32975152" />
-      <window_info x="911" y="150" width="402" height="641" id="Structure" order="1" sideWeight="0.5222222" side_tool="true" weight="0.9307479" />
+      <window_info x="911" y="150" width="402" height="641" id="Structure" order="1" sideWeight="0.5239478" side_tool="true" visible="true" weight="0.21793921" />
       <window_info anchor="bottom" auto_hide="true" x="589" y="537" width="907" height="372" id="Terminal" internal_type="SLIDING" order="15" sideWeight="0.35604218" type="SLIDING" weight="0.8670886" />
       <window_info id="Favorites" order="2" sideWeight="0.5056361" side_tool="true" weight="0.10220588" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.6959459" />
@@ -1480,17 +1473,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/saegus/parameters.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3300">
-          <caret line="452" column="44" selection-start-line="452" selection-start-column="44" selection-end-line="452" selection-end-column="44" />
-          <folding>
-            <element signature="e#218#3818#0" />
-            <element signature="e#3861#9747#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/operators.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -1550,8 +1532,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="617">
-          <caret line="110" lean-forward="true" selection-start-line="110" selection-end-line="110" />
+        <state relative-caret-position="587">
+          <caret line="110" column="106" lean-forward="true" selection-start-line="110" selection-start-column="106" selection-end-line="110" selection-end-column="106" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/saegus/parameters.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="97">
+          <caret line="269" selection-start-line="269" selection-end-line="269" />
+          <folding>
+            <element signature="e#218#3818#0" />
+            <element signature="e#3861#9747#0" />
+          </folding>
         </state>
       </provider>
     </entry>
