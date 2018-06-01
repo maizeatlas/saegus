@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="Primarily committing to preserve the derived data tables found in &#10;&quot;small_scale_run.pynb&quot;. I am in the process of using them to write the &#10;introduction for my proposal defense." />
+    <list default="true" id="046e9456-0ad1-4939-a1a7-2f61d6aac5e8" name="Default" comment="Primarily committing to preserve the derived data tables found in &#10;&quot;small_scale_run.pynb&quot;. I am in the process of using them to write the &#10;introduction for my proposal defense.">
+      <change beforePath="$PROJECT_DIR$/devel/magic/1478/small_scale_run.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/devel/magic/1478/small_scale_run.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/docs/user_guide/additive_trait_parameterization.rst" beforeDir="false" afterPath="$PROJECT_DIR$/src/docs/user_guide/additive_trait_parameterization.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/saegus/parameters.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/saegus/parameters.py" afterDir="false" />
+    </list>
     <ignored path="saegus_project.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -51,20 +55,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="operators.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/saegus/operators.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="497" column="21" selection-start-line="497" selection-start-column="21" selection-end-line="497" selection-end-column="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="analyze.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1125" column="63" selection-start-line="1125" selection-start-column="63" selection-end-line="1125" selection-end-column="63" />
+            <state relative-caret-position="37">
+              <caret line="2023" column="51" lean-forward="true" selection-start-line="2023" selection-start-column="51" selection-end-line="2023" selection-end-column="51" />
               <folding>
                 <element signature="e#24#45#0" expanded="true" />
               </folding>
@@ -111,8 +106,8 @@
       <file leaf-file-name="parameters.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/saegus/parameters.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="97">
-              <caret line="269" selection-start-line="269" selection-end-line="269" />
+            <state relative-caret-position="321">
+              <caret line="292" column="56" lean-forward="true" selection-start-line="292" selection-start-column="56" selection-end-line="292" selection-end-column="56" />
               <folding>
                 <element signature="e#218#3818#0" />
                 <element signature="e#3861#9747#0" />
@@ -136,8 +131,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>svd</find>
-      <find>calculate_cou</find>
       <find>P</find>
       <find>seg_loci</find>
       <find>calculate_count_</find>
@@ -166,6 +159,8 @@
       <find>kinship</find>
       <find>GWAS</find>
       <find>int_to_snp</find>
+      <find>constr</find>
+      <find>gather_allele</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -205,7 +200,6 @@
         <option value="$PROJECT_DIR$/src/docs/user_guide/conf.py" />
         <option value="$PROJECT_DIR$/src/docs/analysis_reports/conf.py" />
         <option value="$PROJECT_DIR$/src/docs/saegus_documentation/conf.py" />
-        <option value="$PROJECT_DIR$/src/docs/user_guide/additive_trait_parameterization.rst" />
         <option value="$PROJECT_DIR$/src/docs/index.rst" />
         <option value="$PROJECT_DIR$/src/docs/user_guide/association_mapping_using_tassel.rst" />
         <option value="$PROJECT_DIR$/devel/magic/1478/pipeline_phases/phase_three.r" />
@@ -235,6 +229,7 @@
         <option value="$PROJECT_DIR$/src/docs/user_guide/simulated_mlm.sh" />
         <option value="$PROJECT_DIR$/src/saegus/analyze.py" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/src/docs/user_guide/additive_trait_parameterization.rst" />
         <option value="$PROJECT_DIR$/src/saegus/parameters.py" />
       </list>
     </option>
@@ -265,11 +260,11 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="140" />
-    <option name="y" value="34" />
+    <option name="y" value="6" />
     <option name="width" value="1395" />
-    <option name="height" value="845" />
+    <option name="height" value="873" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -1070,10 +1065,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="140" y="34" width="1395" height="845" extended-state="0" />
+    <frame x="65" y="-4" width="1535" height="904" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" x="162" y="208" width="676" height="407" id="Project" order="0" sideWeight="0.47605225" visible="true" weight="0.21793921" />
+      <window_info active="true" content_ui="combo" x="162" y="208" width="676" height="407" id="Project" order="0" sideWeight="0.47459894" visible="true" weight="0.19744796" />
       <window_info anchor="bottom" id="TODO" order="8" weight="0.2274436" />
       <window_info anchor="bottom" id="Event Log" order="1" sideWeight="0.50235057" side_tool="true" weight="0.8302139" />
       <window_info anchor="right" x="0" y="0" width="333" height="704" id="Documentation" order="10" side_tool="true" weight="0.45332438" />
@@ -1081,7 +1076,7 @@
       <window_info anchor="bottom" id="Python Console" order="13" sideWeight="0.49764943" weight="0.8333333" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.23544632" weight="0.72533333" />
       <window_info anchor="right" id="SciView" order="3" weight="0.32975152" />
-      <window_info x="911" y="150" width="402" height="641" id="Structure" order="1" sideWeight="0.5239478" side_tool="true" visible="true" weight="0.21793921" />
+      <window_info x="911" y="150" width="402" height="641" id="Structure" order="1" sideWeight="0.52540106" side_tool="true" visible="true" weight="0.19744796" />
       <window_info anchor="bottom" auto_hide="true" x="589" y="537" width="907" height="372" id="Terminal" internal_type="SLIDING" order="15" sideWeight="0.35604218" type="SLIDING" weight="0.8670886" />
       <window_info id="Favorites" order="2" sideWeight="0.5056361" side_tool="true" weight="0.10220588" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.6959459" />
@@ -1198,13 +1193,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/saegus/operators.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7920">
-          <caret line="534" selection-start-line="534" selection-end-line="534" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/devel/tuson_selection/tuson_genetic_drift.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="960">
@@ -1473,13 +1461,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/saegus/operators.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="497" column="21" selection-start-line="497" selection-start-column="21" selection-end-line="497" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/docs/user_guide/power_analysis_automation.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
@@ -1515,16 +1496,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1125" column="63" selection-start-line="1125" selection-start-column="63" selection-end-line="1125" selection-end-column="63" />
-          <folding>
-            <element signature="e#24#45#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/data/example_genotype_matrix.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-15" />
@@ -1537,10 +1508,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/docs/user_guide/additive_trait_parameterization.rst">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="163" column="10" lean-forward="true" selection-end-line="407" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/saegus/operators.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="21">
+          <caret line="497" column="21" selection-start-line="497" selection-start-column="21" selection-end-line="497" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/saegus/analyze.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="37">
+          <caret line="2023" column="51" lean-forward="true" selection-start-line="2023" selection-start-column="51" selection-end-line="2023" selection-end-column="51" />
+          <folding>
+            <element signature="e#24#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/saegus/parameters.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="97">
-          <caret line="269" selection-start-line="269" selection-end-line="269" />
+        <state relative-caret-position="321">
+          <caret line="292" column="56" lean-forward="true" selection-start-line="292" selection-start-column="56" selection-end-line="292" selection-end-column="56" />
           <folding>
             <element signature="e#218#3818#0" />
             <element signature="e#3861#9747#0" />

@@ -13,7 +13,7 @@ Additive Trait Parameterization
    >>> import pandas as pd
    >>> import numpy as np
    >>> import random
-   >>> from saegus import operators, parameters
+   >>> from saegus import analyze, operators, parameters
    >>> np.set_printoptions(suppress=True, precision=5)
 
 .. _overview_of_additive_trait_example:
@@ -174,8 +174,11 @@ non-zero effects.
 .. code-block:: python
    :caption: Assign allele effects using an exponential distribution
 
+   >>> test_run = analyze.Study('test')
+   >>> allele_states = test_run.gather_allele_data(example_pop)
+   >>> alleles = np.array([astates[:, 1], astates[:, 2]]).T
    >>> trait = parameters.Trait()
-   >>> ae_table = trait.construct_allele_effects_table(example_pop, qtl, random.expovariate, 1)
+   >>> ae_table = trait.construct_allele_effects_table(alleles, qtl, random.expovariate, 1)
    >>> ae_table[qtl]
    [[   248.         2.         1.293      3.         2.876]
     [  2609.         1.         0.578      3.         1.497]

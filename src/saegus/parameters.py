@@ -263,11 +263,10 @@ class Trait(object):
     # todo Create documentation for construct_allele_effects_table
 
     def construct_allele_effects_table(self,
-                                       pop,
+                                       allele_states,
                                        qtl: list,
                                        distribution_function,
-                                       *distribution_function_parameters,
-                                       allele_states = None):
+                                       *distribution_function_parameters):
         """
         Creates an array which provides the allele state and its corresponding
         allele effect for di-allelic population. The distribution_function is
@@ -288,7 +287,7 @@ class Trait(object):
         """
 
 
-        allele_effects_table = np.zeros((pop.totNumLoci(), 5))
+        allele_effects_table = np.zeros((allele_states.shape[0], 5))
 
         allele_effects_table[:, 0] = list(range(allele_states.shape[0]))
         allele_effects_table[:, 1] = allele_states[:, 0]
