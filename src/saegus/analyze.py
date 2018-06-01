@@ -1082,10 +1082,10 @@ class GWAS(object):
                       for i in range(self.segregating_loci.shape[0])]).T)
 
         X = (1/self.segregating_loci.shape[0])*(M*M.T)
-        eigendata = linalg.eig(X)
+        eigendata = linalg.svd(X)
 
-        eigenvalues = np.real(eigendata[0])
-        eigenvectors = np.array(eigendata[1])
+        eigenvalues = np.real(eigendata[1])
+        eigenvectors = np.real(eigendata[0])
 
         return eigenvalues, eigenvectors
 
@@ -1751,8 +1751,8 @@ class Study(object):
                 tassel_results = pd.read_csv(
                     data_directory+self.run_id+'_'+ str(rep_id) + '_out_2.txt',
                     sep='\t',
-                    skiprows=[1],
-                    index_col='Marker')
+                    skiprows=[1])
+                tassel_results.index = tassel_results.Marker
                 tassel_results.drop(labels=['Trait', 'Pos', 'dom_effect',
                                             'dom_F', 'dom_p', 'Genetic Var',
                                             'Residual Var', '-2LnLikelihood',
@@ -1767,15 +1767,16 @@ class Study(object):
 
                 seg_loci = list(np.array(tassel_results.index, dtype=np.int))
 
-                non_qtl = set(seg_loci).difference(qtl)
+                non_qtl = set(seg_loci).difference(set(qtl))
 
-                detected_loci = list(np.where(qvalues.q < q_value_threshold))[0]
+                detected_loci = truncated_plus_q.ix[truncated_plus_q.q < q_value_threshold].index
 
-                true_positives = set(detected_loci).intersection(qtl)
+                set_of_true_positives = set(detected_loci).intersection(set(qtl))
+                true_positives = sorted(list(set_of_true_positives))
                 power = len(true_positives) / len(qtl)
 
-                false_positive_loci = set(detected_loci).intersection(non_qtl)
-
+                set_of_false_positive_loci = set(detected_loci).intersection(non_qtl)
+                false_positive_loci = sorted(list(set_of_false_positive_loci))
                 false_positive_rate = len(false_positive_loci) / len(qtl)
 
                 power_and_fprs[rep_id, 0] = rep_id
