@@ -1,7 +1,7 @@
 Overview of SAEGUS
 ===================================
 
-SAEGUS (Simulation and Evolution of Genomes Under Selection) is a Python package which is built around the forward-time population genetics simulator [simuPOP](http://simupop.sourceforge.net/Main/HomePage). SAEGUS adds functions for modeling quantitative traits, customized breeding schemes and handling data. SAEGUS only supports Python 3. This readme will show you how to get started with SAEGUS by creating a population from raw data.
+SAEGUS (Simulation and Evolution of Genomes Under Selection) is a Python package which is built around the forward-time population genetics simulator [simuPOP](http://simupop.sourceforge.net/Main/HomePage). SAEGUS adds functions for modeling quantitative traits, customized breeding schemes and handling data. SAEGUS only supports Python 3. This readme will show you how to install SAEGUS. A [user guide](https://saegus-user-guide-docs.readthedocs.io/en/latest/#) is provided separately.
 
 SAEGUS was developed and coded by John J. Dougherty III under the guidance of Dr. Randall J. Wisser. 
 
@@ -27,17 +27,17 @@ h5py is a Python package for hdf5 files. I am unsure if it ships by default with
 conda install -c anaconda h5py
 ```
 
-Installing SAEGUS
+Setting up SAEGUS
 =============================================
 
-After Anaconda, simuPOP and h5py have been installed we will install SAEGUS. I caution you that I have not had anyone else attempt to install SAEGUS in a very long time. A list of the steps:
+After Anaconda, simuPOP and h5py have been installed, the following steps are used to set up and execute SAEGUS:
 
-+ Clone the saegus repository
-+ Install saegus
++ Clone the 'saegus' repository
++ Install 'saegus'
 + Open a Python terminal, preferrably a Jupyter notebook
 + Follow the tutorial on creating a population from raw data
 
-Clone the saegus repository
+Clone the SAEGUS repository
 ---------------------------------------------
 
 Using HTTPS protocol:
@@ -58,7 +58,7 @@ Alternatively if you already have the repository on your machine then use `git p
 git pull
 ```
 
-Install saegus
+Install SAEGUS
 -----------------------------
 
 In the ``saegus`` directory navigate to the saegus_project/src/ directory. You should see: 
@@ -87,7 +87,8 @@ jupyter notebook
 ```
 A window in your browser will open. This is a much nicer environment to work in than a plain Python interpreter. Especially with saegus' long function names.
 
-Creating a Population from Raw Data
+Creating a Population from Real Data
 ------------------------------------------------------------------
 
 Open a new tab in your web browser and follow the walk through: [saegus walkthrough](http://saegus-user-guide-docs.readthedocs.io/en/latest/population_from_raw_data.html)
+
