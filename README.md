@@ -1,4 +1,4 @@
-ingOverview of SAEGUS
+Overview of SAEGUS
 ===================================
 
 SAEGUS (Simulation and Evolution of Genomes Under Selection) is a Python package which is built around the forward-time population genetics simulator [simuPOP](http://simupop.sourceforge.net/Main/HomePage). SAEGUS adds functions for modeling quantitative traits, customized breeding schemes and handling data. SAEGUS only supports Python 3. This readme will show you how to install SAEGUS. A [user guide](https://saegus-user-guide-docs.readthedocs.io/en/latest/#) is provided separately.
