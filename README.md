@@ -11,7 +11,7 @@ SAEGUS was developed and coded by John J. Dougherty III under the guidance of Dr
 Installing the Anaconda Distribution
 ================================================
 
-[Anaconda](https://conda.io/docs/user-guide/install/index.html) is a package manager and a Python distribution which ships with popular Python packages used in scientific computing. The Anaconda distribution must be installed in order to proceed with this readme.
+[Anaconda](https://www.anaconda.com/distribution/) <!---https://conda.io/docs/user-guide/install/index.html)---> is a package manager and a Python distribution which ships with popular Python packages used in scientific computing. The Anaconda distribution must be installed in order to proceed with this readme.
 
 Installing simuPOP and h5py
 ====================================================
