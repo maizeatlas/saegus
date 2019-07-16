@@ -16,19 +16,21 @@ Installing the Anaconda Distribution
 Installing simuPOP and h5py
 ====================================================
 
-simuPOP is very easy to install by using the conda package manager. Once you have install Anaconda open a terminal and run:
+[simuPOP](http://simupop.sourceforge.net/) can be installed using the conda package manager. Once you have installed Anaconda, open a terminal and run:
 
 ```bash
-conda install -c bpeng simupop
+$ conda install -c conda-forge simuPOP
 ```
 
-Anaconda page for simuPOP: [simuPOP Installation](https://anaconda.org/bpeng/simupop)
+Having toruble? See source documentation on installing simuPOP: [simuPOP Installation](https://github.com/BoPeng/simuPOP)<!-- (https://anaconda.org/bpeng/simupop) -->
 
-h5py is a Python package for hdf5 files. I am unsure if it ships by default with the Anaconda distribution. To be sure, you can run the install command regardless.
+[h5py](https://www.h5py.org/) is a Python package for hdf5 files. I am unsure if it ships by default with the Anaconda distribution. To be sure, you can run the install command regardless.
 
 ```bash
-conda install -c anaconda h5py
+$ conda install -c anaconda h5py
 ```
+Having toruble? See source documentation on installing h5py: : [h5py Installation](http://docs.h5py.org/en/stable/build.html)
+
 
 Setting up SAEGUS
 =============================================
