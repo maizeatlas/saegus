@@ -463,7 +463,8 @@ def test_qtl_concordance(agreement_counts, qtl):
             print("Disagrement of QTL at sample {}".format(k))
     return qtl_concordance
 
-def async (array_of_seg_loci):
+# in prior versions of Python this worked: def async (array_of_seg_loci):
+async def (array_of_seg_loci):
     segregating_loci_concordance_counts = col.defaultdict(int, default=0)
     for row in array_of_seg_loci:
         segregating_loci_concordance_counts[tuple(row)] += 1
