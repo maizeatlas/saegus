@@ -38,7 +38,7 @@ After Anaconda, simuPOP and h5py have been installed, the following steps are us
 + Clone the 'saegus' repository
 + Install 'saegus'
 + Open a Python terminal, preferrably a Jupyter notebook: ``$ jupyter notebook``
-+ Follow the tutorial, starting with the creation of a population from raw data: [saegus - step 1](http://saegus-user-guide-docs.readthedocs.io/en/latest/population_from_raw_data.html)
++ Follow the tutorial, starting with the creation of a population from raw data: [Step 1](http://saegus-user-guide-docs.readthedocs.io/en/latest/population_from_raw_data.html){:target="_blank"}
 
 Clone the SAEGUS repository
 ---------------------------------------------
