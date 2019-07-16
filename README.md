@@ -69,23 +69,23 @@ Install SAEGUS
 In the ``saegus`` directory navigate to the saegus_project/src/ directory. You should see: 
 
 ```bash
-~/saegus/saegus_project/src$ ls
-~/saegus/saegus_project/src$ build  data  docs  LICENSE  MANIFEST.in  README.rst  saegus  scripts  setup.py
+$ ~/saegus/src$ ls
+$ ~/saegus/src$ LICENSE . MANIFEST.in . README.rst . build . data . docs . saegus . scripts . setup.py
 ```
 Run the python setup.py install command to install the saegus package. You should see something like this:
 
 ```bash
-~/saegus/saegus_project/src$ python setup.py install
+$ ~/saegus/src$ python setup.py install
 running install
 running build
 running build_py
 running install_lib
 ```
 
-Open a Jupyter Notebook (Formerly IPython Notebook)
+Open a Jupyter Notebook
 -------------------------------------------------------------
 
-In your terminal navigate to the ``saegus_project/src/docs/user_guide/`` directory. This is where all the data files are located. In your terminal run:
+In your terminal navigate to the ``$ ~/src/docs/user_guide/`` directory. This is where all the data files are located. In your terminal run:
 
 ```bash
 $ jupyter notebook
@@ -95,5 +95,5 @@ A window in your browser will open. This is a much nicer environment to work in 
 Creating a Population from Real Data
 ------------------------------------------------------------------
 
-Open a new tab in your web browser and follow the walk through: [saegus walkthrough](http://saegus-user-guide-docs.readthedocs.io/en/latest/population_from_raw_data.html)
+Open a new tab in your web browser and follow the walk through: [saegus walkthrough](https://saegus-user-guide-docs.readthedocs.io/en/latest/#)
 
