@@ -69,13 +69,13 @@ Install SAEGUS
 In the ``saegus`` directory navigate to the saegus_project/src/ directory. You should see: 
 
 ```bash
-$ ~/saegus/src$ ls
-$ ~/saegus/src$ LICENSE . MANIFEST.in . README.rst . build . data . docs . saegus . scripts . setup.py
+~/saegus/src$ ls
+~/saegus/src$ LICENSE . MANIFEST.in . README.rst . build . data . docs . saegus . scripts . setup.py
 ```
 Run the python setup.py install command to install the saegus package. You should see something like this:
 
 ```bash
-$ ~/saegus/src$ python setup.py install
+~/saegus/src$ python setup.py install
 running install
 running build
 running build_py
