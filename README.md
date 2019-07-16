@@ -83,7 +83,7 @@ running install_lib
 Open a Jupyter Notebook (Formerly IPython Notebook)
 -------------------------------------------------------------
 
-In your terminal navigate to the ``saegus_project/docs/user_guide/`` directory. This is where all the data files are located. In your terminal run:
+In your terminal navigate to the ``saegus_project/src/docs/user_guide/`` directory. This is where all the data files are located. In your terminal run:
 
 ```bash
 jupyter notebook
