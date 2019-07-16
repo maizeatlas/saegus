@@ -22,14 +22,14 @@ Installing simuPOP and h5py
 $ conda install -c conda-forge simuPOP
 ```
 
-Having toruble? See source documentation on installing simuPOP: [simuPOP Installation](https://github.com/BoPeng/simuPOP)<!-- (https://anaconda.org/bpeng/simupop) -->
+Having toruble? See source documentation on installation: [simuPOP Installation](https://github.com/BoPeng/simuPOP)<!-- (https://anaconda.org/bpeng/simupop) -->
 
 [h5py](https://www.h5py.org/) is a Python package for hdf5 files. I am unsure if it ships by default with the Anaconda distribution. To be sure, you can run the install command regardless.
 
 ```bash
 $ conda install -c anaconda h5py
 ```
-Having toruble? See source documentation on installing h5py: [h5py Installation](http://docs.h5py.org/en/stable/build.html)
+Having toruble? See source documentation on installation: [h5py Installation](http://docs.h5py.org/en/stable/build.html)
 
 
 Setting up SAEGUS
