@@ -48,19 +48,19 @@ Clone the SAEGUS repository
 Using HTTPS protocol:
 
 ```bash
-git clone https://github.com/maizeatlas/saegus.git
+$ git clone https://github.com/maizeatlas/saegus.git
 ```
 
 Using SSH protocol
 
 ```bash
-git clone git@github.com:maizeatlas/saegus.git
+$ git clone git@github.com:maizeatlas/saegus.git
 ```
 
 Alternatively if you already have the repository on your machine then use `git pull` command to retrieve the most recent version of the repository. Navigate to the location of the repository on your machine and run:
 
 ```bash
-git pull
+$ git pull
 ```
 
 Install SAEGUS
@@ -88,7 +88,7 @@ Open a Jupyter Notebook (Formerly IPython Notebook)
 In your terminal navigate to the ``saegus_project/src/docs/user_guide/`` directory. This is where all the data files are located. In your terminal run:
 
 ```bash
-jupyter notebook
+$ jupyter notebook
 ```
 A window in your browser will open. This is a much nicer environment to work in than a plain Python interpreter. Especially with saegus' long function names.
 
