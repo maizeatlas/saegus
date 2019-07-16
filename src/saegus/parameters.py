@@ -8,7 +8,6 @@ import random
 import numpy as np
 import copy
 import yaml
-import asyncio
 from scipy import stats
 
 
@@ -464,7 +463,8 @@ def test_qtl_concordance(agreement_counts, qtl):
     return qtl_concordance
 
 # in prior versions of Python this worked: def async (array_of_seg_loci):
-async def (array_of_seg_loci):
+# re: async in more recent versions of Python: https://www.aeracode.org/2018/02/19/python-async-simplified/ 
+def asyn(array_of_seg_loci):
     segregating_loci_concordance_counts = col.defaultdict(int, default=0)
     for row in array_of_seg_loci:
         segregating_loci_concordance_counts[tuple(row)] += 1
