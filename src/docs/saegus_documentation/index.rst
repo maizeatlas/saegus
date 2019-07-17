@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to saegus's documentation!
+Welcome to SAEGUS's documentation!
 ==================================
 
 Contents:
@@ -18,8 +18,6 @@ Contents:
    parameters.rst
    simulate.rst
    parse.rst
-
-
 
 Indices and tables
 ==================
