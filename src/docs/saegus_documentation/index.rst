@@ -6,7 +6,8 @@
 Welcome to SAEGUS's documentation!
 ==================================
 
-Contents:
+Content
+==================
 
 .. toctree::
    :maxdepth: 2
