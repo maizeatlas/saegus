@@ -42,18 +42,10 @@ and father of each individual.
 .. code-block:: python
    :caption: Adding information fields
 
-   >>> example_pop.addInfoFields('ind_id', 'mother_id', 'father_id', 'primary')
+   >>> example_pop.addInfoFields(['ind_id', 'mother_id', 'father_id', 'primary'])
    >>> sim.tagID(example_pop)
    >>> example_pop.indInfo('ind_id')
-   (1.0,
-    2.0,
-    3.0,
-    4.0,
-    5.0,
-    6.0,
-   ...
-   105.0
-   )
+   (1.0, 2.0, 3.0, 4.0, 5.0, 6.0, ... 105.0)
 
 We will import a file that tells us the likely mating structure of each of the
 105 individuals of our population.
@@ -64,7 +56,7 @@ We will import a file that tells us the likely mating structure of each of the
    >>> structure_matrix = pd.read_csv('example_population_structure_matrix.txt', index_col=0)
    >>> popst = parameters.PopulationStructure(example_pop)
    >>> proportions = np.array(np.array(structure_matrix)[:, 1:7])
-   >>> proportions
+   >>> print(proportions)
    [[0.0, 0.9996, 0.0, 0.0004, 0.0, 0.0],
    [0.011000000000000001, 0.0015, 0.0004, 0.1047, 0.0, 0.8824],
    [0.0, 0.3832, 0.0, 0.6168, 0.0, 0.0],
@@ -81,7 +73,6 @@ We will import a file that tells us the likely mating structure of each of the
    [0.3813, 0.0014, 0.6129, 0.0024, 0.0008, 0.0012],
    ...
    [0.0, 0.4602, 0.0, 0.5398, 0.0, 0.0]]
-
 
 There is a very small amount of rounding error in the proportions for some
 individuals. If the proportions do not sum to ``1`` then we cannot use
@@ -102,11 +93,11 @@ subtracting from the ``primary`` sub-population proportion.
    :caption: Correcting the rounding error
 
    >>> corrected_proportions = popst.correct_rounding_error(proportions)
-   >>> corrected_proportions[33]
+   >>> sum(corrected_proportions[33])
    0.9999999999999999
 
 Apparently the result of ``0.9999999999999999`` is close enough for the
-``scipy.stats`` module we are about to use. For peace of mind we can use the
+``scipy.stats`` module we are about to use. For peace of mind, we can use the
 ``name`` attribute of the ``stats.rv_discrete`` function to match the ``ind_id``
 with the corresponding probabilities.
 
