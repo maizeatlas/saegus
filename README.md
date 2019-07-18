@@ -70,7 +70,7 @@ In the ``saegus`` directory navigate to the saegus_project/src/ directory. You s
 
 ```bash
 ~/saegus/src$ ls
-~/saegus/src$ LICENSE . MANIFEST.in . README.rst . build . data . docs . saegus . scripts . setup.py
+~/saegus/src$ MANIFEST.in . build . data . docs . saegus . setup.py
 ```
 Run the python setup.py install command to install the saegus package. You should see something like this:
 
@@ -85,7 +85,7 @@ running install_lib
 Open a Jupyter Notebook
 -------------------------------------------------------------
 
-In your terminal navigate to the ``$ ~/src/docs/user_guide/`` directory. This is where all the data files are located. In your terminal run:
+In your terminal navigate to the ``$ ~/src/data/`` directory. This is where all the example data files are located for the user guide. In your terminal run:
 
 ```bash
 $ jupyter notebook
