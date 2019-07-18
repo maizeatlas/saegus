@@ -79,7 +79,8 @@ Run the python setup.py install command to install the saegus package. You shoul
 running install
 running build
 running build_py
-running install_lib
+creating build
+creating build/lib
 ...
 ```
 
