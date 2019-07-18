@@ -9,5 +9,5 @@ setup(
     license='GNU General Public License Version 3',
     author='John J. Dougherty III',
     author_email='jjdoc@udel.edu',
-    description='Simulation and Analysis of Artificial Selection experiments'
+    description='Simulation and Evolution of Genomes Under Selection'
 )
