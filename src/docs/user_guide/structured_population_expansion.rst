@@ -25,6 +25,8 @@ probabilities for determining which sub-population the mate will derive from.
    >>> simuOpt.setOptions(alleleType='short', quiet=True)
    >>> import simuPOP as sim
    >>> import numpy as np, pandas as pd
+   >>> import collections as col
+   >>> from scipy import stats
    >>> from saegus import parameters, breed
    >>> np.set_printoptions(suppress=True, precision=3)
 
@@ -45,7 +47,7 @@ and father of each individual.
    >>> example_pop.addInfoFields(['ind_id', 'mother_id', 'father_id', 'primary'])
    >>> sim.tagID(example_pop)
    >>> example_pop.indInfo('ind_id')
-   (1.0, 2.0, 3.0, 4.0, 5.0, 6.0, ... 105.0)
+   (1.0, 2.0, 3.0, 4.0, 5.0, ... 105.0)
 
 We will import a file that tells us the likely mating structure of each of the
 105 individuals of our population.
@@ -62,15 +64,6 @@ We will import a file that tells us the likely mating structure of each of the
    [0.0, 0.3832, 0.0, 0.6168, 0.0, 0.0],
    [0.0, 0.4085, 0.5134, 0.0782, 0.0, 0.0],
    [0.0, 0.0009, 0.0, 0.0048, 0.0, 0.9943],
-   [0.2195, 0.0198, 0.021, 0.2371, 0.1295, 0.3731],
-   [0.0, 0.4907, 0.0, 0.5093, 0.0, 0.0],
-   [0.9994, 0.0, 0.0, 0.0006, 0.0, 0.0],
-   [0.4155, 0.0079, 0.0007, 0.5736, 0.0005, 0.0018],
-   [0.0, 0.4622, 0.0, 0.5378, 0.0, 0.0],
-   [0.0, 0.0003, 0.0, 0.0115, 0.0, 0.9882],
-   [0.0, 0.0, 0.0, 1.0, 0.0, 0.0],
-   [0.9243, 0.001, 0.0008, 0.0729, 0.001, 0.0],
-   [0.3813, 0.0014, 0.6129, 0.0024, 0.0008, 0.0012],
    ...
    [0.0, 0.4602, 0.0, 0.5398, 0.0, 0.0]]
 
@@ -104,11 +97,11 @@ with the corresponding probabilities.
 .. code-block:: python
    :caption: Creating the probability mass functions
 
-   >>> from scipy import stats
    >>> mating_pmfs = {}
-   >>> for i, ind enumerate(example_pop.individuals()):
-   ...  mating_pmfs[ind.ind_id] = stats.rv_discrete(values=([0.0, 1.0, 2.0, 3.0, 4.0, 5.0],
-   ...                                       corrected_proportions[i]), name=str(ind.ind_id))
+   >>> for i, ind in enumerate(example_pop.individuals()):
+   ...     mating_pmfs[ind.ind_id] = stats.rv_discrete(values=([0.0, 1.0, 2.0, 3.0, 4.0, 5.0], 
+   ...                                                         corrected_proportions[i]), name=str(ind.ind_id))
+   
    >>> example_pop.dvars().mating_probabilities = mating_pmfs
 
 
@@ -140,10 +133,7 @@ results.
 
    >>> draw_results = mating_pmfs[6].rvs(size=1000)
    >>> draw_results
-   array([4, 3, 5, 3, 3, 0, 3, 5, 5, 5, 5, 4, 5, 4, 4, 0, 5, 4, 3, 5, 3, 0, 0,
-   ...
-   5, 2, 0, 2, 5, 4, 4, 3, 4, 5, 4])
-   >>> import collections as col
+   array([4, 3, 5, 3, 3, ... 4])
    >>> draw_counts = col.Counter(draw_results)
    >>> draw_frequencies = []
    >>> for sp in range(6):
@@ -180,15 +170,7 @@ genome is derived.
    >>> for ind in example_pop.individuals():
    ...  ind.primary = primary_subpops[ind.ind_id]
    >>> example_pop.indInfo('primary')
-   (1.0,
-    5.0,
-    3.0,
-    2.0,
-    5.0,
-    5.0,
-    3.0,
-    ...,
-    3.0)
+   (1.0, 5.0, 3.0, 2.0, 5.0, ..., 3.0)
 
 Then we will use the virtual sub-population feature of ``simuPOP`` to group the
 individuals without restricting mating between groups.
@@ -216,12 +198,8 @@ in :py:mod:`simuPOP`.
    >>> tf = parse.TusonFounders()
    >>> recom_rates = tf.parse_recombination_rates('genetic_map.txt')
    >>> recom_rates
-   [0.0020926625899999962,
-    2.2615580000007186e-05,
-    0.00042822784999999361,
-    0.00031254837999999729,
-    ...,
-   ]
+   [0.0020926625899999962, 2.2615580000007186e-05, 0.00042822784999999361, 0.0014689310100000075,
+    ..., 0.0]
 
 .. _expanding_the_population:
 
