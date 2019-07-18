@@ -75,7 +75,7 @@ By default information fields are set to ``0.0``. We can initialize the
 .. code-block:: python
    :caption: Initialize individual identifiers
 
-   >>> print(np.array(example_pop.indInfo('example_pop')))
+   >>> print(np.array(example_pop.indInfo('ind_id')))
    [ 0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
      0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
@@ -98,6 +98,12 @@ By default information fields are set to ``0.0``. We can initialize the
    ::
    In this step we converted the output into a np.array for aesthetics
 
+.. _determine_allele_frequencies:
+
+.. code-block:: python
+   :caption: Using :mod:`simuPOP` to find compute allele frequencies
+   >>> sim.stat(example_pop, alleleFreq=sim.ALL_AVAIL)
+
 .. _determine_segregating_loci:
 
 Determine Segregating Loci
@@ -113,7 +119,7 @@ segregating.
    ...              vars=['numOfSegSites', 'segSites', 'fixedSites'])
    >>> example_pop.dvars().numOfSegSites
    42837
-   >>> print(example_pop.dvars().segSites[::1000] # every 1000th segregating locus
+   >>> print(example_pop.dvars().segSites[::1000]) # every 1000th segregating locus
    [0, 1040, 2072, 3098, 4124, 5156, 6199, 7217, 8248, 9282, 10338, 11361,
    12392, 13407, 14468, 15502, 16562, 17599, 18637, 19665, 20700, 21766, 22805,
    23813, 24837, 25882, 26910, 27923, 28955, 30026, 31057, 32103, 33142,
@@ -174,12 +180,12 @@ non-zero effects.
 .. code-block:: python
    :caption: Assign allele effects using an exponential distribution
 
-   >>> test_run = analyze.Study('test')
-   >>> allele_states = test_run.gather_allele_data(example_pop)
-   >>> alleles = np.array([astates[:, 1], astates[:, 2]]).T
+   >>> example_run = analyze.Study('example_pop')
+   >>> allele_states = example_run.gather_allele_data(example_pop)
+   >>> alleles = np.array([allele_states[:, 1], allele_states[:, 2]]).T
    >>> trait = parameters.Trait()
    >>> ae_table = trait.construct_allele_effects_table(alleles, qtl, random.expovariate, 1)
-   >>> ae_table[qtl]
+   >>> print(ae_table[qtl]) # qtl only
    [[   248.         2.         1.293      3.         2.876]
     [  2609.         1.         0.578      3.         1.497]
     [  4351.         1.         0.326      3.         0.024]
@@ -200,7 +206,7 @@ non-zero effects.
     [ 40501.         1.         2.083      3.         1.123]
     [ 42632.         1.         0.527      3.         0.029]
     [ 44217.         1.         0.703      2.         0.337]]
-   >>> print(ae_table) # non-qtl
+   >>> print(ae_table) # all loci
    [[     0.      1.      0.      2.      0.]
     [     1.      2.      0.      3.      0.]
     [     2.      2.      0.      3.      0.]
