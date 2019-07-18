@@ -1,7 +1,7 @@
 Overview of SAEGUS
 ===================================
 
-SAEGUS (Simulation and Evolution of Genomes Under Selection) is a Python package which is built around the forward-time population genetics simulator [simuPOP](http://simupop.sourceforge.net/Main/HomePage). SAEGUS adds functions for modeling quantitative traits, customized breeding schemes and handling data. SAEGUS only supports Python 3. This readme will show you how to install SAEGUS. A [user guide](https://saegus-user-guide-docs.readthedocs.io/en/latest/#) is provided separately.
+SAEGUS (Simulation and Evolution of Genomes Under Selection) is a Python package which is built around the forward-time population genetics simulator [simuPOP](http://simupop.sourceforge.net/Main/HomePage). SAEGUS adds functions for modeling quantitative traits, customized breeding schemes and handling data. SAEGUS only supports Python 3. This readme will show you how to install SAEGUS. A [user guide](https://saegus.readthedocs.io/en/latest/index.html) is provided separately.
 
 Credits
 ===================================
@@ -40,7 +40,7 @@ After Anaconda, simuPOP and h5py have been installed, the following steps are us
 + Clone the 'saegus' repository
 + Install 'saegus'
 + Open a Python terminal, preferrably a Jupyter notebook: ``$ jupyter notebook``
-+ Follow the [user guide](https://saegus-user-guide-docs.readthedocs.io/en/latest/#), starting with the [creation of a population from raw data](http://saegus-user-guide-docs.readthedocs.io/en/latest/population_from_raw_data.html)
++ Follow the [user guide](https://saegus.readthedocs.io/en/latest/index.html), starting with the [creation of a population from raw data](https://saegus.readthedocs.io/en/latest/population_from_raw_data.html)
 
 Clone the SAEGUS repository
 ---------------------------------------------
@@ -95,5 +95,5 @@ A window in your browser will open. This is a much nicer environment to work in 
 Creating a Population from Real Data
 ------------------------------------------------------------------
 
-Open a new tab in your web browser and follow the walk through: [saegus walkthrough](https://saegus-user-guide-docs.readthedocs.io/en/latest/#)
+Open a new tab in your web browser and follow the walk through: [saegus walkthrough](https://saegus.readthedocs.io/en/latest/index.html)
 
