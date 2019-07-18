@@ -27,7 +27,7 @@ probabilities for determining which sub-population the mate will derive from.
    >>> import numpy as np, pandas as pd
    >>> import collections as col
    >>> from scipy import stats
-   >>> from saegus import parameters, breed
+   >>> from saegus import parameters, breed, parse
    >>> np.set_printoptions(suppress=True, precision=3)
 
 We will continue to use the same population as the rest of our examples.
