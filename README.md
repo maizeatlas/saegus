@@ -80,6 +80,7 @@ running install
 running build
 running build_py
 running install_lib
+...
 ```
 
 Open a Jupyter Notebook
