@@ -244,10 +244,6 @@ individual's ``g`` value.
 :math:`\epsilon` is a random variable with a normal distribution given by
 mean :math:`0` and variance given by:
 
-.. math::
-
-   \sigma^2_g = V_g * (\frac{1}{h^2} - 1)
-
 where :math:`V_g` is the variance of ``g`` and :math:`h^2` is the
 narrow sense heritability.
 
