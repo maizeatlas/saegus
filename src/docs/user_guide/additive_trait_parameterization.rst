@@ -98,7 +98,7 @@ By default information fields are set to ``0.0``. We can initialize the
    ::
    In this step we converted the output into a np.array for aesthetics
    
-.. calculate allele frequencies:
+..  calculate allele frequencies:
 
 Calculate Allele Frequencies
 ==========================
