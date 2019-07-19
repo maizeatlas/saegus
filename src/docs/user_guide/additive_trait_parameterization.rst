@@ -76,23 +76,10 @@ By default information fields are set to ``0.0``. We can initialize the
    :caption: Initialize individual identifiers
 
    >>> print(np.array(example_pop.indInfo('ind_id')))
-   [ 0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-     0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-     0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-     0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-     0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.
-     0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.  0.]
+   [ 0.  0.  0.  0.  0. ... 0.]
    >>> sim.tagID(example_pop)
    >>> print(np.array(example_pop.indInfo('ind_id')))
-   [   1.    2.    3.    4.    5.    6.    7.    8.    9.   10.   11.   12.
-      13.   14.   15.   16.   17.   18.   19.   20.   21.   22.   23.   24.
-      25.   26.   27.   28.   29.   30.   31.   32.   33.   34.   35.   36.
-      37.   38.   39.   40.   41.   42.   43.   44.   45.   46.   47.   48.
-      49.   50.   51.   52.   53.   54.   55.   56.   57.   58.   59.   60.
-      61.   62.   63.   64.   65.   66.   67.   68.   69.   70.   71.   72.
-      73.   74.   75.   76.   77.   78.   79.   80.   81.   82.   83.   84.
-      85.   86.   87.   88.   89.   90.   91.   92.   93.   94.   95.   96.
-      97.   98.   99.  100.  101.  102.  103.  104.  105.]
+   [   1.    2.    3.    4.    5. ... 105.]
 
 .. note::
    ::
@@ -124,10 +111,7 @@ segregating.
    >>> example_pop.dvars().numOfSegSites
    42837
    >>> print(example_pop.dvars().segSites[::1000]) # every 1000th segregating locus
-   [0, 1040, 2072, 3098, 4124, 5156, 6199, 7217, 8248, 9282, 10338, 11361,
-   12392, 13407, 14468, 15502, 16562, 17599, 18637, 19665, 20700, 21766, 22805,
-   23813, 24837, 25882, 26910, 27923, 28955, 30026, 31057, 32103, 33142,
-   34173, 35185, 36207, 37223, 38243, 39351, 40419, 41477, 42537, 43578]
+   [0, 1040, 2072, 3098, 4124, ... 43578]
 
 There are 42,837 segregating loci in this population. ``saegus`` has a function
 to put the alleles into an array and assign the alleles at ``qtl`` an effect as
@@ -139,7 +123,7 @@ Additive Trait
 ##############
 
 We have all the information we need from the previous steps. We will randomly
-choose ``20`` QTL from the segregating loci. Both alleles at each QTL are
+choose ``5`` QTL from the segregating loci. Both alleles at each QTL are
 assigned an effect as a random draw with an exponential distribution.
 
 .. _choose_QTL:
@@ -155,7 +139,7 @@ For this example we will pick 5 loci to designate as quantitative trait loci.
    >>> segregating_loci = example_pop.dvars().segSites
    >>> qtl = sorted(random.sample(segregating_loci, 5))
    >>> print(qtl)
-   [6943, 14327, 16868, 17119, 35312]
+   [7790, 21801, 22978, 29480, 30705]
 
 Every allele is initially assigned an effect of ``0``. Now alleles only at each QTL 
 will be assigned a non-zero effect drawn from the Exponential distribution.
@@ -169,11 +153,11 @@ will be assigned a non-zero effect drawn from the Exponential distribution.
    >>> trait = parameters.Trait()
    >>> ae_table = trait.construct_allele_effects_table(alleles, qtl, random.expovariate, 1)
    >>> print(ae_table[qtl]) # qtl only
-   [[ 6943.        1.        0.938     3.        0.315]
-    [14327.        1.        0.436     2.        2.439]
-    [16868.        1.        1.3       3.        0.99 ]
-    [17119.        1.        0.28      3.        0.702]
-    [35312.        1.        0.449     3.        0.281]]
+   [[ 7790.          1.          1.69685     3.          0.02152]
+    [21801.          1.          0.9653      3.          0.30436]
+    [22978.          1.          0.21302     3.          0.22749]
+    [29480.          1.          1.58062     3.          0.57265]
+    [30705.          1.          0.18288     3.          0.04947]]
    >>> print(ae_table) # all loci
    [[     0.      1.      0.      2.      0.]
     [     1.      2.      0.      3.      0.]
@@ -191,11 +175,11 @@ This overwrites the previously assigned effects.
 
    >>> ae_table = trait.construct_allele_effects_table(alleles, qtl, random.normalvariate, 0, 1)
    >>> print(ae_table[qtl]) # qtl only
-   [[ 6943.        1.        1.927     3.       -0.827]
-    [14327.        1.       -0.51      2.       -0.649]
-    [16868.        1.       -0.863     3.        4.06 ]
-    [17119.        1.       -0.292     3.       -0.763]
-    [35312.        1.       -0.388     3.        0.148]]
+   [[ 7790.          1.         -0.41871     3.         -0.49912]
+    [21801.          1.          0.5188      3.         -1.04793]
+    [22978.          1.          0.9032      3.          0.49079]
+    [29480.          1.          0.24459     3.          0.64607]
+    [30705.          1.         -0.88107     3.         -0.80171]]
 
 For speed of computation we construct an array of allele effects where the row
 of the array corresponds to the locus and the column corresponds to the integer
@@ -206,11 +190,11 @@ representing the allele state.
 
    >>> ae_array = trait.construct_ae_array(ae_table, qtl)
    >>> print(ae_array[qtl])
-   [[ 0.     1.927  0.    -0.827  0.     0.   ]
-    [ 0.    -0.51  -0.649  0.     0.     0.   ]
-    [ 0.    -0.863  0.     4.06   0.     0.   ]
-    [ 0.    -0.292  0.    -0.763  0.     0.   ]
-    [ 0.    -0.388  0.     0.148  0.     0.   ]]
+   [[ 0.      -0.41871  0.      -0.49912  0.       0.     ]
+    [ 0.       0.5188   0.      -1.04793  0.       0.     ]
+    [ 0.       0.9032   0.       0.49079  0.       0.     ]
+    [ 0.       0.24459  0.       0.64607  0.       0.     ]
+    [ 0.      -0.88107  0.      -0.80171  0.       0.     ]]
 
 .. _definition_of_g:
 
@@ -226,17 +210,7 @@ effects.
 
    >>> operators.calculate_g(example_pop, ae_array)
    >>> print(np.array(example_pop.indInfo('g')))
-   [-6.702 -5.63  -6.702 -1.195 -5.63  -6.702 -5.695 -4.227 -6.166 -0.658
-    -6.702  0.284 -1.334 -3.412 -6.702 -6.166 -1.242  4.736 -5.695  0.349
-    -0.724 -5.695 -6.702 -0.658 -3.006 -6.166 -6.702 -6.231 -0.658 -6.702
-    -1.195 -5.63  -5.695 -1.195 -3.412 -3.948 -2.405 -5.159 -1.195 -3.948
-    -5.63  -1.195 -0.658 -6.166 -6.702 -0.122 -3.412 -6.231 -5.63  -1.195
-    -1.195 -0.658 -1.195 -2.47  -0.658 -3.948 -1.195 -5.695 -6.702 -3.412
-    -1.195 -3.412 -6.231 -6.702 -6.702 -3.412 -6.166 -6.702 -1.195 -6.841
-    -1.473 -6.166 -0.658 -0.658 -1.242 -6.166 -0.122 -5.63  -5.63  -6.231
-    -6.166 -0.658 -6.166 -0.724 -5.695 -3.756 -0.122 -6.702 -0.724 -6.166
-     1.446 -1.195 -1.334 -3.948 -1.195 -2.47  -0.658 -2.941 -6.166 -0.658
-    -0.798 -6.702 -0.724 -5.76  -5.695]
+   [-0.83311  0.40057 -0.84405 -1.65794 -2.73393 ...  -2.82318]
 
 .. _calculating_error:
 
@@ -280,18 +254,7 @@ have a function to make it even easier for ourselves.
    >>> operators.calculate_error_variance(example_pop, heritability)
    >>> operators.calculate_p(example_pop)
    >>> print(np.array(example_pop.indInfo('p')))
-   [ -5.914  -9.91   -3.431   1.705  -6.228  -8.191  -6.529  -7.639  -7.721
-      3.255  -4.3    -2.664   4.516  -6.719  -8.796  -7.221  -6.325   8.624
-     -9.833   0.183   6.828  -8.382  -9.432  -4.054  -7.174  -1.427  -4.127
-     -3.868  -2.605  -4.644   3.063  -4.283  -7.793  -2.364  -7.342  -3.79
-      1.104  -3.4    -3.65   -2.31   -9.322  -1.742   1.93  -10.422  -5.688
-     -3.107  -4.476  -5.138  -2.316   3.798   0.795  -6.71   -3.408  -9.865
-     -0.851  -2.047  -4.579  -0.868  -9.356   0.209   2.896   3.036  -4.482
-     -2.621  -4.892  -3.376  -5.189  -7.666  -2.429 -10.87   -0.462  -4.31
-     -0.184  -1.023  -0.967  -7.608   0.757  -2.729  -6.495  -7.947  -5.493
-      2.968  -1.071  -5.463  -8.298  -7.276  -4.92   -8.31   -3.426 -10.872
-     -0.99   -6.105  -0.051  -5.167  -0.692  -0.158  -3.649   0.146  -6.078
-     -0.35    0.057  -5.414  -7.03    1.191  -4.866]
+   [-0.35134  0.27554 -1.03809 -1.68467 -3.88023 ... -1.95743]
 
 .. _validating_the_calculate_g_function:
 
@@ -314,12 +277,12 @@ with our function :func:`calculate_g`.
    ...  print(locus, alpha, ae_array[locus, alpha], omega, ae_array[locus, omega])
    ...  example_g[0].append(ae_array[locus, alpha])
    ...  example_g[1].append(ae_array[locus, omega])
-   6943 3 -0.8270650481760465 3 -0.8270650481760465
-   14327 1 -0.5096871785660831 1 -0.5096871785660831
-   16868 1 -0.8631600556024023 1 -0.8631600556024023
-   17119 3 -0.7627590609820143 3 -0.7627590609820143
-   35312 1 -0.388313399999193 1 -0.388313399999193
+   7790 1 -0.41871386917093 1 -0.41871386917093
+   21801 3 -1.047928786709147 1 0.5187969288611954
+   22978 1 0.9032044301593078 1 0.9032044301593078
+   29480 1 0.24459159812004574 1 0.24459159812004574
+   30705 1 -0.8810726262417609 1 -0.8810726262417609
    >>> sum(example_g[0]) + sum(example_g[1])
-   -6.701969486651478
+   -0.8331127921146263
    >>> example_pop.indByID(1).g
-   -6.701969486651478
+   -0.833112792114626
