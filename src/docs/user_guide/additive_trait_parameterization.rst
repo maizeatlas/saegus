@@ -253,7 +253,7 @@ narrow sense heritability.
 
 .. math::
 
-   \varepsilon \sim \mathcal{N} (0,\sigma^2_:math:`\epsilon`)
+   \varepsilon \sim \mathcal{N} (0,\sigma^2_\epsilon)
 
 Hence an individual's value of ``p`` is calculated by
 
