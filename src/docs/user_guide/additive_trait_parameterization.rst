@@ -97,8 +97,11 @@ By default information fields are set to ``0.0``. We can initialize the
 .. note::
    ::
    In this step we converted the output into a np.array for aesthetics
+   
+.. _calculate allele frequencies:
 
-.. _determine_allele_frequencies:
+Calculate Allele Frequencies
+==========================
 
 .. code-block:: python
    :caption: Using :mod:`simuPOP` to find compute allele frequencies
