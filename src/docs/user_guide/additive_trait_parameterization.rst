@@ -104,7 +104,7 @@ Calculate Allele Frequencies
 ==========================
 
 .. code-block:: python
-   :caption: Using :mod:`simuPOP` to find compute allele frequencies
+   :caption: Using :mod:`simuPOP` to compute allele frequencies
    
    >>> sim.stat(example_pop, alleleFreq=sim.ALL_AVAIL)
 
