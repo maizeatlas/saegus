@@ -306,14 +306,14 @@ mean h2 from 100 replications (given ``g``)
 .. code-block:: python
    :caption: Validating the calculation of ``g``
    
-   >>>   check_h2 = []
-   >>>   for x in range(0, 100):
-   >>>     operators.calculate_error_variance(example_pop, heritability)
-   >>>     operators.calculate_p(example_pop)
-   >>>     check_h2.append(np.var(example_pop.indInfo('g')) / np.var(example_pop.indInfo('p')))
+   >>> check_h2 = []
+   >>> for x in range(0, 100):
+   >>>   operators.calculate_error_variance(example_pop, heritability)
+   >>>   operators.calculate_p(example_pop)
+   >>>   check_h2.append(np.var(example_pop.indInfo('g')) / np.var(example_pop.indInfo('p')))
    
-   >>>   check_h2[0:4]
-   >>>   np.mean(check_h2)
+   >>> check_h2[0:4]
+   >>> np.mean(check_h2)
    
    
    
