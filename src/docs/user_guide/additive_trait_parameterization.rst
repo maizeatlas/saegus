@@ -242,7 +242,7 @@ Calculation of Error Term
 To simulate the experimental noise a term :math:`\epsilon` is added to each
 individual's ``g`` value.
 :math:`\epsilon` is a random variable with a normal distribution given by
-mean :math:`0` and variance given by:
+mean :math:`0` and variance given:
 
 .. math::
 
