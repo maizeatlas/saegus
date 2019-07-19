@@ -240,7 +240,9 @@ class CalculateErrorVariance(sim.PyOperator):
         found in real experiments.
         """
         variance_of_g = np.var(pop.indInfo('g'))
-        epsilon = variance_of_g*(1/self.heritability - 1)
+        #epsilon = variance_of_g*(1/self.heritability - 1)
+        # rjw correction
+        epsilon = (variance_of_g-(self.heritability*variance_of_g))/self.heritability 
         pop.dvars().epsilon = epsilon
         return True
 
