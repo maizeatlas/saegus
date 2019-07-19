@@ -246,7 +246,7 @@ mean :math:`0` and variance given by:
 
 .. math::
 
-   \sigma^2_g = V_g * (\frac{1}{h^2} - 1)
+   \sigma^2_:math:`\epsilon` = \frac{V_g - (:math:`h^2` * V_g)}{:math:`h^2`}
 
 Where :math:`V_g` is the variance of ``g`` and :math:`h^2` is the
 narrow sense heritability.
