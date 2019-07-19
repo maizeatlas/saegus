@@ -139,7 +139,7 @@ For this example we will pick 5 loci to designate as quantitative trait loci.
    >>> segregating_loci = example_pop.dvars().segSites
    >>> qtl = sorted(random.sample(segregating_loci, 5))
    >>> print(qtl)
-   [7790, 21801, 22978, 29480, 30705]
+   [5734, 6689, 21521, 22767, 23599]
 
 Every allele is initially assigned an effect of ``0``. Now alleles only at each QTL 
 will be assigned a non-zero effect drawn from the Exponential distribution.
@@ -153,11 +153,11 @@ will be assigned a non-zero effect drawn from the Exponential distribution.
    >>> trait = parameters.Trait()
    >>> ae_table = trait.construct_allele_effects_table(alleles, qtl, random.expovariate, 1)
    >>> print(ae_table[qtl]) # qtl only
-   [[ 7790.          1.          1.69685     3.          0.02152]
-    [21801.          1.          0.9653      3.          0.30436]
-    [22978.          1.          0.21302     3.          0.22749]
-    [29480.          1.          1.58062     3.          0.57265]
-    [30705.          1.          0.18288     3.          0.04947]]
+   [[ 5734.          1.          0.62029     3.          2.43187]
+    [ 6689.          1.          0.40669     3.          0.31783]
+    [21521.          1.          0.03528     2.          0.25746]
+    [22767.          1.          0.40018     2.          1.41895]
+    [23599.          1.          0.05104     3.          0.56454]]
    >>> print(ae_table) # all loci
    [[     0.      1.      0.      2.      0.]
     [     1.      2.      0.      3.      0.]
@@ -175,11 +175,11 @@ This overwrites the previously assigned effects.
 
    >>> ae_table = trait.construct_allele_effects_table(alleles, qtl, random.normalvariate, 0, 1)
    >>> print(ae_table[qtl]) # qtl only
-   [[ 7790.          1.         -0.41871     3.         -0.49912]
-    [21801.          1.          0.5188      3.         -1.04793]
-    [22978.          1.          0.9032      3.          0.49079]
-    [29480.          1.          0.24459     3.          0.64607]
-    [30705.          1.         -0.88107     3.         -0.80171]]
+   [[ 5734.          1.          1.55153     3.          0.36892]
+    [ 6689.          1.          2.42786     3.         -0.50764]
+    [21521.          1.         -0.35644     2.          0.33509]
+    [22767.          1.          0.1135      2.         -0.05583]
+    [23599.          1.          0.38313     3.         -0.19189]]
 
 For speed of computation we construct an array of allele effects where the row
 of the array corresponds to the locus and the column corresponds to the integer
@@ -190,11 +190,11 @@ representing the allele state.
 
    >>> ae_array = trait.construct_ae_array(ae_table, qtl)
    >>> print(ae_array[qtl])
-   [[ 0.      -0.41871  0.      -0.49912  0.       0.     ]
-    [ 0.       0.5188   0.      -1.04793  0.       0.     ]
-    [ 0.       0.9032   0.       0.49079  0.       0.     ]
-    [ 0.       0.24459  0.       0.64607  0.       0.     ]
-    [ 0.      -0.88107  0.      -0.80171  0.       0.     ]]
+   [[ 0.       1.55153  0.       0.36892  0.       0.     ]
+    [ 0.       2.42786  0.      -0.50764  0.       0.     ]
+    [ 0.      -0.35644  0.33509  0.       0.       0.     ]
+    [ 0.       0.1135  -0.05583  0.       0.       0.     ]
+    [ 0.       0.38313  0.      -0.19189  0.       0.     ]]
 
 .. _definition_of_g:
 
@@ -210,7 +210,7 @@ effects.
 
    >>> operators.calculate_g(example_pop, ae_array)
    >>> print(np.array(example_pop.indInfo('g')))
-   [-0.83311  0.40057 -0.84405 -1.65794 -2.73393 ...  -2.82318]
+   [ 5.87393  8.2703   4.92909  6.56547  3.98285  ... 0.11944]
 
 .. _calculating_error:
 
@@ -224,7 +224,7 @@ mean :math:`0` and variance given by:
 
 .. math::
 
-   \sigma^2_\epsilon = \frac{V_g - (h^2 * V_g)}{h^2}
+   \sigma^2_\epsilon = \frac{V_g - (h^2 * V_g)}{h^2};
 
 where :math:`V_g` is the variance of ``g`` and :math:`h^2` is the
 narrow sense heritability.
@@ -232,12 +232,21 @@ narrow sense heritability.
 .. math::
 
    \varepsilon \sim \mathcal{N} (0,\sigma^2_\epsilon)
-
-Hence an individual's value of ``p`` is calculated by
+   
+Now that we have an appropriately g-scaled, genome-wide error variance,
+the locus-specific variance is computed as:
 
 .. math::
 
-   p = g + \epsilon
+   \sigma^2_\epsilon_l = \frac{sigma^2_\epsilon}}{l};
+
+where l is the total number of segregating sites.
+
+Hence, an individual's value of ``p`` is calculated by
+
+.. math::
+
+   p = g + \epsilon_l
 
 .. _calculating_p:
 
@@ -254,7 +263,7 @@ have a function to make it even easier for ourselves.
    >>> operators.calculate_error_variance(example_pop, heritability)
    >>> operators.calculate_p(example_pop)
    >>> print(np.array(example_pop.indInfo('p')))
-   [-0.35134  0.27554 -1.03809 -1.68467 -3.88023 ... -1.95743]
+   [ 6.32259  8.87967  3.0958   5.79269  2.42935  ... -2.04103]
 
 .. _validating_the_calculate_g_function:
 
@@ -286,3 +295,25 @@ with our function :func:`calculate_g`.
    -0.8331127921146263
    >>> example_pop.indByID(1).g
    -0.833112792114626
+   
+.. _validating_h2:
+
+Validating the ``h2`` Function
+=======================================
+Becuase :math:`\epsilon_1` is a random variable, we will compute 
+mean h2 from 100 replications (given ``g``)
+
+.. code-block:: python
+   :caption: Validating the calculation of ``g``
+   
+   >>>   check_h2 = []
+   >>>   for x in range(0, 100):
+   >>>     operators.calculate_error_variance(example_pop, heritability)
+   >>>     operators.calculate_p(example_pop)
+   >>>     check_h2.append(np.var(example_pop.indInfo('g')) / np.var(example_pop.indInfo('p')))
+   
+   >>>   check_h2[0:4]
+   >>>   np.mean(check_h2)
+   
+   
+   
