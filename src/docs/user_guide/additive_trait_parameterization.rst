@@ -98,13 +98,14 @@ By default information fields are set to ``0.0``. We can initialize the
    ::
    In this step we converted the output into a np.array for aesthetics
    
-..  calculate allele frequencies:
+.. calculate allele frequencies:
 
 Calculate Allele Frequencies
 ==========================
 
 .. code-block:: python
    :caption: Using :mod:`simuPOP` to find compute allele frequencies
+   
    >>> sim.stat(example_pop, alleleFreq=sim.ALL_AVAIL)
 
 .. _determine_segregating_loci:
