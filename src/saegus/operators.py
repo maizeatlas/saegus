@@ -240,9 +240,9 @@ class CalculateErrorVariance(sim.PyOperator):
         found in real experiments.
         """
         variance_of_g = np.var(pop.indInfo('g'))
-        # epsilon = (variance_of_g-(self.heritability*variance_of_g))/self.heritability
+        epsilon = (variance_of_g-(self.heritability*variance_of_g))/self.heritability
         # distribute across segregating sites
-        epsilon = ((variance_of_g-(self.heritability*variance_of_g)))/self.heritability/len(pop.dvars().segSites)
+        # epsilon = ((variance_of_g-(self.heritability*variance_of_g)))/self.heritability/len(pop.dvars().segSites)
         pop.dvars().epsilon = epsilon
         return True
 
@@ -492,9 +492,9 @@ def calculate_error_variance(pop, heritability):
     """
     assert 0 < heritability < 1, "heritability must be between 0 anc 1"
     variance_of_g = np.var(pop.indInfo('g'))
-    # epsilon = (variance_of_g-(self.heritability*variance_of_g))/self.heritability
+    epsilon = (variance_of_g-(self.heritability*variance_of_g))/self.heritability
     # distribute across segregating sites
-    epsilon = ((variance_of_g-(heritability*variance_of_g)))/heritability/len(pop.dvars().segSites)
+    # epsilon = ((variance_of_g-(heritability*variance_of_g)))/heritability/len(pop.dvars().segSites)
     pop.dvars().epsilon = epsilon
 
 # todo Create documentation entry for calculate_p
