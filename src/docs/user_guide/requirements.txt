@@ -1,1 +1,2 @@
-sphinxjp.themes.basicstrap
+pip install sphinx_bootstrap_theme
+pip install sphinxjp.themes.basicstrap
