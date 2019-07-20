@@ -115,9 +115,9 @@ diverse in its lineage.
    :caption: Comparing empirical results versus pmf
 
    corrected_proportions[5]
-   array([0.2195, 0.0198, 0.021, 0.2371, 0.1295, 0.3731], dtype=object)
+   # array([0.2195, 0.0198, 0.021, 0.2371, 0.1295, 0.3731], dtype=object)
    mating_pmfs[6].pk # corresponding mating pmf
-   array([0.2195, 0.0198, 0.021, 0.2371, 0.1295, 0.3731], dtype=object)
+   # array([0.2195, 0.0198, 0.021, 0.2371, 0.1295, 0.3731], dtype=object)
    mating_pmfs[6].name
    # 6.0
 
