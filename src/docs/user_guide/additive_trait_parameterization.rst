@@ -288,3 +288,30 @@ median h2 from 30 replications (median b/c h2 is bounded)
    [0.8594594061513856, 0.547350607012552, 0.8588487371957536, 0.9482336217995192, 0.5859820047845293, ... 0.4640558795605753]
    >>> np.median(check_h2_v2)
    0.6260138213421671
+   
+   .. _validating_the_calculate_g_function:
+
+Validating the ``calculate_g`` Function
+=======================================
+
+Let's make sure that our function is correctly matching allele to its effect and
+summing the effects correctly. We will look at the alleles individual ``1`` of
+``example_pop`` at the QTL. Then we will sum the effects and compare the result
+with our function :func:`calculate_g`.
+
+.. code-block:: python
+   :caption: Validating the calculation of ``g``
+
+   >>> example_ind = example_pop.individual(0)
+   >>> alpha_qtl_alleles = np.array(example_ind.genotype(ploidy=0))[qtl]
+   >>> omega_qtl_alleles = np.array(example_ind.genotype(ploidy=1))[qtl]
+   >>> example_g = [[], []]
+   >>> for locus, alpha, omega in zip(qtl, alpha_qtl_alleles, omega_qtl_alleles):
+   ...  print(locus, alpha, ae_array[locus, alpha], omega, ae_array[locus, omega])
+   ...  example_g[0].append(ae_array[locus, alpha])
+   ...  example_g[1].append(ae_array[locus, omega])
+   
+   >>> sum(example_g[0]) + sum(example_g[1])
+   0.8047750628903483
+   >>> example_pop.indByID(1).g
+   0.8047750628903477
