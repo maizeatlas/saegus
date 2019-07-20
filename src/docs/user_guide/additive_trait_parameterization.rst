@@ -233,20 +233,20 @@ narrow sense heritability.
 
    \varepsilon \sim \mathcal{N} (0,\sigma^2_\epsilon)
    
-Now that we have an appropriately g-scaled, genome-wide error variance,
-the locus-specific variance is computed as:
+.. Now that we have an appropriately g-scaled, genome-wide error variance,
+.. the locus-specific variance is computed as:
 
-.. math::
+.. .. math::
 
-   \sigma^2_\epsilon_l = \frac{sigma^2_\epsilon}{l};
+..   \sigma^2_\epsilon_\l = \frac{sigma^2_\epsilon}{l};
 
-where l is the total number of segregating sites.
+.. where l is the total number of segregating sites.
 
 Hence, an individual's value of ``p`` is calculated by
 
 .. math::
 
-   p = g + \epsilon_l
+   p = g + \epsilon
 
 .. _calculating_p:
 
@@ -300,17 +300,20 @@ with our function :func:`calculate_g`.
 
 Validating the ``h2`` Function
 =======================================
-Becuase :math:`\epsilon_1` is a random variable, we will compute 
-mean h2 from 100 replications (given ``g``)
+Becuase :math:`\epsilon` is a random variable, we will compute 
+mean h2 from 100 replications
 
 .. code-block:: python
    :caption: Validating the calculation of ``g``
    
    >>> check_h2 = []
    >>> for x in range(0, 100):
-   >>>   operators.calculate_error_variance(example_pop, heritability)
-   >>>   operators.calculate_p(example_pop)
-   >>>   check_h2.append(np.var(example_pop.indInfo('g')) / np.var(example_pop.indInfo('p')))
+   >>> ae_table = trait.construct_allele_effects_table(alleles, qtl, random.normalvariate, 0, 1)
+   >>> ae_array = trait.construct_ae_array(ae_table, qtl)
+   >>> operators.calculate_g(example_pop, ae_array)
+   >>> operators.calculate_error_variance(example_pop, heritability)
+   >>> operators.calculate_p(example_pop)
+   >>> check_h2.append(np.var(example_pop.indInfo('g')) / np.var(example_pop.indInfo('p')))
    
    >>> check_h2[0:4]
    >>> np.mean(check_h2)
