@@ -163,7 +163,7 @@ genome is derived.
    :caption: Assignment of Primary Sub-Populations
 
    primary_subpops = {ind.ind_id: float(np.argmax(corrected_proportions[i]))
-                         for i, ind in enumerate(example_pop.individuals())}
+                      for i, ind in enumerate(example_pop.individuals())}
 
    for ind in example_pop.individuals():
        ind.primary = primary_subpops[ind.ind_id]
@@ -193,7 +193,7 @@ in :py:mod:`simuPOP`.
 .. code-block:: python
    :caption: Instantiating parent chooser and parsing recombination map
 
-   popst_parent_chooser = breed.ForcedPopulationStructureParentChooser(1000, example_pop)
+   popst_parent_chooser = breed.ForcedPopulationStructureParentChooser(1000, mating_pmfs)
    tf = parse.TusonFounders()
    recom_rates = tf.parse_recombination_rates('genetic_map.txt')
    recom_rates
