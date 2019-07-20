@@ -217,16 +217,16 @@ single offspring.
 .. code-block:: python
    :caption: Expand the population to ``1000`` individuals
 
-    example_pop.evolve(
-        matingScheme=sim.HomoMating(
-            sim.PyParentsChooser(popst_parent_chooser.forced_structure_parent_chooser),
-            sim.OffspringGenerator(
-                ops=[sim.IdTagger(), sim.PedigreeTagger(), sim.Recombinator(recom_rates)],
-                    numOffspring=1),
-            subPopSize=1000
-        ),
-        gen=1
-    )
+   example_pop.evolve(
+       matingScheme=sim.HomoMating(
+           sim.PyParentsChooser(popst_parent_chooser.forced_structure_parent_chooser),
+           sim.OffspringGenerator(
+               ops=[sim.IdTagger(), sim.PedigreeTagger(), sim.Recombinator(recom_rates)],
+                   numOffspring=1),
+           subPopSize=1000
+       ),
+       gen=1
+   )
 
 If we wanted to analyze the specific crosses we can create a pedigree using
 the ``ind_id``, ``mother_id`` and ``father_id`` fields.
