@@ -264,3 +264,27 @@ have a function to make it even easier for ourselves.
    >>> operators.calculate_p(example_pop)
    >>> print(np.array(example_pop.indInfo('p')))
    [ 4.70345  8.28645  0.7787   0.75012  4.3679 ... 6.9911 ]
+   
+ .. _validating_h2:
+
+Validating the ``h2`` Function
+=======================================
+Becuase :math:`\epsilon` is a random variable, we will compute 
+median h2 from 30 replications (median b/c h2 is bounded)
+
+.. code-block:: python
+   :caption: Validating the calculation of ``h2``
+   
+   >>> check_h2_v2 = []
+   >>> for x in range(0, 30):
+   >>>   ae_table = trait.construct_allele_effects_table(alleles, qtl, random.normalvariate, 0, 1)
+   >>>   ae_array = trait.construct_ae_array(ae_table, qtl)
+   >>>   operators.calculate_g(example_pop, ae_array)
+   >>>   operators.calculate_error_variance(example_pop, heritability)
+   >>>   operators.calculate_p(example_pop)
+   >>>   check_h2.append(np.var(example_pop.indInfo('g')) / np.var(example_pop.indInfo('p')))
+   
+   >>> check_h2
+   [0.8594594061513856, 0.547350607012552, 0.8588487371957536, 0.9482336217995192, 0.5859820047845293, ... 0.4640558795605753]
+   >>> np.median(check_h2_v2)
+   0.6260138213421671
