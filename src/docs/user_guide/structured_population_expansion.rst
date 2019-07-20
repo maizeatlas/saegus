@@ -21,21 +21,21 @@ probabilities for determining which sub-population the mate will derive from.
 .. code-block:: python
    :caption: Module imports
 
-   >>> import simuOpt
-   >>> simuOpt.setOptions(alleleType='short', quiet=True)
-   >>> import simuPOP as sim
-   >>> import numpy as np, pandas as pd
-   >>> import collections as col
-   >>> from scipy import stats
-   >>> from saegus import parameters, breed, parse
-   >>> np.set_printoptions(suppress=True, precision=3)
+   import simuOpt
+   simuOpt.setOptions(alleleType='short', quiet=True)
+   import simuPOP as sim
+   import numpy as np, pandas as pd
+   import collections as col
+   from scipy import stats
+   from saegus import parameters, breed, parse
+   np.set_printoptions(suppress=True, precision=3)
 
 We will continue to use the same population as the rest of our examples.
 
 .. code-block:: python
    :caption: Load the population from ``example_pop.pop``
 
-   >>> example_pop = sim.loadPopulation('example_pop.pop')
+   example_pop = sim.loadPopulation('example_pop.pop')
 
 We will add information fields to the population so that we can track the
 pedigree. If we wanted to analyze the pedigree we could look at the mother
@@ -44,9 +44,9 @@ and father of each individual.
 .. code-block:: python
    :caption: Adding information fields
 
-   >>> example_pop.addInfoFields(['ind_id', 'mother_id', 'father_id', 'primary'])
-   >>> sim.tagID(example_pop)
-   >>> example_pop.indInfo('ind_id')
+   example_pop.addInfoFields(['ind_id', 'mother_id', 'father_id', 'primary'])
+   sim.tagID(example_pop)
+   example_pop.indInfo('ind_id')
    (1.0, 2.0, 3.0, 4.0, 5.0, ... 105.0)
 
 We will import a file that tells us the likely mating structure of each of the
@@ -55,10 +55,10 @@ We will import a file that tells us the likely mating structure of each of the
 .. code-block:: python
    :caption: Importing the population structure matrix
 
-   >>> structure_matrix = pd.read_csv('example_population_structure_matrix.txt', index_col=0)
-   >>> popst = parameters.PopulationStructure(example_pop)
-   >>> proportions = np.array(np.array(structure_matrix)[:, 1:7])
-   >>> print(proportions)
+   structure_matrix = pd.read_csv('example_population_structure_matrix.txt', index_col=0)
+   popst = parameters.PopulationStructure(example_pop)
+   proportions = np.array(np.array(structure_matrix)[:, 1:7])
+   print(proportions)
    [[0.0, 0.9996, 0.0, 0.0004, 0.0, 0.0],
    [0.011000000000000001, 0.0015, 0.0004, 0.1047, 0.0, 0.8824],
    [0.0, 0.3832, 0.0, 0.6168, 0.0, 0.0],
@@ -74,9 +74,9 @@ them to make a probability mass function. For example:
 .. code-block:: python
    :caption: Example of rounding error
 
-   >>> proportions[33]
+   proportions[33]
    array([0.8856999999999998, 0.0016, 0.0009, 0.1065, 0.0042, 0.0011], dtype=object)
-   >>> sum(proportions[33])
+   sum(proportions[33])
    1.0000000000000002
 
 So we will use a function to adjust the small difference from ``1`` by adding or
@@ -85,8 +85,8 @@ subtracting from the ``primary`` sub-population proportion.
 .. code-block:: python
    :caption: Correcting the rounding error
 
-   >>> corrected_proportions = popst.correct_rounding_error(proportions)
-   >>> sum(corrected_proportions[33])
+   corrected_proportions = popst.correct_rounding_error(proportions)
+   sum(corrected_proportions[33])
    0.9999999999999999
 
 Apparently the result of ``0.9999999999999999`` is close enough for the
@@ -97,13 +97,12 @@ with the corresponding probabilities.
 .. code-block:: python
    :caption: Creating the probability mass functions
 
-   >>> mating_pmfs = {}
-   >>> for i, ind in enumerate(example_pop.individuals()):
-   ...     mating_pmfs[ind.ind_id] = stats.rv_discrete(values=([0.0, 1.0, 2.0, 3.0, 4.0, 5.0], 
-   ...                                                         corrected_proportions[i]), name=str(ind.ind_id))
+   mating_pmfs = {}
+   for i, ind in enumerate(example_pop.individuals()):
+     mating_pmfs[ind.ind_id] = stats.rv_discrete(values=([0.0, 1.0, 2.0, 3.0, 4.0, 5.0], 
+                                                           corrected_proportions[i]), name=str(ind.ind_id))
    
-   >>> example_pop.dvars().mating_probabilities = mating_pmfs
-
+   example_pop.dvars().mating_probabilities = mating_pmfs
 
 .. _validating_the_mating_probabilities:
 
@@ -117,11 +116,11 @@ diverse in its lineage.
 .. code-block:: python
    :caption: Comparing empirical results versus pmf
 
-   >>> corrected_proportions[5]
+   corrected_proportions[5]
    array([0.2195, 0.0198, 0.021, 0.2371, 0.1295, 0.3731], dtype=object)
-   >>> mating_pmfs[6].pk # corresponding mating pmf
+   mating_pmfs[6].pk # corresponding mating pmf
    array([0.2195, 0.0198, 0.021, 0.2371, 0.1295, 0.3731], dtype=object)
-   >>> mating_pmfs[6].name
+   mating_pmfs[6].name
    6.0
 
 This individual is composed from all six sub-populations. We will draw
@@ -131,12 +130,12 @@ results.
 .. code-block:: python
    :caption: Comparing empirical distribution
 
-   >>> draw_results = mating_pmfs[6].rvs(size=1000)
-   >>> draw_results
-   array([4, 3, 5, 3, 3, ... 4])
-   >>> draw_counts = col.Counter(draw_results)
-   >>> draw_frequencies = []
-   >>> for sp in range(6):
+   draw_results = mating_pmfs[6].rvs(size=1000)
+   draw_results
+   # array([4, 3, 5, 3, 3, ... 4])
+   draw_counts = col.Counter(draw_results)
+   draw_frequencies = []
+   for sp in range(6):
    ...  draw_frequencies.append(draw_counts[sp]/1000)
 
 Finally let's compare the ``1000`` draws with the probabilities.
