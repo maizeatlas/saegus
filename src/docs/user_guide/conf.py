@@ -16,10 +16,11 @@
 import sys
 import os
 import shlex
-import sphinxjp.themes.basicstrap
+#import sphinxjp.themes.basicstrap
+import sphinx_bootstrap_theme
 
 #alabaster_path = alabaster.get_path()
-bpath = sphinxjp.themes.basicstrap.get_path()
+#bpath = sphinxjp.themes.basicstrap.get_path()
 
 
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -35,14 +36,22 @@ bpath = sphinxjp.themes.basicstrap.get_path()
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
+#extensions = [
+#    'sphinx.ext.coverage',
+#    'sphinx.ext.mathjax',
+#    'sphinx.ext.viewcode',
+#    'sphinx.ext.githubpages',
+#    'sphinx.ext.graphviz',
+#    'sphinx.ext.todo',
+#    'sphinxjp.themes.basicstrap',
+#]
 extensions = [
     'sphinx.ext.coverage',
     'sphinx.ext.mathjax',
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
     'sphinx.ext.graphviz',
-    'sphinx.ext.todo',
-    'sphinxjp.themes.basicstrap',
+    'sphinx.ext.todo'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -119,10 +128,12 @@ todo_include_todos = False
 
 
 # -- Options for HTML output ----------------------------------------------
-html_theme_path = [bpath]
+#html_theme_path = [bpath]
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'basicstrap'
+#html_theme = 'basicstrap'
+html_theme = 'bootstrap'
+html_theme_path = sphinx_bootstrap_theme.get_html_theme_path()
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -235,7 +246,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  (master_doc, 'saegus.tex', 'saegus Documentation',
+  (master_doc, 'saegus.tex', 'SAEGUS Documentation',
    'John J. Dougherty III', 'manual'),
 ]
 
@@ -265,7 +276,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'saegus', 'saegus Documentation',
+    (master_doc, 'saegus', 'SAEGUS Documentation',
      [author], 1)
 ]
 
@@ -279,8 +290,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  (master_doc, 'saegus', 'saegus Documentation',
-   author, 'saegus', 'Simulation and analysis package for evolve and resequence experiments.',
+  (master_doc, 'saegus', 'SAEGUS Documentation',
+   author, 'SAEGUS', 'Simulation and Evolution of Genomes Under Selection',
    'Miscellaneous'),
 ]
 
