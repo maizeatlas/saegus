@@ -163,11 +163,13 @@ genome is derived.
    :caption: Assignment of Primary Sub-Populations
 
    primary_subpops = {ind.ind_id: float(np.argmax(corrected_proportions[i]))
-                        for i, ind in enumerate(example_pop.individuals())}
+                         for i, ind in enumerate(example_pop.individuals())}
+
    for ind in example_pop.individuals():
-     ind.primary = primary_subpops[ind.ind_id]
+       ind.primary = primary_subpops[ind.ind_id]
+
    example_pop.indInfo('primary')
-   # (1.0, 5.0, 3.0, 2.0, 5.0, ..., 3.0)
+   # (1.0, 5.0, 3.0, ..., 3.0)
 
 Then we will use the virtual sub-population feature of ``simuPOP`` to group the
 individuals without restricting mating between groups.
