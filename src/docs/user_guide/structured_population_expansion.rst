@@ -73,7 +73,7 @@ them to make a probability mass function. For example:
    :caption: Example of rounding error
 
    proportions[33]
-   array([0.8856999999999998, 0.0016, 0.0009, 0.1065, 0.0042, 0.0011], dtype=object)
+   # array([0.8856999999999998, 0.0016, 0.0009, 0.1065, 0.0042, 0.0011], dtype=object)
    sum(proportions[33])
    # 1.0000000000000002
 
@@ -97,8 +97,8 @@ with the corresponding probabilities.
 
    mating_pmfs = {}
    for i, ind in enumerate(example_pop.individuals()):
-     mating_pmfs[ind.ind_id] = stats.rv_discrete(values=([0.0, 1.0, 2.0, 3.0, 4.0, 5.0], 
-                                                           corrected_proportions[i]), name=str(ind.ind_id))
+       mating_pmfs[ind.ind_id] = stats.rv_discrete(values=([0.0, 1.0, 2.0, 3.0, 4.0, 5.0], 
+           corrected_proportions[i]), name=str(ind.ind_id))
    
    example_pop.dvars().mating_probabilities = mating_pmfs
 
@@ -134,7 +134,7 @@ results.
    draw_counts = col.Counter(draw_results)
    draw_frequencies = []
    for sp in range(6):
-     draw_frequencies.append(draw_counts[sp]/1000)
+       draw_frequencies.append(draw_counts[sp]/1000)
 
 Finally let's compare the ``1000`` draws with the probabilities.
 
