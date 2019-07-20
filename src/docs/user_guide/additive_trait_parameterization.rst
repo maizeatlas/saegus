@@ -175,11 +175,11 @@ This overwrites the previously assigned effects.
 
    >>> ae_table = trait.construct_allele_effects_table(alleles, qtl, random.normalvariate, 0, 1)
    >>> print(ae_table[qtl]) # qtl only
-   [[    6.          1.         -0.75014     3.         -1.69209]
-    [ 2972.          1.          1.14243     2.         -0.99128]
-    [12694.          1.         -0.28296     3.         -1.29433]
-    [30642.          1.          0.68729     3.          1.38177]
-    [34123.          1.         -0.5662      3.         -0.41077]]
+   [[    6.          1.          0.09821     3.          0.19477]
+    [ 2972.          1.         -1.48559     2.          1.47764]
+    [12694.          1.         -1.16001     3.          0.09613]
+    [30642.          1.          0.44827     3.          0.11772]
+    [34123.          1.          2.15811     3.          0.99274]]
 
 For speed of computation we construct an array of allele effects where the row
 of the array corresponds to the locus and the column corresponds to the integer
@@ -190,11 +190,11 @@ representing the allele state.
 
    >>> ae_array = trait.construct_ae_array(ae_table, qtl)
    >>> print(ae_array[qtl])
-   [[ 0.      -0.75014  0.      -1.69209  0.       0.     ]
-    [ 0.       1.14243 -0.99128  0.       0.       0.     ]
-    [ 0.      -0.28296  0.      -1.29433  0.       0.     ]
-    [ 0.       0.68729  0.       1.38177  0.       0.     ]
-    [ 0.      -0.5662   0.      -0.41077  0.       0.     ]]
+   [[ 0.       0.09821  0.       0.19477  0.       0.     ]
+    [ 0.      -1.48559  1.47764  0.       0.       0.     ]
+    [ 0.      -1.16001  0.       0.09613  0.       0.     ]
+    [ 0.       0.44827  0.       0.11772  0.       0.     ]
+    [ 0.       2.15811  0.       0.99274  0.       0.     ]]
 
 .. _definition_of_g:
 
@@ -210,7 +210,7 @@ effects.
 
    >>> operators.calculate_g(example_pop, ae_array)
    >>> print(np.array(example_pop.indInfo('g')))
-   [-2.23724 -5.15746 -1.04548 -3.24861 -2.16782  ... -5.3129 ]
+   [ 3.7728   5.66723  0.90614  5.02893  2.61323  ... 6.83259]
 
 .. _calculating_error:
 
@@ -263,7 +263,7 @@ have a function to make it even easier for ourselves.
    >>> operators.calculate_error_variance(example_pop, heritability)
    >>> operators.calculate_p(example_pop)
    >>> print(np.array(example_pop.indInfo('p')))
-   [-3.12408 -3.16513 -1.89    -3.89288 -4.07191 ... -5.78886]
+   [ 4.70345  8.28645  0.7787   0.75012  4.3679 ... 6.9911 ]
    
 
 .. _validating_h2:
@@ -278,15 +278,17 @@ median h2 from 30 replications (median b/c h2 is bounded)
    
    >>> check_h2_v2 = []
    >>> for x in range(0, 30):
-   >>> ae_table = trait.construct_allele_effects_table(alleles, qtl, random.normalvariate, 0, 1)
-   >>> ae_array = trait.construct_ae_array(ae_table, qtl)
-   >>> operators.calculate_g(example_pop, ae_array)
-   >>> operators.calculate_error_variance(example_pop, heritability)
-   >>> operators.calculate_p(example_pop)
-   >>> check_h2.append(np.var(example_pop.indInfo('g')) / np.var(example_pop.indInfo('p')))
+   >>>   ae_table = trait.construct_allele_effects_table(alleles, qtl, random.normalvariate, 0, 1)
+   >>>   ae_array = trait.construct_ae_array(ae_table, qtl)
+   >>>   operators.calculate_g(example_pop, ae_array)
+   >>>   operators.calculate_error_variance(example_pop, heritability)
+   >>>   operators.calculate_p(example_pop)
+   >>>   check_h2.append(np.var(example_pop.indInfo('g')) / np.var(example_pop.indInfo('p')))
    
+   >>> check_h2
+   [0.8594594061513856, 0.547350607012552, 0.8588487371957536, 0.9482336217995192, 0.5859820047845293, 0.48451356996429945,      0.6476887090455897, 0.6473231860820202, 0.5707832662074976, 0.5624522767258369, 0.6904177284827195, 0.7037907811236152,        0.4212058783775653, 0.592938053866838, 0.6303325896899764, 0.43566662500320275, 0.6555301973248256, 0.6821556390400682,        0.6216950529943577, 0.5850740583148917, 0.8058604666488691, 0.7983912412773911, 0.8300505686338339, 0.50881044911643,          0.7143243670909613, 0.4504519064174604, 0.6185733023670038, 0.5213122292721617, 1.0024212160717978, 0.4640558795605753]
    >>> np.median(check_h2_v2)
-   0.6739037157646094
+   0.6260138213421671
 
 .. _validating_the_calculate_g_function:
 
@@ -309,15 +311,10 @@ with our function :func:`calculate_g`.
    ...  print(locus, alpha, ae_array[locus, alpha], omega, ae_array[locus, omega])
    ...  example_g[0].append(ae_array[locus, alpha])
    ...  example_g[1].append(ae_array[locus, omega])
-   7790 1 -0.41871386917093 1 -0.41871386917093
-   21801 3 -1.047928786709147 1 0.5187969288611954
-   22978 1 0.9032044301593078 1 0.9032044301593078
-   29480 1 0.24459159812004574 1 0.24459159812004574
-   30705 1 -0.8810726262417609 1 -0.8810726262417609
    >>> sum(example_g[0]) + sum(example_g[1])
-   -0.8331127921146263
+   0.8047750628903483
    >>> example_pop.indByID(1).g
-   -0.833112792114626
+   0.8047750628903477
    
    
    
