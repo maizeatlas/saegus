@@ -139,7 +139,7 @@ For this example we will pick 5 loci to designate as quantitative trait loci.
    >>> segregating_loci = example_pop.dvars().segSites
    >>> qtl = sorted(random.sample(segregating_loci, 5))
    >>> print(qtl)
-   [5734, 6689, 21521, 22767, 23599]
+   [6, 2972, 12694, 30642, 34123]
 
 Every allele is initially assigned an effect of ``0``. Now alleles only at each QTL 
 will be assigned a non-zero effect drawn from the Exponential distribution.
@@ -153,11 +153,11 @@ will be assigned a non-zero effect drawn from the Exponential distribution.
    >>> trait = parameters.Trait()
    >>> ae_table = trait.construct_allele_effects_table(alleles, qtl, random.expovariate, 1)
    >>> print(ae_table[qtl]) # qtl only
-   [[ 5734.          1.          0.62029     3.          2.43187]
-    [ 6689.          1.          0.40669     3.          0.31783]
-    [21521.          1.          0.03528     2.          0.25746]
-    [22767.          1.          0.40018     2.          1.41895]
-    [23599.          1.          0.05104     3.          0.56454]]
+   [[    6.          1.          0.47333     3.          1.1387 ]
+    [ 2972.          1.          0.50155     2.          0.81906]
+    [12694.          1.          0.41925     3.          1.32648]
+    [30642.          1.          0.70116     3.          0.16591]
+    [34123.          1.          3.27972     3.          0.33993]]
    >>> print(ae_table) # all loci
    [[     0.      1.      0.      2.      0.]
     [     1.      2.      0.      3.      0.]
@@ -175,11 +175,11 @@ This overwrites the previously assigned effects.
 
    >>> ae_table = trait.construct_allele_effects_table(alleles, qtl, random.normalvariate, 0, 1)
    >>> print(ae_table[qtl]) # qtl only
-   [[ 5734.          1.          1.55153     3.          0.36892]
-    [ 6689.          1.          2.42786     3.         -0.50764]
-    [21521.          1.         -0.35644     2.          0.33509]
-    [22767.          1.          0.1135      2.         -0.05583]
-    [23599.          1.          0.38313     3.         -0.19189]]
+   [[    6.          1.         -0.75014     3.         -1.69209]
+    [ 2972.          1.          1.14243     2.         -0.99128]
+    [12694.          1.         -0.28296     3.         -1.29433]
+    [30642.          1.          0.68729     3.          1.38177]
+    [34123.          1.         -0.5662      3.         -0.41077]]
 
 For speed of computation we construct an array of allele effects where the row
 of the array corresponds to the locus and the column corresponds to the integer
@@ -190,11 +190,11 @@ representing the allele state.
 
    >>> ae_array = trait.construct_ae_array(ae_table, qtl)
    >>> print(ae_array[qtl])
-   [[ 0.       1.55153  0.       0.36892  0.       0.     ]
-    [ 0.       2.42786  0.      -0.50764  0.       0.     ]
-    [ 0.      -0.35644  0.33509  0.       0.       0.     ]
-    [ 0.       0.1135  -0.05583  0.       0.       0.     ]
-    [ 0.       0.38313  0.      -0.19189  0.       0.     ]]
+   [[ 0.      -0.75014  0.      -1.69209  0.       0.     ]
+    [ 0.       1.14243 -0.99128  0.       0.       0.     ]
+    [ 0.      -0.28296  0.      -1.29433  0.       0.     ]
+    [ 0.       0.68729  0.       1.38177  0.       0.     ]
+    [ 0.      -0.5662   0.      -0.41077  0.       0.     ]]
 
 .. _definition_of_g:
 
@@ -210,7 +210,7 @@ effects.
 
    >>> operators.calculate_g(example_pop, ae_array)
    >>> print(np.array(example_pop.indInfo('g')))
-   [ 5.87393  8.2703   4.92909  6.56547  3.98285  ... 0.11944]
+   [-2.23724 -5.15746 -1.04548 -3.24861 -2.16782  ... -5.3129 ]
 
 .. _calculating_error:
 
@@ -263,7 +263,50 @@ have a function to make it even easier for ourselves.
    >>> operators.calculate_error_variance(example_pop, heritability)
    >>> operators.calculate_p(example_pop)
    >>> print(np.array(example_pop.indInfo('p')))
-   [ 6.32259  8.87967  3.0958   5.79269  2.42935  ... -2.04103]
+   [-3.12408 -3.16513 -1.89    -3.89288 -4.07191 ... -5.78886]
+   
+
+.. _validating_h2:
+
+Validating the ``h2`` Function
+=======================================
+Becuase :math:`\epsilon` is a random variable, we will compute 
+mean h2 from 100 replications
+
+.. code-block:: python
+   :caption: Check ``h2`` using variance estimates
+   
+   >>> np.var(example_pop.indInfo('g')) / np.var(example_pop.indInfo('p'))
+   
+Becuase :math:`\epsilon` is a random variable, we can also check 
+mean h2 from 100 replications...
+
+redrawing random variates for :math:`\epsilon`  
+
+.. code-block:: python
+   :caption: Validating the calculation of ``h2``
+   
+   >>> check_h2_v1 = []
+   >>> for x in range(0, 100):
+   >>>   operators.calculate_error_variance(example_pop, heritability)
+   >>>   operators.calculate_p(example_pop)
+   >>>   check_h2.append(np.var(example_pop.indInfo('g')) / np.var(example_pop.indInfo('p')))
+   
+   >>> np.mean(check_h2_v1)
+
+.. code-block:: python
+   :caption: Validating the calculation of ``h2``
+   
+   >>> check_h2_v2 = []
+   >>> for x in range(0, 100):
+   >>> ae_table = trait.construct_allele_effects_table(alleles, qtl, random.normalvariate, 0, 1)
+   >>> ae_array = trait.construct_ae_array(ae_table, qtl)
+   >>> operators.calculate_g(example_pop, ae_array)
+   >>> operators.calculate_error_variance(example_pop, heritability)
+   >>> operators.calculate_p(example_pop)
+   >>> check_h2.append(np.var(example_pop.indInfo('g')) / np.var(example_pop.indInfo('p')))
+   
+   >>> np.mean(check_h2_v2)
 
 .. _validating_the_calculate_g_function:
 
@@ -296,27 +339,6 @@ with our function :func:`calculate_g`.
    >>> example_pop.indByID(1).g
    -0.833112792114626
    
-.. _validating_h2:
-
-Validating the ``h2`` Function
-=======================================
-Becuase :math:`\epsilon` is a random variable, we will compute 
-mean h2 from 100 replications
-
-.. code-block:: python
-   :caption: Validating the calculation of ``g``
-   
-   >>> check_h2 = []
-   >>> for x in range(0, 100):
-   >>> ae_table = trait.construct_allele_effects_table(alleles, qtl, random.normalvariate, 0, 1)
-   >>> ae_array = trait.construct_ae_array(ae_table, qtl)
-   >>> operators.calculate_g(example_pop, ae_array)
-   >>> operators.calculate_error_variance(example_pop, heritability)
-   >>> operators.calculate_p(example_pop)
-   >>> check_h2.append(np.var(example_pop.indInfo('g')) / np.var(example_pop.indInfo('p')))
-   
-   >>> check_h2[0:4]
-   >>> np.mean(check_h2)
    
    
    
