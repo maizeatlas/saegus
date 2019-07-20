@@ -238,7 +238,7 @@ the locus-specific variance is computed as:
 
 .. math::
 
-   \sigma^2_\epsilon_l = \frac{sigma^2_\epsilon}}{l};
+   \sigma^2_\epsilon_l = \frac{sigma^2_\epsilon}{l};
 
 where l is the total number of segregating sites.
 
