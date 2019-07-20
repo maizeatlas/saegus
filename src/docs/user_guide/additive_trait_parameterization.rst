@@ -265,7 +265,7 @@ have a function to make it even easier for ourselves.
    >>> print(np.array(example_pop.indInfo('p')))
    [ 4.70345  8.28645  0.7787   0.75012  4.3679 ... 6.9911 ]
    
- .. _validating_h2:
+.. _validating_h2:
 
 Validating the ``h2`` Function
 =======================================
@@ -289,7 +289,7 @@ median h2 from 30 replications (median b/c h2 is bounded)
    >>> np.median(check_h2_v2)
    0.6260138213421671
    
-   .. _validating_the_calculate_g_function:
+.. _validating_the_calculate_g_function:
 
 Validating the ``calculate_g`` Function
 =======================================
