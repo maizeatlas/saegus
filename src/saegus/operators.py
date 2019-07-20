@@ -505,7 +505,8 @@ def calculate_p(pop):
     contribution. Normal distribution mean 0 and variance equal to epsilon
     """
     for ind in pop.individuals():
-        ind.p = ind.g + random.normalvariate(0, pop.dvars().epsilon)
+        #ind.p = ind.g + random.normalvariate(0, pop.dvars().epsilon)
+        ind.p = ind.g + random.normalvariate(np.mean(pop.indInfo('g')), pop.dvars().epsilon)
 
 # todo Create documentation entry for calculate_g. Replaces assign_additive_g
 
