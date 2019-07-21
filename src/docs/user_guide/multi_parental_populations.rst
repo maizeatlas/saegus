@@ -18,7 +18,7 @@ wrote the code I was not aware of the difference. I will change it before launch
    import simuOpt
    simuOpt.setOptions(alleleType='short', quiet=True)
    import simuPOP as sim
-   import pandas as pd, import numpy as np
+   import numpy as np, pandas as pd
    from saegus import breed, parse
    np.set_printoptions(suppress=True, precision=3)
 
