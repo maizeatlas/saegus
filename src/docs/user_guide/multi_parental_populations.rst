@@ -107,7 +107,7 @@ individuals ``3`` and ``4``, 500 from ``5`` and ``6`` and 500 from
    pedigrees = {}
    pedigree = np.array((example_pop.indInfo('ind_id'),
                         example_pop.indInfo('mother_id'),
-                        example_pop.indInfo('father_id')))
+                        example_pop.indInfo('father_id'))).T
    print(pedigree[:500])
    # [[ 106.,    1.,    2.],
    #  [ 107.,    1.,    2.],
