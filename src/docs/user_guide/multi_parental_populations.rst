@@ -184,6 +184,7 @@ with ``629`` so on and so forth.
        ),
        gen=1
    )
+   
    # 1
 
 .. _check_pedigree_after_first_random_cross:
@@ -251,7 +252,8 @@ Given the final mate choices we repeat the same evolutionary process.
        ),
        gen=1
    )
-   # 
+   
+   # 1
 
 Final Pedigree Check
 ********************
