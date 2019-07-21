@@ -184,7 +184,6 @@ with ``629`` so on and so forth.
        ),
        gen=1
    )
-   
    # 1
 
 .. _check_pedigree_after_first_random_cross:
@@ -230,7 +229,7 @@ by a single admixed population.
    :caption: Determine final mating events
 
    final_random_cross = breed.RandomCross(example_pop, 2, 1000)
-   mothers, fathers = final_random_cross.converging_random_crosss()
+   mothers, fathers = final_random_cross.converging_random_cross()
    print(mothers)
    # [ 2217.,  2473.,  2160., ...,  2179.,  2963.,  2836.]
    print(fathers)
@@ -242,6 +241,7 @@ Given the final mate choices we repeat the same evolutionary process.
 .. code-block:: python
    :caption: Final mating event
  
+   final_chooser = breed.SecondOrderPairIDChooser(mothers, fathers)
    example_pop.evolve(
        matingScheme=sim.HomoMating(
            sim.PyParentsChooser(final_chooser.snd_ord_id_pairs),
@@ -252,7 +252,6 @@ Given the final mate choices we repeat the same evolutionary process.
        ),
        gen=1
    )
-   
    # 1
 
 Final Pedigree Check
