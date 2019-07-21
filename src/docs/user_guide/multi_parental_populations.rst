@@ -161,7 +161,7 @@ variables.
    :caption: Using :func:`converging_random_cross`
 
    random_cross = breed.RandomCross(example_pop, 4, 500)
-   mothers, fathers = random_cross.converging_random_cross(example_pop, 4, 500)
+   mothers, fathers = random_cross.converging_random_cross()
    print(mothers)
    # [  167.   382.   424. ...,  1270.  1109.  1230.]
    print(fathers)
