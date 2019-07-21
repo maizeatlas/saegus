@@ -108,6 +108,7 @@ individuals ``3`` and ``4``, 500 from ``5`` and ``6`` and 500 from
    pedigree = np.array((example_pop.indInfo('ind_id'),
                         example_pop.indInfo('mother_id'),
                         example_pop.indInfo('father_id'))).T
+   pedigrees[0] = pedigree
    print(pedigree[:500])
    # [[ 106.,    1.,    2.],
    #  [ 107.,    1.,    2.],
@@ -140,7 +141,6 @@ individuals ``3`` and ``4``, 500 from ``5`` and ``6`` and 500 from
    #  [ 2103.,     7.,     8.],
    #  [ 2104.,     7.,     8.],
    #  [ 2105.,     7.,     8.]]
-   pedigrees[0] = pedigree
 
 
 Single Replicate Population: MAGIC and Random Cross
@@ -200,6 +200,7 @@ function is working properly.
    pedigree = np.array((example_pop.indInfo('ind_id'),
                         example_pop.indInfo('mother_id'),
                         example_pop.indInfo('father_id'))).T
+   pedigrees[1] = pedigree
    pedigree
    # [[ 2106.,   167.,   936.],
    #  [ 2107.,   382.,   629.],
@@ -208,7 +209,6 @@ function is working properly.
    #  [ 4103.,  1270.,  2020.],
    #  [ 4104.,  1109.,  1722.],
    #  [ 4105.,  1230.,  1773.]]
-   pedigrees[1] = pedigree
 
 It seems to be correctly matching parents together based upon ID fields. A
 more exhaustive verification could be done by comparing the mother IDs with
@@ -265,6 +265,7 @@ Let's compare the final pedigree the same way as the others.
    pedigree = np.array((example_pop.indInfo('ind_id'),
                         example_pop.indInfo('mother_id'),
                         example_pop.indInfo('father_id'))).T
+   pedigrees[2] = pedigree
    print(pedigree)
    # [[ 4106.  2217.  3951.]
    #  [ 4107.  2473.  4025.]
@@ -273,7 +274,6 @@ Let's compare the final pedigree the same way as the others.
    #  [ 6103.  2179.  3580.]
    #  [ 6104.  2963.  3464.]
    #  [ 6105.  2836.  4084.]]
-   pedigrees[2] = pedigree
 
 Seems to match up. Now we have the pedigree of the entire breeding process.
 The dictionary ``pedigrees`` has the first, second and third generation in case
