@@ -184,6 +184,7 @@ with ``629`` so on and so forth.
        ),
        gen=1
    )
+   # 1
 
 .. _check_pedigree_after_first_random_cross:
 
@@ -198,7 +199,7 @@ function is working properly.
 
    pedigree = np.array((example_pop.indInfo('ind_id'),
                         example_pop.indInfo('mother_id'),
-                        example_pop.indInfo('father_id'))
+                        example_pop.indInfo('father_id'))).T
    pedigree
    # [[ 2106.,   167.,   936.],
    #  [ 2107.,   382.,   629.],
@@ -250,6 +251,7 @@ Given the final mate choices we repeat the same evolutionary process.
        ),
        gen=1
    )
+   # 
 
 Final Pedigree Check
 ********************
