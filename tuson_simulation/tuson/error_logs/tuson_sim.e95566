@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "sim.py", line 350, in <module>
+    td.insert_frequencies_into_aggregate_matrix('batch_b'+str(batch)+'_af.txt', meta_population=tuson_replicates, number_of_reps=replicates, minor_allele_list=minor_alleles)
+  File "sim.py", line 187, in insert_frequencies_into_aggregate_matrix
+    aggregate_frequency_matrix[row_index, 2:] = [replicate.dvars(sp).alleleFreq[locus][ma] for ma, locus in zip(minor_alleles.values(), range(44442))]
+  File "sim.py", line 187, in <listcomp>
+    aggregate_frequency_matrix[row_index, 2:] = [replicate.dvars(sp).alleleFreq[locus][ma] for ma, locus in zip(minor_alleles.values(), range(44442))]
+  File "/home/jjdoc/anaconda3/lib/python3.4/site-packages/simuPOP/__init__.py", line 511, in dvars
+    return _dw(self.vars(*args, **kwargs))
+ValueError: Statistics for specified (virtual) subpopulation does not exist.

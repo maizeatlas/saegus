@@ -1,0 +1,295 @@
+Executing population expansion using estimated population structure.
+Executing batch: 43.
+Beginning simulation of genetic drift with parameters:
+Breeding females: 400, breeding males: 400, sample sizes: {0: 105, 2: 56, 4: 55, 6: 54, 8: 56, 10: 55}
+Initial: Sampled 105 individuals from generation 0 Replicate: 0.
+Initial: Sampled 105 individuals from generation 0 Replicate: 1.
+Initial: Sampled 105 individuals from generation 0 Replicate: 2.
+Initial: Sampled 105 individuals from generation 0 Replicate: 3.
+Initial: Sampled 105 individuals from generation 0 Replicate: 4.
+Initial: Sampled 105 individuals from generation 0 Replicate: 5.
+Initial: Sampled 105 individuals from generation 0 Replicate: 6.
+Initial: Sampled 105 individuals from generation 0 Replicate: 7.
+Initial: Sampled 105 individuals from generation 0 Replicate: 8.
+Initial: Sampled 105 individuals from generation 0 Replicate: 9.
+Generation: 0
+Generation: 0
+Generation: 0
+Generation: 0
+Generation: 0
+Generation: 0
+Generation: 0
+Generation: 0
+Generation: 0
+Generation: 0
+Generation: 1
+Generation: 1
+Generation: 1
+Generation: 1
+Generation: 1
+Generation: 1
+Generation: 1
+Generation: 1
+Generation: 1
+Generation: 1
+Generation: 2
+Sampled 56 individuals from generation 2 from replicate: 0.
+Generation: 2
+Sampled 56 individuals from generation 2 from replicate: 1.
+Generation: 2
+Sampled 56 individuals from generation 2 from replicate: 2.
+Generation: 2
+Sampled 56 individuals from generation 2 from replicate: 3.
+Generation: 2
+Sampled 56 individuals from generation 2 from replicate: 4.
+Generation: 2
+Sampled 56 individuals from generation 2 from replicate: 5.
+Generation: 2
+Sampled 56 individuals from generation 2 from replicate: 6.
+Generation: 2
+Sampled 56 individuals from generation 2 from replicate: 7.
+Generation: 2
+Sampled 56 individuals from generation 2 from replicate: 8.
+Generation: 2
+Sampled 56 individuals from generation 2 from replicate: 9.
+Generation: 3
+Generation: 3
+Generation: 3
+Generation: 3
+Generation: 3
+Generation: 3
+Generation: 3
+Generation: 3
+Generation: 3
+Generation: 3
+Generation: 4
+Sampled 55 individuals from generation 4 from replicate: 0.
+Generation: 4
+Sampled 55 individuals from generation 4 from replicate: 1.
+Generation: 4
+Sampled 55 individuals from generation 4 from replicate: 2.
+Generation: 4
+Sampled 55 individuals from generation 4 from replicate: 3.
+Generation: 4
+Sampled 55 individuals from generation 4 from replicate: 4.
+Generation: 4
+Sampled 55 individuals from generation 4 from replicate: 5.
+Generation: 4
+Sampled 55 individuals from generation 4 from replicate: 6.
+Generation: 4
+Sampled 55 individuals from generation 4 from replicate: 7.
+Generation: 4
+Sampled 55 individuals from generation 4 from replicate: 8.
+Generation: 4
+Sampled 55 individuals from generation 4 from replicate: 9.
+Generation: 5
+Generation: 5
+Generation: 5
+Generation: 5
+Generation: 5
+Generation: 5
+Generation: 5
+Generation: 5
+Generation: 5
+Generation: 5
+Generation: 6
+Sampled 54 individuals from generation 6 from replicate: 0.
+Generation: 6
+Sampled 54 individuals from generation 6 from replicate: 1.
+Generation: 6
+Sampled 54 individuals from generation 6 from replicate: 2.
+Generation: 6
+Sampled 54 individuals from generation 6 from replicate: 3.
+Generation: 6
+Sampled 54 individuals from generation 6 from replicate: 4.
+Generation: 6
+Sampled 54 individuals from generation 6 from replicate: 5.
+Generation: 6
+Sampled 54 individuals from generation 6 from replicate: 6.
+Generation: 6
+Sampled 54 individuals from generation 6 from replicate: 7.
+Generation: 6
+Sampled 54 individuals from generation 6 from replicate: 8.
+Generation: 6
+Sampled 54 individuals from generation 6 from replicate: 9.
+Generation: 7
+Generation: 7
+Generation: 7
+Generation: 7
+Generation: 7
+Generation: 7
+Generation: 7
+Generation: 7
+Generation: 7
+Generation: 7
+Generation: 8
+Sampled 56 individuals from generation 8 from replicate: 0.
+Generation: 8
+Sampled 56 individuals from generation 8 from replicate: 1.
+Generation: 8
+Sampled 56 individuals from generation 8 from replicate: 2.
+Generation: 8
+Sampled 56 individuals from generation 8 from replicate: 3.
+Generation: 8
+Sampled 56 individuals from generation 8 from replicate: 4.
+Generation: 8
+Sampled 56 individuals from generation 8 from replicate: 5.
+Generation: 8
+Sampled 56 individuals from generation 8 from replicate: 6.
+Generation: 8
+Sampled 56 individuals from generation 8 from replicate: 7.
+Generation: 8
+Sampled 56 individuals from generation 8 from replicate: 8.
+Generation: 8
+Sampled 56 individuals from generation 8 from replicate: 9.
+Generation: 9
+Generation: 9
+Generation: 9
+Generation: 9
+Generation: 9
+Generation: 9
+Generation: 9
+Generation: 9
+Generation: 9
+Generation: 9
+Final: Sampled 55 individuals from generation 10
+Final: Sampled 55 individuals from generation 10
+Final: Sampled 55 individuals from generation 10
+Final: Sampled 55 individuals from generation 10
+Final: Sampled 55 individuals from generation 10
+Final: Sampled 55 individuals from generation 10
+Final: Sampled 55 individuals from generation 10
+Final: Sampled 55 individuals from generation 10
+Final: Sampled 55 individuals from generation 10
+Final: Sampled 55 individuals from generation 10
+Multi-replicate drift simulation complete.
+Calculating allele frequencies for 10 and writing them to an aggregate matrix.
+Replicate: 0
+Row index: 0
+Row index: 1
+Row index: 2
+Row index: 3
+Row index: 4
+Row index: 5
+Replicate: 1
+Row index: 6
+Row index: 7
+Row index: 8
+Row index: 9
+Row index: 10
+Row index: 11
+Replicate: 2
+Row index: 12
+Row index: 13
+Row index: 14
+Row index: 15
+Row index: 16
+Row index: 17
+Replicate: 3
+Row index: 18
+Row index: 19
+Row index: 20
+Row index: 21
+Row index: 22
+Row index: 23
+Replicate: 4
+Row index: 24
+Row index: 25
+Row index: 26
+Row index: 27
+Row index: 28
+Row index: 29
+Replicate: 5
+Row index: 30
+Row index: 31
+Row index: 32
+Row index: 33
+Row index: 34
+Row index: 35
+Replicate: 6
+Row index: 36
+Row index: 37
+Row index: 38
+Row index: 39
+Row index: 40
+Row index: 41
+Replicate: 7
+Row index: 42
+Row index: 43
+Row index: 44
+Row index: 45
+Row index: 46
+Row index: 47
+Replicate: 8
+Row index: 48
+Row index: 49
+Row index: 50
+Row index: 51
+Row index: 52
+Row index: 53
+Replicate: 9
+Row index: 54
+Row index: 55
+Row index: 56
+Row index: 57
+Row index: 58
+Row index: 59
+Executing batch: 44.
+Beginning simulation of genetic drift with parameters:
+Breeding females: 400, breeding males: 400, sample sizes: {0: 105, 2: 56, 4: 55, 6: 54, 8: 56, 10: 55}
+Initial: Sampled 105 individuals from generation 0 Replicate: 0.
+Initial: Sampled 105 individuals from generation 0 Replicate: 1.
+Initial: Sampled 105 individuals from generation 0 Replicate: 2.
+Initial: Sampled 105 individuals from generation 0 Replicate: 3.
+Initial: Sampled 105 individuals from generation 0 Replicate: 4.
+Initial: Sampled 105 individuals from generation 0 Replicate: 5.
+Initial: Sampled 105 individuals from generation 0 Replicate: 6.
+Initial: Sampled 105 individuals from generation 0 Replicate: 7.
+Initial: Sampled 105 individuals from generation 0 Replicate: 8.
+Initial: Sampled 105 individuals from generation 0 Replicate: 9.
+Generation: 0
+Generation: 0
+Generation: 0
+Generation: 0
+Generation: 0
+Generation: 0
+Generation: 0
+Generation: 0
+Generation: 0
+Generation: 0
+Generation: 1
+Generation: 1
+Generation: 1
+Generation: 1
+Generation: 1
+Generation: 1
+Generation: 1
+Generation: 1
+Generation: 1
+Generation: 1
+Generation: 2
+Sampled 56 individuals from generation 2 from replicate: 0.
+Generation: 2
+Sampled 56 individuals from generation 2 from replicate: 1.
+Generation: 2
+Sampled 56 individuals from generation 2 from replicate: 2.
+Generation: 2
+Sampled 56 individuals from generation 2 from replicate: 3.
+Generation: 2
+Sampled 56 individuals from generation 2 from replicate: 4.
+Generation: 2
+Sampled 56 individuals from generation 2 from replicate: 5.
+Generation: 2
+Sampled 56 individuals from generation 2 from replicate: 6.
+Generation: 2
+Sampled 56 individuals from generation 2 from replicate: 7.
+Generation: 2
+Sampled 56 individuals from generation 2 from replicate: 8.
+Generation: 2
+Sampled 56 individuals from generation 2 from replicate: 9.
+Generation: 3
+Generation: 3
+Generation: 3
+Generation: 3
+Generation: 3
+Gene

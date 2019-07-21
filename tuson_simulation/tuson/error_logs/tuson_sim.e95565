@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "sim.py", line 350, in <module>
+    td.insert_frequencies_into_aggregate_matrix('batch_b'+str(batch)+'_af.txt', tuson_replicates, replicates, minor_alleles)
+  File "sim.py", line 173, in insert_frequencies_into_aggregate_matrix
+    number_of_rows = 6*number_of_reps
+TypeError: unsupported operand type(s) for *: 'int' and 'Simulator'

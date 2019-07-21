@@ -1,0 +1,1 @@
+/var/spool/torque/mom_priv/jobs/95570.biohen.dbi.local.SC: line 6: 63410 Segmentation fault      python3.4 -O sim.py

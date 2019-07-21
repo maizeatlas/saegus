@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "sim.py", line 365, in <module>
+    main()
+NameError: name 'main' is not defined
