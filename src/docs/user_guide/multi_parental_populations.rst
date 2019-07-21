@@ -86,6 +86,7 @@ F\ :sub:`1` population from ``8`` members from ``example_pop``.
    example_pop.popSize() # prior to mating
    # 105
    magic.generate_f_one(founders, offspring_per_pair)
+   example_pop.popSize() # after mating
    # 2000
 
 The new population size is ``2000``. We provided four pairs in ``founders`` and
