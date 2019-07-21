@@ -15,29 +15,29 @@ wrote the code I was not aware of the difference. I will change it before launch
 .. code-block:: python
    :caption: Required modules
 
-   >>> import simuOpt
-   >>> simuOpt.setOptions(alleleType='short', quiet=True)
-   >>> import simuPOP as sim
-   >>> import pandas as pd, import numpy as np
-   >>> from saegus import breed, parse
-   >>> np.set_printoptions(suppress=True, precision=3)
+   import simuOpt
+   simuOpt.setOptions(alleleType='short', quiet=True)
+   import simuPOP as sim
+   import pandas as pd, import numpy as np
+   from saegus import breed, parse
+   np.set_printoptions(suppress=True, precision=3)
 
 Reload the example population.
 
 .. code-block:: python
    :caption: Load the example population
 
-   >>> example_pop = sim.loadPopulation('example_pop.pop')
-   >>> example_pop.addInfoFields(['ind_id', 'mother_id', 'father_id'])
-   >>> sim.tagID(example_pop)
+   example_pop = sim.loadPopulation('example_pop.pop')
+   example_pop.addInfoFields(['ind_id', 'mother_id', 'father_id'])
+   sim.tagID(example_pop)
 
 Load up the recombination map for this example
 
 .. code-block:: python
    :caption: Load the recombination map
 
-   >>> tf = parse.TusonFounders()
-   >>> recom_map = tf.parse_recombination_rates('genetic_map.txt')
+   tf = parse.TusonFounders()
+   recom_map = tf.parse_recombination_rates('genetic_map.txt')
 
 .. _example_multi_parental:
 
@@ -80,13 +80,13 @@ F\ :sub:`1` population from ``8`` members from ``example_pop``.
 .. code-block:: python
    :caption: Creating the F\ :sub:`1`
 
-   >>> founders = [[1, 2], [3, 4], [5, 6], [7,8]]
-   >>> offspring_per_pair = 500
-   >>> magic = breed.MAGIC(example_pop, founders, recom_map)
-   >>> example_pop.popSize() # prior to mating
-   105
-   >>> magic.generate_f_one(founders, offspring_per_pair)
-   2000
+   founders = [[1, 2], [3, 4], [5, 6], [7,8]]
+   offspring_per_pair = 500
+   magic = breed.MAGIC(example_pop, founders, recom_map)
+   example_pop.popSize() # prior to mating
+   # 105
+   magic.generate_f_one(founders, offspring_per_pair)
+   # 2000
 
 The new population size is ``2000``. We provided four pairs in ``founders`` and
 we specified 500 ``offspring_per_pair``. The result is 500 individuals from
@@ -103,43 +103,43 @@ individuals ``3`` and ``4``, 500 from ``5`` and ``6`` and 500 from
 .. code-block:: python
    :caption: Checking the pedigree
 
-   >>> pedigrees = {}
-   >>> pedigree = np.array((example_pop.indInfo('ind_id'),
-   ...                           example_pop.indInfo('mother_id'),
-   ...                           example_pop.indInfo('father_id')))
-   >>> print(pedigree[:500])
-      [[ 106.,    1.,    2.],
-       [ 107.,    1.,    2.],
-       [ 108.,    1.,    2.],
-       ...,
-       [ 603.,    1.,    2.],
-       [ 604.,    1.,    2.],
-       [ 605.,    1.,    2.]]
-   >>> print(pedigree[500:1000])
-      [[  606.,     3.,     4.],
-       [  607.,     3.,     4.],
-       [  608.,     3.,     4.],
-       ...,
-       [ 1103.,     3.,     4.],
-       [ 1104.,     3.,     4.],
-       [ 1105.,     3.,     4.]]
-   >>> print(pedigree[1000:1500])
-      [[ 1106.,     5.,     6.],
-       [ 1107.,     5.,     6.],
-       [ 1108.,     5.,     6.],
-       ...,
-       [ 1603.,     5.,     6.],
-       [ 1604.,     5.,     6.],
-       [ 1605.,     5.,     6.]])
-   >>> print(pedigree[1500:2000])
-      [[ 1606.,     7.,     8.],
-       [ 1607.,     7.,     8.],
-       [ 1608.,     7.,     8.],
-       ...,
-       [ 2103.,     7.,     8.],
-       [ 2104.,     7.,     8.],
-       [ 2105.,     7.,     8.]]
-   >>> pedigrees[0] = pedigree
+   pedigrees = {}
+   pedigree = np.array((example_pop.indInfo('ind_id'),
+                        example_pop.indInfo('mother_id'),
+                        example_pop.indInfo('father_id')))
+   print(pedigree[:500])
+   # [[ 106.,    1.,    2.],
+   #  [ 107.,    1.,    2.],
+   #  [ 108.,    1.,    2.],
+   #  ...,
+   #  [ 603.,    1.,    2.],
+   #  [ 604.,    1.,    2.],
+   #  [ 605.,    1.,    2.]]
+   print(pedigree[500:1000])
+   # [[  606.,     3.,     4.],
+   #  [  607.,     3.,     4.],
+   #  [  608.,     3.,     4.],
+   #  ...,
+   #  [ 1103.,     3.,     4.],
+   #  [ 1104.,     3.,     4.],
+   #  [ 1105.,     3.,     4.]]
+   print(pedigree[1000:1500])
+   # [[ 1106.,     5.,     6.],
+   #  [ 1107.,     5.,     6.],
+   #  [ 1108.,     5.,     6.],
+   #  ...,
+   #  [ 1603.,     5.,     6.],
+   #  [ 1604.,     5.,     6.],
+   #  [ 1605.,     5.,     6.]])
+   print(pedigree[1500:2000])
+   # [[ 1606.,     7.,     8.],
+   #  [ 1607.,     7.,     8.],
+   #  [ 1608.,     7.,     8.],
+   #  ...,
+   #  [ 2103.,     7.,     8.],
+   #  [ 2104.,     7.,     8.],
+   #  [ 2105.,     7.,     8.]]
+   pedigrees[0] = pedigree
 
 
 Single Replicate Population: MAGIC and Random Cross
@@ -159,12 +159,12 @@ variables.
 .. code-block:: python
    :caption: Using :func:`converging_random_cross`
 
-   >>> random_cross = breed.RandomCross(example_pop, 4, 500)
-   >>> mothers, fathers = random_cross.converging_random_cross(example_pop, 4, 500)
-   >>> print(mothers)
-   [  167.   382.   424. ...,  1270.  1109.  1230.]
-   >>> print(fathers)
-   [  936.   629.  1095. ...,  2020.  1722.  1773.]
+   random_cross = breed.RandomCross(example_pop, 4, 500)
+   mothers, fathers = random_cross.converging_random_cross(example_pop, 4, 500)
+   print(mothers)
+   # [  167.   382.   424. ...,  1270.  1109.  1230.]
+   print(fathers)
+   # [  936.   629.  1095. ...,  2020.  1722.  1773.]
 
 In this case individual ``167`` will be mated with individual ``936``, ``382``
 with ``629`` so on and so forth.
@@ -172,20 +172,17 @@ with ``629`` so on and so forth.
 .. code-block:: python
    :caption: Using customized parent chooser
 
-   >>> second_order_chooser = breed.SecondOrderPairIDChooser(mothers, fathers)
-   >>> example_pop.evolve(
-   ...  matingScheme=sim.HomoMating(
-   ...      sim.PyParentsChooser(second_order_chooser.snd_ord_id_pairs),
-   ...      sim.OffspringGenerator(ops=[
-   ...          sim.IdTagger(),
-   ...          sim.PedigreeTagger(),
-   ...          sim.Recombinator(rates=recom_map)],
-   ...      numOffspring=1),
-   ...      subPopSize=2000
-   ...      ),
-   ...      gen=1
-   ... )
-   1
+   second_order_chooser = breed.SecondOrderPairIDChooser(mothers, fathers)
+   example_pop.evolve(
+       matingScheme=sim.HomoMating(
+           sim.PyParentsChooser(second_order_chooser.snd_ord_id_pairs),
+           sim.OffspringGenerator(
+               ops=[sim.IdTagger(), sim.PedigreeTagger(), sim.Recombinator(rates=recom_rates)],
+                   numOffspring=1),
+           subPopSize=2000
+       ),
+       gen=1
+   )
 
 .. _check_pedigree_after_first_random_cross:
 
@@ -198,18 +195,18 @@ function is working properly.
 .. code-block:: python
    :caption: Check pedigree after using pair ID chooser
 
-   >>> pedigree = np.array((example_pop.indInfo('ind_id'),
-   ...                      example_pop.indInfo('mother_id'),
-   ...                      example_pop.indInfo('father_id'))
-   >>> pedigree
-      [[ 2106.,   167.,   936.],
-       [ 2107.,   382.,   629.],
-       [ 2108.,   424.,  1095.],
-       ...,
-       [ 4103.,  1270.,  2020.],
-       [ 4104.,  1109.,  1722.],
-       [ 4105.,  1230.,  1773.]]
-   >>> pedigrees[1] = pedigree
+   pedigree = np.array((example_pop.indInfo('ind_id'),
+                        example_pop.indInfo('mother_id'),
+                        example_pop.indInfo('father_id'))
+   pedigree
+   # [[ 2106.,   167.,   936.],
+   #  [ 2107.,   382.,   629.],
+   #  [ 2108.,   424.,  1095.],
+   #  ...,
+   #  [ 4103.,  1270.,  2020.],
+   #  [ 4104.,  1109.,  1722.],
+   #  [ 4105.,  1230.,  1773.]]
+   pedigrees[1] = pedigree
 
 It seems to be correctly matching parents together based upon ID fields. A
 more exhaustive verification could be done by comparing the mother IDs with
@@ -229,31 +226,29 @@ by a single admixed population.
 .. code-block:: python
    :caption: Determine final mating events
 
-   >>> final_random_cross = breed.RandomCross(example_pop, 2, 1000)
-   >>> mothers, fathers = final_random_cross.converging_random_crosss()
-   >>> print(mothers)
-   [ 2217.,  2473.,  2160., ...,  2179.,  2963.,  2836.]
-   >>> print(fathers)
-   [ 3951.,  4025.,  3355., ...,  3580.,  3464.,  4084.]
+   final_random_cross = breed.RandomCross(example_pop, 2, 1000)
+   mothers, fathers = final_random_cross.converging_random_crosss()
+   print(mothers)
+   # [ 2217.,  2473.,  2160., ...,  2179.,  2963.,  2836.]
+   print(fathers)
+   # [ 3951.,  4025.,  3355., ...,  3580.,  3464.,  4084.]
 
 
 Given the final mate choices we repeat the same evolutionary process.
 
 .. code-block:: python
    :caption: Final mating event
-
-   >>> example_pop.evolve(
-   ...      matingScheme=sim.HomoMating(
-   ...          sim.PyParentsChooser(final_chooser.snd_ord_id_chooser),
-   ...          sim.OffspringGenerator(ops=[
-   ...              sim.IdTagger(),
-   ...              sim.PedigreeTagger(),
-   ...              sim.Recombinator(rates=recom_map)], numOffspring=1),
-   ...          subPopSize=2000,
-   ...      ),
-   ...  gen=1
-   ... )
-   1
+ 
+   example_pop.evolve(
+       matingScheme=sim.HomoMating(
+           sim.PyParentsChooser(final_chooser.snd_ord_id_pairs),
+           sim.OffspringGenerator(
+               ops=[sim.IdTagger(), sim.PedigreeTagger(), sim.Recombinator(rates=recom_rates)],
+                   numOffspring=1),
+           subPopSize=2000
+       ),
+       gen=1
+   )
 
 Final Pedigree Check
 ********************
@@ -264,18 +259,18 @@ Let's compare the final pedigree the same way as the others.
 .. code-block:: python
    :caption: Check final pedigree
 
-   >>> pedigree = np.array((example_pop.indInfo('ind_id'),
-   ...                  example_pop.indInfo('mother_id'),
-   ...                 example_pop.indInfo('father_id'))).T
-   >>> print(pedigree)
-   [[ 4106.  2217.  3951.]
-    [ 4107.  2473.  4025.]
-    [ 4108.  2160.  3355.]
-    ...,
-    [ 6103.  2179.  3580.]
-    [ 6104.  2963.  3464.]
-    [ 6105.  2836.  4084.]]
-   >>> pedigrees[2] = pedigree
+   pedigree = np.array((example_pop.indInfo('ind_id'),
+                        example_pop.indInfo('mother_id'),
+                        example_pop.indInfo('father_id'))).T
+   print(pedigree)
+   # [[ 4106.  2217.  3951.]
+   #  [ 4107.  2473.  4025.]
+   #  [ 4108.  2160.  3355.]
+   #  ...,
+   #  [ 6103.  2179.  3580.]
+   #  [ 6104.  2963.  3464.]
+   #  [ 6105.  2836.  4084.]]
+   pedigrees[2] = pedigree
 
 Seems to match up. Now we have the pedigree of the entire breeding process.
 The dictionary ``pedigrees`` has the first, second and third generation in case
