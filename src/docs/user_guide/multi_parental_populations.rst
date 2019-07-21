@@ -178,7 +178,7 @@ with ``629`` so on and so forth.
        matingScheme=sim.HomoMating(
            sim.PyParentsChooser(second_order_chooser.snd_ord_id_pairs),
            sim.OffspringGenerator(
-               ops=[sim.IdTagger(), sim.PedigreeTagger(), sim.Recombinator(rates=recom_rates)],
+               ops=[sim.IdTagger(), sim.PedigreeTagger(), sim.Recombinator(rates=recom_map)],
                    numOffspring=1),
            subPopSize=2000
        ),
@@ -244,7 +244,7 @@ Given the final mate choices we repeat the same evolutionary process.
        matingScheme=sim.HomoMating(
            sim.PyParentsChooser(final_chooser.snd_ord_id_pairs),
            sim.OffspringGenerator(
-               ops=[sim.IdTagger(), sim.PedigreeTagger(), sim.Recombinator(rates=recom_rates)],
+               ops=[sim.IdTagger(), sim.PedigreeTagger(), sim.Recombinator(rates=recom_map)],
                    numOffspring=1),
            subPopSize=2000
        ),
