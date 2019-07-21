@@ -7,14 +7,13 @@ Additive Trait Parameterization
 .. code-block:: python
    :caption: Modules we will need for this example
 
-   >>> import simuOpt
-   >>> simuOpt.setOptions(alleleType='short', quiet=True)
-   >>> import simuPOP as sim
-   >>> import pandas as pd
-   >>> import numpy as np
-   >>> import random
-   >>> from saegus import analyze, operators, parameters
-   >>> np.set_printoptions(suppress=True, precision=5)
+   import simuOpt
+   simuOpt.setOptions(alleleType='short', quiet=True)
+   import simuPOP as sim
+   import numpy as np, pandas as pd
+   import random
+   from saegus import analyze, operators, parameters
+   np.set_printoptions(suppress=True, precision=5)
 
 .. _overview_of_additive_trait_example:
 
@@ -44,7 +43,7 @@ a new population.
 .. code-block:: python
    :caption: Loading our example population from a file
 
-   >>> example_pop = sim.loadPopulation('example_pop.pop')
+   example_pop = sim.loadPopulation('example_pop.pop')
 
 
 .. _add_information_fields:
@@ -63,11 +62,11 @@ identifying individuals.
 .. code-block:: python
    :caption: Add the ``infoFields`` ``ind_id``, ``g`` and ``p``
 
-   >>> example_pop.infoFields()
-   ()
-   >>> example_pop.addInfoFields(['ind_id', 'g', 'p'])
-   >>> example_pop.infoFields()
-   ('ind_id', 'g', 'p')
+   example_pop.infoFields()
+   # ()
+   example_pop.addInfoFields(['ind_id', 'g', 'p'])
+   example_pop.infoFields()
+   # ('ind_id', 'g', 'p')
 
 By default information fields are set to ``0.0``. We can initialize the
 ``ind_id`` field using a :mod:`simuPOP` function.
@@ -75,11 +74,11 @@ By default information fields are set to ``0.0``. We can initialize the
 .. code-block:: python
    :caption: Initialize individual identifiers
 
-   >>> print(np.array(example_pop.indInfo('ind_id')))
-   [ 0.  0.  0.  0.  0. ... 0.]
-   >>> sim.tagID(example_pop)
-   >>> print(np.array(example_pop.indInfo('ind_id')))
-   [   1.    2.    3.    4.    5. ... 105.]
+   print(np.array(example_pop.indInfo('ind_id')))
+   # [ 0.  0.  0.  ...  0.]
+   sim.tagID(example_pop)
+   print(np.array(example_pop.indInfo('ind_id')))
+   # [ 1.  2.  3.  ...  105.]
 
 .. note::
    ::
@@ -93,7 +92,7 @@ Calculate Allele Frequencies
 .. code-block:: python
    :caption: Using :mod:`simuPOP` to compute allele frequencies
    
-   >>> sim.stat(example_pop, alleleFreq=sim.ALL_AVAIL)
+   sim.stat(example_pop, alleleFreq=sim.ALL_AVAIL)
 
 .. _determine_segregating_loci:
 
@@ -106,12 +105,12 @@ segregating.
 .. code-block:: python
    :caption: Using :mod:`simuPOP` to find segregating loci
 
-   >>> sim.stat(example_pop, numOfSegSites=sim.ALL_AVAIL,
-   ...              vars=['numOfSegSites', 'segSites', 'fixedSites'])
-   >>> example_pop.dvars().numOfSegSites
-   42837
-   >>> print(example_pop.dvars().segSites[::1000]) # every 1000th segregating locus
-   [0, 1040, 2072, 3098, 4124, ... 43578]
+   sim.stat(example_pop, numOfSegSites=sim.ALL_AVAIL,
+                         vars=['numOfSegSites', 'segSites', 'fixedSites'])
+   example_pop.dvars().numOfSegSites
+   # 42837
+   print(example_pop.dvars().segSites[::1000]) # every 1000th segregating locus
+   # [0, 1040, 2072, ..., 43578]
 
 There are 42,837 segregating loci in this population. ``saegus`` has a function
 to put the alleles into an array and assign the alleles at ``qtl`` an effect as
@@ -136,10 +135,10 @@ For this example we will pick 5 loci to designate as quantitative trait loci.
 .. code-block:: python
    :caption: Choosing QTL and assigning allele effects
 
-   >>> segregating_loci = example_pop.dvars().segSites
-   >>> qtl = sorted(random.sample(segregating_loci, 5))
-   >>> print(qtl)
-   [6, 2972, 12694, 30642, 34123]
+   segregating_loci = example_pop.dvars().segSites
+   qtl = sorted(random.sample(segregating_loci, 5))
+   print(qtl)
+   # [6, 2972, 12694, 30642, 34123]
 
 Every allele is initially assigned an effect of ``0``. Now alleles only at each QTL 
 will be assigned a non-zero effect drawn from the Exponential distribution.
@@ -147,25 +146,25 @@ will be assigned a non-zero effect drawn from the Exponential distribution.
 .. code-block:: python
    :caption: Assign allele effects using an exponential distribution
 
-   >>> example_run = analyze.Study('example_pop')
-   >>> allele_states = example_run.gather_allele_data(example_pop)
-   >>> alleles = np.array([allele_states[:, 1], allele_states[:, 2]]).T
-   >>> trait = parameters.Trait()
-   >>> ae_table = trait.construct_allele_effects_table(alleles, qtl, random.expovariate, 1)
-   >>> print(ae_table[qtl]) # qtl only
-   [[    6.          1.          0.47333     3.          1.1387 ]
-    [ 2972.          1.          0.50155     2.          0.81906]
-    [12694.          1.          0.41925     3.          1.32648]
-    [30642.          1.          0.70116     3.          0.16591]
-    [34123.          1.          3.27972     3.          0.33993]]
-   >>> print(ae_table) # all loci
-   [[     0.      1.      0.      2.      0.]
-    [     1.      2.      0.      3.      0.]
-    [     2.      2.      0.      3.      0.]
-    ...,
-    [ 44442.      1.      0.      2.      0.]
-    [ 44443.      1.      0.      3.      0.]
-    [ 44444.      1.      0.      3.      0.]]
+   example_run = analyze.Study('example_pop')
+   allele_states = example_run.gather_allele_data(example_pop)
+   alleles = np.array([allele_states[:, 1], allele_states[:, 2]]).T
+   trait = parameters.Trait()
+   ae_table = trait.construct_allele_effects_table(alleles, qtl, random.expovariate, 1)
+   print(ae_table[qtl]) # qtl only
+   # [[    6.          1.          0.47333     3.          1.1387 ]
+   #  [ 2972.          1.          0.50155     2.          0.81906]
+   #  [12694.          1.          0.41925     3.          1.32648]
+   #  [30642.          1.          0.70116     3.          0.16591]
+   #  [34123.          1.          3.27972     3.          0.33993]]
+   print(ae_table) # all loci
+   # [[     0.      1.      0.      2.      0.]
+   #  [     1.      2.      0.      3.      0.]
+   #  [     2.      2.      0.      3.      0.]
+   #  ...,
+   #  [ 44442.      1.      0.      2.      0.]
+   #  [ 44443.      1.      0.      3.      0.]
+   #  [ 44444.      1.      0.      3.      0.]]
 
 Alternatively, we could use another distribution, such as the Normal.
 This overwrites the previously assigned effects.
@@ -173,13 +172,13 @@ This overwrites the previously assigned effects.
 .. code-block:: python
    :caption: Assign allele effects using a normal distribution
 
-   >>> ae_table = trait.construct_allele_effects_table(alleles, qtl, random.normalvariate, 0, 1)
-   >>> print(ae_table[qtl]) # qtl only
-   [[    6.          1.          0.09821     3.          0.19477]
-    [ 2972.          1.         -1.48559     2.          1.47764]
-    [12694.          1.         -1.16001     3.          0.09613]
-    [30642.          1.          0.44827     3.          0.11772]
-    [34123.          1.          2.15811     3.          0.99274]]
+   ae_table = trait.construct_allele_effects_table(alleles, qtl, random.normalvariate, 0, 1)
+   print(ae_table[qtl]) # qtl only
+   # [[    6.          1.          0.09821     3.          0.19477]
+   #  [ 2972.          1.         -1.48559     2.          1.47764]
+   #  [12694.          1.         -1.16001     3.          0.09613]
+   #  [30642.          1.          0.44827     3.          0.11772]
+   #  [34123.          1.          2.15811     3.          0.99274]]
 
 For speed of computation we construct an array of allele effects where the row
 of the array corresponds to the locus and the column corresponds to the integer
@@ -188,13 +187,13 @@ representing the allele state.
 .. code-block:: python
    :caption: Putting the allele effects in an array for speed of computation
 
-   >>> ae_array = trait.construct_ae_array(ae_table, qtl)
-   >>> print(ae_array[qtl])
-   [[ 0.       0.09821  0.       0.19477  0.       0.     ]
-    [ 0.      -1.48559  1.47764  0.       0.       0.     ]
-    [ 0.      -1.16001  0.       0.09613  0.       0.     ]
-    [ 0.       0.44827  0.       0.11772  0.       0.     ]
-    [ 0.       2.15811  0.       0.99274  0.       0.     ]]
+   ae_array = trait.construct_ae_array(ae_table, qtl)
+   print(ae_array[qtl])
+   # [[ 0.       0.09821  0.       0.19477  0.       0.     ]
+   #  [ 0.      -1.48559  1.47764  0.       0.       0.     ]
+   #  [ 0.      -1.16001  0.       0.09613  0.       0.     ]
+   #  [ 0.       0.44827  0.       0.11772  0.       0.     ]
+   #  [ 0.       2.15811  0.       0.99274  0.       0.     ]]
 
 .. _definition_of_g:
 
@@ -208,9 +207,9 @@ effects.
 .. code-block:: python
    :caption: Calculating g values
 
-   >>> operators.calculate_g(example_pop, ae_array)
-   >>> print(np.array(example_pop.indInfo('g')))
-   [ 3.7728   5.66723  0.90614  5.02893  2.61323  ... 6.83259]
+   operators.calculate_g(example_pop, ae_array)
+   print(np.array(example_pop.indInfo('g')))
+   # [ 3.7728   5.66723  0.90614  ...  6.83259]
 
 .. _calculating_error:
 
@@ -259,11 +258,11 @@ have a function to make it even easier for ourselves.
 .. code-block:: python
    :caption: Computing ``p`` for each individual
 
-   >>> heritability = 0.7
-   >>> operators.calculate_error_variance(example_pop, heritability)
-   >>> operators.calculate_p(example_pop)
-   >>> print(np.array(example_pop.indInfo('p')))
-   [ 4.70345  8.28645  0.7787   0.75012  4.3679 ... 6.9911 ]
+   heritability = 0.7
+   operators.calculate_error_variance(example_pop, heritability)
+   operators.calculate_p(example_pop)
+   print(np.array(example_pop.indInfo('p')))
+   # [ 4.70345  8.28645  0.7787  ...  6.9911 ]
    
 .. _validating_h2:
 
@@ -275,19 +274,19 @@ median h2 from 30 replications (median b/c h2 is bounded)
 .. code-block:: python
    :caption: Validating the calculation of ``h2``
    
-   >>> check_h2_v2 = []
-   >>> for x in range(0, 30):
-   >>>   ae_table = trait.construct_allele_effects_table(alleles, qtl, random.normalvariate, 0, 1)
-   >>>   ae_array = trait.construct_ae_array(ae_table, qtl)
-   >>>   operators.calculate_g(example_pop, ae_array)
-   >>>   operators.calculate_error_variance(example_pop, heritability)
-   >>>   operators.calculate_p(example_pop)
-   >>>   check_h2.append(np.var(example_pop.indInfo('g')) / np.var(example_pop.indInfo('p')))
+   check_h2_v2 = []
+   for x in range(0, 30):
+       ae_table = trait.construct_allele_effects_table(alleles, qtl, random.normalvariate, 0, 1)
+       ae_array = trait.construct_ae_array(ae_table, qtl)
+       operators.calculate_g(example_pop, ae_array)
+       operators.calculate_error_variance(example_pop, heritability)
+       operators.calculate_p(example_pop)
+       check_h2.append(np.var(example_pop.indInfo('g')) / np.var(example_pop.indInfo('p')))
    
-   >>> check_h2
-   [0.8594594061513856, 0.547350607012552, 0.8588487371957536, 0.9482336217995192, 0.5859820047845293, ... 0.4640558795605753]
-   >>> np.median(check_h2_v2)
-   0.6260138213421671
+   check_h2
+   # [0.8594594061513856, 0.547350607012552, 0.8588487371957536, ..., 0.4640558795605753]
+   np.median(check_h2_v2)
+   # 0.6260138213421671
    
 .. _validating_the_calculate_g_function:
 
@@ -302,16 +301,16 @@ with our function :func:`calculate_g`.
 .. code-block:: python
    :caption: Validating the calculation of ``g``
 
-   >>> example_ind = example_pop.individual(0)
-   >>> alpha_qtl_alleles = np.array(example_ind.genotype(ploidy=0))[qtl]
-   >>> omega_qtl_alleles = np.array(example_ind.genotype(ploidy=1))[qtl]
-   >>> example_g = [[], []]
-   >>> for locus, alpha, omega in zip(qtl, alpha_qtl_alleles, omega_qtl_alleles):
-   ...  print(locus, alpha, ae_array[locus, alpha], omega, ae_array[locus, omega])
-   ...  example_g[0].append(ae_array[locus, alpha])
-   ...  example_g[1].append(ae_array[locus, omega])
+   example_ind = example_pop.individual(0)
+   alpha_qtl_alleles = np.array(example_ind.genotype(ploidy=0))[qtl]
+   omega_qtl_alleles = np.array(example_ind.genotype(ploidy=1))[qtl]
+   example_g = [[], []]
+   for locus, alpha, omega in zip(qtl, alpha_qtl_alleles, omega_qtl_alleles):
+       print(locus, alpha, ae_array[locus, alpha], omega, ae_array[locus, omega])
+       example_g[0].append(ae_array[locus, alpha])
+       example_g[1].append(ae_array[locus, omega])
    
-   >>> sum(example_g[0]) + sum(example_g[1])
-   0.8047750628903483
-   >>> example_pop.indByID(1).g
-   0.8047750628903477
+   sum(example_g[0]) + sum(example_g[1])
+   # 0.8047750628903483
+   example_pop.indByID(1).g
+   # 0.8047750628903477
