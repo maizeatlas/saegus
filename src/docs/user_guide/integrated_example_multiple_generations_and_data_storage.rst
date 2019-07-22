@@ -128,7 +128,7 @@ We will use the same process in :ref:`additive_trait_parameterization`.
    :caption: Choosing QTL and assigning effects
 
    segregating_loci = sim.stat(example_pop, numOfSegSites=sim.ALL_AVAIL, vars=['segSites'])
-   qtl = sorted(random.sample(segregating_loci, 20))
+   qtl = sorted(random.sample(example_pop.dvars().segSites, 20))
    trait = parameters.Trait()
    ae_table = trait.construct_allele_effects_table(example_pop, qtl, random.expovariate, 1)
    ae_array = trait.construct_ae_array(ae_table, qtl)
