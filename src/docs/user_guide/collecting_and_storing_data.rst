@@ -51,6 +51,7 @@ Load the example population:
    :caption: Load the example population, recombination map and initialize sex
 
    example_pop = sim.loadPopulation('example_pop.pop')
+   example_pop.addInfoFields(['ind_id', 'mother_id', 'father_id'])
    sim.tagID(example_pop)
    sim.initSex(example_pop)
    tf = parse.TusonFounders()
