@@ -61,7 +61,9 @@ recombinatorial convergence. We will create a population of size ``1000``.
 
    founders = [[1, 2], [3, 4], [5, 6], [7, 8]]
    offspring_per_pair = 250
-   magic = breed.MAGIC(example_pop, recom_map)
+   magic = breed.MAGIC(example_pop, founders, recom_map)
+   example_pop.popSize()
+   # 105
    magic.generate_f_one(founders, offspring_per_pair)
 
 First Converging Cross
@@ -71,7 +73,7 @@ First Converging Cross
    :caption: Second step of recombinatorial convergence
 
    first_random_cross = breed.RandomCross(example_pop, 4, 250)
-   first_mothers, first_fathers = first_random_cross.converging_random_cross()
+   first_mothers, first_fathers = first_random_cross.converging_random_cross()   
    first_parent_chooser = breed.SecondOrderPairIDChooser(first_mothers, first_fathers)
    example_pop.evolve(
        matingScheme=sim.HomoMating(
