@@ -75,7 +75,9 @@ allele.
 .. code-block:: python
    :caption: Allele data
 
-   allele_data_table = analyze.gather_allele_data(example_pop)
+   sim.stat(example_pop, alleleFreq=sim.ALL_AVAIL, genoFreq=sim.ALL_AVAIL)
+   example_run = analyze.Study('example_pop')
+   allele_data_table = example_run.gather_allele_data(example_pop)
    print(allele_data_table)
    # [[     0.      1.      2.      1.      2.]
    #  [     1.      2.      3.      2.      3.]
@@ -90,7 +92,7 @@ The array for allele frequencies has the same ordering of columns:
 .. code-block:: python
    :caption: Allele frequencies
 
-   allele_frequencies = analyze.gather_allele_frequencies(example_pop, allele_data_table)
+   allele_frequencies = example_run.gather_allele_frequencies(example_pop, allele_data_table)
    print(allele_frequencies)
    # [[     0.         0.319      0.681      0.319      0.681]
    #  [     1.         0.219      0.781      0.219      0.781]
@@ -117,7 +119,7 @@ frequency array by using a ``saegus`` function.
 .. code-block:: python
    :caption: Structure of genotype frequency data
 
-   genotype_frequencies = analyze.gather_genotype_frequencies(example_pop)
+   genotype_frequencies = example_run.gather_genotype_frequencies(example_pop)
    print(genotype_frequencies)
    # [[[ 0.     0.     0.     0.     0.   ]
    #   [ 0.     0.133  0.     0.     0.   ]
@@ -204,7 +206,7 @@ index. If we wanted to see the genotypes at a specific locus we can use the
    :caption: Retrieve genotypes by locus
 
    locus_five_genotypes = np.array(np.where(genotypes_by_locus[:, 0] == 5))
-   print(locus_five)
+   print(locus_five_genotypes)
    # [14, 15, 16]
    print(genotypes_by_locus[locus_five_genotypes])
    # [[5 1 1]
