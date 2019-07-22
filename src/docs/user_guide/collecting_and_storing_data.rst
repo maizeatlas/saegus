@@ -37,24 +37,24 @@ import the necessary modules and load the example population like usual.
 .. code-block:: python
    :caption: Module imports
 
-   >>> import simuOpt
-   >>> simuOpt.setOptions(alleleType='short', quiet=True, numThreads=4)
-   >>> import simuPOP as sim
-   >>> import pandas as pd
-   >>> import numpy as np
-   >>> from saegus import analyze, parse
-   >>> np.set_printoptions(precision=3, suppress=True)
+   import simuOpt
+   simuOpt.setOptions(alleleType='short', quiet=True, numThreads=4)
+   import simuPOP as sim
+   import pandas as pd
+   import numpy as np
+   from saegus import analyze, parse
+   np.set_printoptions(precision=3, suppress=True)
 
 Load the example population:
 
 .. code-block:: python
    :caption: Load the example population, recombination map and initialize sex
 
-   >>> example_pop = sim.loadPopulation('example_pop.pop')
-   >>> sim.tagID(example_pop)
-   >>> sim.initSex(example_pop)
-   >>> tf = parse.TusonFounders()
-   >>> recom_map = tf.parse_recombination_map('genetic_map.txt')
+   example_pop = sim.loadPopulation('example_pop.pop')
+   sim.tagID(example_pop)
+   sim.initSex(example_pop)
+   tf = parse.TusonFounders()
+   recom_map = tf.parse_recombination_map('genetic_map.txt')
 
 .. _allele_data:
 
@@ -74,30 +74,30 @@ allele.
 .. code-block:: python
    :caption: Allele data
 
-   >>> allele_data_table = analyze.gather_allele_data(example_pop)
-   >>> print(allele_data_table)
-   [[     0.      1.      2.      1.      2.]
-    [     1.      2.      3.      2.      3.]
-    [     2.      2.      3.      3.      2.]
-    ...,
-    [ 44442.      1.      2.      2.      1.]
-    [ 44443.      1.      3.      3.      1.]
-    [ 44444.      1.      3.      1.      3.]]
+   allele_data_table = analyze.gather_allele_data(example_pop)
+   print(allele_data_table)
+   # [[     0.      1.      2.      1.      2.]
+   #  [     1.      2.      3.      2.      3.]
+   #  [     2.      2.      3.      3.      2.]
+   #  ...,
+   #  [ 44442.      1.      2.      2.      1.]
+   #  [ 44443.      1.      3.      3.      1.]
+   #  [ 44444.      1.      3.      1.      3.]]
 
 The array for allele frequencies has the same ordering of columns:
 
 .. code-block:: python
    :caption: Allele frequencies
 
-   >>> allele_frequencies = analyze.gather_allele_frequencies(example_pop, allele_data_table)
-   >>> print(allele_frequencies)
-   [[     0.         0.319      0.681      0.319      0.681]
-    [     1.         0.219      0.781      0.219      0.781]
-    [     2.         0.938      0.062      0.062      0.938]
-    ...,
-    [ 44442.         0.533      0.467      0.467      0.533]
-    [ 44443.         0.738      0.262      0.262      0.738]
-    [ 44444.         0.267      0.733      0.267      0.733]]
+   allele_frequencies = analyze.gather_allele_frequencies(example_pop, allele_data_table)
+   print(allele_frequencies)
+   # [[     0.         0.319      0.681      0.319      0.681]
+   #  [     1.         0.219      0.781      0.219      0.781]
+   #  [     2.         0.938      0.062      0.062      0.938]
+   #  ...,
+   #  [ 44442.         0.533      0.467      0.467      0.533]
+   #  [ 44443.         0.738      0.262      0.262      0.738]
+   #  [ 44444.         0.267      0.733      0.267      0.733]]
 
 .. _collect_and_store_genotype_data:
 
@@ -116,52 +116,51 @@ frequency array by using a ``saegus`` function.
 .. code-block:: python
    :caption: Structure of genotype frequency data
 
-   >>> genotype_frequencies = analyze.gather_genotype_frequencies(example_pop)
-   >>> print(genotype_frequencies)
-   [[[ 0.     0.     0.     0.     0.   ]
-     [ 0.     0.133  0.     0.     0.   ]
-     [ 0.     0.371  0.495  0.     0.   ]
-     [ 0.     0.     0.     0.     0.   ]
-     [ 0.     0.     0.     0.     0.   ]]
-
-    [[ 0.     0.     0.     0.     0.   ]
-     [ 0.     0.     0.     0.     0.   ]
-     [ 0.     0.     0.086  0.     0.   ]
-     [ 0.     0.     0.267  0.648  0.   ]
-     [ 0.     0.     0.     0.     0.   ]]
-
-    [[ 0.     0.     0.     0.     0.   ]
-     [ 0.     0.     0.     0.     0.   ]
-     [ 0.     0.     0.886  0.105  0.   ]
-     [ 0.     0.     0.     0.01   0.   ]
-     [ 0.     0.     0.     0.     0.   ]]
-
-    ...,
-    [[ 0.     0.     0.     0.     0.   ]
-     [ 0.     0.305  0.457  0.     0.   ]
-     [ 0.     0.     0.238  0.     0.   ]
-     [ 0.     0.     0.     0.     0.   ]
-     [ 0.     0.     0.     0.     0.   ]]
-
-    [[ 0.     0.     0.     0.     0.   ]
-     [ 0.     0.562  0.     0.352  0.   ]
-     [ 0.     0.     0.     0.     0.   ]
-     [ 0.     0.     0.     0.086  0.   ]
-     [ 0.     0.     0.     0.     0.   ]]
-
-    [[ 0.     0.     0.     0.     0.   ]
-     [ 0.     0.143  0.     0.     0.   ]
-     [ 0.     0.     0.     0.     0.   ]
-     [ 0.     0.248  0.     0.61   0.   ]
-     [ 0.     0.     0.     0.     0.   ]]]
+   genotype_frequencies = analyze.gather_genotype_frequencies(example_pop)
+   print(genotype_frequencies)
+   # [[[ 0.     0.     0.     0.     0.   ]
+   #   [ 0.     0.133  0.     0.     0.   ]
+   #   [ 0.     0.371  0.495  0.     0.   ]
+   #   [ 0.     0.     0.     0.     0.   ]
+   #   [ 0.     0.     0.     0.     0.   ]]
+   #
+   # [[ 0.     0.     0.     0.     0.   ]
+   #  [ 0.     0.     0.     0.     0.   ]
+   #  [ 0.     0.     0.086  0.     0.   ]
+   #  [ 0.     0.     0.267  0.648  0.   ]
+   #  [ 0.     0.     0.     0.     0.   ]]
+   #
+   # [[ 0.     0.     0.     0.     0.   ]
+   #  [ 0.     0.     0.     0.     0.   ]
+   #  [ 0.     0.     0.886  0.105  0.   ]
+   #  [ 0.     0.     0.     0.01   0.   ]
+   #  [ 0.     0.     0.     0.     0.   ]]
+   #  ...,
+   # [[ 0.     0.     0.     0.     0.   ]
+   #  [ 0.     0.305  0.457  0.     0.   ]
+   #  [ 0.     0.     0.238  0.     0.   ]
+   #  [ 0.     0.     0.     0.     0.   ]
+   #  [ 0.     0.     0.     0.     0.   ]]
+   #
+   # [[ 0.     0.     0.     0.     0.   ]
+   #  [ 0.     0.562  0.     0.352  0.   ]
+   #  [ 0.     0.     0.     0.     0.   ]
+   #  [ 0.     0.     0.     0.086  0.   ]
+   #  [ 0.     0.     0.     0.     0.   ]]
+   #
+   # [[ 0.     0.     0.     0.     0.   ]
+   #  [ 0.     0.143  0.     0.     0.   ]
+   #  [ 0.     0.     0.     0.     0.   ]
+   #  [ 0.     0.248  0.     0.61   0.   ]
+   #  [ 0.     0.     0.     0.     0.   ]]]
 
 The syntax to access the frequency of genotype ``(1, 1)`` at locus ``0`` is
 
 .. code-block:: python
    :caption: Accessing genotype frequencies
 
-   >>> print(genotype_frequencies[0, 1, 1])
-   0.133333333333
+   print(genotype_frequencies[0, 1, 1])
+   # 0.133333333333
 
 Unlike the allele data we do not have an organized array of genotypes by locus.
 However, we can obtain all the genotypes as a set of coordinates by locus
@@ -170,15 +169,15 @@ using a very simple manipulation.
 .. code-block:: python
    :caption: Genotypes as coordinates
 
-   >>> genotypes_by_locus = np.array(np.ndarray.nonzero(genotype_frequencies)).T
-   >>> print(genotypes_by_locus)
-   [[    0     1     1]
-    [    0     2     1]
-    [    0     2     2]
-    ...,
-    [44444     1     1]
-    [44444     3     1]
-    [44444     3     3]]
+   genotypes_by_locus = np.array(np.ndarray.nonzero(genotype_frequencies)).T
+   print(genotypes_by_locus)
+   # [[    0     1     1]
+   #  [    0     2     1]
+   #  [    0     2     2]
+   #  ...,
+   #  [44444     1     1]
+   #  [44444     3     1]
+   #  [44444     3     3]]
 
 .. note:: ``simuPOP`` considers ``(2, 1)`` and ``(1, 2)`` as distinct genotypes
 
@@ -192,8 +191,8 @@ rows than the number of loci.
 .. code-block:: python
    :caption: Variable number of genotypes by locus
 
-   >>> print(genotypes_by_locus.shape)
-   (122993, 3)
+   print(genotypes_by_locus.shape)
+   # (122993, 3)
 
 It is clear that the locus index will not match the ``genotypes_by_locus``
 index. If we wanted to see the genotypes at a specific locus we can use the
@@ -203,17 +202,17 @@ index. If we wanted to see the genotypes at a specific locus we can use the
 .. code-block:: python
    :caption: Retrieve genotypes by locus
 
-   >>> locus_five_genotypes = np.array(np.where(genotypes_by_locus[:, 0] == 5))
-   >>> print(locus_five)
-   [14, 15, 16]
-   >>> print(genotypes_by_locus[locus_five_genotypes])
-   [[5 1 1]
-    [5 1 3]
-    [5 3 3]]
-   >>> print(genotypes_by_locus[locus_five_genotypes][:, 1:]) # without locus
-   [[1 1]
-    [1 3]
-    [3 3]]
+   locus_five_genotypes = np.array(np.where(genotypes_by_locus[:, 0] == 5))
+   print(locus_five)
+   # [14, 15, 16]
+   print(genotypes_by_locus[locus_five_genotypes])
+   # [[5 1 1]
+   #  [5 1 3]
+   #  [5 3 3]]
+   print(genotypes_by_locus[locus_five_genotypes][:, 1:]) # without locus
+   # [[1 1]
+   #  [1 3]
+   #  [3 3]]
 
 This tells us that at locus ``5`` there are genotypes ``(1, 1)``, ``(1, 3)``
 and ``(3, 3)``. Let's check their frequencies.
@@ -221,12 +220,12 @@ and ``(3, 3)``. Let's check their frequencies.
 .. code-block:: python
    :caption: Checking genotypic frequencies at locus ``5``
 
-   >>> print(genotype_frequencies[5, 1, 1])
-   0.904761904762
-   >>> print(genotype_frequencies[5, 1, 3])
-   0.0857142857143
-   >>> print(genotype_frequencies[5, 3, 3])
-   0.00952380952381
+   print(genotype_frequencies[5, 1, 1])
+   # 0.904761904762
+   print(genotype_frequencies[5, 1, 3])
+   # 0.0857142857143
+   print(genotype_frequencies[5, 3, 3])
+   # 0.00952380952381
 
 .. _storing_data_hdf5:
 
@@ -251,20 +250,20 @@ into HDF5 files as if you were working with a ``dict``.
 .. code-block:: python
    :caption: Creating an HDF5 file
 
-   >>> import h5py
-   >>> example_data = h5py.File('example_data.hdf5')
-   >>> allele_group = example_data.create_group('allele')
-   >>> allele_group['states'] = allele_data # store data
-   >>> allele_group['states']
-   <HDF5 dataset "states": shape (44445, 5), type "<f8">
-   >>> print(np.array(allele_group['states'])) # retrieve the data
-   [[     0.      1.      2.      1.      2.]
-    [     1.      2.      3.      2.      3.]
-    [     2.      2.      3.      3.      2.]
-    ...,
-    [ 44442.      1.      2.      2.      1.]
-    [ 44443.      1.      3.      3.      1.]
-    [ 44444.      1.      3.      1.      3.]]
+   import h5py
+   example_data = h5py.File('example_data.hdf5')
+   allele_group = example_data.create_group('allele')
+   allele_group['states'] = allele_data # store data
+   print(allele_group['states'])
+   #  <HDF5 dataset "states": shape (44445, 5), type "<f8">
+   print(np.array(allele_group['states'])) # retrieve the data
+   # [[     0.      1.      2.      1.      2.]
+   #  [     1.      2.      3.      2.      3.]
+   #  [     2.      2.      3.      3.      2.]
+   #  ...,
+   #  [ 44442.      1.      2.      2.      1.]
+   #  [ 44443.      1.      3.      3.      1.]
+   #  [ 44444.      1.      3.      1.      3.]]
 
 It is best to think of an HDF5 file as its very own directory. So we can use
 an absolute path to get to data or we can use the relative path. A "relative"
@@ -274,10 +273,10 @@ object.
 .. code-block:: python
    :caption: Absolute versus relative paths in HDF5
 
-   >>> print(example_data['allele/states']) # absolute path to dataset
-   <HDF5 dataset "states": shape (44445, 5), type "<f8">
-   >>> print(allele_group['states']) # relative path to dataset
-   <HDF5 dataset "states": shape (44445, 5), type "<f8">
+   print(example_data['allele/states']) # absolute path to dataset
+   # <HDF5 dataset "states": shape (44445, 5), type "<f8">
+   print(allele_group['states']) # relative path to dataset
+   # <HDF5 dataset "states": shape (44445, 5), type "<f8">
 
 
 .. _groups_and_datasets:
@@ -293,22 +292,25 @@ can also have metadata.
 .. code-block:: python
    :caption: HDF5 ``groups`` versus  ``datasets``
 
-   >>> print(example_data)
-   <HDF5 file "example_data.hdf5" (mode r+)>
-   >>> print(allele_group)
-   <HDF5 group "/allele" (1 members)>
-   >>> print(type(allele_group))
-   <class 'h5py._hl.group.Group'>
-   >>> allele_group['states'].attrs['columns'] = list(map(np.string_, ['locus',  # metadata attached to dataset
-   ...                        'alpha', 'omega', 'minor', 'major' ]))
-   >>> print([name.decode('UTF-8') for name in allele_group['states'].attrs['columns']])
-   ['locus', 'alpha', 'omega', 'minor', 'major']
-   >>> allele_group.attrs['info'] = list(map(np.string_, # metadata attached to group
-   ...                  ['Declaration of alpha, omega, minor and major alleles']))
-   >>> print(allele_group.attrs['info'])
-   [b'Declaration of alpha, omega, minor and major alleles']
-   >>> allele_group.attrs['info'][0].decode('UTF-8')
-   Declaration of alpha, omega, minor and major alleles
+   print(example_data)
+   # <HDF5 file "example_data.hdf5" (mode r+)>
+   print(allele_group)
+   # <HDF5 group "/allele" (1 members)>
+   print(type(allele_group))
+   # <class 'h5py._hl.group.Group'>
+   allele_group['states'].attrs['columns'] = list(map(np.string_, ['locus',  # metadata attached to dataset
+                                                                   'alpha', 
+                                                                   'omega', 
+                                                                   'minor', 
+                                                                   'major' ]))
+   print([name.decode('UTF-8') for name in allele_group['states'].attrs['columns']])
+   # ['locus', 'alpha', 'omega', 'minor', 'major']
+   allele_group.attrs['info'] = list(map(np.string_, # metadata attached to group
+                                         ['Declaration of alpha, omega, minor and major alleles']))
+   print(allele_group.attrs['info'])
+   # [b'Declaration of alpha, omega, minor and major alleles']
+   allele_group.attrs['info'][0].decode('UTF-8')
+   # Declaration of alpha, omega, minor and major alleles
 
 .. _storing_frequency_data:
 
@@ -321,46 +323,45 @@ own groups.
 .. code-block:: python
    :caption: Storing frequency data
 
-   >>> allele_group['generation/founder'] = allele_frequencies
-   >>> genotype_group = example_data.create_group('genotype')
-   >>> genotype_group['generation/founder'] = genotype_frequencies # store
-   >>> print(np.array(genotype_group['generation/founder'])) # retrieve
-   [[[ 0.     0.     0.     0.     0.   ]
-     [ 0.     0.133  0.     0.     0.   ]
-     [ 0.     0.371  0.495  0.     0.   ]
-     [ 0.     0.     0.     0.     0.   ]
-     [ 0.     0.     0.     0.     0.   ]]
-
-    [[ 0.     0.     0.     0.     0.   ]
-     [ 0.     0.     0.     0.     0.   ]
-     [ 0.     0.     0.086  0.     0.   ]
-     [ 0.     0.     0.267  0.648  0.   ]
-     [ 0.     0.     0.     0.     0.   ]]
-
-    [[ 0.     0.     0.     0.     0.   ]
-     [ 0.     0.     0.     0.     0.   ]
-     [ 0.     0.     0.886  0.105  0.   ]
-     [ 0.     0.     0.     0.01   0.   ]
-     [ 0.     0.     0.     0.     0.   ]]
-
-    ...,
-    [[ 0.     0.     0.     0.     0.   ]
-     [ 0.     0.305  0.457  0.     0.   ]
-     [ 0.     0.     0.238  0.     0.   ]
-     [ 0.     0.     0.     0.     0.   ]
-     [ 0.     0.     0.     0.     0.   ]]
-
-    [[ 0.     0.     0.     0.     0.   ]
-     [ 0.     0.562  0.     0.352  0.   ]
-     [ 0.     0.     0.     0.     0.   ]
-     [ 0.     0.     0.     0.086  0.   ]
-     [ 0.     0.     0.     0.     0.   ]]
-
-    [[ 0.     0.     0.     0.     0.   ]
-     [ 0.     0.143  0.     0.     0.   ]
-     [ 0.     0.     0.     0.     0.   ]
-     [ 0.     0.248  0.     0.61   0.   ]
-     [ 0.     0.     0.     0.     0.   ]]]
+   allele_group['generation/founder'] = allele_frequencies
+   genotype_group = example_data.create_group('genotype')
+   genotype_group['generation/founder'] = genotype_frequencies # store
+   print(np.array(genotype_group['generation/founder'])) # retrieve
+   # [[[ 0.     0.     0.     0.     0.   ]
+   #   [ 0.     0.133  0.     0.     0.   ]
+   #   [ 0.     0.371  0.495  0.     0.   ]
+   #   [ 0.     0.     0.     0.     0.   ]
+   #   [ 0.     0.     0.     0.     0.   ]]
+   # 
+   #  [[ 0.     0.     0.     0.     0.   ]
+   #   [ 0.     0.     0.     0.     0.   ]
+   #   [ 0.     0.     0.086  0.     0.   ]
+   #   [ 0.     0.     0.267  0.648  0.   ]
+   #   [ 0.     0.     0.     0.     0.   ]]
+   # 
+   #  [[ 0.     0.     0.     0.     0.   ]
+   #   [ 0.     0.     0.     0.     0.   ]
+   #   [ 0.     0.     0.886  0.105  0.   ]
+   #   [ 0.     0.     0.     0.01   0.   ]
+   #   [ 0.     0.     0.     0.     0.   ]]
+   #   ...,
+   #  [[ 0.     0.     0.     0.     0.   ]
+   #   [ 0.     0.305  0.457  0.     0.   ]
+   #   [ 0.     0.     0.238  0.     0.   ]
+   #   [ 0.     0.     0.     0.     0.   ]
+   #   [ 0.     0.     0.     0.     0.   ]]
+   # 
+   #  [[ 0.     0.     0.     0.     0.   ]
+   #   [ 0.     0.562  0.     0.352  0.   ]
+   #   [ 0.     0.     0.     0.     0.   ]
+   #   [ 0.     0.     0.     0.086  0.   ]
+   #   [ 0.     0.     0.     0.     0.   ]]
+   # 
+   #  [[ 0.     0.     0.     0.     0.   ]
+   #   [ 0.     0.143  0.     0.     0.   ]
+   #   [ 0.     0.     0.     0.     0.   ]
+   #   [ 0.     0.248  0.     0.61   0.   ]
+   #   [ 0.     0.     0.     0.     0.   ]]]
 
 .. _creating_a_generation_of_data:
 
@@ -380,23 +381,23 @@ Generation 1
 .. code-block:: python
    :caption: Generation ``1``
 
-   >>> example_pop.popSize() # pre-random mating
-   105
-   >>> example_pop.evolve(
-   ...    matingScheme=sim.RandomMating(
-   ...         ops=[
-   ...          sim.IdTagger(),
-   ...          sim.PedigreeTagger(),
-   ...          sim.Recombinator(rates=recom_map)
-   ...         ], subPopSize=1000
-   ...          ),
-   ...      gen=1
-   ...  )
-   1
-   >>> example_pop.popSize() # post random mating
-   1000
-   >>> allele_group['generation/1'] = analyze.gather_allele_frequencies(example_pop, allele_data)
-   >>> genotype_group['generation/1'] = analyze.gather_genotype_frequencies(example_pop)
+   example_pop.popSize() # pre-random mating
+   # 105
+   example_pop.evolve(
+       matingScheme=sim.RandomMating(
+           ops=[
+           sim.IdTagger(), 
+           sim.PedigreeTagger(), 
+           sim.Recombinator(recom_map)],
+           subPopSize=1000
+       ),
+       gen=1
+   )
+   # 1
+   example_pop.popSize() # post random mating
+   # 1000
+   allele_group['generation/1'] = analyze.gather_allele_frequencies(example_pop, allele_data)
+   genotype_group['generation/1'] = analyze.gather_genotype_frequencies(example_pop)
 
 .. _generation_2:
 
@@ -405,20 +406,20 @@ Generation 2
 
 .. code-block:: python
    :caption: Generation ``2``
-
-   >>> example_pop.evolve(
-   ...    matingScheme=sim.RandomMating(
-   ...         ops=[
-   ...          sim.IdTagger(),
-   ...          sim.PedigreeTagger(),
-   ...          sim.Recombinator(rates=recom_map)
-   ...         ], subPopSize=1000
-   ...          ),
-   ...      gen=1
-   ...  )
-   1
-   >>> allele_group['generation/2'] = analyze.gather_allele_frequencies(example_pop, allele_data)
-   >>> genotype_group['generation/2'] = analyze.gather_genotype_frequencies(example_pop)
+   
+      example_pop.evolve(
+       matingScheme=sim.RandomMating(
+           ops=[
+           sim.IdTagger(), 
+           sim.PedigreeTagger(), 
+           sim.Recombinator(recom_map)],
+           subPopSize=1000
+       ),
+       gen=1
+   )
+   # 1
+   allele_group['generation/2'] = analyze.gather_allele_frequencies(example_pop, allele_data)
+   genotype_group['generation/2'] = analyze.gather_genotype_frequencies(example_pop)
 
 .. _generation_3:
 
@@ -428,19 +429,19 @@ Generation 3
 .. code-block:: python
    :caption: Generation ``3``
 
-   >>> example_pop.evolve(
-   ...    matingScheme=sim.RandomMating(
-   ...         ops=[
-   ...          sim.IdTagger(),
-   ...          sim.PedigreeTagger(),
-   ...          sim.Recombinator(rates=recom_map)
-   ...         ], subPopSize=1000
-   ...          ),
-   ...      gen=1
-   ...  )
-   1
-   >>> allele_group['generation/3'] = analyze.gather_allele_frequencies(example_pop, allele_data)
-   >>> genotype_group['generation/3'] = analyze.gather_genotype_frequencies(example_pop)
+      example_pop.evolve(
+       matingScheme=sim.RandomMating(
+           ops=[
+           sim.IdTagger(), 
+           sim.PedigreeTagger(), 
+           sim.Recombinator(recom_map)],
+           subPopSize=1000
+       ),
+       gen=1
+   )
+   # 1
+   allele_group['generation/3'] = analyze.gather_allele_frequencies(example_pop, allele_data)
+   genotype_group['generation/3'] = analyze.gather_genotype_frequencies(example_pop)
 
 .. _generation_4:
 
@@ -450,19 +451,19 @@ Generation 4
 .. code-block:: python
    :caption: Generation ``4``
 
-   >>> example_pop.evolve(
-   ...    matingScheme=sim.RandomMating(
-   ...         ops=[
-   ...          sim.IdTagger(),
-   ...          sim.PedigreeTagger(),
-   ...          sim.Recombinator(rates=recom_map)
-   ...         ], subPopSize=1000
-   ...          ),
-   ...      gen=1
-   ...  )
-   1
-   >>> allele_group['generation/4'] = analyze.gather_allele_frequencies(example_pop, allele_data)
-   >>> genotype_group['generation/4'] = analyze.gather_genotype_frequencies(example_pop)
+      example_pop.evolve(
+       matingScheme=sim.RandomMating(
+           ops=[
+           sim.IdTagger(), 
+           sim.PedigreeTagger(), 
+           sim.Recombinator(recom_map)],
+           subPopSize=1000
+       ),
+       gen=1
+   )
+   # 1
+   allele_group['generation/4'] = analyze.gather_allele_frequencies(example_pop, allele_data)
+   genotype_group['generation/4'] = analyze.gather_genotype_frequencies(example_pop)
 
 
 .. _generation_5:
@@ -473,27 +474,26 @@ Generation 5
 .. code-block:: python
    :caption: Generation ``5``
 
-   >>> example_pop.evolve(
-   ...    matingScheme=sim.RandomMating(
-   ...         ops=[
-   ...          sim.IdTagger(),
-   ...          sim.PedigreeTagger(),
-   ...          sim.Recombinator(rates=recom_map)
-   ...         ], subPopSize=1000
-   ...          ),
-   ...      gen=1
-   ...  )
-   1
-   >>> allele_group['generation/5'] = analyze.gather_allele_frequencies(example_pop, allele_data)
-   >>> genotype_group['generation/5'] = analyze.gather_genotype_frequencies(example_pop)
+      example_pop.evolve(
+       matingScheme=sim.RandomMating(
+           ops=[
+           sim.IdTagger(), 
+           sim.PedigreeTagger(), 
+           sim.Recombinator(recom_map)],
+           subPopSize=1000
+       ),
+       gen=1
+   )
+   # 1
+   allele_group['generation/5'] = analyze.gather_allele_frequencies(example_pop, allele_data)
+   genotype_group['generation/5'] = analyze.gather_genotype_frequencies(example_pop)
 
 After the final generation close the HDF5 file.
 
 .. code-block:: python
    :caption: Close the HDF5 file
 
-   >>> example_data.close()
-
+   example_data.close()
 
 .. _using_R_for_hdf5:
 
