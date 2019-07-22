@@ -55,7 +55,7 @@ Load the example population:
    sim.tagID(example_pop)
    sim.initSex(example_pop)
    tf = parse.TusonFounders()
-   recom_map = tf.parse_recombination_map('genetic_map.txt')
+   recom_map = tf.parse_recombination_rates('genetic_map.txt')
 
 .. _allele_data:
 
