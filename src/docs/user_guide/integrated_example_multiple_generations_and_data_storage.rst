@@ -19,6 +19,7 @@ allele frequencies, genotype frequencies and additive trait.
    import numpy as np
    import random
    from saegus import analyze, breed, operators, parameters, parse
+   import h5py
    np.set_printoptions(precision=3, suppress=True)
 
 .. _creating_multi_parental_population:
@@ -127,6 +128,7 @@ We will use the same process in :ref:`additive_trait_parameterization`.
 .. code-block:: python
    :caption: Choosing QTL and assigning effects
 
+   sim.stat(example_pop, alleleFreq=sim.ALL_AVAIL)
    segregating_loci = sim.stat(example_pop, numOfSegSites=sim.ALL_AVAIL, vars=['segSites'])
    qtl = sorted(random.sample(example_pop.dvars().segSites, 20))
    example_run = analyze.Study('example_pop')
