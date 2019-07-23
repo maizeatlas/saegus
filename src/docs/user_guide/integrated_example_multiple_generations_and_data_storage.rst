@@ -129,8 +129,11 @@ We will use the same process in :ref:`additive_trait_parameterization`.
 
    segregating_loci = sim.stat(example_pop, numOfSegSites=sim.ALL_AVAIL, vars=['segSites'])
    qtl = sorted(random.sample(example_pop.dvars().segSites, 20))
+   example_run = analyze.Study('example_pop')
+   allele_states = example_run.gather_allele_data(example_pop)
+   alleles = np.array([allele_states[:, 1], allele_states[:, 2]]).T
    trait = parameters.Trait()
-   ae_table = trait.construct_allele_effects_table(example_pop, qtl, random.expovariate, 1)
+   ae_table = trait.construct_allele_effects_table(alleles, qtl, random.expovariate, 1)
    ae_array = trait.construct_ae_array(ae_table, qtl)
    print(ae_array[qtl])
 
