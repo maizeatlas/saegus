@@ -152,7 +152,6 @@ groups make it very easy to split data into categories.
    genotype_group = integrated_example_data.create_group('genotype')
    trait_group = integrated_example_data.create_group('trait')
 
-
 .. _ten_generations_of_random_mating:
 
 Ten Generations of Random Mating
@@ -182,7 +181,15 @@ are stored in the :py:class:`h5py.File` generation by generation.
 .. code-block:: python
    :caption: Creating the allele data and frequency arrays
 
-   allele_data_table = analyze.gather_allele_data(example_pop)
+   operators.calculate_g(example_pop, ae_array)
+   print(np.array(example_pop.indInfo('g')))
+   operators.calculate_error_variance(example_pop, 0.7)
+   example_pop.dvars().epsilon
+   operators.calculate_p(example_pop)
+   np.mean(example_pop.indInfo('g')), np.var(example_pop.indInfo('g'))
+   np.mean(example_pop.indInfo('p')), np.var(example_pop.indInfo('p'))
+   g = np.array(example_pop.indInfo('g'))
+   example_pop.dvars().gen = 1
 
 .. code-block:: python
    :caption: Storing ten generations of data
@@ -191,7 +198,7 @@ are stored in the :py:class:`h5py.File` generation by generation.
    preOps=[
        sim.Stat(alleleFreq=sim.ALL_AVAIL), #calculate allele frequencies
        sim.Stat(genoFreq=sim.ALL_AVAIL), # calculate genotype frequencies
-       operators.HDF5AlleleFrequencies(allele_group), #store allele frequencies
+       operators.HDF5AlleleFrequencies(allele_group, allele_states), #store allele frequencies
        operators.HDF5GenotypeFrequencies(genotype_group), # store genotype frequencies
        operators.GenoAdditiveArray(qtl, ae_array), # calculate g
        operators.PhenoAdditive(), # calulcate p
