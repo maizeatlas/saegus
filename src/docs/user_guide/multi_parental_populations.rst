@@ -37,7 +37,7 @@ Load up the recombination map for this example
    :caption: Load the recombination map
 
    tf = parse.TusonFounders()
-   recom_map = tf.parse_recombination_rates('genetic_map.txt')
+   recom_map = tf.parse_recombination_rates('example_genetic_map.txt')
 
 .. _example_multi_parental:
 
