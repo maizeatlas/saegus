@@ -40,9 +40,9 @@ def parse_genotype_matrix(genotype_matrix_filename: str, columns_to_drop='popdat
     return genotype_matrix
 
 
-class TusonFounders(object):
+class RecomRates(object):
     """
-    Collection of Tuson specific raw data parser functions.
+    Collection of recombination rate parser functions.
 
     """
 
@@ -57,11 +57,7 @@ class TusonFounders(object):
         genetic_map = pd.read_csv(genetic_map_filename, sep='\t',
                                   index_col=None)
         genetic_map.filter(['chr', 'cM'], axis=1,
-                         inplace=True
-        """
-        genetic_map.drop(['locus', 'agpv2', 'namZmPRDA', 'namZmPRDS'], axis=1,
                          inplace=True)
-        """
         genetic_map = np.array(genetic_map)
         recombination_rates = col.OrderedDict()
         for i in range(1, len(genetic_map), 1):
