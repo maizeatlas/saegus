@@ -56,8 +56,12 @@ class TusonFounders(object):
         """
         genetic_map = pd.read_csv(genetic_map_filename, sep='\t',
                                   index_col=None)
+        genetic_map.filter(['chr', 'cM'], axis=1,
+                         inplace=True
+        """
         genetic_map.drop(['locus', 'agpv2', 'namZmPRDA', 'namZmPRDS'], axis=1,
                          inplace=True)
+        """
         genetic_map = np.array(genetic_map)
         recombination_rates = col.OrderedDict()
         for i in range(1, len(genetic_map), 1):
