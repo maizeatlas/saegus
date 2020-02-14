@@ -56,7 +56,7 @@ class RecomRates(object):
         """
         genetic_map = pd.read_csv(genetic_map_filename, sep='\t',
                                   index_col=None)
-        genetic_map.filter(['chr', 'cM'], axis=1,
+        genetic_map = genetic_map.filter(['chr', 'cM'], axis=1,
                          inplace=True)
         genetic_map = np.array(genetic_map)
         recombination_rates = col.OrderedDict()
