@@ -222,8 +222,9 @@ individual's ``g`` value.
 mean :math:`0` and variance given by:
 
 .. math::
-
-   \sigma^2_\epsilon = \frac{V_g - (h^2 * V_g)}{h^2};
+ 
+   \sigma^2_\epsilon = V_a * $(\frac{1}{h^2}-1)$;
+   %\sigma^2_\epsilon = \frac{V_g - (h^2 * V_g)}{h^2};
 
 where :math:`V_g` is the variance of ``g`` and :math:`h^2` is the
 narrow sense heritability.
