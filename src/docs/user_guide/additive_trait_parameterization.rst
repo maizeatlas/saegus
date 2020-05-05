@@ -217,15 +217,15 @@ Calculation of Error Term
 =========================
 
 To simulate the experimental noise a term :math:`\epsilon` is added to each
-individual's ``g`` value.
+individual's ``a`` value.
 :math:`\epsilon` is a random variable with a normal distribution given by
 mean :math:`0` and variance given by:
 
 .. math::
  
-   \sigma^2_\epsilon = V_a(\frac{1}{h^2}-1);
+   \sigma^2_\epsilon = \sigma^2_a(\frac{1}{h^2}-1);
 
-where :math:`V_a` is the variance of ``a`` and :math:`h^2` is the
+where :math:`\sigma^2_a` is the variance of ``a`` and :math:`h^2` is the
 narrow sense heritability.
 
 .. math::
@@ -245,7 +245,7 @@ Hence, an individual's value of ``p`` is calculated by
 
 .. math::
 
-   p = g + \epsilon
+   p = a + \epsilon
 
 .. _calculating_p:
 
