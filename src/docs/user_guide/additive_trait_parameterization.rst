@@ -223,9 +223,9 @@ mean :math:`0` and variance given by:
 
 .. math::
  
-   \sigma^2_\epsilon = V_a * $(\frac{1}{h^2}-1)$;
+   \sigma^2_\epsilon = V_a * (\frac{1}{h^2}-1);
 
-where :math:`V_g` is the variance of ``g`` and :math:`h^2` is the
+where :math:`V_a` is the variance of ``a`` and :math:`h^2` is the
 narrow sense heritability.
 
 .. math::
