@@ -490,7 +490,7 @@ def calculate_error_variance(pop, heritability):
     of the error distribution. The error distribution generates noise
     found in real experiments.
     """
-    assert 0 < heritability < 1, "heritability must be between 0 anc 1"
+    assert 0 < heritability < 1, "heritability must be between 0 and 1"
     variance_of_g = np.var(pop.indInfo('g'))
     epsilon = (variance_of_g*((1/heritability)-1))
     # distribute across segregating sites
