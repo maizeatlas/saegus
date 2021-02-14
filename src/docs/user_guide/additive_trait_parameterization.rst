@@ -274,7 +274,7 @@ median h2 from 30 replications (median b/c h2 is bounded)
 .. code-block:: python
    :caption: Validating the calculation of ``h2``
    
-   check_h2_v2 = []
+   check_h2 = []
    for x in range(0, 30):
        ae_table = trait.construct_allele_effects_table(alleles, qtl, random.normalvariate, 0, 1)
        ae_array = trait.construct_ae_array(ae_table, qtl)
